@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>应龙 v1.0 - 我的任务</title>
+    <link href="assets/css/tailwind.css" rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/font-awesome.min.css">
+    <link rel="stylesheet" href="assets/css/font-awesome-compat.css">
+    <link rel="stylesheet" href="assets/css/sherlock-theme.css">
+</head>
+<body class="bg-gray-50 text-gray-800">
+
+<div class="flex h-screen overflow-hidden">
+    <!-- Sidebar -->
+    <aside class="w-64 bg-slate-900 text-white flex-shrink-0 hidden md:flex flex-col">
+        <div class="p-6 border-b border-slate-800">
+            <h1 class="text-2xl font-bold text-blue-400">应龙 <span class="text-sm text-gray-400 font-normal">v1.0</span></h1>
+            <p class="text-xs text-gray-500 mt-1">大模型推理平台</p>
+        </div>
+        <nav class="flex-1 overflow-y-auto py-4">
+            <ul class="space-y-1 px-4">
+                <li><p class="px-2 text-xs font-semibold text-gray-500 uppercase tracking-wider mb-2">系统管理员</p></li>
+                <li><a href="sys_dashboard.html" class="flex items-center px-4 py-2 text-gray-400 hover:text-white hover:bg-slate-800 rounded-lg transition-colors"><i class="fa-solid fa-chart-pie w-6"></i><span>概览</span></a></li>
+                
+                <li class="mt-4"><p class="px-2 text-xs font-semibold text-gray-500 uppercase tracking-wider mb-2">算力调度</p></li>
+                <li><a href="sys_dispatch.html" class="flex items-center px-4 py-2 text-gray-400 hover:text-white hover:bg-slate-800 rounded-lg transition-colors"><i class="fa-solid fa-sliders-h w-6"></i><span>算力调度</span></a></li>
+                <li><a href="sys_task_list.html" class="flex items-center px-4 py-2 bg-blue-600 text-white rounded-lg transition-colors"><i class="fa-solid fa-tasks w-6"></i><span>我的任务</span></a></li>
+
+                <li class="mt-4"><p class="px-2 text-xs font-semibold text-gray-500 uppercase tracking-wider mb-2">模型管理</p></li>
+                <li><a href="sys_model_repo.html" class="flex items-center px-4 py-2 text-gray-400 hover:text-white hover:bg-slate-800 rounded-lg transition-colors"><i class="fa-solid fa-box w-6"></i><span>模型仓库</span></a></li>
+                <li><a href="sys_model_training.html" class="flex items-center px-4 py-2 text-gray-400 hover:text-white hover:bg-slate-800 rounded-lg transition-colors"><i class="fa-solid fa-brain w-6"></i><span>模型训练</span></a></li>
+                <li><a href="sys_model_service.html" class="flex items-center px-4 py-2 text-gray-400 hover:text-white hover:bg-slate-800 rounded-lg transition-colors"><i class="fa-solid fa-server w-6"></i><span>模型服务</span></a></li>
+                <li><a href="sys_model_monitor.html" class="flex items-center px-4 py-2 text-gray-400 hover:text-white hover:bg-slate-800 rounded-lg transition-colors"><i class="fa-solid fa-chart-line w-6"></i><span>模型监测</span></a></li>
+
+                <li class="mt-4"><p class="px-2 text-xs font-semibold text-gray-500 uppercase tracking-wider mb-2">运维管理</p></li>
+                <li><a href="sys_resource_application.html" class="flex items-center px-4 py-2 text-gray-400 hover:text-white hover:bg-slate-800 rounded-lg transition-colors"><i class="fa-solid fa-file-circle-plus w-6"></i><span>资源申请</span></a></li>
+                <li><a href="sys_resource_approval.html" class="flex items-center px-4 py-2 text-gray-400 hover:text-white hover:bg-slate-800 rounded-lg transition-colors"><i class="fa-solid fa-user-check w-6"></i><span>授权与审批</span></a></li>
+                <li><a href="sys_infrastructure_mgmt.html" class="flex items-center px-4 py-2 text-gray-400 hover:text-white hover:bg-slate-800 rounded-lg transition-colors"><i class="fa-solid fa-network-wired w-6"></i><span>集群节点</span></a></li>
+                <li><a href="sys_api_key_mgmt.html" class="flex items-center px-4 py-2 text-gray-400 hover:text-white hover:bg-slate-800 rounded-lg transition-colors"><i class="fa-solid fa-chart-bar w-6"></i><span>请求监控分析</span></a></li>
+                <li><a href="sys_request_tracing.html" class="flex items-center px-4 py-2 text-gray-400 hover:text-white hover:bg-slate-800 rounded-lg transition-colors"><i class="fa-solid fa-route w-6"></i><span>链路跟踪</span></a></li>
+                <li><a href="sys_scheduler_settings.html" class="flex items-center px-4 py-2 text-gray-400 hover:text-white hover:bg-slate-800 rounded-lg transition-colors"><i class="fa-solid fa-cogs w-6"></i><span>全局调度设置</span></a></li>
+            </ul>
+        </nav>
+        <div class="p-4 border-t border-slate-800">
+             <div class="flex items-center gap-3"><div class="w-8 h-8 rounded-full bg-red-500 flex items-center justify-center text-sm font-bold">S</div><div><p class="text-sm font-medium">System Admin</p></div></div>
+        </div>
+    </aside>
+
+    <div class="flex-1 flex flex-col h-full overflow-hidden">
+        <header class="bg-white shadow-sm z-10 p-4 flex justify-between items-center">
+            
+            <h2 class="text-xl font-semibold text-gray-800">我的任务</h2>
+            <button onclick="document.getElementById('registerTaskModal').classList.remove('hidden')" class="px-4 py-2 bg-blue-600 text-white rounded-lg text-sm hover:bg-blue-700">注册任务</button>
+        </header>
+
+        <main class="flex-1 overflow-y-auto p-6">
+            <!-- Stats Cards -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+                <div class="bg-white p-5 rounded-xl shadow-sm border border-gray-100 flex items-center gap-4">
+                    <div class="w-12 h-12 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center text-xl"><i class="fa-solid fa-list"></i></div>
+                    <div>
+                        <p class="text-xs text-gray-500 uppercase font-bold">总任务数</p>
+                        <p class="text-xl font-bold text-gray-800">128</p>
+                    </div>
+                </div>
+                <div class="bg-white p-5 rounded-xl shadow-sm border border-gray-100 flex items-center gap-4">
+                    <div class="w-12 h-12 rounded-full bg-indigo-100 text-indigo-600 flex items-center justify-center text-xl"><i class="fa-solid fa-calendar-day"></i></div>
+                    <div>
+                        <p class="text-xs text-gray-500 uppercase font-bold">今日提交</p>
+                        <p class="text-xl font-bold text-gray-800">12</p>
+                    </div>
+                </div>
+                <div class="bg-white p-5 rounded-xl shadow-sm border border-gray-100 flex items-center gap-4">
+                    <div class="w-12 h-12 rounded-full bg-green-100 text-green-600 flex items-center justify-center text-xl"><i class="fa-solid fa-spinner fa-spin"></i></div>
+                    <div>
+                        <p class="text-xs text-gray-500 uppercase font-bold">运行中</p>
+                        <p class="text-xl font-bold text-gray-800">3</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
+                 <table class="w-full text-left text-sm">
+                    <thead>
+                        <tr class="bg-gray-50 border-b border-gray-100 text-gray-500">
+                            <th class="px-6 py-4">任务ID</th>
+                            <th class="px-6 py-4">名称</th>
+                            <th class="px-6 py-4">Tag</th>
+                            <th class="px-6 py-4">类型</th>
+                            <th class="px-6 py-4">状态</th>
+                            <th class="px-6 py-4">时间</th>
+                            <th class="px-6 py-4 text-right">操作</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-gray-100">
+                        <tr class="hover:bg-gray-50">
+                            <td class="px-6 py-4 font-mono">job-test-001</td>
+                            <td class="px-6 py-4">基准测试 Qwen</td>
+                            <td class="px-6 py-4"><span class="px-2 py-0.5 bg-blue-100 text-blue-700 rounded text-xs">923</span></td>
+                            <td class="px-6 py-4">离线</td>
+                            <td class="px-6 py-4"><span class="px-2 py-1 bg-green-100 text-green-700 rounded text-xs font-bold">Active</span></td>
+                            <td class="px-6 py-4 text-gray-500">2h ago</td>
+                            <td class="px-6 py-4 text-right space-x-2">
+                                <a href="sys_task_detail.html" class="text-blue-600 hover:underline">详情</a>
+                                <button class="text-red-500 hover:text-red-700">停用</button>
+                            </td>
+                        </tr>
+                         <tr class="hover:bg-gray-50">
+                            <td class="px-6 py-4 font-mono">job-test-002</td>
+                            <td class="px-6 py-4">压力测试 R1</td>
+                            <td class="px-6 py-4"><span class="px-2 py-0.5 bg-purple-100 text-purple-700 rounded text-xs">WX</span></td>
+                            <td class="px-6 py-4">在线</td>
+                            <td class="px-6 py-4"><span class="px-2 py-1 bg-gray-200 text-gray-500 rounded text-xs font-bold">Disabled</span></td>
+                            <td class="px-6 py-4 text-gray-500">5h ago</td>
+                            <td class="px-6 py-4 text-right space-x-2">
+                                <a href="sys_task_detail.html" class="text-blue-600 hover:underline">详情</a>
+                                <button class="text-green-600 hover:text-green-800">启用</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </main>
+    </div>
+</div>
+
+<!-- Register Task Modal -->
+<div id="registerTaskModal" class="hidden fixed inset-0 bg-gray-900 bg-opacity-50 flex items-center justify-center z-50">
+    <div class="bg-white rounded-xl shadow-lg w-full max-w-2xl overflow-hidden max-h-[90vh] flex flex-col">
+        <div class="p-6 border-b border-gray-100 flex justify-between items-center bg-gray-50">
+            <h3 class="text-lg font-bold text-gray-800">注册新任务</h3>
+            <button onclick="document.getElementById('registerTaskModal').classList.add('hidden')" class="text-gray-400 hover:text-gray-600"><i class="fa-solid fa-times"></i></button>
+        </div>
+        <div class="p-6 space-y-6 overflow-y-auto">
+            <!-- Basic Info -->
+            <div>
+                <h4 class="text-sm font-bold text-gray-700 mb-4 border-l-4 border-blue-600 pl-2">基本信息</h4>
+                <div class="grid grid-cols-1 gap-4">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">任务名称 <span class="text-red-500">*</span></label>
+                        <input type="text" placeholder="如：923 / QB推荐" class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-500 outline-none">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">业务标签</label>
+                        <input type="text" placeholder="如：923, WX" class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-500 outline-none">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">任务描述</label>
+                        <textarea rows="2" class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-500 outline-none"></textarea>
+                    </div>
+                    <div>
+                         <label class="block text-sm font-medium text-gray-700 mb-1">任务类型</label>
+                         <div class="flex gap-4 mt-1">
+                             <label class="flex items-center"><input type="radio" name="taskType" value="online" class="mr-2" onchange="toggleOfflineConfig()"> 在线实时调用</label>
+                             <label class="flex items-center"><input type="radio" name="taskType" value="offline" class="mr-2" onchange="toggleOfflineConfig()"> 离线批处理</label>
+                         </div>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">关联模型服务</label>
+                        <select id="modelServiceSelect" class="w-full border border-gray-300 rounded-lg px-3 py-2 bg-white" onchange="checkServiceStatus()">
+                            <option value="">请选择模型服务...</option>
+                            <option value="svc-001">Qwen-72B-Chat (v1.2)</option>
+                            <option value="svc-002">DeepSeek-R1 (v2.0)</option>
+                            <option value="svc-error">Llama-3-70B (Maintenance)</option>
+                        </select>
+                        <p id="serviceStatusMsg" class="text-xs mt-1 hidden"></p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Offline Config -->
+            <div id="offlineConfigSection" class="hidden">
+                 <h4 class="text-sm font-bold text-gray-700 mb-4 border-l-4 border-purple-600 pl-2">离线任务参数配置</h4>
+                 <div class="grid grid-cols-2 gap-4">
+                     <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">输入Token规模 (预估)</label>
+                        <input type="number" class="w-full border border-gray-300 rounded-lg px-3 py-2">
+                     </div>
+                     <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">输出Token规模 (预估)</label>
+                        <input type="number" class="w-full border border-gray-300 rounded-lg px-3 py-2">
+                     </div>
+                     <div class="col-span-2">
+                        <label class="block text-sm font-medium text-gray-700 mb-1">期望完成时间</label>
+                        <select class="w-full border border-gray-300 rounded-lg px-3 py-2 bg-white">
+                            <option value="">-- 请选择期望时长 --</option>
+                            <option value="0.5">0.5 小时</option>
+                            <option value="1">1 小时</option>
+                            <option value="2">2 小时</option>
+                            <option value="4">4 小时</option>
+                            <option value="8">8 小时</option>
+                            <option value="24">24 小时</option>
+                        </select>
+                     </div>
+                 </div>
+            </div>
+        </div>
+        <div class="p-6 border-t border-gray-100 flex justify-end gap-3 bg-gray-50">
+            <button onclick="document.getElementById('registerTaskModal').classList.add('hidden')" class="px-4 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-100">取消</button>
+            <button class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700">提交注册</button>
+        </div>
+    </div>
+</div>
+
+<script>
+    function toggleOfflineConfig() {
+        const type = document.querySelector('input[name="taskType"]:checked').value;
+        const section = document.getElementById('offlineConfigSection');
+        if (type === 'offline') {
+            section.classList.remove('hidden');
+        } else {
+            section.classList.add('hidden');
+        }
+    }
+
+    function checkServiceStatus() {
+        const val = document.getElementById('modelServiceSelect').value;
+        const msg = document.getElementById('serviceStatusMsg');
+        
+        if (val === 'svc-error') {
+            msg.textContent = '警告：该服务当前状态异常，可能导致调用失败。';
+            msg.className = 'text-xs mt-1 text-red-500 font-bold';
+            msg.classList.remove('hidden');
+        } else if (val) {
+             msg.textContent = '服务状态正常。';
+            msg.className = 'text-xs mt-1 text-green-600';
+            msg.classList.remove('hidden');
+        } else {
+            msg.classList.add('hidden');
+        }
+    }
+</script>
+</body>
+</html>
+
+

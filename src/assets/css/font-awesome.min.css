@@ -1,0 +1,40 @@
+/* Font Awesome offline shim.
+   Original font files in this prototype package are corrupted, so the real
+   font-face declarations are intentionally removed. Icon glyphs are provided
+   by font-awesome-compat.css, loaded immediately after this file. */
+.fa,
+.fa-solid,
+.fa-regular,
+.fa-brands {
+  display: inline-block;
+  width: 1.25em;
+  font-family: "Segoe UI Symbol", "Arial Unicode MS", Arial, sans-serif;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 1;
+  text-align: center;
+  text-rendering: auto;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.fa::before,
+.fa-solid::before,
+.fa-regular::before,
+.fa-brands::before {
+  display: inline-block;
+  content: "\25A1";
+}
+
+.fa-fw {
+  width: 1.25em;
+}
+
+.fa-spin {
+  animation: fa-spin 1s linear infinite;
+}
+
+@keyframes fa-spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}

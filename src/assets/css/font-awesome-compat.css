@@ -1,0 +1,109 @@
+/* Offline icon fallback.
+   The bundled woff2 files are corrupted, so these classes intentionally avoid
+   loading icon fonts and render lightweight system-symbol icons instead. */
+.fa,
+.fa-solid,
+.fa-regular,
+.fa-brands {
+  display: inline-block;
+  width: 1.25em;
+  font-family: "Segoe UI Symbol", "Arial Unicode MS", Arial, sans-serif !important;
+  font-style: normal !important;
+  font-weight: 700 !important;
+  line-height: 1;
+  text-align: center;
+  text-rendering: auto;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.fa::before,
+.fa-solid::before,
+.fa-regular::before,
+.fa-brands::before {
+  display: inline-block;
+  content: "\25A1" !important;
+}
+
+.fa-spin {
+  animation: fa-spin 1s linear infinite;
+}
+
+@keyframes fa-spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.fa-align-left::before { content: "\2630" !important; }
+.fa-arrow-left::before { content: "\2190" !important; }
+.fa-arrow-up::before { content: "\2191" !important; }
+.fa-balance-scale::before { content: "\2696" !important; }
+.fa-bars::before { content: "\2630" !important; }
+.fa-bell::before { content: "\25CF" !important; }
+.fa-bolt::before { content: "\26A1" !important; }
+.fa-box::before { content: "\25A3" !important; }
+.fa-brain::before { content: "\273A" !important; }
+.fa-briefcase::before { content: "\25A4" !important; }
+.fa-calendar-alt::before { content: "\25A6" !important; }
+.fa-calendar-day::before { content: "\25A6" !important; }
+.fa-calendar-days::before { content: "\25A6" !important; }
+.fa-chart-area::before { content: "\25E9" !important; }
+.fa-chart-bar::before { content: "\2586" !important; }
+.fa-chart-column::before { content: "\2586" !important; }
+.fa-chart-line::before { content: "\2571" !important; }
+.fa-chart-pie::before { content: "\25D4" !important; }
+.fa-check::before { content: "\2713" !important; }
+.fa-check-circle::before { content: "\2713" !important; }
+.fa-chevron-right::before { content: "\203A" !important; }
+.fa-circle-info::before { content: "\0069" !important; }
+.fa-clipboard-check::before { content: "\2611" !important; }
+.fa-cog::before { content: "\2699" !important; }
+.fa-cogs::before { content: "\2699" !important; }
+.fa-comment-alt::before { content: "\25A1" !important; }
+.fa-copy::before { content: "\2398" !important; }
+.fa-crown::before { content: "\25B2" !important; }
+.fa-cube::before { content: "\25A3" !important; }
+.fa-desktop::before { content: "\25AD" !important; }
+.fa-download::before { content: "\2193" !important; }
+.fa-exclamation-circle::before { content: "\0021" !important; }
+.fa-exclamation-triangle::before { content: "\26A0" !important; }
+.fa-file-circle-plus::before { content: "\2295" !important; }
+.fa-file-pen::before { content: "\270E" !important; }
+.fa-file-upload::before { content: "\21E7" !important; }
+.fa-flask::before { content: "\25BD" !important; }
+.fa-folder-open::before { content: "\25F0" !important; }
+.fa-hourglass-half::before { content: "\231B" !important; }
+.fa-info-circle::before { content: "\0069" !important; }
+.fa-key::before { content: "\26BF" !important; }
+.fa-layer-group::before { content: "\25A4" !important; }
+.fa-list::before { content: "\2630" !important; }
+.fa-lock::before { content: "\25A0" !important; }
+.fa-lock-open::before { content: "\25A1" !important; }
+.fa-microchip::before { content: "\25A6" !important; }
+.fa-network-wired::before { content: "\25CE" !important; }
+.fa-paper-plane::before { content: "\25B7" !important; }
+.fa-play::before { content: "\25B6" !important; }
+.fa-plus::before { content: "\002B" !important; }
+.fa-question-circle::before { content: "\003F" !important; }
+.fa-robot::before { content: "\25A3" !important; }
+.fa-rocket::before { content: "\25B2" !important; }
+.fa-route::before { content: "\223F" !important; }
+.fa-save::before { content: "\25A3" !important; }
+.fa-search::before { content: "\2315" !important; }
+.fa-server::before { content: "\25A4" !important; }
+.fa-share-alt::before { content: "\2197" !important; }
+.fa-shield::before { content: "\25C8" !important; }
+.fa-shield-halved::before { content: "\25C8" !important; }
+.fa-skull-crossbones::before { content: "\2715" !important; }
+.fa-sliders-h::before { content: "\2261" !important; }
+.fa-spinner::before { content: "\25CC" !important; }
+.fa-stop::before { content: "\25A0" !important; }
+.fa-stop-circle::before { content: "\25A0" !important; }
+.fa-stream::before { content: "\2263" !important; }
+.fa-swatchbook::before { content: "\25A7" !important; }
+.fa-tachometer-alt::before { content: "\25D2" !important; }
+.fa-tasks::before { content: "\2611" !important; }
+.fa-times::before { content: "\00D7" !important; }
+.fa-times-circle::before { content: "\00D7" !important; }
+.fa-tools::before { content: "\2699" !important; }
+.fa-user-check::before { content: "\2713" !important; }

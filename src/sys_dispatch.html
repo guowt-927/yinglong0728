@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>应龙 v1.0 - 智能调度沙盘</title>
+    <link href="assets/css/tailwind.css" rel="stylesheet">
+    <script src="assets/js/chart.js"></script>
+    <link rel="stylesheet" href="assets/css/font-awesome.min.css">
+    <link rel="stylesheet" href="assets/css/font-awesome-compat.css">
+    <style>
+        .modal-backdrop { background: rgba(15, 23, 42, 0.7); backdrop-filter: blur(4px); }
+        .glass-card { background: rgba(255, 255, 255, 0.95); border: 1px solid rgba(226, 232, 240, 0.8); }
+        .tooltip:hover .tooltip-text { visibility: visible; opacity: 1; }
+        .slider-thumb::-webkit-slider-thumb { appearance: none; width: 18px; height: 18px; background: #3b82f6; border-radius: 50%; cursor: pointer; border: 3px solid white; box-shadow: 0 0 5px rgba(0,0,0,0.2); }
+    </style>
+    <link rel="stylesheet" href="assets/css/sherlock-theme.css">
+</head>
+<body class="bg-slate-50 text-slate-900 font-sans h-screen overflow-hidden flex flex-col">
+
+<div class="flex h-screen overflow-hidden w-full">
+    <!-- Sidebar -->
+    <aside class="w-64 bg-slate-900 text-white flex-shrink-0 hidden md:flex flex-col">
+        <div class="p-6 border-b border-slate-800">
+            <h1 class="text-2xl font-bold text-blue-400">应龙 <span class="text-sm text-gray-400 font-normal">v1.0</span></h1>
+            <p class="text-xs text-gray-500 mt-1">大模型推理平台</p>
+        </div>
+        <nav class="flex-1 overflow-y-auto py-4">
+            <ul class="space-y-1 px-4">
+                <li><p class="px-2 text-xs font-semibold text-gray-500 uppercase tracking-wider mb-2">系统管理员</p></li>
+                <li><a href="sys_dashboard.html" class="flex items-center px-4 py-2 text-gray-400 hover:text-white hover:bg-slate-800 rounded-lg transition-colors"><i class="fa-solid fa-chart-pie w-6"></i><span>概览</span></a></li>
+                
+                <li class="mt-4"><p class="px-2 text-xs font-semibold text-gray-500 uppercase tracking-wider mb-2">算力调度</p></li>
+                <li><a href="sys_dispatch.html" class="flex items-center px-4 py-2 bg-blue-600 text-white rounded-lg transition-colors"><i class="fa-solid fa-sliders-h w-6"></i><span>算力调度</span></a></li>
+                <li><a href="sys_task_list.html" class="flex items-center px-4 py-2 text-gray-400 hover:text-white hover:bg-slate-800 rounded-lg transition-colors"><i class="fa-solid fa-tasks w-6"></i><span>我的任务</span></a></li>
+
+                <li class="mt-4"><p class="px-2 text-xs font-semibold text-gray-500 uppercase tracking-wider mb-2">模型管理</p></li>
+                <li><a href="sys_model_repo.html" class="flex items-center px-4 py-2 text-gray-400 hover:text-white hover:bg-slate-800 rounded-lg transition-colors"><i class="fa-solid fa-box w-6"></i><span>模型仓库</span></a></li>
+                <li><a href="sys_model_training.html" class="flex items-center px-4 py-2 text-gray-400 hover:text-white hover:bg-slate-800 rounded-lg transition-colors"><i class="fa-solid fa-brain w-6"></i><span>模型训练</span></a></li>
+                <li><a href="sys_model_service.html" class="flex items-center px-4 py-2 text-gray-400 hover:text-white hover:bg-slate-800 rounded-lg transition-colors"><i class="fa-solid fa-server w-6"></i><span>模型服务</span></a></li>
+                <li><a href="sys_model_monitor.html" class="flex items-center px-4 py-2 text-gray-400 hover:text-white hover:bg-slate-800 rounded-lg transition-colors"><i class="fa-solid fa-chart-line w-6"></i><span>模型监测</span></a></li>
+
+                <li class="mt-4"><p class="px-2 text-xs font-semibold text-gray-500 uppercase tracking-wider mb-2">运维管理</p></li>
+                <li><a href="sys_resource_application.html" class="flex items-center px-4 py-2 text-gray-400 hover:text-white hover:bg-slate-800 rounded-lg transition-colors"><i class="fa-solid fa-file-circle-plus w-6"></i><span>资源申请</span></a></li>
+                <li><a href="sys_resource_approval.html" class="flex items-center px-4 py-2 text-gray-400 hover:text-white hover:bg-slate-800 rounded-lg transition-colors"><i class="fa-solid fa-user-check w-6"></i><span>授权与审批</span></a></li>
+                <li><a href="sys_infrastructure_mgmt.html" class="flex items-center px-4 py-2 text-gray-400 hover:text-white hover:bg-slate-800 rounded-lg transition-colors"><i class="fa-solid fa-network-wired w-6"></i><span>集群节点</span></a></li>
+                <li><a href="sys_api_key_mgmt.html" class="flex items-center px-4 py-2 text-gray-400 hover:text-white hover:bg-slate-800 rounded-lg transition-colors"><i class="fa-solid fa-chart-bar w-6"></i><span>请求监控分析</span></a></li>
+                <li><a href="sys_request_tracing.html" class="flex items-center px-4 py-2 text-gray-400 hover:text-white hover:bg-slate-800 rounded-lg transition-colors"><i class="fa-solid fa-route w-6"></i><span>链路跟踪</span></a></li>
+                <li><a href="sys_scheduler_settings.html" class="flex items-center px-4 py-2 text-gray-400 hover:text-white hover:bg-slate-800 rounded-lg transition-colors"><i class="fa-solid fa-cogs w-6"></i><span>全局调度设置</span></a></li>
+            </ul>
+        </nav>
+        <div class="p-4 border-t border-slate-800">
+             <div class="flex items-center gap-3"><div class="w-8 h-8 rounded-full bg-red-500 flex items-center justify-center text-sm font-bold">S</div><div><p class="text-sm font-medium">System Admin</p></div></div>
+        </div>
+    </aside>
+
+    <!-- Main Content -->
+    <div class="flex-1 flex flex-col h-full overflow-hidden">
+        <!-- 1. 顶部导航与域切换 -->
+        <header class="h-16 bg-white border-b border-slate-200 px-6 flex items-center justify-between shrink-0">
+        <div class="flex items-center gap-4">
+            
+            <div class="h-6 w-px bg-slate-200 mx-2"></div>
+            <div class="flex items-center gap-2">
+                <span class="text-sm text-slate-500 font-medium">当前调度域:</span>
+                <select class="bg-slate-100 border-none rounded-md px-3 py-1 text-sm font-bold text-slate-700 outline-none focus:ring-2 focus:ring-blue-500">
+                    <option>Qwen-7B 混合算力池 (8 Nodes)</option>
+                    <option>Llama-3-70B 专属池 (16 Nodes)</option>
+                </select>
+                <span class="px-2 py-0.5 bg-green-100 text-green-700 rounded text-[10px] font-bold border border-green-200">🟢 域健康: 平稳</span>
+            </div>
+        </div>
+        <div class="flex items-center gap-4">
+            <button class="text-slate-500 hover:text-blue-600 transition-colors"><i class="fa-regular fa-bell text-lg"></i></button>
+            <div class="w-8 h-8 rounded-full bg-blue-500 flex items-center justify-center text-white font-bold text-xs shadow-sm">Admin</div>
+        </div>
+    </header>
+
+    <main class="flex-1 p-6 overflow-y-auto space-y-6">
+
+        <!-- 2. AI 智能诊断横幅 -->
+        <section class="bg-gradient-to-r from-blue-50 to-indigo-50 border border-blue-100 p-4 rounded-xl flex items-start gap-4 shadow-sm">
+            <div class="w-10 h-10 bg-white rounded-lg flex items-center justify-center shadow-sm text-blue-600 shrink-0">
+                <i class="fa-solid fa-robot text-xl"></i>
+            </div>
+            <div class="flex-1">
+                <h3 class="text-sm font-bold text-blue-900 flex items-center gap-2">智能调度建议</h3>
+                <p class="text-sm text-blue-800/80 mt-1 leading-relaxed">
+                    检测到 <strong>Llama-3 调度域</strong> Headroom 充足 (余量 >40%)，但“离线普通”通道中的 <span class="font-bold underline decoration-indigo-300">Batch-财务报表</span> 积压已超过 2 小时。
+                    建议：将其一键提优至 <span class="font-bold text-indigo-700">离线 VIP</span> 通道并分配 20% 算力，预计可缩短 80% 的等待时间。
+                </p>
+            </div>
+        </section>
+
+        <!-- 3. 四大核心北极星指标 -->
+        <section class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <!-- Metric 1: 硬件资源 -->
+            <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-200 group relative">
+                <div class="flex items-center justify-between mb-3">
+                    <span class="text-xs font-bold text-slate-500 uppercase tracking-wider">硬件资源</span>
+                    <div class="group/tooltip relative cursor-help">
+                        <i class="fa-regular fa-question-circle text-slate-300 hover:text-blue-500"></i>
+                        <div class="invisible group-hover/tooltip:visible opacity-0 group-hover/tooltip:opacity-100 transition-all absolute bottom-full left-1/2 -translate-x-1/2 mb-2 w-64 p-3 bg-slate-800 text-white text-[11px] rounded-lg shadow-xl z-50 leading-relaxed">
+                            <b class="text-blue-300 mb-1 block italic underline font-normal">硬件资源:</b>
+                            展示了 NVIDIA A100 (16张)、H800 (8张) 及 L40S (8张) 的组合。
+                        </div>
+                    </div>
+                </div>
+                <div class="flex items-baseline gap-2">
+                    <span class="text-xl font-black text-slate-800">A100x16 · H800x8</span>
+                </div>
+                <div class="mt-3 text-[10px] text-slate-400 border-t pt-2">及 L40S x 8 的组合</div>
+            </div>
+
+            <!-- Metric 2: 实例数量 -->
+            <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-200 group relative">
+                <div class="flex items-center justify-between mb-3">
+                    <span class="text-xs font-bold text-slate-500 uppercase tracking-wider">实例数量</span>
+                    <div class="group/tooltip relative cursor-help">
+                        <i class="fa-regular fa-question-circle text-slate-300 hover:text-blue-500"></i>
+                        <div class="invisible group-hover/tooltip:visible opacity-0 group-hover/tooltip:opacity-100 transition-all absolute bottom-full left-1/2 -translate-x-1/2 mb-2 w-64 p-3 bg-slate-800 text-white text-[11px] rounded-lg shadow-xl z-50 leading-relaxed">
+                            <b class="text-blue-300 mb-1 block italic underline font-normal">实例数量:</b>
+                            当前运行中的推理引擎实例总数。
+                        </div>
+                    </div>
+                </div>
+                <div class="flex items-baseline gap-2">
+                    <span class="text-3xl font-black text-indigo-600">32</span>
+                    <span class="text-xs text-slate-400 font-medium italic">个</span>
+                </div>
+                <div class="mt-3 text-[10px] text-slate-400 border-t pt-2">在线 24 | 离线 8</div>
+            </div>
+
+            <!-- Metric 3: 域出队余量 -->
+            <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-200 group relative">
+                <div class="flex items-center justify-between mb-3">
+                    <span class="text-xs font-bold text-slate-500 uppercase tracking-wider">域出队余量</span>
+                    <div class="group/tooltip relative cursor-help">
+                        <i class="fa-regular fa-question-circle text-slate-300 hover:text-blue-500"></i>
+                        <div class="invisible group-hover/tooltip:visible opacity-0 group-hover/tooltip:opacity-100 transition-all absolute bottom-full left-1/2 -translate-x-1/2 mb-2 w-64 p-3 bg-slate-800 text-white text-[11px] rounded-lg shadow-xl z-50 leading-relaxed">
+                            <b class="text-blue-300 mb-1 block italic underline font-normal">域出队余量:</b>
+                            当前调度周期内（如100ms），系统最多可向底层物理实例派发的新请求总数。受底层闲置度实时控制。
+                        </div>
+                    </div>
+                </div>
+                <div class="flex items-baseline gap-2">
+                    <span class="text-3xl font-black text-green-600">1,240</span>
+                    <span class="text-xs text-slate-400 font-medium italic">Slots</span>
+                </div>
+                <div class="mt-3 text-[10px] text-slate-400 border-t pt-2">当前调度周期内（如100ms），系统最多可向底层物理实例派发的新请求总数。受底层闲置度实时控制。</div>
+            </div>
+
+            <!-- Metric 4: 底层实例积压 -->
+            <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-200 group">
+                <div class="flex items-center justify-between mb-3">
+                    <span class="text-xs font-bold text-slate-500 uppercase tracking-wider">底层实例积压</span>
+                    <div class="group/tooltip relative cursor-help">
+                        <i class="fa-regular fa-question-circle text-slate-300 hover:text-blue-500"></i>
+                        <div class="invisible group-hover/tooltip:visible opacity-0 group-hover/tooltip:opacity-100 transition-all absolute bottom-full left-1/2 -translate-x-1/2 mb-2 w-64 p-3 bg-slate-800 text-white text-[11px] rounded-lg shadow-xl z-50">
+                            <b class="text-blue-300 mb-1 block italic underline font-normal">Pending Reqs:</b>
+                            已下发但卡在底层 vLLM 内部排队等待的请求数。数值飙升意味着底层算力已饱和，引擎将停止下发。
+                        </div>
+                    </div>
+                </div>
+                <div class="flex items-baseline gap-2">
+                    <span class="text-3xl font-black text-blue-600">12</span>
+                    <span class="text-xs text-slate-400 font-medium">/ 2048</span>
+                </div>
+                <div class="mt-3 text-[10px] text-slate-400 border-t pt-2">已下发但卡在底层 vLLM 内部排队等待的请求数。数值飙升意味着底层算力已饱和，引擎将停止下发。</div>
+            </div>
+
+            <!-- Metric 5: 域吞吐水位 -->
+            <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-200 group">
+                <div class="flex items-center justify-between mb-3">
+                    <span class="text-xs font-bold text-slate-500 uppercase tracking-wider">域吞吐水位 (TPS)</span>
+                    <div class="group/tooltip relative cursor-help">
+                        <i class="fa-regular fa-question-circle text-slate-300 hover:text-blue-500"></i>
+                        <div class="invisible group-hover/tooltip:visible opacity-0 group-hover/tooltip:opacity-100 transition-all absolute bottom-full left-1/2 -translate-x-1/2 mb-2 w-64 p-3 bg-slate-800 text-white text-[11px] rounded-lg shadow-xl z-50">
+                            <b class="text-blue-300 mb-1 block italic underline font-normal">域吞吐水位:</b>
+                            当前域的实际输出吞吐量与系统历史峰值吞吐量的对比，反映总体算力产出效率。
+                        </div>
+                    </div>
+                </div>
+                <div class="flex items-baseline gap-2">
+                    <span class="text-3xl font-black text-slate-800">4,850</span>
+                    <span class="text-xs text-slate-400 font-medium">/ 5,500 峰值</span>
+                </div>
+                <div class="mt-3 text-[10px] text-slate-400 border-t pt-2">当前域的实际输出吞吐量与系统历史峰值吞吐量的对比，反映总体算力产出效率。</div>
+            </div>
+
+            <!-- Metric 6: KV Cache 综合水位 -->
+            <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-200 group">
+                <div class="flex items-center justify-between mb-3">
+                    <span class="text-xs font-bold text-slate-500 uppercase tracking-wider">KV Cache 综合水位</span>
+                    <div class="group/tooltip relative cursor-help">
+                        <i class="fa-regular fa-question-circle text-slate-300 hover:text-blue-500"></i>
+                        <div class="invisible group-hover/tooltip:visible opacity-0 group-hover/tooltip:opacity-100 transition-all absolute bottom-full left-1/2 -translate-x-1/2 mb-2 w-64 p-3 bg-slate-800 text-white text-[11px] rounded-lg shadow-xl z-50">
+                            <b class="text-blue-300 mb-1 block italic underline font-normal">显存红线:</b>
+                            大模型并发的物理红线。超过 90% 将触发显存换页导致性能骤降，调度器需严控进水速度。
+                        </div>
+                    </div>
+                </div>
+                <div class="flex items-baseline gap-2">
+                    <span class="text-3xl font-black text-orange-500">78%</span>
+                    <span class="text-xs text-green-600 font-bold bg-green-50 px-1.5 rounded ml-2">健康</span>
+                </div>
+                <div class="mt-3 text-[10px] text-slate-400 border-t pt-2">大模型并发的物理红线。超过 90% 将触发显存换页导致性能骤降，调度器需严控进水速度。</div>
+            </div>
+        </section>
+
+        <!-- 4. 任务队列监控列表 -->
+        <section class="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden">
+            <div class="px-6 py-4 border-b border-slate-100 flex justify-between items-center">
+                <h3 class="font-bold text-slate-800">当前任务队列明细</h3>
+                <div class="flex gap-2">
+                    <input type="text" placeholder="搜索 App ID..." class="px-3 py-1.5 bg-slate-50 border border-slate-200 rounded-lg text-xs outline-none focus:ring-2 focus:ring-blue-500">
+                </div>
+            </div>
+            <table class="w-full text-left">
+                <thead>
+                    <tr class="bg-slate-50/50 text-slate-500 text-[10px] uppercase font-bold tracking-widest border-b border-slate-100">
+                        <th class="px-6 py-4">任务名称</th>
+                        <th class="px-6 py-4">tag</th>
+                        <th class="px-6 py-4">任务类型</th>
+                        <th class="px-6 py-4">算力权重</th>
+                        <th class="px-6 py-4">出队延迟P90</th>
+                        <th class="px-6 py-4">实际消耗算力占比(TPS)</th>
+                        <th class="px-6 py-4">当前积压量</th>
+                        <th class="px-6 py-4 text-right">操作</th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-slate-100 text-sm">
+                    <tr class="hover:bg-slate-50 transition-colors">
+                        <td class="px-6 py-4">
+                            <div class="font-bold text-slate-700">Agent-实时客服</div>
+                        </td>
+                        <td class="px-6 py-4"><span class="px-2 py-1 bg-slate-100 text-slate-500 rounded text-xs">wx</span></td>
+                        <td class="px-6 py-4"><span class="px-2 py-1 bg-green-100 text-green-700 rounded-md text-[10px] font-bold">⚡ 在线实时</span></td>
+                        <td class="px-6 py-4 text-slate-400 italic">独占优先</td>
+                        <td class="px-6 py-4 font-bold text-green-600">12ms</td>
+                        <td class="px-6 py-4 font-bold text-blue-600">45%</td>
+                        <td class="px-6 py-4 font-mono font-medium text-slate-400">0</td>
+                        <td class="px-6 py-4 text-right">
+                            <button onclick="openSandbox('Agent-实时客服', 'APP_KEFU_SYNC', 'online')" class="px-4 py-2 bg-blue-50 text-blue-600 border border-blue-200 rounded-lg text-xs font-bold hover:bg-blue-600 hover:text-white transition-all shadow-sm">⚙️ 调度设置与推演</button>
+                        </td>
+                    </tr>
+                    <tr class="hover:bg-slate-50 transition-colors">
+                        <td class="px-6 py-4">
+                            <div class="font-bold text-slate-700">Batch-财务报表分析</div>
+                        </td>
+                        <td class="px-6 py-4"><span class="px-2 py-1 bg-slate-100 text-slate-500 rounded text-xs">923</span></td>
+                        <td class="px-6 py-4"><span class="px-2 py-1 bg-slate-100 text-slate-600 rounded-md text-[10px] font-bold">🧠 离线普通</span></td>
+                        <td class="px-6 py-4 text-blue-600 font-bold">12.5%</td>
+                        <td class="px-6 py-4 font-bold text-orange-500">125min</td>
+                        <td class="px-6 py-4 font-bold text-blue-600">5%</td>
+                        <td class="px-6 py-4 font-mono font-medium text-red-500">18,240 <i class="fa-solid fa-arrow-up text-[8px]"></i></td>
+                        <td class="px-6 py-4 text-right">
+                            <button onclick="openSandbox('Batch-财务报表分析', 'FIN_JOB_012', 'normal')" class="px-4 py-2 bg-blue-50 text-blue-600 border border-blue-200 rounded-lg text-xs font-bold hover:bg-blue-600 hover:text-white transition-all shadow-sm">⚙️ 调度设置与推演</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+    </main>
+
+    <!-- 5. 沉浸式调度沙盘弹窗 -->
+    <div id="sandboxModal" class="fixed inset-0 modal-backdrop flex items-center justify-center z-[100] hidden">
+        <div class="w-[1000px] h-[650px] glass-card rounded-3xl shadow-2xl flex flex-col overflow-hidden animate-in fade-in zoom-in duration-300">
+            <!-- 弹窗头部 -->
+            <div class="px-8 py-5 border-b border-slate-100 flex justify-between items-center bg-slate-50/50">
+                <div>
+                    <h2 class="text-xl font-black text-slate-800">任务调度策略沙盘</h2>
+                    <p class="text-xs text-slate-400 mt-1">正在配置: <span id="targetTaskName" class="font-bold text-blue-600">---</span> (<span id="targetAppId" class="font-mono">---</span>)</p>
+                </div>
+                <button onclick="closeSandbox()" class="w-10 h-10 rounded-full hover:bg-white hover:shadow-sm text-slate-400 hover:text-red-500 transition-all">
+                    <i class="fa-solid fa-times text-lg"></i>
+                </button>
+            </div>
+
+            <div class="flex-1 flex overflow-hidden">
+                <!-- 左侧: 策略控制台 -->
+                <div class="w-1/2 p-8 border-r border-slate-100 space-y-8 overflow-y-auto">
+                    <!-- 通道切换器 -->
+                    <div class="space-y-4">
+                        <label class="text-xs font-bold text-slate-400 uppercase tracking-widest">选择调度通道</label>
+                        <div class="grid grid-cols-1 gap-3">
+                            <label class="group relative flex items-center p-4 border-2 border-slate-100 rounded-2xl cursor-pointer hover:border-blue-200 transition-all has-[:checked]:border-blue-500 has-[:checked]:bg-blue-50/50">
+                                <input type="radio" name="channel" value="online" class="hidden peer" onchange="updateSimulation()">
+                                <div class="w-10 h-10 rounded-xl bg-green-100 text-green-600 flex items-center justify-center mr-4 shrink-0"><i class="fa-solid fa-bolt"></i></div>
+                                <div>
+                                    <div class="font-bold text-slate-700 text-sm">⚡ 在线直通</div>
+                                    <div class="text-[10px] text-slate-400 mt-0.5">绕过分布式调度器，直接抢占物理 Pod 槽位，追求极致低延迟。</div>
+                                </div>
+                            </label>
+                            <label class="group relative flex items-center p-4 border-2 border-slate-100 rounded-2xl cursor-pointer hover:border-blue-200 transition-all has-[:checked]:border-blue-500 has-[:checked]:bg-blue-50/50">
+                                <input type="radio" name="channel" value="vip" class="hidden peer" onchange="updateSimulation()">
+                                <div class="w-10 h-10 rounded-xl bg-orange-100 text-orange-600 flex items-center justify-center mr-4 shrink-0"><i class="fa-solid fa-crown"></i></div>
+                                <div>
+                                    <div class="font-bold text-slate-700 text-sm">👑 离线 VIP</div>
+                                    <div class="text-[10px] text-slate-400 mt-0.5">锁定固定算力配额，在出队逻辑中拥有绝对优先级，无视动态权重平衡。</div>
+                                </div>
+                            </label>
+                            <label class="group relative flex items-center p-4 border-2 border-slate-100 rounded-2xl cursor-pointer hover:border-blue-200 transition-all has-[:checked]:border-blue-500 has-[:checked]:bg-blue-50/50">
+                                <input type="radio" name="channel" value="normal" class="hidden peer" onchange="updateSimulation()">
+                                <div class="w-10 h-10 rounded-xl bg-blue-100 text-blue-600 flex items-center justify-center mr-4 shrink-0"><i class="fa-solid fa-brain"></i></div>
+                                <div>
+                                    <div class="font-bold text-slate-700 text-sm">🧠 离线 普通</div>
+                                    <div class="text-[10px] text-slate-400 mt-0.5">参与 5 因子动态权重分配。根据积压量、等待时间自动波动，实现削峰填谷。</div>
+                                </div>
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- 参数调节器 -->
+                    <div id="quotaControl" class="space-y-4 opacity-30 pointer-events-none transition-all">
+                        <div class="flex items-center justify-between">
+                            <label class="text-xs font-bold text-slate-400 uppercase tracking-widest">专属算力配额锁定</label>
+                            <span id="quotaValue" class="px-2 py-1 bg-blue-600 text-white text-xs font-mono rounded">20%</span>
+                        </div>
+                        <input type="range" min="5" max="80" value="20" class="w-full h-2 bg-slate-200 rounded-lg appearance-none slider-thumb" oninput="document.getElementById('quotaValue').innerText=this.value+'%'; updateSimulation();">
+                        <div class="flex justify-between text-[10px] text-slate-400 font-medium italic">
+                            <span>最小保证 (5%)</span>
+                            <span>高危挤占 (80%)</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 右侧: 实时推演沙盘 -->
+                <div class="w-1/2 p-8 bg-slate-50/50 space-y-6 overflow-y-auto shadow-inner">
+                    <label class="text-xs font-bold text-slate-400 uppercase tracking-widest flex items-center gap-2">
+                        <span class="relative flex h-2 w-2">
+                            <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-75"></span>
+                            <span class="relative inline-flex rounded-full h-2 w-2 bg-blue-500"></span>
+                        </span>
+                        推演模拟结果
+                    </label>
+
+                    <!-- 收益推演 -->
+                    <div class="bg-white p-6 rounded-3xl border border-slate-100 shadow-sm space-y-4">
+                        <div class="flex justify-between items-center">
+                            <span class="text-xs font-bold text-slate-500">目标任务完成预测</span>
+                            <span class="text-[10px] text-green-600 font-bold bg-green-50 px-2 py-0.5 rounded">收益显著提升</span>
+                        </div>
+                        <div class="flex items-center justify-around gap-4 py-2">
+                            <div class="text-center">
+                                <div class="text-xs text-slate-400 mb-1">原预计等候</div>
+                                <div class="text-xl font-bold text-slate-400 line-through">125 min</div>
+                            </div>
+                            <i class="fa-solid fa-chevron-right text-slate-200 text-xl"></i>
+                            <div class="text-center">
+                                <div class="text-xs text-blue-500 font-bold mb-1">模拟后等候</div>
+                                <div id="simWaitTime" class="text-3xl font-black text-blue-600">15 min</div>
+                            </div>
+                        </div>
+                        <div class="h-20 w-full bg-slate-50 rounded-xl overflow-hidden pt-4">
+                            <canvas id="simChart"></canvas>
+                        </div>
+                    </div>
+
+                    <!-- 挤压预警 -->
+                    <div id="warningBox" class="bg-orange-50 border border-orange-100 p-5 rounded-3xl space-y-3">
+                        <h4 class="text-xs font-black text-orange-700 flex items-center gap-2">
+                            <i class="fa-solid fa-exclamation-triangle"></i> 全局挤压效应预警 (零和博弈)
+                        </h4>
+                        <div class="space-y-2">
+                            <p class="text-[11px] text-orange-800 leading-relaxed">
+                                因为您将此任务设为 <span class="font-bold underline">VIP</span> 并占据了大量的 Headroom 槽位，预计以下业务将受到影响：
+                            </p>
+                            <div class="flex justify-between items-center p-2 bg-white/60 rounded-lg border border-orange-200 text-[10px]">
+                                <span class="text-slate-600">离线普通池 (Batch-QA)</span>
+                                <span class="text-red-600 font-bold">延迟增加 +45min</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 风险探针 -->
+                    <div class="flex gap-4">
+                        <div class="flex-1 bg-white p-4 rounded-2xl border border-slate-100 shadow-sm text-center">
+                            <div class="text-[10px] text-slate-400 font-bold uppercase mb-1">KV Cache 风险</div>
+                            <div id="riskKV" class="text-lg font-black text-green-600">低风险</div>
+                        </div>
+                        <div class="flex-1 bg-white p-4 rounded-2xl border border-slate-100 shadow-sm text-center">
+                            <div class="text-[10px] text-slate-400 font-bold uppercase mb-1">SLA 违约可能性</div>
+                            <div id="riskSLA" class="text-lg font-black text-slate-800">极小</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 弹窗底部按钮 -->
+            <div class="px-8 py-5 border-t border-slate-100 flex justify-between items-center bg-white">
+                <button onclick="resetSandbox()" class="px-6 py-2.5 text-slate-500 text-sm font-bold hover:bg-slate-50 rounded-xl transition-all">重置</button>
+                <div class="flex gap-3">
+                    <button onclick="closeSandbox()" class="px-6 py-2.5 text-slate-500 text-sm font-bold hover:bg-slate-50 rounded-xl transition-all">取消</button>
+                    <button onclick="applyStrategy()" class="px-8 py-2.5 bg-blue-600 text-white text-sm font-bold rounded-xl shadow-lg shadow-blue-200 hover:bg-blue-700 hover:-translate-y-0.5 transition-all">确认并下发策略</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let myChart;
+        let originalChannel = '';
+
+        function openSandbox(name, id, currentChannel) {
+            document.getElementById('targetTaskName').innerText = name;
+            document.getElementById('targetAppId').innerText = id;
+            document.getElementById('sandboxModal').classList.remove('hidden');
+            
+            originalChannel = currentChannel;
+            
+            // 设置初始状态
+            const radios = document.getElementsByName('channel');
+            radios.forEach(r => {
+                r.disabled = false;
+                r.closest('label').classList.remove('opacity-50', 'cursor-not-allowed');
+                
+                if(r.value === currentChannel) {
+                    r.checked = true;
+                    r.disabled = true; // 如果是原本的任务类型，卡片不可点击
+                    r.closest('label').classList.add('opacity-50', 'cursor-not-allowed');
+                }
+            });
+            
+            updateSimulation();
+            initChart();
+        }
+
+        function closeSandbox() {
+            document.getElementById('sandboxModal').classList.add('hidden');
+        }
+
+        function resetSandbox() {
+            const radios = document.getElementsByName('channel');
+            radios.forEach(r => {
+                if(r.value === originalChannel) {
+                    r.checked = true;
+                }
+            });
+            document.querySelector('input[type="range"]').value = 20;
+            document.getElementById('quotaValue').innerText = '20%';
+            updateSimulation();
+        }
+
+        function updateSimulation() {
+            const channel = document.querySelector('input[name="channel"]:checked').value;
+            const quotaControl = document.getElementById('quotaControl');
+            const simWaitTime = document.getElementById('simWaitTime');
+            const warningBox = document.getElementById('warningBox');
+            const riskKV = document.getElementById('riskKV');
+
+            // 联动 UI
+            if(channel === 'vip') {
+                quotaControl.classList.remove('opacity-30', 'pointer-events-none');
+                simWaitTime.innerText = "15 min";
+                warningBox.classList.remove('hidden');
+                riskKV.innerText = "中等偏高";
+                riskKV.classList.replace('text-green-600', 'text-orange-600');
+            } else if(channel === 'online') {
+                quotaControl.classList.add('opacity-30', 'pointer-events-none');
+                simWaitTime.innerText = "即时 (0s)";
+                warningBox.classList.remove('hidden');
+                riskKV.innerText = "高风险";
+                riskKV.classList.replace('text-green-600', 'text-red-600');
+            } else {
+                quotaControl.classList.add('opacity-30', 'pointer-events-none');
+                simWaitTime.innerText = "115 min";
+                warningBox.classList.add('hidden');
+                riskKV.innerText = "安全";
+                riskKV.classList.replace('text-orange-600', 'text-green-600');
+                riskKV.classList.replace('text-red-600', 'text-green-600');
+            }
+        }
+
+        function initChart() {
+            const ctx = document.getElementById('simChart').getContext('2d');
+            if(myChart) myChart.destroy();
+            myChart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: ['T+0', 'T+2', 'T+4', 'T+6', 'T+8', 'T+10'],
+                    datasets: [{
+                        label: '预期等待下降曲线',
+                        data: [120, 80, 45, 20, 15, 12],
+                        borderColor: '#3b82f6',
+                        backgroundColor: 'rgba(59, 130, 246, 0.1)',
+                        fill: true,
+                        tension: 0.4,
+                        borderWidth: 2,
+                        pointRadius: 0
+                    }]
+                },
+                options: {
+                    plugins: { legend: { display: false } },
+                    scales: {
+                        x: { display: false },
+                        y: { display: false }
+                    },
+                    maintainAspectRatio: false
+                }
+            });
+        }
+
+        function applyStrategy() {
+            alert('策略推演通过，正在向调度中心下发异步配置...');
+            closeSandbox();
+        }
+    </script>
+    </div>
+</div>
+</body>
+</html>
+
+

@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>应龙 v1.0 - 节点详情</title>
+    <link href="assets/css/tailwind.css" rel="stylesheet">
+    <script src="assets/js/chart.js"></script>
+    <link rel="stylesheet" href="assets/css/font-awesome.min.css">
+    <link rel="stylesheet" href="assets/css/font-awesome-compat.css">
+    <link rel="stylesheet" href="assets/css/sherlock-theme.css">
+</head>
+<body class="bg-gray-50 text-gray-800">
+
+<div class="flex h-screen overflow-hidden">
+    <!-- Sidebar -->
+    <aside class="w-64 bg-slate-900 text-white flex-shrink-0 hidden md:flex flex-col">
+        <div class="p-6 border-b border-slate-800">
+            <h1 class="text-2xl font-bold text-blue-400">应龙 <span class="text-sm text-gray-400 font-normal">v1.0</span></h1>
+            <p class="text-xs text-gray-500 mt-1">大模型推理平台</p>
+        </div>
+        <nav class="flex-1 overflow-y-auto py-4">
+            <ul class="space-y-1 px-4">
+                <li><p class="px-2 text-xs font-semibold text-gray-500 uppercase tracking-wider mb-2">系统管理员</p></li>
+                <li><a href="sys_dashboard.html" class="flex items-center px-4 py-2 text-gray-400 hover:text-white hover:bg-slate-800 rounded-lg transition-colors"><i class="fa-solid fa-chart-pie w-6"></i><span>概览</span></a></li>
+                
+                <li class="mt-4"><p class="px-2 text-xs font-semibold text-gray-500 uppercase tracking-wider mb-2">算力调度</p></li>
+                <li><a href="sys_dispatch.html" class="flex items-center px-4 py-2 text-gray-400 hover:text-white hover:bg-slate-800 rounded-lg transition-colors"><i class="fa-solid fa-sliders-h w-6"></i><span>算力调度</span></a></li>
+                <li><a href="sys_task_list.html" class="flex items-center px-4 py-2 text-gray-400 hover:text-white hover:bg-slate-800 rounded-lg transition-colors"><i class="fa-solid fa-tasks w-6"></i><span>我的任务</span></a></li>
+
+                <li class="mt-4"><p class="px-2 text-xs font-semibold text-gray-500 uppercase tracking-wider mb-2">模型管理</p></li>
+                <li><a href="sys_model_repo.html" class="flex items-center px-4 py-2 text-gray-400 hover:text-white hover:bg-slate-800 rounded-lg transition-colors"><i class="fa-solid fa-box w-6"></i><span>模型仓库</span></a></li>
+                <li><a href="sys_model_training.html" class="flex items-center px-4 py-2 text-gray-400 hover:text-white hover:bg-slate-800 rounded-lg transition-colors"><i class="fa-solid fa-brain w-6"></i><span>模型训练</span></a></li>
+                <li><a href="sys_model_service.html" class="flex items-center px-4 py-2 text-gray-400 hover:text-white hover:bg-slate-800 rounded-lg transition-colors"><i class="fa-solid fa-server w-6"></i><span>模型服务</span></a></li>
+                <li><a href="sys_model_monitor.html" class="flex items-center px-4 py-2 text-gray-400 hover:text-white hover:bg-slate-800 rounded-lg transition-colors"><i class="fa-solid fa-chart-line w-6"></i><span>模型监测</span></a></li>
+
+                <li class="mt-4"><p class="px-2 text-xs font-semibold text-gray-500 uppercase tracking-wider mb-2">运维管理</p></li>
+                <li><a href="sys_resource_application.html" class="flex items-center px-4 py-2 text-gray-400 hover:text-white hover:bg-slate-800 rounded-lg transition-colors"><i class="fa-solid fa-file-circle-plus w-6"></i><span>资源申请</span></a></li>
+                <li><a href="sys_resource_approval.html" class="flex items-center px-4 py-2 text-gray-400 hover:text-white hover:bg-slate-800 rounded-lg transition-colors"><i class="fa-solid fa-user-check w-6"></i><span>授权与审批</span></a></li>
+                <li><a href="sys_infrastructure_mgmt.html" class="flex items-center px-4 py-2 text-gray-400 hover:text-white hover:bg-slate-800 rounded-lg transition-colors"><i class="fa-solid fa-network-wired w-6"></i><span>集群节点</span></a></li>
+                <li><a href="sys_api_key_mgmt.html" class="flex items-center px-4 py-2 text-gray-400 hover:text-white hover:bg-slate-800 rounded-lg transition-colors"><i class="fa-solid fa-chart-bar w-6"></i><span>请求监控分析</span></a></li>
+                <li><a href="sys_request_tracing.html" class="flex items-center px-4 py-2 text-gray-400 hover:text-white hover:bg-slate-800 rounded-lg transition-colors"><i class="fa-solid fa-route w-6"></i><span>链路跟踪</span></a></li>
+                <li><a href="sys_scheduler_settings.html" class="flex items-center px-4 py-2 text-gray-400 hover:text-white hover:bg-slate-800 rounded-lg transition-colors"><i class="fa-solid fa-cogs w-6"></i><span>全局调度设置</span></a></li>
+            </ul>
+        </nav>
+        <div class="p-4 border-t border-slate-800">
+             <div class="flex items-center gap-3"><div class="w-8 h-8 rounded-full bg-red-500 flex items-center justify-center text-sm font-bold">S</div><div><p class="text-sm font-medium">System Admin</p></div></div>
+        </div>
+    </aside>
+
+    <div class="flex-1 flex flex-col h-full overflow-hidden">
+        <header class="bg-white shadow-sm z-10 p-4 flex items-center justify-between">
+            <div class="flex items-center">
+                <a href="sys_infrastructure_mgmt.html" class="text-gray-500 hover:text-blue-600 mr-4"><i class="fa-solid fa-arrow-left"></i></a>
+                <div>
+                    <h2 class="text-xl font-semibold text-gray-800">node-01 (192.168.1.101)</h2>
+                    <p class="text-xs text-gray-500"></p>
+                </div>
+            </div>
+            <span class="px-3 py-1 bg-green-100 text-green-700 font-bold rounded">Online</span>
+        </header>
+
+        <main class="flex-1 overflow-y-auto p-6">
+             <!-- Metrics (Top Layout) -->
+             <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+                <div class="bg-white p-4 rounded-xl shadow-sm border border-gray-100">
+                    
+                    <div class="flex flex-col">
+                        <span class="text-xl font-bold text-gray-800">NVIDIA A100</span>
+                        <div class="flex items-center gap-2 mt-1">
+                            <span class="text-sm text-gray-500">可用: <b class="text-green-600">2</b></span>
+                            <span class="text-gray-300">|</span>
+                            <span class="text-sm text-gray-500">总数: 8</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-white p-4 rounded-xl shadow-sm border border-gray-100">
+                    
+                    <div class="flex items-end gap-2">
+                        <span class="text-2xl font-bold text-gray-800">64%</span>
+                    </div>
+                </div>
+                 <div class="bg-white p-4 rounded-xl shadow-sm border border-gray-100">
+                    
+                    <div class="flex items-end gap-2">
+                        <span class="px-2 py-1 bg-green-100 text-green-700 font-bold rounded text-sm">Online</span>
+                        <span class="text-xs text-gray-400 mb-1">运行时长: 14d</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tabs -->
+            <div class="mb-6 border-b border-gray-200">
+                <nav class="-mb-px flex space-x-8" id="nodeTabs">
+                    <button onclick="switchTab('instances')" class="tab-btn border-blue-500 text-blue-600 whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm" data-target="instances">实例运行情况</button>
+                    <button onclick="switchTab('events')" class="tab-btn border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm" data-target="events">节点事件</button>
+                </nav>
+            </div>
+
+            <!-- Content Area -->
+            <div class="space-y-6">
+                <!-- Tab Contents -->
+                <div id="tab-content-instances" class="tab-content block">
+                    <div class="bg-white rounded-xl shadow-sm border border-gray-100">
+                        <div class="p-4 border-b border-gray-100 font-bold text-gray-700">运行实例</div>
+                        <table class="w-full text-left text-sm">
+                            <thead class="bg-gray-50 text-gray-500">
+                                <tr>
+                                    <th class="px-6 py-3">Pod 名称</th>
+                                    <th class="px-6 py-3">所属服务</th>
+                                    <th class="px-6 py-3">状态</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-gray-100">
+                                <tr>
+                                    <td class="px-6 py-4 font-mono">pod-qwen-72b-wx92</td>
+                                    <td class="px-6 py-4">svc-qwen-72b-prod</td>
+                                    <td class="px-6 py-4"><span class="text-green-600 font-bold">Running</span></td>
+                                </tr>
+                                 <tr>
+                                    <td class="px-6 py-4 font-mono">pod-qwen-72b-ab12</td>
+                                    <td class="px-6 py-4">svc-qwen-72b-prod</td>
+                                    <td class="px-6 py-4"><span class="text-green-600 font-bold">Running</span></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div id="tab-content-events" class="tab-content hidden">
+                     <div class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
+                        <div class="p-4 border-b border-gray-100 flex justify-between items-center">
+                            <h4 class="font-bold text-gray-700">系统事件日志</h4>
+                            <div class="relative">
+                                <i class="fa-solid fa-search absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 text-xs"></i>
+                                <input type="text" placeholder="搜索事件..." class="pl-8 pr-3 py-1.5 border border-gray-300 rounded-lg text-sm bg-gray-50">
+                            </div>
+                        </div>
+                        <table class="w-full text-left text-sm">
+                             <thead class="bg-gray-50 text-gray-500">
+                                <tr>
+                                    <th class="px-6 py-3">事件名称</th>
+                                    <th class="px-6 py-3 w-32">类型</th>
+                                    <th class="px-6 py-3 w-48">时间</th>
+                                    <th class="px-6 py-3">详情</th>
+                                    <th class="px-6 py-3">原因</th>
+                                    <th class="px-6 py-3 w-32">来源</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-gray-100">
+                                <tr>
+                                    <td class="px-6 py-4 font-bold text-gray-800">Node Ready</td>
+                                    <td class="px-6 py-4"><span class="px-2 py-0.5 bg-gray-100 text-gray-700 rounded text-xs font-bold">Normal</span></td>
+                                    <td class="px-6 py-4 text-gray-500">Today, 10:23:45</td>
+                                    <td class="px-6 py-4 text-gray-600">System checks passed. GPU drivers initialized.</td>
+                                    <td class="px-6 py-4 text-gray-500 text-xs">NodeStartup</td>
+                                    <td class="px-6 py-4 text-gray-500 text-xs font-mono">kubelet</td>
+                                </tr>
+                                <tr>
+                                    <td class="px-6 py-4 font-bold text-gray-800">High Temp</td>
+                                    <td class="px-6 py-4"><span class="px-2 py-0.5 bg-yellow-100 text-yellow-700 rounded text-xs font-bold">Warning</span></td>
+                                    <td class="px-6 py-4 text-gray-500">Yesterday, 14:00:12</td>
+                                    <td class="px-6 py-4 text-gray-600">GPU #3 temperature reached 82°C. Fan speed increased.</td>
+                                    <td class="px-6 py-4 text-gray-500 text-xs">TemperatureThresholdExceeded</td>
+                                    <td class="px-6 py-4 text-gray-500 text-xs font-mono">nvidia-dcgm</td>
+                                </tr>
+                                <tr>
+                                    <td class="px-6 py-4 font-bold text-gray-800">Net Failure</td>
+                                    <td class="px-6 py-4"><span class="px-2 py-0.5 bg-red-100 text-red-700 rounded text-xs font-bold">Error</span></td>
+                                    <td class="px-6 py-4 text-gray-500">Yesterday, 12:00:00</td>
+                                    <td class="px-6 py-4 text-gray-600">Connection to Master node timed out.</td>
+                                    <td class="px-6 py-4 text-gray-500 text-xs">NetworkTimeout</td>
+                                    <td class="px-6 py-4 text-gray-500 text-xs font-mono">cni-plugin</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                     </div>
+                </div>
+            </div>
+        </main>
+    </div>
+</div>
+<script>
+    function switchTab(tabId) {
+        // Update Buttons
+        document.querySelectorAll('.tab-btn').forEach(btn => {
+            if(btn.dataset.target === tabId) {
+                btn.className = 'tab-btn border-blue-500 text-blue-600 whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm';
+            } else {
+                btn.className = 'tab-btn border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm';
+            }
+        });
+
+        // Update Content
+        document.querySelectorAll('.tab-content').forEach(content => {
+            if(content.id === 'tab-content-' + tabId) {
+                content.classList.remove('hidden');
+                content.classList.add('block');
+            } else {
+                content.classList.remove('block');
+                content.classList.add('hidden');
+            }
+        });
+    }
+</script>
+
+

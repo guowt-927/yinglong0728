@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>应龙 - 资源申请授权与审批</title>
+    <link href="assets/css/tailwind.css" rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/font-awesome.min.css">
+    <link rel="stylesheet" href="assets/css/font-awesome-compat.css">
+    <link rel="stylesheet" href="assets/css/sherlock-theme.css">
+    <style>
+        .page-tab.active { color: #2563eb; border-color: #2563eb; background: #eff6ff; }
+        .mode-tab.active { background: #1d4ed8; color: #fff; border-color: #1d4ed8; }
+        .modal-open { overflow: hidden; }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800">
+
+<div class="flex h-screen overflow-hidden">
+    <aside class="w-64 bg-slate-900 text-white flex-shrink-0 hidden md:flex flex-col">
+        <div class="p-6 border-b border-slate-800">
+            <h1 class="text-2xl font-bold text-blue-400">应龙 <span class="text-sm text-gray-400 font-normal">MVP</span></h1>
+            <p class="text-xs text-gray-500 mt-1">大模型推理平台</p>
+        </div>
+        <nav class="flex-1 overflow-y-auto py-4">
+            <ul class="space-y-1 px-4">
+                <li><p class="px-2 text-xs font-semibold text-gray-500 uppercase tracking-wider mb-2">系统管理员</p></li>
+                <li><a href="sys_dashboard.html" class="flex items-center px-4 py-2 text-gray-400 hover:text-white hover:bg-slate-800 rounded-lg transition-colors"><i class="fa-solid fa-chart-pie w-6"></i><span>概览</span></a></li>
+                <li class="mt-4"><p class="px-2 text-xs font-semibold text-gray-500 uppercase tracking-wider mb-2">算力调度</p></li>
+                <li><a href="sys_dispatch.html" class="flex items-center px-4 py-2 text-gray-400 hover:text-white hover:bg-slate-800 rounded-lg transition-colors"><i class="fa-solid fa-sliders-h w-6"></i><span>算力调度</span></a></li>
+                <li><a href="sys_task_list.html" class="flex items-center px-4 py-2 text-gray-400 hover:text-white hover:bg-slate-800 rounded-lg transition-colors"><i class="fa-solid fa-tasks w-6"></i><span>我的任务</span></a></li>
+                <li class="mt-4"><p class="px-2 text-xs font-semibold text-gray-500 uppercase tracking-wider mb-2">模型管理</p></li>
+                <li><a href="sys_model_repo.html" class="flex items-center px-4 py-2 text-gray-400 hover:text-white hover:bg-slate-800 rounded-lg transition-colors"><i class="fa-solid fa-box w-6"></i><span>模型仓库</span></a></li>
+                <li><a href="sys_model_training.html" class="flex items-center px-4 py-2 text-gray-400 hover:text-white hover:bg-slate-800 rounded-lg transition-colors"><i class="fa-solid fa-brain w-6"></i><span>模型训练</span></a></li>
+                <li><a href="sys_model_service.html" class="flex items-center px-4 py-2 text-gray-400 hover:text-white hover:bg-slate-800 rounded-lg transition-colors"><i class="fa-solid fa-server w-6"></i><span>模型服务</span></a></li>
+                <li><a href="sys_model_monitor.html" class="flex items-center px-4 py-2 text-gray-400 hover:text-white hover:bg-slate-800 rounded-lg transition-colors"><i class="fa-solid fa-chart-line w-6"></i><span>模型监测</span></a></li>
+                <li class="mt-4"><p class="px-2 text-xs font-semibold text-gray-500 uppercase tracking-wider mb-2">运维管理</p></li>
+                <li><a href="sys_resource_approval.html" class="flex items-center px-4 py-2 bg-blue-600 text-white rounded-lg transition-colors"><i class="fa-solid fa-user-check w-6"></i><span>授权与审批</span></a></li>
+                <li><a href="sys_infrastructure_mgmt.html" class="flex items-center px-4 py-2 text-gray-400 hover:text-white hover:bg-slate-800 rounded-lg transition-colors"><i class="fa-solid fa-network-wired w-6"></i><span>集群节点</span></a></li>
+                <li><a href="sys_api_key_mgmt.html" class="flex items-center px-4 py-2 text-gray-400 hover:text-white hover:bg-slate-800 rounded-lg transition-colors"><i class="fa-solid fa-chart-bar w-6"></i><span>请求监控分析</span></a></li>
+                <li><a href="sys_request_tracing.html" class="flex items-center px-4 py-2 text-gray-400 hover:text-white hover:bg-slate-800 rounded-lg transition-colors"><i class="fa-solid fa-route w-6"></i><span>链路跟踪</span></a></li>
+                <li><a href="sys_scheduler_settings.html" class="flex items-center px-4 py-2 text-gray-400 hover:text-white hover:bg-slate-800 rounded-lg transition-colors"><i class="fa-solid fa-cogs w-6"></i><span>全局调度设置</span></a></li>
+            </ul>
+        </nav>
+        <div class="p-4 border-t border-slate-800">
+            <div class="flex items-center gap-3"><div class="w-8 h-8 rounded-full bg-red-500 flex items-center justify-center text-sm font-bold">A</div><div><p class="text-sm font-medium">资源管理员</p><p class="text-xs text-gray-500">审批授权视角</p></div></div>
+        </div>
+    </aside>
+
+    <div class="flex-1 flex flex-col h-full overflow-hidden">
+        <header class="bg-white shadow-sm z-10 p-4 flex flex-col xl:flex-row xl:items-center justify-between gap-4">
+            <div class="flex items-center gap-3">
+                <h2 class="text-xl font-semibold text-gray-800">授权与审批</h2>
+                <span class="px-2 py-1 bg-red-50 text-red-700 text-xs rounded-md font-medium">仅管理员可见</span>
+            </div>
+        </header>
+
+        <main class="flex-1 overflow-y-auto p-6 space-y-4">
+            <div class="flex gap-2 border-b border-gray-200">
+                <button id="approvalTabBtn" onclick="switchPageTab('approval')" class="page-tab active px-4 py-2 border border-b-0 rounded-t-lg text-sm font-medium">审批列表</button>
+                <button id="accountTabBtn" onclick="switchPageTab('account')" class="page-tab px-4 py-2 border border-b-0 rounded-t-lg text-sm font-medium">账号授权</button>
+            </div>
+
+            <section id="approvalTab" class="yl-page-card overflow-hidden">
+                <div class="p-4 border-b border-gray-100 bg-gray-50/70 flex items-center justify-between gap-3">
+                    <h3 class="font-bold text-gray-800">审批列表</h3>
+                    <div class="flex gap-2">
+                        <select class="px-3 py-2 border border-gray-300 rounded-lg text-sm bg-white"><option>全部类型</option><option>试用资源</option><option>正式资源</option></select>
+                        <select class="px-3 py-2 border border-gray-300 rounded-lg text-sm bg-white"><option>全部状态</option><option>草稿</option><option>已提交</option><option>审核中</option><option>已驳回</option><option>审核通过</option></select>
+                    </div>
+                </div>
+                <div class="overflow-x-auto">
+                    <table class="w-full text-sm text-left">
+                        <thead class="bg-gray-50 text-gray-500">
+                            <tr>
+                                <th class="px-5 py-3 font-medium">申请名称</th>
+                                <th class="px-5 py-3 font-medium">类型</th>
+                                <th class="px-5 py-3 font-medium">业务系统</th>
+                                <th class="px-5 py-3 font-medium">申请人 / 部署操作人</th>
+                                <th class="px-5 py-3 font-medium">资源需求</th>
+                                <th class="px-5 py-3 font-medium">状态</th>
+                                <th class="px-5 py-3 font-medium">提交时间</th>
+                                <th class="px-5 py-3 font-medium text-right">操作</th>
+                            </tr>
+                        </thead>
+                        <tbody id="approvalTable" class="divide-y divide-gray-100"></tbody>
+                    </table>
+                </div>
+            </section>
+
+            <section id="accountTab" class="yl-page-card overflow-hidden hidden">
+                <div class="p-4 border-b border-gray-100 bg-gray-50/70 flex items-center justify-between">
+                    <h3 class="font-bold text-gray-800">账号授权列表</h3>
+                    <button onclick="openAccountAuthModal()" class="px-3 py-2 bg-blue-600 text-white rounded-lg text-sm hover:bg-blue-700"><i class="fa-solid fa-plus mr-2"></i>授权账号</button>
+                </div>
+                <div class="overflow-x-auto">
+                    <table class="w-full text-sm text-left">
+                        <thead class="bg-gray-50 text-gray-500">
+                            <tr>
+                                <th class="px-5 py-3 font-medium">授权账号</th>
+                                <th class="px-5 py-3 font-medium">状态</th>
+                                <th class="px-5 py-3 font-medium">授权时间</th>
+                                <th class="px-5 py-3 font-medium">授权资源</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-gray-100">
+                            <tr class="hover:bg-gray-50">
+                                <td class="px-5 py-4 font-medium">li.si</td>
+                                <td class="px-5 py-4"><span class="yl-pill bg-green-100 text-green-700">已授权</span></td>
+                                <td class="px-5 py-4 text-gray-600">2026-07-27 18:35</td>
+                                <td class="px-5 py-4">生产环境集群 A / cs-prod / 8 x L40</td>
+                            </tr>
+                            <tr class="hover:bg-gray-50">
+                                <td class="px-5 py-4 font-medium">zhou.hang</td>
+                                <td class="px-5 py-4"><span class="yl-pill bg-amber-100 text-amber-700">待授权</span></td>
+                                <td class="px-5 py-4 text-gray-600">2026-07-28 10:05</td>
+                                <td class="px-5 py-4">生产环境集群 A / rag-prod / 6 x 910B4</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+        </main>
+    </div>
+</div>
+
+<section id="approvalModal" class="hidden fixed inset-0 z-[60] bg-slate-900/55 p-4 md:p-6 overflow-y-auto">
+    <div class="bg-white rounded-lg shadow-2xl border border-gray-100 overflow-hidden w-full max-w-3xl mx-auto my-6">
+        <div class="p-5 border-b border-gray-100 bg-gray-50/80 flex items-start justify-between gap-4">
+            <div>
+                <h3 class="font-bold text-gray-900">审核处理</h3>
+                <p id="auditModalMeta" class="text-xs text-gray-500 mt-1"></p>
+            </div>
+            <button onclick="closeModal('approvalModal')" class="px-3 py-2 border border-gray-200 rounded-lg text-gray-500 hover:bg-gray-100" aria-label="关闭"><i class="fa-solid fa-times"></i></button>
+        </div>
+
+        <div class="p-6">
+            <div class="flex border-b border-gray-100 mb-5">
+                <button id="approveTab" onclick="switchAction('approve')" class="mode-tab active px-4 py-2 border border-b-0 rounded-t-lg text-sm font-medium">审核通过</button>
+                <button id="rejectTab" onclick="switchAction('reject')" class="mode-tab px-4 py-2 border border-b-0 rounded-t-lg text-sm font-medium ml-2">驳回申请</button>
+            </div>
+
+            <div id="approvePanel" class="space-y-5">
+                <div id="trialAuditFields">
+                    <h4 class="font-bold text-sm mb-3">试用资源分配</h4>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                        <label class="block"><span class="text-xs text-gray-500">服务器 IP</span><input id="trialIp" value="192.168.2.18" class="mt-1 w-full border border-gray-300 rounded-lg px-3 py-2 text-sm"></label>
+                        <label class="block"><span class="text-xs text-gray-500">登录账号/方式</span><input id="trialLogin" value="yl_trial_vision / SSH Key" class="mt-1 w-full border border-gray-300 rounded-lg px-3 py-2 text-sm"></label>
+                        <label class="block"><span class="text-xs text-gray-500">实际分配 GPU</span><input id="trialGpu" value="2 x A10" class="mt-1 w-full border border-gray-300 rounded-lg px-3 py-2 text-sm"></label>
+                        <label class="block"><span class="text-xs text-gray-500">有效期</span><input id="trialExpire" type="date" value="2026-08-08" class="mt-1 w-full border border-gray-300 rounded-lg px-3 py-2 text-sm"></label>
+                    </div>
+                </div>
+
+                <div id="formalAuditFields">
+                    <h4 class="font-bold text-sm mb-3">正式资源分配</h4>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                        <label class="block"><span class="text-xs text-gray-500">授权账号</span><select id="authAccount" class="mt-1 w-full border border-gray-300 rounded-lg px-3 py-2 text-sm bg-white"><option>li.si</option><option>zhou.hang</option><option>chen.chen</option></select></label>
+                        <label class="block"><span class="text-xs text-gray-500">实际分配 GPU</span><input id="formalGpu" value="8 x L40" class="mt-1 w-full border border-gray-300 rounded-lg px-3 py-2 text-sm"></label>
+                        <div class="md:col-span-2">
+                            <span class="text-xs text-gray-500">授权资源范围</span>
+                            <div class="grid grid-cols-1 md:grid-cols-3 gap-2 mt-2 text-sm">
+                                <label class="flex items-center gap-2 bg-gray-50 border border-gray-200 rounded-lg px-3 py-2"><input type="checkbox" value="生产环境集群 A" checked> 生产环境集群 A</label>
+                                <label class="flex items-center gap-2 bg-gray-50 border border-gray-200 rounded-lg px-3 py-2"><input type="checkbox" value="测试环境集群 B"> 测试环境集群 B</label>
+                                <label class="flex items-center gap-2 bg-gray-50 border border-gray-200 rounded-lg px-3 py-2"><input type="checkbox" value="离线试用资源池"> 离线试用资源池</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <label class="block"><span class="text-xs text-gray-500">审批意见</span><textarea rows="3" class="mt-1 w-full border border-gray-300 rounded-lg px-3 py-2 text-sm">资源用途合理，申请材料完整，同意按审批结论开通资源和权限。</textarea></label>
+                <div class="flex justify-end gap-2">
+                    <button class="px-4 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50">保存审批意见</button>
+                    <button class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700">审核通过并开通</button>
+                </div>
+            </div>
+
+            <div id="rejectPanel" class="hidden space-y-4">
+                <label class="block"><span class="text-xs text-gray-500">驳回原因</span><textarea rows="4" class="mt-1 w-full border border-gray-300 rounded-lg px-3 py-2 text-sm">试用结论不完整，缺少性能测试报告和上线容量评估，请补充后重新提交。</textarea></label>
+                <div class="flex justify-end gap-2">
+                    <button class="px-4 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50">保存草稿</button>
+                    <button class="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700">驳回申请</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section id="accountAuthModal" class="hidden fixed inset-0 z-[60] bg-slate-900/55 p-4 md:p-6 overflow-y-auto">
+    <div class="bg-white rounded-lg shadow-2xl border border-gray-100 overflow-hidden w-full max-w-xl mx-auto my-6">
+        <div class="p-5 border-b border-gray-100 bg-gray-50/80 flex items-center justify-between">
+            <h3 class="font-bold text-gray-900">授权账号</h3>
+            <button onclick="closeModal('accountAuthModal')" class="px-3 py-2 border border-gray-200 rounded-lg text-gray-500 hover:bg-gray-100" aria-label="关闭"><i class="fa-solid fa-times"></i></button>
+        </div>
+        <div class="p-6 space-y-5">
+            <label class="block"><span class="text-xs text-gray-500">授权账号</span><select class="mt-1 w-full border border-gray-300 rounded-lg px-3 py-2 text-sm bg-white"><option>li.si</option><option>zhou.hang</option><option>chen.chen</option></select></label>
+            <div>
+                <span class="text-xs text-gray-500">授权资源范围</span>
+                <div class="grid grid-cols-1 gap-2 mt-2 text-sm">
+                    <label class="flex items-center gap-2 bg-gray-50 border border-gray-200 rounded-lg px-3 py-2"><input type="checkbox" checked> 生产环境集群 A / 8 x L40</label>
+                    <label class="flex items-center gap-2 bg-gray-50 border border-gray-200 rounded-lg px-3 py-2"><input type="checkbox"> 测试环境集群 B / 4 x A10</label>
+                    <label class="flex items-center gap-2 bg-gray-50 border border-gray-200 rounded-lg px-3 py-2"><input type="checkbox"> 离线试用资源池 / 2 x 910B4</label>
+                </div>
+            </div>
+        </div>
+        <div class="px-6 py-4 bg-gray-50 border-t border-gray-100 flex justify-end gap-3">
+            <button onclick="closeModal('accountAuthModal')" class="px-4 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-100">取消</button>
+            <button class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700">确认授权</button>
+        </div>
+    </div>
+</section>
+
+<script>
+    const applications = {
+        formal: { type: '正式资源', title: '智能客服正式部署资源申请', system: '智能客服中台', applicant: '刘明', operator: '李四', status: '审核中', gpu: '8 x L40', compute: '128 Core / 1TB', qps: '80 / 200', date: '2026-08-20', submitted: '2026-07-28 10:05', desc: '试用验证通过，申请正式接入生产环境，承载智能客服推理服务。', materials: ['模型信息', '模型权重', '部署镜像', 'K8s YAML', '接口文档', '性能测试报告', '测试样例数据'] },
+        trial: { type: '试用资源', title: '合同解析模型试运行资源', system: '合同智能审阅', applicant: '赵琪', operator: '陈晨', status: '已提交', gpu: '2 x A10', compute: '64 Core / 256GB', qps: '-', date: '2026-08-08', submitted: '2026-07-27 15:30', desc: '短期测试合同解析模型的 OCR 后处理效果，需线下服务器验证依赖兼容性。', materials: ['试用目的', '计划开始时间', '计划结束时间'] },
+        quota: { type: '正式资源', title: '知识库问答服务扩容申请', system: '企业知识库', applicant: '周航', operator: '周航', status: '审核中', gpu: '6 x 910B4', compute: '96 Core / 768GB', qps: '45 / 120', date: '2026-08-15', submitted: '2026-07-28 09:40', desc: '正式服务峰值延迟偏高，申请增加模型服务副本与 GPU 配额。', materials: ['模型信息', '性能测试报告', '接口文档'] }
+    };
+    let currentKey = 'formal';
+
+    function renderApprovalTable() {
+        const tbody = document.getElementById('approvalTable');
+        tbody.innerHTML = Object.entries(applications).map(([key, item]) => `
+            <tr class="hover:bg-gray-50">
+                <td class="px-5 py-4 font-medium text-gray-900">${item.title}</td>
+                <td class="px-5 py-4"><span class="px-2 py-1 rounded-md bg-gray-100 text-gray-700 text-xs font-medium">${item.type}</span></td>
+                <td class="px-5 py-4 text-gray-700">${item.system}</td>
+                <td class="px-5 py-4"><p>${item.applicant}</p><p class="text-xs text-gray-500 mt-1">${item.operator}</p></td>
+                <td class="px-5 py-4 font-mono text-gray-700">${item.gpu}</td>
+                <td class="px-5 py-4"><span class="yl-pill ${item.status === '已提交' ? 'bg-blue-100 text-blue-700' : 'bg-amber-100 text-amber-700'}">${item.status}</span></td>
+                <td class="px-5 py-4 text-gray-600">${item.submitted}</td>
+                <td class="px-5 py-4 text-right"><button onclick="openAuditModal('${key}')" class="text-blue-600 hover:underline">审核</button></td>
+            </tr>
+        `).join('');
+    }
+
+    function switchPageTab(tab) {
+        const account = tab === 'account';
+        document.getElementById('approvalTabBtn').classList.toggle('active', !account);
+        document.getElementById('accountTabBtn').classList.toggle('active', account);
+        document.getElementById('approvalTab').classList.toggle('hidden', account);
+        document.getElementById('accountTab').classList.toggle('hidden', !account);
+    }
+
+    function openAuditModal(key) {
+        currentKey = key;
+        const item = applications[key];
+        document.getElementById('auditModalMeta').textContent = `${item.title} / ${item.type} / 申请人：${item.applicant} / 部署操作人：${item.operator}`;
+        const trial = item.type === '试用资源';
+        document.getElementById('trialAuditFields').classList.toggle('hidden', !trial);
+        document.getElementById('formalAuditFields').classList.toggle('hidden', trial);
+        document.getElementById('trialGpu').value = item.gpu;
+        document.getElementById('formalGpu').value = item.gpu;
+        switchAction('approve');
+        openModal('approvalModal');
+    }
+
+    function openAccountAuthModal() {
+        openModal('accountAuthModal');
+    }
+
+    function switchAction(mode) {
+        const reject = mode === 'reject';
+        document.getElementById('approveTab').classList.toggle('active', !reject);
+        document.getElementById('rejectTab').classList.toggle('active', reject);
+        document.getElementById('approvePanel').classList.toggle('hidden', reject);
+        document.getElementById('rejectPanel').classList.toggle('hidden', !reject);
+    }
+
+    function openModal(id) {
+        document.getElementById(id).classList.remove('hidden');
+        document.body.classList.add('modal-open');
+    }
+
+    function closeModal(id, keepLocked) {
+        document.getElementById(id).classList.add('hidden');
+        if (!keepLocked) document.body.classList.remove('modal-open');
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+        renderApprovalTable();
+        document.addEventListener('keydown', event => {
+            if (event.key === 'Escape') {
+                closeModal('approvalModal');
+                closeModal('accountAuthModal');
+            }
+        });
+    });
+</script>
+
+</body>
+</html>

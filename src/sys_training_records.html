@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>应龙 v1.0 - 训练记录</title>
+    <link href="assets/css/tailwind.css" rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/font-awesome.min.css">
+    <link rel="stylesheet" href="assets/css/font-awesome-compat.css">
+    <style>
+        .modal-backdrop { background: rgba(15, 23, 42, 0.52); }
+        .btn-sm { display: inline-flex; align-items: center; gap: 4px; height: 28px; padding: 0 9px; border-radius: 6px; font-size: 12px; font-weight: 600; white-space: nowrap; }
+        .field-label { display: block; font-size: 13px; font-weight: 600; color: #374151; margin-bottom: 6px; }
+        .form-input { border: 1px solid #d1d5db; border-radius: 8px; padding: 9px 12px; outline: none; background: #fff; font-size: 14px; }
+        .status-dot { width: 7px; height: 7px; border-radius: 999px; display: inline-block; }
+        .bg-emerald-50 { background-color: #ecfdf5; }
+        .bg-emerald-500 { background-color: #10b981; }
+        .text-emerald-600 { color: #059669; }
+        .text-emerald-700 { color: #047857; }
+        .bg-indigo-50 { background-color: #eef2ff; }
+        .text-indigo-600 { color: #4f46e5; }
+        .text-indigo-700 { color: #4338ca; }
+        .max-h-\[92vh\] { max-height: 92vh; }
+        .bg-gray-50\/80 { background-color: rgba(249, 250, 251, 0.8); }
+        .align-top { vertical-align: top; }
+        .w-40 { width: 10rem; }
+        .w-44 { width: 11rem; }
+        @media (min-width: 768px) {
+            .md\:col-span-3 { grid-column: span 3 / span 3; }
+        }
+    </style>
+    <link rel="stylesheet" href="assets/css/sherlock-theme.css">
+</head>
+<body class="bg-gray-50 text-gray-800">
+
+<div class="flex h-screen overflow-hidden">
+    <aside class="w-64 bg-slate-900 text-white flex-shrink-0 hidden md:flex flex-col">
+        <div class="p-6 border-b border-slate-800">
+            <h1 class="text-2xl font-bold text-blue-400">应龙 <span class="text-sm text-gray-400 font-normal">v1.0</span></h1>
+            <p class="text-xs text-gray-500 mt-1">大模型推理平台</p>
+        </div>
+        <nav class="flex-1 overflow-y-auto py-4">
+            <ul class="space-y-1 px-4">
+                <li><p class="px-2 text-xs font-semibold text-gray-500 uppercase tracking-wider mb-2">系统管理员</p></li>
+                <li><a href="sys_dashboard.html" class="flex items-center px-4 py-2 text-gray-400 hover:text-white hover:bg-slate-800 rounded-lg transition-colors"><i class="fa-solid fa-chart-pie w-6"></i><span>概览</span></a></li>
+                <li class="mt-4"><p class="px-2 text-xs font-semibold text-gray-500 uppercase tracking-wider mb-2">算力调度</p></li>
+                <li><a href="sys_dispatch.html" class="flex items-center px-4 py-2 text-gray-400 hover:text-white hover:bg-slate-800 rounded-lg transition-colors"><i class="fa-solid fa-sliders-h w-6"></i><span>算力调度</span></a></li>
+                <li><a href="sys_task_list.html" class="flex items-center px-4 py-2 text-gray-400 hover:text-white hover:bg-slate-800 rounded-lg transition-colors"><i class="fa-solid fa-tasks w-6"></i><span>我的任务</span></a></li>
+                <li class="mt-4"><p class="px-2 text-xs font-semibold text-gray-500 uppercase tracking-wider mb-2">模型管理</p></li>
+                <li><a href="sys_model_repo.html" class="flex items-center px-4 py-2 text-gray-400 hover:text-white hover:bg-slate-800 rounded-lg transition-colors"><i class="fa-solid fa-box w-6"></i><span>模型仓库</span></a></li>
+                <li><a href="sys_model_training.html" class="flex items-center px-4 py-2 bg-blue-600 text-white rounded-lg transition-colors"><i class="fa-solid fa-brain w-6"></i><span>模型训练</span></a></li>
+                <li><a href="sys_model_service.html" class="flex items-center px-4 py-2 text-gray-400 hover:text-white hover:bg-slate-800 rounded-lg transition-colors"><i class="fa-solid fa-server w-6"></i><span>模型服务</span></a></li>
+                <li><a href="sys_model_monitor.html" class="flex items-center px-4 py-2 text-gray-400 hover:text-white hover:bg-slate-800 rounded-lg transition-colors"><i class="fa-solid fa-chart-line w-6"></i><span>模型监测</span></a></li>
+                <li class="mt-4"><p class="px-2 text-xs font-semibold text-gray-500 uppercase tracking-wider mb-2">运维管理</p></li>
+                <li><a href="sys_resource_application.html" class="flex items-center px-4 py-2 text-gray-400 hover:text-white hover:bg-slate-800 rounded-lg transition-colors"><i class="fa-solid fa-file-circle-plus w-6"></i><span>资源申请</span></a></li>
+                <li><a href="sys_resource_approval.html" class="flex items-center px-4 py-2 text-gray-400 hover:text-white hover:bg-slate-800 rounded-lg transition-colors"><i class="fa-solid fa-user-check w-6"></i><span>授权与审批</span></a></li>
+                <li><a href="sys_infrastructure_mgmt.html" class="flex items-center px-4 py-2 text-gray-400 hover:text-white hover:bg-slate-800 rounded-lg transition-colors"><i class="fa-solid fa-network-wired w-6"></i><span>集群节点</span></a></li>
+                <li><a href="sys_api_key_mgmt.html" class="flex items-center px-4 py-2 text-gray-400 hover:text-white hover:bg-slate-800 rounded-lg transition-colors"><i class="fa-solid fa-chart-bar w-6"></i><span>请求监控分析</span></a></li>
+                <li><a href="sys_request_tracing.html" class="flex items-center px-4 py-2 text-gray-400 hover:text-white hover:bg-slate-800 rounded-lg transition-colors"><i class="fa-solid fa-route w-6"></i><span>链路跟踪</span></a></li>
+                <li><a href="sys_scheduler_settings.html" class="flex items-center px-4 py-2 text-gray-400 hover:text-white hover:bg-slate-800 rounded-lg transition-colors"><i class="fa-solid fa-cogs w-6"></i><span>全局调度设置</span></a></li>
+            </ul>
+        </nav>
+        <div class="p-4 border-t border-slate-800">
+            <div class="flex items-center gap-3"><div class="w-8 h-8 rounded-full bg-red-500 flex items-center justify-center text-sm font-bold">S</div><div><p class="text-sm font-medium">System Admin</p></div></div>
+        </div>
+    </aside>
+
+    <div class="flex-1 flex flex-col h-full overflow-hidden">
+        <header class="bg-white shadow-sm z-10 p-4 flex justify-between items-center">
+            <h2 class="text-xl font-semibold text-gray-800">训练记录</h2>
+            <a href="sys_model_training.html" class="px-4 py-2 border border-gray-200 rounded-lg text-sm font-semibold text-gray-700 hover:bg-gray-50"><i class="fa-solid fa-arrow-left mr-1.5"></i>返回模型训练</a>
+        </header>
+
+        <main class="flex-1 overflow-y-auto p-6">
+            <section class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
+                <div class="px-6 py-4 bg-gray-50 border-b border-gray-100">
+                    <div class="flex flex-wrap gap-4 items-end">
+                        <div>
+                            <label class="field-label">状态筛选</label>
+                            <select class="form-input w-44">
+                                <option>全部状态</option>
+                                <option>已完成</option>
+                                <option>训练中</option>
+                                <option>失败</option>
+                                <option>已部署</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="field-label">时间范围</label>
+                            <select class="form-input w-44">
+                                <option>全部时间</option>
+                                <option>最近7天</option>
+                                <option>最近30天</option>
+                                <option>最近90天</option>
+                            </select>
+                        </div>
+                        <button class="px-4 py-2 bg-blue-600 text-white rounded-lg text-sm font-semibold hover:bg-blue-700">筛选</button>
+                        <button class="px-4 py-2 text-gray-500 rounded-lg text-sm font-semibold hover:bg-white">清除</button>
+                    </div>
+                </div>
+
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left text-sm">
+                        <thead>
+                            <tr class="bg-gray-50 border-b border-gray-100 text-gray-500">
+                                <th class="px-6 py-4">记录ID</th>
+                                <th class="px-6 py-4">记录时间</th>
+                                <th class="px-6 py-4">数据集</th>
+                                <th class="px-6 py-4">训练模型</th>
+                                <th class="px-6 py-4">模型评估结果</th>
+                                <th class="px-6 py-4">状态</th>
+                                <th class="px-6 py-4 text-right">操作</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-gray-100">
+                            <tr class="hover:bg-gray-50 align-top">
+                                <td class="px-6 py-4 font-mono font-bold">TR-20240125-001</td>
+                                <td class="px-6 py-4 text-gray-500">2024-01-25 18:22</td>
+                                <td class="px-6 py-4">
+                                    <div class="font-semibold">用户评论情感数据集v2.1</div>
+                                    <div class="text-xs text-gray-500 mt-1">45000样本 / 3类别</div>
+                                </td>
+                                <td class="px-6 py-4">BERT-Large-Collaboration v1.2.0</td>
+                                <td class="px-6 py-4">
+                                    <div class="text-xs space-y-1">
+                                        <p>准确率 <span class="font-bold text-emerald-600">92.4%</span></p>
+                                        <p>F1 <span class="font-bold text-orange-500">91.5%</span></p>
+                                    </div>
+                                </td>
+                                <td class="px-6 py-4"><span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-indigo-50 text-indigo-700 text-xs font-bold"><span class="status-dot bg-indigo-500"></span>已部署</span></td>
+                                <td class="px-6 py-4">
+                                    <div class="flex justify-end gap-1.5">
+                                        <button onclick="openModal('recordDetailModal')" class="btn-sm border border-blue-100 text-blue-600 hover:bg-blue-50">详情</button>
+                                        <button disabled class="btn-sm border border-gray-200 text-gray-400 bg-gray-50 cursor-not-allowed">已部署</button>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr class="hover:bg-gray-50 align-top">
+                                <td class="px-6 py-4 font-mono font-bold">TR-20240124-003</td>
+                                <td class="px-6 py-4 text-gray-500">2024-01-24 11:36</td>
+                                <td class="px-6 py-4">
+                                    <div class="font-semibold">用户评论情感数据集v2.0</div>
+                                    <div class="text-xs text-gray-500 mt-1">42000样本 / 3类别</div>
+                                </td>
+                                <td class="px-6 py-4">BERT-Base-Collaboration v1.1.5</td>
+                                <td class="px-6 py-4">
+                                    <div class="text-xs space-y-1">
+                                        <p>准确率 <span class="font-bold text-emerald-600">90.8%</span></p>
+                                        <p>F1 <span class="font-bold text-orange-500">90.1%</span></p>
+                                    </div>
+                                </td>
+                                <td class="px-6 py-4"><span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-emerald-50 text-emerald-700 text-xs font-bold"><span class="status-dot bg-emerald-500"></span>已完成</span></td>
+                                <td class="px-6 py-4">
+                                    <div class="flex justify-end gap-1.5">
+                                        <button onclick="openModal('recordDetailModal')" class="btn-sm border border-blue-100 text-blue-600 hover:bg-blue-50">详情</button>
+                                        <button class="btn-sm bg-blue-600 text-white hover:bg-blue-700">部署</button>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr class="hover:bg-gray-50 align-top">
+                                <td class="px-6 py-4 font-mono font-bold">TR-20240123-007</td>
+                                <td class="px-6 py-4 text-gray-500">2024-01-23 15:05</td>
+                                <td class="px-6 py-4">
+                                    <div class="font-semibold">合同条款抽取数据集v1.4</div>
+                                    <div class="text-xs text-gray-500 mt-1">18000样本 / 12类实体</div>
+                                </td>
+                                <td class="px-6 py-4">Qwen3.5-9B Relation v0.9.1</td>
+                                <td class="px-6 py-4"><span class="text-xs text-red-600 font-semibold">训练过程中出现内存不足错误</span></td>
+                                <td class="px-6 py-4"><span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-red-50 text-red-700 text-xs font-bold"><span class="status-dot bg-red-500"></span>失败</span></td>
+                                <td class="px-6 py-4">
+                                    <div class="flex justify-end gap-1.5">
+                                        <button onclick="openModal('recordDetailModal')" class="btn-sm border border-blue-100 text-blue-600 hover:bg-blue-50">详情</button>
+                                        <button disabled class="btn-sm border border-gray-200 text-gray-400 bg-gray-50 cursor-not-allowed">不可部署</button>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr class="hover:bg-gray-50 align-top">
+                                <td class="px-6 py-4 font-mono font-bold">TR-20240125-005</td>
+                                <td class="px-6 py-4 text-gray-500">2024-01-25 20:12</td>
+                                <td class="px-6 py-4">
+                                    <div class="font-semibold">用户评论情感数据集v2.2</div>
+                                    <div class="text-xs text-gray-500 mt-1">51000样本 / 3类别</div>
+                                </td>
+                                <td class="px-6 py-4">BERT-Large-Collaboration v1.3.0</td>
+                                <td class="px-6 py-4">
+                                    <div class="w-40">
+                                        <div class="flex justify-between text-xs mb-1"><span class="font-semibold text-blue-600">65%</span><span class="text-gray-500">剩余约 42 分钟</span></div>
+                                        <div class="h-2 bg-gray-100 rounded-full overflow-hidden"><div class="h-full bg-blue-600 rounded-full" style="width:65%"></div></div>
+                                    </div>
+                                </td>
+                                <td class="px-6 py-4"><span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-blue-50 text-blue-700 text-xs font-bold"><span class="status-dot bg-blue-500"></span>训练中</span></td>
+                                <td class="px-6 py-4">
+                                    <div class="flex justify-end gap-1.5">
+                                        <button onclick="openModal('recordDetailModal')" class="btn-sm border border-blue-100 text-blue-600 hover:bg-blue-50">详情</button>
+                                        <button disabled class="btn-sm border border-gray-200 text-gray-400 bg-gray-50 cursor-not-allowed">不可部署</button>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+        </main>
+    </div>
+</div>
+
+<div id="recordDetailModal" class="hidden fixed inset-0 z-50 modal-backdrop items-center justify-center p-4">
+    <div class="bg-white rounded-xl shadow-2xl w-full max-w-4xl max-h-[92vh] flex flex-col overflow-hidden">
+        <div class="px-6 py-4 border-b border-gray-100 flex items-center justify-between">
+            <h3 class="text-lg font-bold text-gray-900">训练记录详情</h3>
+            <button onclick="closeModal('recordDetailModal')" class="text-gray-400 hover:text-gray-700"><i class="fa-solid fa-times"></i></button>
+        </div>
+        <div class="p-6 overflow-y-auto">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6 text-sm">
+                <div class="bg-gray-50 rounded-lg p-4"><p class="text-xs text-gray-500 font-semibold">记录ID</p><p class="font-bold mt-1">TR-20240125-001</p></div>
+                <div class="bg-gray-50 rounded-lg p-4"><p class="text-xs text-gray-500 font-semibold">训练时间</p><p class="font-bold mt-1">2024-01-25 18:22</p></div>
+                <div class="bg-gray-50 rounded-lg p-4"><p class="text-xs text-gray-500 font-semibold">GPU配置</p><p class="font-bold mt-1">NVIDIA L40 x 4</p></div>
+                <div class="bg-gray-50 rounded-lg p-4"><p class="text-xs text-gray-500 font-semibold">模型版本</p><p class="font-bold mt-1">BERT-Large-Collaboration v1.2.0</p></div>
+                <div class="bg-gray-50 rounded-lg p-4"><p class="text-xs text-gray-500 font-semibold">数据集版本</p><p class="font-bold mt-1">用户评论情感数据集 v2.1</p></div>
+                <div class="bg-gray-50 rounded-lg p-4"><p class="text-xs text-gray-500 font-semibold">样本数量</p><p class="font-bold mt-1">45000 样本 / 3 类别</p></div>
+                <div class="md:col-span-3 bg-red-50 rounded-lg p-4"><p class="text-xs text-red-600 font-semibold">错误信息</p><p class="font-semibold text-red-700 mt-1">无；失败记录中展示为：训练过程中出现内存不足错误</p></div>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+                <div class="rounded-xl border border-gray-100 p-4"><p class="text-xs text-gray-500 font-semibold">准确率</p><p class="text-2xl font-bold text-emerald-600 mt-1">92.4%</p></div>
+                <div class="rounded-xl border border-gray-100 p-4"><p class="text-xs text-gray-500 font-semibold">精确率</p><p class="text-2xl font-bold text-blue-600 mt-1">92.0%</p></div>
+                <div class="rounded-xl border border-gray-100 p-4"><p class="text-xs text-gray-500 font-semibold">召回率</p><p class="text-2xl font-bold text-indigo-600 mt-1">91.1%</p></div>
+                <div class="rounded-xl border border-gray-100 p-4"><p class="text-xs text-gray-500 font-semibold">F1分数</p><p class="text-2xl font-bold text-orange-500 mt-1">91.5%</p></div>
+            </div>
+        </div>
+        <div class="px-6 py-4 border-t border-gray-100 bg-gray-50 flex justify-end">
+            <button onclick="closeModal('recordDetailModal')" class="px-4 py-2 bg-blue-600 text-white rounded-lg text-sm font-semibold hover:bg-blue-700">关闭</button>
+        </div>
+    </div>
+</div>
+
+<script>
+    function openModal(id) {
+        const modal = document.getElementById(id);
+        modal.classList.remove('hidden');
+        modal.classList.add('flex');
+    }
+    function closeModal(id) {
+        const modal = document.getElementById(id);
+        modal.classList.add('hidden');
+        modal.classList.remove('flex');
+    }
+</script>
+</body>
+</html>
+
+

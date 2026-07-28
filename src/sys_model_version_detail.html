@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>应龙 v1.0 - 模型版本详情</title>
+    <link href="assets/css/tailwind.css" rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/font-awesome.min.css">
+    <link rel="stylesheet" href="assets/css/font-awesome-compat.css">
+    <link rel="stylesheet" href="assets/css/sherlock-theme.css">
+</head>
+<body class="bg-gray-50 text-gray-800">
+
+<div class="flex h-screen overflow-hidden">
+    <!-- Sidebar -->
+    <aside class="w-64 bg-slate-900 text-white flex-shrink-0 hidden md:flex flex-col">
+        <div class="p-6 border-b border-slate-800">
+            <h1 class="text-2xl font-bold text-blue-400">应龙 <span class="text-sm text-gray-400 font-normal">v1.0</span></h1>
+            <p class="text-xs text-gray-500 mt-1">大模型推理平台</p>
+        </div>
+        <nav class="flex-1 overflow-y-auto py-4">
+            <ul class="space-y-1 px-4">
+                <li><p class="px-2 text-xs font-semibold text-gray-500 uppercase tracking-wider mb-2">系统管理员</p></li>
+                <li><a href="sys_dashboard.html" class="flex items-center px-4 py-2 text-gray-400 hover:text-white hover:bg-slate-800 rounded-lg transition-colors"><i class="fa-solid fa-chart-pie w-6"></i><span>概览</span></a></li>
+                
+                <li class="mt-4"><p class="px-2 text-xs font-semibold text-gray-500 uppercase tracking-wider mb-2">算力调度</p></li>
+                <li><a href="sys_dispatch.html" class="flex items-center px-4 py-2 text-gray-400 hover:text-white hover:bg-slate-800 rounded-lg transition-colors"><i class="fa-solid fa-sliders-h w-6"></i><span>算力调度</span></a></li>
+                <li><a href="sys_task_list.html" class="flex items-center px-4 py-2 text-gray-400 hover:text-white hover:bg-slate-800 rounded-lg transition-colors"><i class="fa-solid fa-tasks w-6"></i><span>我的任务</span></a></li>
+
+                <li class="mt-4"><p class="px-2 text-xs font-semibold text-gray-500 uppercase tracking-wider mb-2">模型管理</p></li>
+                <li><a href="sys_model_repo.html" class="flex items-center px-4 py-3 bg-blue-600 text-white rounded-lg transition-colors"><i class="fa-solid fa-box w-6"></i><span>模型仓库</span></a></li>
+                <li><a href="sys_model_training.html" class="flex items-center px-4 py-2 text-gray-400 hover:text-white hover:bg-slate-800 rounded-lg transition-colors"><i class="fa-solid fa-brain w-6"></i><span>模型训练</span></a></li>
+                <li><a href="sys_model_service.html" class="flex items-center px-4 py-2 text-gray-400 hover:text-white hover:bg-slate-800 rounded-lg transition-colors"><i class="fa-solid fa-server w-6"></i><span>模型服务</span></a></li>
+                <li><a href="sys_model_monitor.html" class="flex items-center px-4 py-2 text-gray-400 hover:text-white hover:bg-slate-800 rounded-lg transition-colors"><i class="fa-solid fa-chart-line w-6"></i><span>模型监测</span></a></li>
+
+                <li class="mt-4"><p class="px-2 text-xs font-semibold text-gray-500 uppercase tracking-wider mb-2">运维管理</p></li>
+                <li><a href="sys_resource_application.html" class="flex items-center px-4 py-2 text-gray-400 hover:text-white hover:bg-slate-800 rounded-lg transition-colors"><i class="fa-solid fa-file-circle-plus w-6"></i><span>资源申请</span></a></li>
+                <li><a href="sys_resource_approval.html" class="flex items-center px-4 py-2 text-gray-400 hover:text-white hover:bg-slate-800 rounded-lg transition-colors"><i class="fa-solid fa-user-check w-6"></i><span>授权与审批</span></a></li>
+                <li><a href="sys_infrastructure_mgmt.html" class="flex items-center px-4 py-2 text-gray-400 hover:text-white hover:bg-slate-800 rounded-lg transition-colors"><i class="fa-solid fa-network-wired w-6"></i><span>集群节点</span></a></li>
+                <li><a href="sys_api_key_mgmt.html" class="flex items-center px-4 py-2 text-gray-400 hover:text-white hover:bg-slate-800 rounded-lg transition-colors"><i class="fa-solid fa-chart-bar w-6"></i><span>请求监控分析</span></a></li>
+                <li><a href="sys_request_tracing.html" class="flex items-center px-4 py-2 text-gray-400 hover:text-white hover:bg-slate-800 rounded-lg transition-colors"><i class="fa-solid fa-route w-6"></i><span>链路跟踪</span></a></li>
+                <li><a href="sys_scheduler_settings.html" class="flex items-center px-4 py-2 text-gray-400 hover:text-white hover:bg-slate-800 rounded-lg transition-colors"><i class="fa-solid fa-cogs w-6"></i><span>全局调度设置</span></a></li>
+            </ul>
+        </nav>
+        <div class="p-4 border-t border-slate-800">
+             <div class="flex items-center gap-3"><div class="w-8 h-8 rounded-full bg-red-500 flex items-center justify-center text-sm font-bold">S</div><div><p class="text-sm font-medium">System Admin</p></div></div>
+        </div>
+    </aside>
+
+    <div class="flex-1 flex flex-col h-full overflow-hidden">
+        <header class="bg-white shadow-sm z-10 p-4 flex items-center">
+            <a href="sys_model_repo.html" class="text-gray-500 hover:text-blue-600 mr-4"><i class="fa-solid fa-arrow-left"></i></a>
+            <h2 class="text-xl font-semibold text-gray-800">Qwen-72B 版本详情</h2>
+        </header>
+
+        <main class="flex-1 overflow-y-auto p-6">
+            <div class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
+                <div class="p-6 border-b border-gray-100 flex justify-between items-center">
+                    <div>
+                        <h3 class="text-lg font-bold text-gray-800">Qwen-72B-Chat</h3>
+                        <p class="text-sm text-gray-500">通义千问 72B 对话模型</p>
+                    </div>
+                    <button class="px-4 py-2 bg-blue-600 text-white rounded-lg text-sm hover:bg-blue-700">上传新版本</button>
+                </div>
+                
+                <table class="w-full text-left text-sm">
+                    <thead class="bg-gray-50 text-gray-500">
+                        <tr>
+                            <th class="px-6 py-3">版本号</th>
+                            <th class="px-6 py-3">标签</th>
+                            <th class="px-6 py-3">文件大小</th>
+                            <th class="px-6 py-3">更新时间</th>
+                            <th class="px-6 py-3">备注</th>
+                            <th class="px-6 py-3 text-right">操作</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-gray-100">
+                        <tr class="hover:bg-gray-50">
+                            <td class="px-6 py-4 font-mono font-bold text-blue-600">v2.1.0</td>
+                            <td class="px-6 py-4">
+                                <span class="px-2 py-0.5 bg-green-100 text-green-700 rounded text-xs font-bold mr-1">Production</span>
+                                <span class="px-2 py-0.5 bg-blue-100 text-blue-700 rounded text-xs font-bold">Latest</span>
+                            </td>
+                            <td class="px-6 py-4 text-gray-500">144 GB</td>
+                            <td class="px-6 py-4 text-gray-500">2023-10-15 10:00</td>
+                            <td class="px-6 py-4 text-gray-500">优化了长文本推理性能</td>
+                            <td class="px-6 py-4 text-right">
+                                <button class="text-blue-600 hover:underline mr-2">部署</button>
+                                <button class="text-gray-500 hover:text-gray-700"><i class="fa-solid fa-download"></i></button>
+                            </td>
+                        </tr>
+                        <tr class="hover:bg-gray-50">
+                            <td class="px-6 py-4 font-mono text-gray-600">v2.0.5</td>
+                            <td class="px-6 py-4">
+                                <span class="px-2 py-0.5 bg-gray-100 text-gray-600 rounded text-xs">Stable</span>
+                            </td>
+                            <td class="px-6 py-4 text-gray-500">142 GB</td>
+                            <td class="px-6 py-4 text-gray-500">2023-09-20 14:30</td>
+                            <td class="px-6 py-4 text-gray-500">基础版本</td>
+                            <td class="px-6 py-4 text-right">
+                                <button class="text-blue-600 hover:underline mr-2">部署</button>
+                                <button class="text-gray-500 hover:text-gray-700"><i class="fa-solid fa-download"></i></button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </main>
+    </div>
+</div>
+</body>
+</html>
+
+
