@@ -1,0 +1,8 @@
+.yl-status { display: inline-flex; min-height: 22px; align-items: center; gap: 6px; padding: 1px 8px; border-radius: 999px; font-size: 12px; line-height: 18px; }
+.yl-status::before { width: 6px; height: 6px; border-radius: 50%; background: currentColor; content: ""; }
+.yl-status.success { color: #237804; background: #f6ffed; }
+.yl-status.warning { color: #ad6800; background: #fffbe6; }
+.yl-status.danger { color: #cf1322; background: #fff1f0; }
+.yl-status.processing { color: #175be5; background: #ebf2ff; }
+
+.yl-empty-state { display: grid; min-height: 220px; place-items: center; padding: 32px; color: var(--yl-text-secondary); text-align: center; }

@@ -1,0 +1,1298 @@
+/* 应龙 /src 静态页面源码风格覆盖层
+   目标：贴近已实现前端 Pure Admin + Element Plus 风格，同时不改页面结构、不删除任何业务交互。 */
+:root {
+  --yl-primary: #4091f7;
+  --yl-primary-hover: #66a7f8;
+  --yl-primary-active: #337ecc;
+  --yl-purple: #885bd2;
+  --yl-success: #13a474;
+  --yl-warning: #fab914;
+  --yl-danger: #ff655d;
+  --yl-page: #f0f2f5;
+  --yl-card: #fff;
+  --yl-fill: #f7f8fa;
+  --yl-border: #dcdfe6;
+  --yl-border-light: #e4e7ed;
+  --yl-border-lighter: #ebeef5;
+  --yl-text-primary: #222;
+  --yl-text-regular: #333;
+  --yl-text-secondary: #666;
+  --yl-text-placeholder: #999;
+  --yl-menu-bg: #001529;
+  --yl-menu-logo: #002140;
+  --yl-menu-text: rgb(254 254 254 / 65%);
+  --yl-menu-hover: rgb(64 145 247 / 15%);
+  --yl-menu-active-text: #fff;
+  --yl-radius: 4px;
+  --yl-sidebar-width: 210px;
+  --yl-shadow-nav: 0 1px 4px rgb(0 21 41 / 8%);
+  --yl-shadow-card: 0 1px 2px rgb(0 0 0 / 4%);
+
+  /* Compatibility aliases for older inline prototype styles in /src pages. */
+  --ink: var(--yl-menu-bg);
+  --blue: var(--yl-primary);
+  --mist: var(--yl-page);
+  --line: var(--yl-border-lighter);
+  --muted: var(--yl-text-secondary);
+  --green: var(--yl-success);
+  --orange: #b77900;
+  --red: var(--yl-danger);
+  --white: #fff;
+  --shadow: 0 12px 32px rgb(0 0 0 / 16%);
+}
+
+html,
+body {
+  background: var(--yl-page) !important;
+  color: var(--yl-text-regular) !important;
+  font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    "Helvetica Neue", Arial, "Microsoft YaHei UI", "Microsoft YaHei", sans-serif !important;
+  font-size: 14px;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+/* Pure Admin shell */
+aside[data-yl-sidebar],
+.side {
+  width: var(--yl-sidebar-width) !important;
+  background: var(--yl-menu-bg) !important;
+  border-right: 1px solid rgb(255 255 255 / 6%) !important;
+}
+
+aside[data-yl-sidebar] > div:first-child,
+.brand {
+  height: 48px !important;
+  min-height: 48px !important;
+  padding: 0 10px !important;
+  display: flex;
+  align-items: center;
+  background: var(--yl-menu-logo) !important;
+  border-bottom: 0 !important;
+}
+
+aside[data-yl-sidebar] > div:first-child::before,
+.brand::before {
+  content: "";
+  width: 24px;
+  height: 24px;
+  margin-right: 10px;
+  flex: 0 0 auto;
+  border-radius: var(--yl-radius);
+  background: linear-gradient(135deg, var(--yl-primary), var(--yl-purple));
+}
+
+aside[data-yl-sidebar] h1,
+.brand strong {
+  margin: 0 !important;
+  color: #fff !important;
+  font-size: 18px !important;
+  font-weight: 600 !important;
+  line-height: 32px !important;
+  letter-spacing: 0 !important;
+}
+
+aside[data-yl-sidebar] h1 span,
+aside[data-yl-sidebar] > div:first-child p,
+aside[data-yl-sidebar] nav li > p,
+.brand span,
+.brand p,
+.nav small,
+.crumb,
+.admin-only {
+  display: none !important;
+}
+
+aside[data-yl-sidebar] nav,
+.nav {
+  padding: 6px 0 !important;
+}
+
+aside[data-yl-sidebar] nav ul {
+  padding: 0 !important;
+}
+
+aside[data-yl-sidebar] nav li,
+aside[data-yl-sidebar] nav li.mt-4 {
+  margin-top: 0 !important;
+}
+
+aside[data-yl-sidebar] nav a,
+.nav a {
+  position: relative;
+  height: 50px !important;
+  min-height: 50px !important;
+  margin: 0 !important;
+  padding: 0 20px !important;
+  display: flex;
+  align-items: center;
+  gap: 9px !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  color: var(--yl-menu-text) !important;
+  font-size: 14px !important;
+  font-weight: 400 !important;
+  line-height: 50px !important;
+  text-decoration: none !important;
+  transition: color .2s ease, background-color .2s ease;
+}
+
+aside[data-yl-sidebar] nav a:hover,
+.nav a:hover {
+  color: #fff !important;
+  background: var(--yl-menu-hover) !important;
+}
+
+aside[data-yl-sidebar] nav a.bg-blue-600,
+aside[data-yl-sidebar] nav a.active,
+.nav a.active {
+  color: #fff !important;
+}
+
+aside[data-yl-sidebar] nav a.bg-blue-600::before,
+aside[data-yl-sidebar] nav a.active::before,
+.nav a.active::before {
+  content: "";
+  position: absolute;
+  inset: 4px 8px;
+  z-index: 0;
+  background: var(--yl-primary);
+  border-radius: var(--yl-radius);
+}
+
+aside[data-yl-sidebar] nav a > *,
+.nav a > * {
+  position: relative;
+  z-index: 1;
+}
+
+aside[data-yl-sidebar] nav a i {
+  width: 16px !important;
+  margin-right: 4px;
+  color: currentColor !important;
+  font-size: 15px;
+}
+
+aside[data-yl-sidebar] > div:last-child {
+  border-top: 1px solid rgb(255 255 255 / 8%) !important;
+  background: var(--yl-menu-bg) !important;
+}
+
+/* Top navbar */
+header.bg-white,
+.top {
+  height: 48px !important;
+  min-height: 48px !important;
+  padding: 0 16px !important;
+  background: #fff !important;
+  border-bottom: 0 !important;
+  box-shadow: var(--yl-shadow-nav) !important;
+}
+
+header.bg-white h2,
+.top h1,
+.title h1 {
+  margin: 0 !important;
+  color: var(--yl-text-primary) !important;
+  font-size: 16px !important;
+  font-weight: 600 !important;
+  line-height: 48px !important;
+}
+
+header.bg-white select {
+  height: 32px !important;
+}
+
+main.flex-1,
+.main {
+  padding: 16px !important;
+  background: var(--yl-page) !important;
+}
+
+main > section,
+main > div {
+  margin-bottom: 16px;
+}
+
+main > section:last-child,
+main > div:last-child {
+  margin-bottom: 0;
+}
+
+/* Source-style section title: applied to existing common title rows */
+main h3.text-lg,
+.custom-title,
+.section-title {
+  position: relative;
+  min-height: 40px;
+  padding-left: 12px;
+  display: flex;
+  align-items: center;
+  color: var(--yl-text-primary) !important;
+  font-size: 18px !important;
+  font-weight: 600 !important;
+}
+
+main h3.text-lg::before,
+.custom-title::before,
+.section-title::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 8px;
+  width: 4px;
+  height: 24px;
+  background: var(--yl-primary);
+}
+
+/* Cards / panels */
+.card,
+.table-card,
+.bg-white.rounded-xl,
+.bg-white.rounded-lg,
+.bg-white.rounded-2xl,
+.bg-white[class*="rounded"],
+main .bg-white,
+.el-card {
+  background: var(--yl-card) !important;
+  border: 1px solid var(--yl-border-light) !important;
+  border-radius: var(--yl-radius) !important;
+  box-shadow: var(--yl-shadow-card) !important;
+}
+
+/* KPI/stat cards from Tailwind pages should read like CustomStatistic cards. */
+main .grid > .bg-white,
+main .grid > a.bg-white,
+.stat,
+.kpi,
+.pod-card {
+  border: 1px solid var(--yl-border-light) !important;
+  border-radius: var(--yl-radius) !important;
+  box-shadow: var(--yl-shadow-card) !important;
+}
+
+main .grid > .bg-white:hover,
+main .grid > a.bg-white:hover {
+  border-color: #c6e2ff !important;
+  box-shadow: 0 2px 8px rgb(64 145 247 / 10%) !important;
+}
+
+.shadow,
+.shadow-sm,
+.shadow-md,
+.shadow-lg {
+  box-shadow: var(--yl-shadow-card) !important;
+}
+
+.table-head,
+.panel-head,
+.section-head,
+.card-head,
+thead + tbody {
+  border-color: var(--yl-border-lighter) !important;
+}
+
+.table-head,
+.panel-head,
+.section-head,
+.card-head {
+  min-height: 48px;
+  padding: 12px 16px !important;
+  border-bottom: 1px solid var(--yl-border-lighter) !important;
+}
+
+.modal-head,
+.drawer-head {
+  min-height: 48px !important;
+  padding: 12px 16px !important;
+  border-bottom: 1px solid var(--yl-border-lighter) !important;
+}
+
+.modal-body,
+.drawer-body {
+  padding: 16px !important;
+}
+
+.modal-foot,
+.drawer-foot {
+  min-height: 48px !important;
+  padding: 8px 16px !important;
+  background: #fafafa !important;
+  border-top: 1px solid var(--yl-border-lighter) !important;
+}
+
+h1,
+h2,
+h3,
+h4,
+.panel-head h2,
+.section-head h2 {
+  color: var(--yl-text-primary) !important;
+}
+
+/* Element Plus-like controls. Keep all onclick/form bindings intact. */
+button,
+.btn,
+input,
+select,
+textarea {
+  border-radius: var(--yl-radius) !important;
+}
+
+input,
+select,
+textarea,
+.control,
+.search-control {
+  min-height: 32px !important;
+  height: 32px;
+  padding: 0 11px !important;
+  color: var(--yl-text-regular) !important;
+  background: #fff !important;
+  border: 1px solid var(--yl-border) !important;
+  outline: none;
+  transition: border-color .2s ease, box-shadow .2s ease;
+}
+
+textarea {
+  height: auto !important;
+  min-height: 72px !important;
+  padding-top: 8px !important;
+  padding-bottom: 8px !important;
+}
+
+input:focus,
+select:focus,
+textarea:focus,
+.control:focus {
+  border-color: var(--yl-primary) !important;
+  box-shadow: 0 0 0 2px rgb(64 145 247 / 12%);
+}
+
+button,
+.btn,
+button[class*="px-"][class*="py-"] {
+  min-height: 32px !important;
+  height: 32px;
+  padding: 0 15px !important;
+  border: 1px solid var(--yl-border) !important;
+  background: #fff !important;
+  color: var(--yl-text-regular) !important;
+  font-size: 14px !important;
+  font-weight: 400 !important;
+  line-height: 30px !important;
+  transition: color .2s ease, border-color .2s ease, background-color .2s ease;
+}
+
+button:hover,
+.btn:hover {
+  color: var(--yl-primary) !important;
+  border-color: #c6e2ff !important;
+  background: #ecf5ff !important;
+}
+
+button.bg-blue-600,
+button.bg-blue-500,
+button.bg-indigo-600,
+button[class*="bg-blue"],
+.btn.primary,
+.btn-primary,
+.button-gradient,
+.primary {
+  color: #fff !important;
+  background: var(--yl-primary) !important;
+  border-color: var(--yl-primary) !important;
+}
+
+button.bg-blue-600:hover,
+button.bg-blue-500:hover,
+button.bg-indigo-600:hover,
+button[class*="bg-blue"]:hover,
+.btn.primary:hover,
+.btn-primary:hover,
+.primary:hover {
+  color: #fff !important;
+  background: var(--yl-primary-hover) !important;
+  border-color: var(--yl-primary-hover) !important;
+}
+
+button.text-red-600,
+button[class*="red"],
+.btn.danger,
+.danger {
+  color: var(--yl-danger) !important;
+  border-color: #ffd3d0 !important;
+  background: #fff7f6 !important;
+}
+
+/* Tables */
+table {
+  width: 100%;
+  color: var(--yl-text-regular);
+  border-collapse: collapse;
+}
+
+table th {
+  height: 44px;
+  padding: 10px 16px !important;
+  color: var(--yl-text-secondary) !important;
+  background: #fafafa !important;
+  border-bottom: 1px solid var(--yl-border-lighter) !important;
+  font-size: 13px !important;
+  font-weight: 600 !important;
+  white-space: nowrap;
+  vertical-align: middle;
+}
+
+table td {
+  min-height: 46px;
+  padding: 11px 16px !important;
+  border-top: 1px solid var(--yl-border-lighter) !important;
+  vertical-align: middle;
+}
+
+tbody tr:hover {
+  background: #fafcff !important;
+}
+
+/* Toolbars: preserve existing DOM; only normalize spacing. */
+.toolbar-row {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: 12px;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.toolbar-row .actions,
+.toolbar-row .tabs {
+  display: flex;
+  gap: 8px;
+  margin: 0;
+}
+
+.toolbar-row .filters {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 8px;
+  margin: 0;
+  padding: 0;
+}
+
+.search-control {
+  width: min(320px, 42vw);
+}
+
+.filters,
+.approval-toolbar-stack .filters {
+  gap: 12px !important;
+}
+
+.filters.card,
+.filters.bg-white {
+  padding: 16px !important;
+}
+
+main .flex.justify-between.items-center,
+main .flex.items-center.justify-between {
+  gap: 12px;
+}
+
+main .flex.items-center.gap-2,
+main .flex.items-center.gap-3,
+main .flex.items-center.gap-4 {
+  row-gap: 8px;
+}
+
+main input + button,
+main select + button,
+main button + button,
+main input + select,
+main select + select {
+  margin-left: 0;
+}
+
+/* Tabs: closer to Element Plus tabs, not pill buttons. */
+.tabs {
+  height: 40px !important;
+  display: flex;
+  align-items: center;
+  gap: 24px !important;
+  border: 0 !important;
+  border-bottom: 1px solid var(--yl-border-light) !important;
+}
+
+.tab {
+  position: relative;
+  height: 40px !important;
+  min-height: 40px !important;
+  padding: 0 2px !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  color: var(--yl-text-secondary) !important;
+  font-weight: 400 !important;
+  line-height: 40px !important;
+}
+
+.tab.active {
+  color: var(--yl-primary) !important;
+  background: transparent !important;
+  font-weight: 500 !important;
+}
+
+.tab.active::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -1px;
+  height: 2px;
+  background: var(--yl-primary);
+}
+
+/* Status tags */
+.pill,
+span[class*="bg-green"],
+span[class*="bg-yellow"],
+span[class*="bg-red"],
+span[class*="bg-blue"],
+span[class*="bg-purple"] {
+  min-height: 24px;
+  display: inline-flex;
+  align-items: center;
+  border-radius: var(--yl-radius) !important;
+  font-weight: 400 !important;
+}
+
+span[class*="bg-green"] {
+  color: var(--yl-success) !important;
+  background: rgb(19 164 116 / 10%) !important;
+  border-color: rgb(19 164 116 / 20%) !important;
+}
+
+span[class*="bg-yellow"] {
+  color: #b77900 !important;
+  background: rgb(250 185 20 / 15%) !important;
+  border-color: rgb(250 185 20 / 28%) !important;
+}
+
+span[class*="bg-red"] {
+  color: var(--yl-danger) !important;
+  background: rgb(255 101 93 / 10%) !important;
+  border-color: rgb(255 101 93 / 22%) !important;
+}
+
+span[class*="bg-blue"] {
+  color: var(--yl-primary) !important;
+  background: #ecf5ff !important;
+  border-color: #d9ecff !important;
+}
+
+span[class*="bg-purple"] {
+  color: var(--yl-purple) !important;
+  background: rgb(136 91 210 / 10%) !important;
+  border-color: rgb(136 91 210 / 22%) !important;
+}
+
+.type-pill,
+.pill {
+  min-height: 24px !important;
+  padding: 0 8px !important;
+  border-radius: var(--yl-radius) !important;
+  border: 1px solid transparent;
+}
+
+.type-trial,
+.pending {
+  color: var(--yl-primary) !important;
+  background: #ecf5ff !important;
+  border-color: #d9ecff !important;
+}
+
+.type-formal {
+  color: var(--yl-purple) !important;
+  background: rgb(136 91 210 / 10%) !important;
+  border-color: rgb(136 91 210 / 22%) !important;
+}
+
+.approved {
+  color: var(--yl-success) !important;
+  background: rgb(19 164 116 / 10%) !important;
+  border-color: rgb(19 164 116 / 20%) !important;
+}
+
+.reviewing {
+  color: #b77900 !important;
+  background: rgb(250 185 20 / 15%) !important;
+  border-color: rgb(250 185 20 / 28%) !important;
+}
+
+.rejected {
+  color: var(--yl-danger) !important;
+  background: rgb(255 101 93 / 10%) !important;
+  border-color: rgb(255 101 93 / 22%) !important;
+}
+
+.draft {
+  color: #606266 !important;
+  background: #f4f4f5 !important;
+  border-color: #e9e9eb !important;
+}
+
+.link {
+  height: auto !important;
+  min-height: 0 !important;
+  padding: 0 6px !important;
+  border: 0 !important;
+  background: transparent !important;
+  color: var(--yl-primary) !important;
+  line-height: 1.5 !important;
+}
+
+.link:hover {
+  background: transparent !important;
+  color: var(--yl-primary-active) !important;
+}
+
+.switch {
+  background: #dcdfe6 !important;
+  border: 0 !important;
+  border-radius: 999px !important;
+  padding: 3px !important;
+}
+
+.switch.on {
+  background: var(--yl-primary) !important;
+}
+
+.state-box,
+.empty {
+  color: var(--yl-text-secondary) !important;
+  background: #fff !important;
+}
+
+/* Modal / drawer polish; no display-state changes. */
+.fixed.inset-0,
+[id$="Modal"] {
+  backdrop-filter: none;
+}
+
+.fixed .bg-white.rounded-xl,
+.fixed .bg-white.rounded-lg,
+.fixed .bg-white.rounded-2xl {
+  border-radius: var(--yl-radius) !important;
+  box-shadow: 0 12px 32px rgb(0 0 0 / 16%) !important;
+}
+
+/* Utility compatibility for the standalone source-style prototype vocabulary if reused in /src. */
+.el-card {
+  background: #fff !important;
+}
+
+.el-button {
+  height: 32px;
+}
+
+.el-tag {
+  min-height: 24px;
+  padding: 0 8px;
+  border-radius: var(--yl-radius);
+}
+
+@media (max-width: 1200px) {
+  .toolbar-row {
+    grid-template-columns: 1fr;
+  }
+
+  .toolbar-row .filters {
+    justify-content: flex-start;
+    flex-wrap: wrap;
+  }
+
+  .search-control {
+    width: min(100%, 420px);
+  }
+}
+
+/* --------------------------------------------------------------------------
+   Yinglong V2 compatibility layer
+   Brings the remaining Tailwind-era pages into the same visual system as
+   index.html and yinglong-v2.css without changing their business interactions.
+   -------------------------------------------------------------------------- */
+:root {
+  --yl-primary: #266eff;
+  --yl-primary-hover: #175be5;
+  --yl-primary-active: #134fc4;
+  --yl-purple: #4f46e5;
+  --yl-success: #059669;
+  --yl-warning: #d97706;
+  --yl-danger: #e11d48;
+  --yl-page: #f8fafc;
+  --yl-card: #fff;
+  --yl-fill: #f1f5f9;
+  --yl-border: #cbd5e1;
+  --yl-border-light: #e2e8f0;
+  --yl-border-lighter: #f1f5f9;
+  --yl-text-primary: #0f172a;
+  --yl-text-regular: #334155;
+  --yl-text-secondary: #64748b;
+  --yl-text-placeholder: #94a3b8;
+  --yl-menu-bg: #fff;
+  --yl-menu-logo: #fff;
+  --yl-menu-text: #475569;
+  --yl-menu-hover: #f1f5f9;
+  --yl-menu-active-text: #266eff;
+  --yl-radius: 8px;
+  --yl-sidebar-width: 224px;
+  --yl-header-height: 56px;
+  --yl-shadow-nav: 0 1px 2px rgb(15 23 42 / 4%);
+  --yl-shadow-card: 0 1px 2px rgb(15 23 42 / 4%);
+}
+
+html,
+body {
+  min-width: 320px;
+  background: var(--yl-page) !important;
+  color: var(--yl-text-regular) !important;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    "PingFang SC", "Microsoft YaHei", sans-serif !important;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+button,
+select,
+a {
+  cursor: pointer;
+}
+
+:focus-visible {
+  outline: 2px solid rgb(38 110 255 / 42%) !important;
+  outline-offset: 2px;
+}
+
+/* Legacy sidebar DOM, rendered as the same white 224 px shell as index.html. */
+aside[data-yl-sidebar] {
+  z-index: 50;
+  display: flex !important;
+  width: var(--yl-sidebar-width) !important;
+  min-width: var(--yl-sidebar-width) !important;
+  flex-direction: column;
+  color: var(--yl-text-regular) !important;
+  background: #fff !important;
+  border-right: 1px solid var(--yl-border-light) !important;
+}
+
+aside[data-yl-sidebar] > div:first-child {
+  display: flex !important;
+  height: var(--yl-header-height) !important;
+  min-height: var(--yl-header-height) !important;
+  align-items: center;
+  gap: 10px;
+  padding: 0 16px !important;
+  color: var(--yl-text-primary) !important;
+  background: #fff !important;
+  border-bottom: 1px solid var(--yl-border-light) !important;
+}
+
+aside[data-yl-sidebar] > div:first-child::before {
+  content: "应" !important;
+  display: grid;
+  width: 28px;
+  height: 28px;
+  margin: 0;
+  flex: 0 0 28px;
+  place-items: center;
+  border-radius: 7px;
+  color: #fff;
+  background: var(--yl-primary) !important;
+  box-shadow: 0 2px 6px rgb(38 110 255 / 22%);
+  font-size: 12px;
+  font-weight: 800;
+}
+
+aside[data-yl-sidebar] > div:first-child::after {
+  content: "PROD";
+  display: inline-flex;
+  align-items: center;
+  padding: 1px 6px;
+  border: 1px solid #bfdbfe;
+  border-radius: 4px;
+  color: var(--yl-primary);
+  background: #eff6ff;
+  font: 600 10px/16px "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+  white-space: nowrap;
+}
+
+aside[data-yl-sidebar] > div:first-child h1 {
+  min-width: 0;
+  margin: 0 !important;
+  color: transparent !important;
+  font-size: 0 !important;
+  line-height: 22px !important;
+}
+
+aside[data-yl-sidebar] > div:first-child h1::after {
+  content: "应龙推理平台";
+  color: var(--yl-text-primary);
+  font-size: 15px;
+  line-height: 22px;
+  font-weight: 650;
+  white-space: nowrap;
+}
+
+aside[data-yl-sidebar] > div:first-child h1 span,
+aside[data-yl-sidebar] > div:first-child p {
+  display: none !important;
+}
+
+aside[data-yl-sidebar] nav {
+  flex: 1;
+  overflow-y: auto;
+  padding: 12px 10px 18px !important;
+}
+
+aside[data-yl-sidebar] nav ul {
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+aside[data-yl-sidebar] nav li,
+aside[data-yl-sidebar] nav li.mt-4 {
+  margin: 0 !important;
+}
+
+aside[data-yl-sidebar] nav li > p {
+  display: block !important;
+  margin: 12px 0 5px !important;
+  padding: 0 10px !important;
+  color: var(--yl-text-placeholder) !important;
+  font-size: 11px !important;
+  line-height: 20px !important;
+  font-weight: 600 !important;
+  letter-spacing: 0 !important;
+  text-transform: none !important;
+}
+
+aside[data-yl-sidebar] nav li:first-child > p {
+  margin-top: 0 !important;
+}
+
+aside[data-yl-sidebar] nav a {
+  position: relative;
+  display: flex;
+  height: auto !important;
+  min-height: 38px !important;
+  align-items: center;
+  gap: 10px !important;
+  margin: 2px 0 !important;
+  padding: 8px 10px !important;
+  border: 1px solid transparent !important;
+  border-radius: 6px !important;
+  color: var(--yl-menu-text) !important;
+  background: transparent !important;
+  font-size: 14px !important;
+  line-height: 20px !important;
+  text-decoration: none !important;
+  white-space: nowrap;
+}
+
+aside[data-yl-sidebar] nav a:hover {
+  color: var(--yl-text-primary) !important;
+  background: var(--yl-menu-hover) !important;
+}
+
+aside[data-yl-sidebar] nav a.bg-blue-600,
+aside[data-yl-sidebar] nav a.active,
+aside[data-yl-sidebar] nav a[aria-current="page"] {
+  border-color: transparent !important;
+  color: var(--yl-menu-active-text) !important;
+  background: #eff6ff !important;
+  font-weight: 600 !important;
+}
+
+aside[data-yl-sidebar] nav a.bg-blue-600::before,
+aside[data-yl-sidebar] nav a.active::before {
+  content: none !important;
+  display: none !important;
+}
+
+aside[data-yl-sidebar] nav a i {
+  width: 16px !important;
+  margin: 0;
+  color: currentColor !important;
+  font-size: 15px;
+  text-align: center;
+}
+
+aside[data-yl-sidebar] > div:last-child:not(:first-child) {
+  display: none !important;
+}
+
+/* Header and canvas rhythm match the sidebar-led V2 pages. */
+header.bg-white,
+.top {
+  height: var(--yl-header-height) !important;
+  min-height: var(--yl-header-height) !important;
+  padding: 0 24px !important;
+  border-bottom: 1px solid rgb(226 232 240 / 90%) !important;
+  background: rgb(255 255 255 / 98%) !important;
+  box-shadow: var(--yl-shadow-nav) !important;
+}
+
+header.bg-white h2,
+.top h1,
+.title h1 {
+  margin: 0 !important;
+  color: var(--yl-text-primary) !important;
+  font-size: 18px !important;
+  line-height: 28px !important;
+  font-weight: 650 !important;
+}
+
+main.flex-1,
+.main {
+  padding: 18px 24px 32px !important;
+  color: var(--yl-text-regular) !important;
+  background: var(--yl-page) !important;
+}
+
+/* Components: same density, radii and interaction states as yinglong-v2.css. */
+.card,
+.table-card,
+.bg-white.rounded-xl,
+.bg-white.rounded-lg,
+.bg-white.rounded-2xl,
+.bg-white[class*="rounded"],
+main .bg-white,
+.el-card {
+  border: 1px solid var(--yl-border-light) !important;
+  border-radius: 8px !important;
+  background: #fff !important;
+  box-shadow: var(--yl-shadow-card) !important;
+}
+
+.shadow,
+.shadow-sm,
+.shadow-md,
+.shadow-lg {
+  box-shadow: var(--yl-shadow-card) !important;
+}
+
+button,
+.btn,
+button[class*="px-"][class*="py-"] {
+  min-height: 34px !important;
+  height: 34px;
+  padding: 0 12px !important;
+  border: 1px solid var(--yl-border-light) !important;
+  border-radius: 6px !important;
+  color: var(--yl-text-regular) !important;
+  background: #fff !important;
+  box-shadow: var(--yl-shadow-card);
+  font-size: 12px !important;
+  line-height: 32px !important;
+  font-weight: 600 !important;
+  white-space: nowrap;
+}
+
+button:hover,
+.btn:hover {
+  border-color: #bfdbfe !important;
+  color: var(--yl-primary) !important;
+  background: #f8fbff !important;
+}
+
+button.bg-blue-600,
+button.bg-blue-500,
+button.bg-indigo-600,
+button[class*="bg-blue"],
+.btn.primary,
+.btn-primary,
+.button-gradient,
+.primary {
+  border-color: var(--yl-primary) !important;
+  color: #fff !important;
+  background: var(--yl-primary) !important;
+}
+
+button.bg-blue-600:hover,
+button.bg-blue-500:hover,
+button.bg-indigo-600:hover,
+button[class*="bg-blue"]:hover,
+.btn.primary:hover,
+.btn-primary:hover,
+.primary:hover {
+  border-color: var(--yl-primary-hover) !important;
+  color: #fff !important;
+  background: var(--yl-primary-hover) !important;
+}
+
+button.text-red-600,
+button[class*="text-red"],
+.btn.danger,
+.btn-danger,
+.danger {
+  border-color: #fecdd3 !important;
+  color: var(--yl-danger) !important;
+  background: #fff1f2 !important;
+}
+
+button:disabled,
+.btn:disabled {
+  cursor: not-allowed;
+  opacity: .48;
+}
+
+input,
+select,
+textarea,
+.control,
+.search-control {
+  min-height: 34px !important;
+  height: 34px;
+  padding: 6px 10px !important;
+  border: 1px solid var(--yl-border-light) !important;
+  border-radius: 6px !important;
+  color: var(--yl-text-regular) !important;
+  background: #fff !important;
+  font-size: 12px !important;
+}
+
+textarea {
+  height: auto !important;
+  min-height: 72px !important;
+}
+
+input:focus,
+select:focus,
+textarea:focus,
+.control:focus {
+  outline: none !important;
+  border-color: var(--yl-primary) !important;
+  box-shadow: 0 0 0 3px rgb(38 110 255 / 10%) !important;
+}
+
+table th {
+  height: 40px;
+  padding: 10px 14px !important;
+  color: var(--yl-text-secondary) !important;
+  background: #f8fafc !important;
+  border-bottom: 1px solid var(--yl-border-light) !important;
+  font-size: 11px !important;
+  line-height: 18px;
+  font-weight: 650 !important;
+}
+
+table td {
+  min-height: 44px;
+  padding: 11px 14px !important;
+  border-top: 1px solid var(--yl-border-lighter) !important;
+  font-size: 12px;
+}
+
+tbody tr:hover {
+  background: #f8fafc !important;
+}
+
+.pill,
+.type-pill,
+.el-tag,
+span[class*="bg-green"],
+span[class*="bg-emerald"],
+span[class*="bg-yellow"],
+span[class*="bg-amber"],
+span[class*="bg-red"],
+span[class*="bg-rose"],
+span[class*="bg-blue"],
+span[class*="bg-sky"],
+span[class*="bg-purple"],
+span[class*="bg-indigo"] {
+  display: inline-flex;
+  min-height: 22px !important;
+  align-items: center;
+  padding: 2px 8px !important;
+  border: 1px solid transparent;
+  border-radius: 999px !important;
+  font-size: 11px !important;
+  line-height: 16px;
+  font-weight: 650 !important;
+  white-space: nowrap;
+}
+
+span[class*="bg-green"],
+span[class*="bg-emerald"],
+.approved {
+  border-color: #a7f3d0 !important;
+  color: var(--yl-success) !important;
+  background: #ecfdf5 !important;
+}
+
+span[class*="bg-blue"],
+span[class*="bg-sky"],
+.pending,
+.type-trial {
+  border-color: #bae6fd !important;
+  color: #0284c7 !important;
+  background: #f0f9ff !important;
+}
+
+span[class*="bg-yellow"],
+span[class*="bg-amber"],
+.reviewing {
+  border-color: #fde68a !important;
+  color: var(--yl-warning) !important;
+  background: #fffbeb !important;
+}
+
+span[class*="bg-red"],
+span[class*="bg-rose"],
+.rejected {
+  border-color: #fecdd3 !important;
+  color: var(--yl-danger) !important;
+  background: #fff1f2 !important;
+}
+
+span[class*="bg-purple"],
+span[class*="bg-indigo"],
+.type-formal {
+  border-color: #c7d2fe !important;
+  color: #4f46e5 !important;
+  background: #eef2ff !important;
+}
+
+.fixed.inset-0,
+[id$="Modal"] {
+  backdrop-filter: none;
+}
+
+.fixed .bg-white.rounded-xl,
+.fixed .bg-white.rounded-lg,
+.fixed .bg-white.rounded-2xl {
+  border-radius: 12px !important;
+  box-shadow: 0 20px 50px rgb(15 23 42 / 18%) !important;
+}
+
+@media (max-width: 900px) and (min-width: 621px) {
+  aside[data-yl-sidebar] {
+    width: 64px !important;
+    min-width: 64px !important;
+  }
+
+  aside[data-yl-sidebar] > div:first-child {
+    justify-content: center;
+    padding: 0 !important;
+  }
+
+  aside[data-yl-sidebar] > div:first-child h1,
+  aside[data-yl-sidebar] > div:first-child::after,
+  aside[data-yl-sidebar] nav li > p,
+  aside[data-yl-sidebar] nav a span {
+    display: none !important;
+  }
+
+  aside[data-yl-sidebar] nav {
+    padding-inline: 8px !important;
+  }
+
+  aside[data-yl-sidebar] nav a {
+    justify-content: center;
+    padding: 8px !important;
+  }
+}
+
+@media (max-width: 620px) {
+  aside[data-yl-sidebar] {
+    display: none !important;
+  }
+
+  header.bg-white,
+  .top {
+    padding-inline: 16px !important;
+  }
+
+  main.flex-1,
+  .main {
+    padding: 14px 12px 24px !important;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    transition: none !important;
+    animation: none !important;
+  }
+}
+
+/* Standalone modal previews and redirect fallbacks intentionally have no app shell. */
+body.modal-preview {
+  background: rgb(15 23 42 / 58%) !important;
+}
+
+body.redirect-page {
+  display: grid;
+  min-height: 100vh;
+  margin: 0;
+  padding: 24px;
+  place-items: center;
+  background: var(--yl-page) !important;
+}
+
+.redirect-card {
+  width: min(100%, 440px);
+  padding: 28px;
+  border: 1px solid var(--yl-border-light);
+  border-radius: 12px;
+  background: #fff;
+  box-shadow: 0 12px 30px rgb(15 23 42 / 8%);
+  text-align: center;
+}
+
+.redirect-brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 18px;
+  color: var(--yl-text-primary);
+  font-size: 15px;
+  font-weight: 650;
+}
+
+.redirect-brand::before {
+  content: "应";
+  display: grid;
+  width: 28px;
+  height: 28px;
+  place-items: center;
+  border-radius: 7px;
+  color: #fff;
+  background: var(--yl-primary);
+  box-shadow: 0 2px 6px rgb(38 110 255 / 22%);
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.redirect-card p {
+  margin: 0;
+  color: var(--yl-text-secondary);
+  line-height: 1.7;
+}
+
+.redirect-card a {
+  color: var(--yl-primary);
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.redirect-card a:hover {
+  text-decoration: underline;
+}

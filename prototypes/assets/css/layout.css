@@ -1,0 +1,57 @@
+.yl-content-shell {
+  display: flex;
+  min-width: 0;
+  flex: 1 1 auto;
+  flex-direction: column;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.yl-global-topbar {
+  display: flex;
+  min-height: 40px;
+  flex: 0 0 40px;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 24px;
+  border-bottom: 1px solid var(--yl-divider);
+  color: var(--yl-text-secondary);
+  background: var(--yl-surface);
+  font-size: 12px;
+}
+
+.yl-breadcrumb { display: flex; align-items: center; gap: 7px; min-width: 0; }
+.yl-breadcrumb a { color: var(--yl-text-secondary); text-decoration: none; }
+.yl-breadcrumb a:hover { color: var(--yl-primary); }
+.yl-breadcrumb-separator { color: #c5c5c5; }
+.yl-breadcrumb-current { overflow: hidden; color: var(--yl-text-primary); text-overflow: ellipsis; white-space: nowrap; }
+.yl-global-user { display: flex; align-items: center; gap: 8px; color: var(--yl-text-primary); white-space: nowrap; }
+.yl-global-user-avatar { display: grid; width: 24px; height: 24px; place-items: center; border-radius: 50%; color: #fff; background: var(--yl-primary); font-size: 11px; font-weight: 600; }
+
+.yl-content-shell > .yl-page-header {
+  display: flex !important;
+  min-height: 56px !important;
+  flex: 0 0 auto;
+  align-items: center !important;
+  justify-content: space-between !important;
+  gap: 16px !important;
+  padding: 10px 24px !important;
+  border-bottom: 1px solid var(--yl-border) !important;
+  background: var(--yl-surface) !important;
+  box-shadow: none !important;
+}
+.yl-content-shell > .yl-page-header h1,
+.yl-content-shell > .yl-page-header h2 { margin: 0 !important; font-size: 20px !important; line-height: 28px !important; font-weight: 600 !important; }
+.yl-content-shell > .yl-page-header .crumb,
+.yl-content-shell > .yl-page-header p,
+.yl-content-shell > .yl-page-header .page-description { display: none !important; }
+.yl-content-shell > .yl-page-header > * { min-width: 0; }
+
+.yl-page-workspace { display: flex; min-width: 0; min-height: 0; flex: 1 1 auto; overflow: hidden; }
+.yl-page-workspace > main { flex: 1 1 auto; }
+
+@media (max-width: 767px) {
+  .yl-global-topbar { padding: 0 16px; }
+  .yl-content-shell > .yl-page-header { min-height: 52px !important; padding: 8px 16px !important; }
+  .yl-global-user span:last-child { display: none; }
+}

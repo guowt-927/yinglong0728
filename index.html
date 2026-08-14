@@ -1,12 +1,563 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="refresh" content="0; url=src/index.html">
-  <title>应龙资源权限原型</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>系统概览 - 应龙大模型推理平台</title>
+    <link href="prototypes/assets/css/tailwind.css" rel="stylesheet">
+    <style>
+        :root {
+            --brand: #266eff;
+            --brand-hover: #175be5;
+            --canvas: #f8fafc;
+            --surface: #ffffff;
+            --ink: #0f172a;
+            --text: #334155;
+            --muted: #64748b;
+            --subtle: #94a3b8;
+            --border: #e2e8f0;
+            --success: #059669;
+            --warning: #d97706;
+            --danger: #e11d48;
+            --info: #0284c7;
+            --radius: 8px;
+            --sidebar-width: 224px;
+            --font-sans: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "PingFang SC", "Microsoft YaHei", sans-serif;
+            --font-mono: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+        }
+
+        * { box-sizing: border-box; }
+        html { background: var(--canvas); }
+        body {
+            margin: 0;
+            color: var(--text);
+            background: var(--canvas);
+            font-family: var(--font-sans);
+            font-size: 14px;
+            line-height: 1.5;
+            letter-spacing: 0;
+            -webkit-font-smoothing: antialiased;
+        }
+        button, input, select { font: inherit; letter-spacing: 0; }
+        button, a, select { cursor: pointer; }
+        button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible {
+            outline: 2px solid rgba(38, 110, 255, .35);
+            outline-offset: 2px;
+        }
+        .icon { width: 16px; height: 16px; flex: 0 0 auto; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+        .icon-lg { width: 22px; height: 22px; }
+        .shell { display: flex; min-height: 100vh; }
+
+        .sidebar {
+            position: fixed;
+            inset: 0 auto 0 0;
+            z-index: 40;
+            display: flex;
+            width: var(--sidebar-width);
+            flex-direction: column;
+            border-right: 1px solid var(--border);
+            background: var(--surface);
+        }
+        .brand {
+            display: flex;
+            min-height: 56px;
+            align-items: center;
+            gap: 10px;
+            padding: 0 16px;
+            border-bottom: 1px solid var(--border);
+            text-decoration: none;
+        }
+        .brand-mark {
+            display: grid;
+            width: 28px;
+            height: 28px;
+            flex: 0 0 auto;
+            place-items: center;
+            border-radius: 7px;
+            color: #fff;
+            background: var(--brand);
+            box-shadow: 0 2px 6px rgba(38, 110, 255, .22);
+            font-size: 12px;
+            font-weight: 800;
+        }
+        .brand-name { color: var(--ink); font-size: 15px; font-weight: 650; white-space: nowrap; }
+        .env-badge { padding: 1px 6px; border: 1px solid #bfdbfe; border-radius: 4px; color: var(--brand); background: #eff6ff; font: 600 10px/16px var(--font-mono); white-space: nowrap; }
+        .sidebar-nav { flex: 1; overflow-y: auto; padding: 12px 10px 16px; }
+        .nav-group + .nav-group { margin-top: 14px; }
+        .nav-group-title { margin: 0 0 5px; padding: 0 10px; color: var(--subtle); font-size: 11px; line-height: 20px; font-weight: 600; }
+        .nav-item {
+            display: flex;
+            min-height: 38px;
+            align-items: center;
+            gap: 10px;
+            margin: 2px 0;
+            padding: 8px 10px;
+            border-radius: 6px;
+            color: #475569;
+            text-decoration: none;
+            transition: color .16s ease, background-color .16s ease;
+            white-space: nowrap;
+        }
+        .nav-item:hover { color: var(--ink); background: #f1f5f9; }
+        .nav-item.active { color: var(--brand); background: #eff6ff; font-weight: 600; }
+        .avatar { display: grid; width: 28px; height: 28px; flex: 0 0 auto; place-items: center; border: 1px solid #60a5fa; border-radius: 50%; color: #fff; background: var(--brand); font-size: 11px; font-weight: 700; }
+
+        .content { width: calc(100% - var(--sidebar-width)); min-width: 0; margin-left: var(--sidebar-width); }
+        .global-header {
+            position: sticky;
+            top: 0;
+            z-index: 30;
+            display: flex;
+            height: 56px;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 24px;
+            border-bottom: 1px solid rgba(226, 232, 240, .9);
+            background: rgba(255, 255, 255, .98);
+            box-shadow: 0 1px 2px rgba(15, 23, 42, .03);
+        }
+        .breadcrumb { display: flex; min-width: 0; align-items: center; gap: 8px; color: var(--muted); font-size: 12px; white-space: nowrap; }
+        .breadcrumb a { color: var(--muted); text-decoration: none; }
+        .breadcrumb a:hover { color: var(--brand); }
+        .breadcrumb-current { overflow: hidden; color: var(--text); font-weight: 600; text-overflow: ellipsis; }
+        .header-profile { display: flex; align-items: center; gap: 8px; color: var(--text); font-size: 12px; white-space: nowrap; }
+
+        main { padding: 18px 24px 28px; }
+        .page-title { margin: 0; color: var(--ink); font-size: 20px; line-height: 28px; font-weight: 650; }
+        .page-desc { margin: 2px 0 0; color: var(--muted); font-size: 12px; }
+        .toolbar-actions { display: flex; flex-wrap: wrap; align-items: center; justify-content: flex-end; gap: 8px; }
+        .overview-heading { align-items: flex-end; padding-bottom: 12px; border-bottom: 1px solid var(--border); }
+        .control, .btn { min-height: 34px; border: 1px solid #cbd5e1; border-radius: 6px; background: #fff; color: var(--text); font-size: 12px; white-space: nowrap; }
+        .control { padding: 0 30px 0 10px; }
+        .btn { display: inline-flex; align-items: center; justify-content: center; gap: 7px; padding: 0 12px; font-weight: 550; transition: border-color .16s ease, color .16s ease, background-color .16s ease; }
+        .btn:hover { border-color: #94a3b8; background: #f8fafc; }
+        .btn-primary { border-color: var(--brand); color: #fff; background: var(--brand); }
+        .btn-primary:hover { border-color: var(--brand-hover); color: #fff; background: var(--brand-hover); }
+        .btn-icon { width: 34px; padding: 0; }
+        .refresh-time { color: var(--muted); font: 11px/18px var(--font-mono); white-space: nowrap; }
+
+        .section { margin-top: 16px; }
+        .section-heading { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 10px; }
+        .section-title { display: flex; align-items: center; gap: 8px; margin: 0; color: var(--ink); font-size: 16px; line-height: 24px; font-weight: 600; }
+        .section-dot { width: 4px; height: 16px; border-radius: 2px; background: var(--brand); }
+        .section-note { color: var(--muted); font-size: 12px; }
+        .panel { border: 1px solid rgba(226, 232, 240, .9); border-radius: var(--radius); background: #fff; box-shadow: 0 1px 2px rgba(15, 23, 42, .025); }
+
+        .kpi-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); overflow: hidden; }
+        .kpi { display: flex; min-width: 0; align-items: center; gap: 12px; min-height: 94px; padding: 15px 16px; border-right: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+        .kpi:nth-child(3n) { border-right: 0; }
+        .kpi:nth-last-child(-n+3) { border-bottom: 0; }
+        .kpi-icon { display: grid; width: 40px; height: 40px; flex: 0 0 auto; place-items: center; border: 1px solid #dbeafe; border-radius: 8px; color: var(--brand); background: #eff6ff; }
+        .kpi-icon.success { border-color: #a7f3d0; color: var(--success); background: #ecfdf5; }
+        .kpi-icon.warning { border-color: #fde68a; color: var(--warning); background: #fffbeb; }
+        .kpi-icon.danger { border-color: #fecdd3; color: var(--danger); background: #fff1f2; }
+        .kpi-copy { min-width: 0; }
+        .kpi-label { color: var(--muted); font-size: 12px; white-space: nowrap; }
+        .kpi-value-row { display: flex; min-width: 0; align-items: baseline; gap: 7px; margin-top: 1px; }
+        .kpi-value { color: var(--ink); font: 700 22px/30px var(--font-mono); white-space: nowrap; }
+        .kpi-unit { color: var(--muted); font-size: 11px; }
+        .kpi-trend { display: inline-flex; align-items: center; gap: 3px; margin-top: 2px; color: var(--success); font-size: 10px; white-space: nowrap; }
+        .kpi-trend.warning { color: var(--warning); }
+        .kpi-trend.danger { color: var(--danger); }
+
+        .risk-panel { display: grid; grid-template-columns: minmax(240px, 1.15fr) repeat(3, minmax(180px, 1fr)); overflow: hidden; }
+        .risk-lead { padding: 16px; border-right: 1px solid var(--border); background: #fffbeb; }
+        .risk-kicker { display: flex; align-items: center; gap: 7px; color: #92400e; font-size: 12px; font-weight: 650; }
+        .risk-title { margin: 5px 0 0; color: var(--ink); font-size: 15px; font-weight: 650; }
+        .risk-copy { margin: 3px 0 0; color: #78716c; font-size: 12px; }
+        .risk-item { padding: 14px 16px; border-right: 1px solid var(--border); }
+        .risk-item:last-child { border-right: 0; }
+        .risk-meta { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+        .risk-name { overflow: hidden; color: var(--ink); font: 600 12px/20px var(--font-mono); text-overflow: ellipsis; white-space: nowrap; }
+        .badge { display: inline-flex; min-height: 21px; align-items: center; gap: 5px; padding: 1px 7px; border: 1px solid; border-radius: 999px; font-size: 11px; font-weight: 600; white-space: nowrap; }
+        .badge::before { width: 5px; height: 5px; border-radius: 50%; background: currentColor; content: ""; }
+        .badge-success { border-color: #a7f3d0; color: #047857; background: #ecfdf5; }
+        .badge-warning { border-color: #fde68a; color: #b45309; background: #fffbeb; }
+        .badge-danger { border-color: #fecdd3; color: #be123c; background: #fff1f2; }
+        .badge-info { border-color: #bae6fd; color: #0369a1; background: #f0f9ff; }
+        .risk-value { margin-top: 5px; color: var(--warning); font: 700 18px/26px var(--font-mono); }
+        .risk-desc { margin-top: 2px; color: var(--muted); font-size: 11px; }
+        .text-link { display: inline-flex; align-items: center; gap: 3px; margin-top: 7px; border: 0; padding: 0; color: var(--brand); background: transparent; font-size: 11px; font-weight: 600; text-decoration: none; white-space: nowrap; }
+        .text-link:hover { text-decoration: underline; }
+
+        .resource-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
+        .resource-card { padding: 14px 15px; transition: border-color .16s ease, box-shadow .16s ease; }
+        .resource-card:hover { border-color: #cbd5e1; box-shadow: 0 3px 10px rgba(15, 23, 42, .05); }
+        .resource-card-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 8px; }
+        .resource-name { margin: 0; color: var(--ink); font-size: 13px; font-weight: 650; }
+        .resource-cluster { margin-top: 2px; color: var(--muted); font-size: 11px; }
+        .resource-value-row { display: flex; align-items: flex-end; justify-content: space-between; gap: 8px; margin-top: 14px; }
+        .resource-value { color: var(--ink); font: 700 20px/26px var(--font-mono); }
+        .resource-value small { color: var(--muted); font-size: 11px; font-weight: 400; }
+        .resource-ratio { color: var(--muted); font: 11px/18px var(--font-mono); }
+        .progress { height: 6px; margin-top: 8px; overflow: hidden; border-radius: 999px; background: #e2e8f0; }
+        .progress > span { display: block; height: 100%; border-radius: inherit; background: var(--brand); }
+        .progress.warning > span { background: #f59e0b; }
+        .resource-foot { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-top: 8px; color: var(--muted); font-size: 11px; }
+
+        .node-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); overflow: hidden; }
+        .node-item { position: relative; min-height: 92px; padding: 15px 16px; border-right: 1px solid var(--border); color: inherit; text-decoration: none; }
+        .node-item:last-child { border-right: 0; }
+        .node-item:hover { background: #f8fafc; }
+        .node-label { display: flex; align-items: center; gap: 7px; color: var(--muted); font-size: 12px; }
+        .status-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--success); }
+        .status-dot.offline, .status-dot.error { background: var(--danger); }
+        .status-dot.maintenance { background: var(--warning); }
+        .node-value { margin-top: 5px; color: var(--ink); font: 700 22px/28px var(--font-mono); }
+        .node-share { position: absolute; right: 16px; bottom: 16px; color: var(--muted); font: 11px/18px var(--font-mono); }
+
+        .model-health-panel { display: grid; grid-template-columns: minmax(230px, .9fr) minmax(0, 2.1fr); overflow: hidden; }
+        .model-health-summary { padding: 16px; border-right: 1px solid var(--border); background: #f8fbff; }
+        .model-health-kicker { color: var(--brand); font-size: 11px; font-weight: 700; }
+        .model-health-score { display: flex; align-items: baseline; gap: 7px; margin-top: 5px; }
+        .model-health-score strong { color: var(--ink); font: 700 26px/34px var(--font-mono); }
+        .model-health-score span { color: var(--muted); font-size: 12px; }
+        .model-health-copy { margin: 5px 0 0; color: var(--muted); font-size: 11px; }
+        .model-health-actions { display: flex; flex-wrap: wrap; gap: 8px 14px; margin-top: 12px; }
+        .model-health-list { min-width: 0; }
+        .model-health-row { display: grid; grid-template-columns: minmax(150px, 1.2fr) repeat(3, minmax(86px, .7fr)) auto; align-items: center; gap: 12px; min-height: 66px; padding: 10px 14px; border-bottom: 1px solid #f1f5f9; color: inherit; text-decoration: none; }
+        .model-health-row:last-child { border-bottom: 0; }
+        .model-health-row:hover { background: #f8fafc; }
+        .model-health-name { min-width: 0; }
+        .model-health-name strong { display: block; overflow: hidden; color: var(--ink); font: 650 12px/20px var(--font-mono); text-overflow: ellipsis; white-space: nowrap; }
+        .model-health-name .badge { margin-top: 4px; }
+        .model-health-metric small { display: block; color: var(--subtle); font-size: 9px; }
+        .model-health-metric strong { display: block; margin-top: 2px; color: var(--text); font: 650 12px/18px var(--font-mono); }
+        .model-health-metric strong.warning { color: var(--warning); }
+        .model-health-open { color: var(--brand); font-size: 11px; font-weight: 650; white-space: nowrap; }
+
+        .chart-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+        .chart-panel { min-width: 0; padding: 14px 16px 12px; }
+        .chart-head { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px; padding-bottom: 10px; border-bottom: 1px solid #f1f5f9; }
+        .chart-title { margin: 0; color: var(--ink); font-size: 13px; font-weight: 650; }
+        .chart-subtitle { margin-top: 2px; color: var(--muted); font-size: 11px; }
+        .segment { display: inline-flex; padding: 2px; border-radius: 6px; background: #f1f5f9; }
+        .segment button { min-width: 34px; height: 26px; border: 0; border-radius: 4px; color: var(--muted); background: transparent; font-size: 11px; }
+        .segment button.active { color: var(--brand); background: #fff; box-shadow: 0 1px 2px rgba(15, 23, 42, .08); font-weight: 650; }
+        .chart-wrap { position: relative; height: 196px; margin-top: 10px; }
+        .chart-legend { display: flex; flex-wrap: wrap; align-items: center; gap: 12px; padding-top: 8px; border-top: 1px solid #f1f5f9; color: var(--muted); font-size: 11px; }
+        .legend-item { display: inline-flex; align-items: center; gap: 5px; white-space: nowrap; }
+        .legend-line { width: 15px; height: 2px; background: var(--brand); }
+        .legend-line.green { background: var(--success); }
+        .legend-line.gray { height: 1px; border-top: 1px dashed var(--subtle); background: transparent; }
+
+        .table-panel { overflow: hidden; }
+        .table-toolbar { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 10px; padding: 12px 14px; border-bottom: 1px solid var(--border); }
+        .filters { display: flex; flex: 1; flex-wrap: wrap; align-items: center; gap: 8px; }
+        .search { position: relative; width: min(240px, 100%); }
+        .search .icon { position: absolute; top: 9px; left: 10px; color: var(--subtle); pointer-events: none; }
+        .search input { width: 100%; height: 34px; padding: 0 30px 0 33px; border: 1px solid #cbd5e1; border-radius: 6px; color: var(--text); background: #fff; font-size: 12px; }
+        .clear-search { position: absolute; top: 5px; right: 5px; display: none; width: 24px; height: 24px; place-items: center; border: 0; border-radius: 4px; color: var(--subtle); background: transparent; }
+        .clear-search.visible { display: grid; }
+        .clear-search:hover { color: var(--text); background: #f1f5f9; }
+        .table-summary { color: var(--muted); font-size: 12px; white-space: nowrap; }
+        .table-summary strong { color: var(--brand); font-family: var(--font-mono); }
+        .active-filters { display: none; align-items: center; gap: 6px; padding: 8px 14px; border-bottom: 1px solid #dbeafe; background: #f8fbff; }
+        .active-filters.visible { display: flex; }
+        .filter-chip { display: inline-flex; align-items: center; gap: 4px; padding: 1px 7px; border: 1px solid #bfdbfe; border-radius: 4px; color: var(--brand); background: #eff6ff; font-size: 11px; white-space: nowrap; }
+        .reset-filter { margin-left: auto; border: 0; color: var(--muted); background: transparent; font-size: 11px; }
+        .reset-filter:hover { color: var(--danger); }
+        .table-scroll { overflow-x: auto; }
+        table { width: 100%; border-collapse: collapse; }
+        th { height: 40px; padding: 9px 14px; border-bottom: 1px solid var(--border); color: var(--muted); background: #f8fafc; font-size: 11px; font-weight: 650; text-align: left; white-space: nowrap; }
+        td { padding: 10px 14px; border-bottom: 1px solid #f1f5f9; color: var(--text); font-size: 12px; white-space: nowrap; }
+        tbody tr:hover { background: rgba(248, 250, 252, .8); }
+        .object-name { color: var(--ink); font-weight: 600; }
+        .object-id { color: var(--muted); font: 10px/16px var(--font-mono); }
+        .mono { font-family: var(--font-mono); font-variant-numeric: tabular-nums; }
+        .usage-cell { display: flex; min-width: 116px; align-items: center; gap: 8px; }
+        .usage-cell .progress { width: 68px; margin: 0; }
+        .empty-row td { height: 120px; color: var(--muted); text-align: center; }
+        .pagination { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 10px 14px; color: var(--muted); background: rgba(248, 250, 252, .55); font-size: 11px; }
+        .page-buttons { display: flex; align-items: center; gap: 6px; }
+        .page-buttons button { min-width: 30px; height: 28px; padding: 0 8px; border: 1px solid #cbd5e1; border-radius: 5px; color: var(--text); background: #fff; font-size: 11px; white-space: nowrap; }
+        .page-buttons button:hover:not(:disabled) { border-color: var(--brand); color: var(--brand); }
+        .page-buttons button:disabled { cursor: not-allowed; opacity: .45; }
+
+        .modal-backdrop { position: fixed; inset: 0; z-index: 60; display: flex; align-items: center; justify-content: center; padding: 20px; background: rgba(15, 23, 42, .42); }
+        .modal-backdrop.hidden { display: none; }
+        .modal { display: flex; width: min(1080px, 100%); max-height: 88vh; flex-direction: column; overflow: hidden; border: 1px solid rgba(226, 232, 240, .9); border-radius: 12px; background: #fff; box-shadow: 0 20px 50px rgba(15, 23, 42, .2); }
+        .modal-header { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 14px 18px; border-bottom: 1px solid var(--border); }
+        .modal-title-area { display: flex; flex-wrap: wrap; align-items: center; gap: 9px; }
+        .modal-title { margin: 0; color: var(--ink); font-size: 16px; font-weight: 650; }
+        .modal-body { overflow: auto; }
+        .modal-footer { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 11px 18px; border-top: 1px solid var(--border); color: var(--muted); background: #f8fafc; font-size: 11px; }
+
+        .toast { position: fixed; top: 68px; right: 18px; z-index: 80; display: none; max-width: 360px; align-items: flex-start; gap: 10px; padding: 12px 14px; border: 1px solid var(--border); border-left: 4px solid var(--success); border-radius: 8px; background: #fff; box-shadow: 0 12px 28px rgba(15, 23, 42, .14); }
+        .toast.visible { display: flex; }
+        .toast-title { color: var(--ink); font-size: 12px; font-weight: 650; }
+        .toast-copy { margin-top: 1px; color: var(--muted); font-size: 11px; }
+
+        @media (max-width: 1180px) {
+            .kpi-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+            .kpi:nth-child(2n) { border-right: 0; }
+            .kpi:nth-last-child(-n+3) { border-bottom: 1px solid var(--border); }
+            .kpi:nth-last-child(-n+2) { border-bottom: 0; }
+            .risk-panel { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+            .risk-lead { grid-column: 1 / -1; border-right: 0; border-bottom: 1px solid var(--border); }
+            .model-health-panel { grid-template-columns: 1fr; }
+            .model-health-summary { border-right: 0; border-bottom: 1px solid var(--border); }
+        }
+        @media (max-width: 900px) {
+            :root { --sidebar-width: 64px; }
+            .brand { justify-content: center; padding: 0; }
+            .brand-name, .env-badge, .nav-group-title, .nav-item span { display: none; }
+            .sidebar-nav { padding-inline: 8px; }
+            .nav-item { justify-content: center; padding: 8px; }
+            .resource-grid, .chart-grid { grid-template-columns: 1fr; }
+            .model-health-row { grid-template-columns: minmax(150px, 1.3fr) repeat(3, minmax(76px, .7fr)) auto; }
+        }
+        @media (max-width: 640px) {
+            :root { --sidebar-width: 0px; }
+            .sidebar { display: none; }
+            .content { width: 100%; margin-left: 0; }
+            .global-header, main { padding-left: 14px; padding-right: 14px; }
+            .header-profile span:last-child, .page-desc, .refresh-time { display: none; }
+            .overview-heading { align-items: stretch; flex-direction: column; }
+            .toolbar-actions { justify-content: flex-start; }
+            .kpi-grid, .risk-panel, .resource-grid, .node-grid { grid-template-columns: 1fr; }
+            .kpi, .risk-item, .node-item { border-right: 0; border-bottom: 1px solid var(--border) !important; }
+            .kpi:last-child, .risk-item:last-child, .node-item:last-child { border-bottom: 0 !important; }
+            .table-toolbar { align-items: stretch; flex-direction: column; }
+            .search { width: 100%; }
+            .model-health-row { grid-template-columns: 1fr 1fr; gap: 8px; padding: 12px 14px; }
+            .model-health-name, .model-health-open { grid-column: 1 / -1; }
+            .modal-header { align-items: flex-start; }
+            .modal-title-area { flex-direction: column; align-items: flex-start; }
+        }
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after { scroll-behavior: auto !important; transition-duration: .01ms !important; animation-duration: .01ms !important; }
+        }
+    </style>
 </head>
 <body>
-  <p><a href="src/index.html">进入应龙资源权限原型</a></p>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+    <symbol id="i-dashboard" viewBox="0 0 24 24"><rect width="7" height="9" x="3" y="3" rx="1"/><rect width="7" height="5" x="14" y="3" rx="1"/><rect width="7" height="9" x="14" y="12" rx="1"/><rect width="7" height="5" x="3" y="16" rx="1"/></symbol>
+    <symbol id="i-sliders" viewBox="0 0 24 24"><path d="M4 21v-7m0-4V3m8 18v-9m0-4V3m8 18v-5m0-4V3M1 14h6m2-6h6m2 8h6"/></symbol>
+    <symbol id="i-list" viewBox="0 0 24 24"><path d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01"/></symbol>
+    <symbol id="i-box" viewBox="0 0 24 24"><path d="m21 8-9-5-9 5 9 5 9-5Z"/><path d="m3 8 9 5 9-5M3 8v8l9 5 9-5V8M12 13v8"/></symbol>
+    <symbol id="i-brain" viewBox="0 0 24 24"><path d="M9.5 4.5A3 3 0 0 0 4 6v1a3 3 0 0 0-1 5.5A3 3 0 0 0 4 18v.5a3 3 0 0 0 5.5 1.7M14.5 4.5A3 3 0 0 1 20 6v1a3 3 0 0 1 1 5.5A3 3 0 0 1 20 18v.5a3 3 0 0 1-5.5 1.7M12 4v16M8 9h4M12 15h4"/></symbol>
+    <symbol id="i-server" viewBox="0 0 24 24"><rect width="20" height="8" x="2" y="2" rx="2"/><rect width="20" height="8" x="2" y="14" rx="2"/><path d="M6 6h.01M6 18h.01"/></symbol>
+    <symbol id="i-activity" viewBox="0 0 24 24"><path d="M3 12h4l3-9 4 18 3-9h4"/></symbol>
+    <symbol id="i-file" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8Z"/><path d="M14 2v6h6M9 15h6M12 12v6"/></symbol>
+    <symbol id="i-check-user" viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="m16 11 2 2 4-4"/></symbol>
+    <symbol id="i-network" viewBox="0 0 24 24"><rect width="6" height="6" x="9" y="2" rx="1"/><rect width="6" height="6" x="3" y="16" rx="1"/><rect width="6" height="6" x="15" y="16" rx="1"/><path d="M12 8v4m-6 4v-2h12v2"/></symbol>
+    <symbol id="i-route" viewBox="0 0 24 24"><circle cx="6" cy="19" r="3"/><path d="M9 19h5.5a3.5 3.5 0 0 0 0-7h-5a3.5 3.5 0 0 1 0-7H15"/><circle cx="18" cy="5" r="3"/></symbol>
+    <symbol id="i-settings" viewBox="0 0 24 24"><path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.38a2 2 0 0 0-.73-2.73l-.15-.09a2 2 0 0 1-1-1.74v-.51a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2Z"/><circle cx="12" cy="12" r="3"/></symbol>
+    <symbol id="i-chip" viewBox="0 0 24 24"><rect width="16" height="16" x="4" y="4" rx="2"/><rect width="6" height="6" x="9" y="9" rx="1"/><path d="M9 1v3m6-3v3M9 20v3m6-3v3M20 9h3m-3 5h3M1 9h3m-3 5h3"/></symbol>
+    <symbol id="i-download" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/></symbol>
+    <symbol id="i-refresh" viewBox="0 0 24 24"><path d="M20 6v6h-6M4 18v-6h6"/><path d="M18.49 9A7 7 0 0 0 5.64 6.64L4 8m16 8-1.64 1.36A7 7 0 0 1 5.51 15"/></symbol>
+    <symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></symbol>
+    <symbol id="i-x" viewBox="0 0 24 24"><path d="M18 6 6 18M6 6l12 12"/></symbol>
+    <symbol id="i-alert" viewBox="0 0 24 24"><path d="M10.3 2.9 1.8 17a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 2.9a2 2 0 0 0-3.4 0Z"/><path d="M12 9v4m0 4h.01"/></symbol>
+    <symbol id="i-check" viewBox="0 0 24 24"><path d="m20 6-11 11-5-5"/></symbol>
+    <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></symbol>
+    <symbol id="i-layers" viewBox="0 0 24 24"><path d="m12 2 9 5-9 5-9-5 9-5Z"/><path d="m3 12 9 5 9-5M3 17l9 5 9-5"/></symbol>
+</svg>
+
+<div class="shell">
+    <aside class="sidebar" aria-label="应龙主导航">
+        <a class="brand" href="index.html" aria-label="应龙大模型推理平台首页">
+            <span class="brand-mark">应</span>
+            <span class="brand-name">应龙推理平台</span>
+            <span class="env-badge">PROD</span>
+        </a>
+        <nav class="sidebar-nav">
+            <div class="nav-group">
+                <p class="nav-group-title">工作台</p>
+                <a class="nav-item active" href="index.html" aria-current="page"><svg class="icon"><use href="#i-dashboard"/></svg><span>系统概览</span></a>
+            </div>
+            <div class="nav-group">
+                <p class="nav-group-title">算力调度</p>
+                <a class="nav-item" href="prototypes/sys_dispatch.html"><svg class="icon"><use href="#i-sliders"/></svg><span>算力调度</span></a>
+                <a class="nav-item" href="prototypes/sys_task_list.html"><svg class="icon"><use href="#i-list"/></svg><span>我的任务</span></a>
+            </div>
+            <div class="nav-group">
+                <p class="nav-group-title">模型管理</p>
+                <a class="nav-item" href="prototypes/sys_model_repo.html"><svg class="icon"><use href="#i-box"/></svg><span>模型资产</span></a>
+                <a class="nav-item" href="prototypes/sys_model_service.html"><svg class="icon"><use href="#i-server"/></svg><span>模型服务</span></a>
+                <a class="nav-item" href="prototypes/sys_model_training.html"><svg class="icon"><use href="#i-brain"/></svg><span>模型训练</span></a>
+                <a class="nav-item" href="prototypes/sys_model_governance.html"><svg class="icon"><use href="#i-check-user"/></svg><span>模型纳管</span></a>
+                <a class="nav-item" href="prototypes/sys_model_monitor.html"><svg class="icon"><use href="#i-activity"/></svg><span>模型监测</span></a>
+            </div>
+            <div class="nav-group">
+                <p class="nav-group-title">资源与运维</p>
+                <a class="nav-item" href="prototypes/sys_resource_application.html"><svg class="icon"><use href="#i-file"/></svg><span>资源申请</span></a>
+                <a class="nav-item" href="prototypes/sys_resource_approval.html"><svg class="icon"><use href="#i-check-user"/></svg><span>授权审批</span></a>
+                <a class="nav-item" href="prototypes/sys_infrastructure_mgmt.html"><svg class="icon"><use href="#i-network"/></svg><span>集群管理</span></a>
+                <a class="nav-item" href="prototypes/sys_api_key_mgmt.html"><svg class="icon"><use href="#i-activity"/></svg><span>请求监控</span></a>
+                <a class="nav-item" href="prototypes/sys_request_tracing.html"><svg class="icon"><use href="#i-route"/></svg><span>链路追踪</span></a>
+            </div>
+        </nav>
+    </aside>
+
+    <div class="content">
+        <header class="global-header">
+            <nav class="breadcrumb" aria-label="面包屑"><a href="index.html">应龙</a><span>/</span><span>工作台</span><span>/</span><span class="breadcrumb-current" aria-current="page">系统概览</span></nav>
+            <div class="header-profile" aria-label="当前用户"><span class="avatar">A</span><span>资源管理员</span></div>
+        </header>
+
+        <main id="main-content">
+            <section class="section" aria-labelledby="overviewTitle">
+                <div class="section-heading overview-heading">
+                    <div><h1 class="page-title" id="overviewTitle">系统概览</h1><p class="page-desc">平台算力、节点与模型服务的实时运行态势 · 近 5 分钟实时数据</p></div>
+                    <div class="toolbar-actions">
+                        <span class="refresh-time" id="refreshTime">更新于 14:32:18</span>
+                        <select class="control" id="clusterScope" aria-label="集群范围"><option value="all">全部集群</option><option value="prod-a">生产集群 A</option><option value="prod-b">生产集群 B</option><option value="test">测试集群</option></select>
+                        <button class="btn btn-icon" type="button" id="refreshButton" aria-label="刷新数据" title="刷新数据"><svg class="icon"><use href="#i-refresh"/></svg></button>
+                        <button class="btn btn-primary" type="button" id="exportButton"><svg class="icon"><use href="#i-download"/></svg>导出资源明细</button>
+                    </div>
+                </div>
+                <div class="panel kpi-grid">
+                    <div class="kpi"><span class="kpi-icon"><svg class="icon icon-lg"><use href="#i-chip"/></svg></span><div class="kpi-copy"><div class="kpi-label">GPU 总量</div><div class="kpi-value-row"><span class="kpi-value">256</span><span class="kpi-unit">卡</span></div><div class="kpi-trend">较昨日无变化</div></div></div>
+                    <div class="kpi"><span class="kpi-icon success"><svg class="icon icon-lg"><use href="#i-check"/></svg></span><div class="kpi-copy"><div class="kpi-label">空闲 GPU</div><div class="kpi-value-row"><span class="kpi-value">61</span><span class="kpi-unit">卡</span></div><div class="kpi-trend">可调度 53 卡</div></div></div>
+                    <div class="kpi"><span class="kpi-icon warning"><svg class="icon icon-lg"><use href="#i-activity"/></svg></span><div class="kpi-copy"><div class="kpi-label">GPU 使用率</div><div class="kpi-value-row"><span class="kpi-value">76.2%</span></div><div class="kpi-trend warning">近 1 小时 +4.8%</div></div></div>
+                    <div class="kpi"><span class="kpi-icon success"><svg class="icon icon-lg"><use href="#i-server"/></svg></span><div class="kpi-copy"><div class="kpi-label">在线节点</div><div class="kpi-value-row"><span class="kpi-value">42</span><span class="kpi-unit">台</span></div><div class="kpi-trend">可用率 89.4%</div></div></div>
+                    <div class="kpi"><span class="kpi-icon"><svg class="icon icon-lg"><use href="#i-layers"/></svg></span><div class="kpi-copy"><div class="kpi-label">运行模型服务</div><div class="kpi-value-row"><span class="kpi-value">18</span><span class="kpi-unit">个</span></div><div class="kpi-trend">健康 17 个</div></div></div>
+                    <div class="kpi"><span class="kpi-icon warning"><svg class="icon icon-lg"><use href="#i-clock"/></svg></span><div class="kpi-copy"><div class="kpi-label">待处理审批</div><div class="kpi-value-row"><span class="kpi-value">6</span><span class="kpi-unit">项</span></div><div class="kpi-trend warning">最长等待 46 分钟</div></div></div>
+                </div>
+            </section>
+
+            <section class="section" aria-labelledby="riskTitle">
+                <div class="section-heading"><h2 class="section-title" id="riskTitle"><span class="section-dot"></span>容量风险</h2></div>
+                <div class="panel risk-panel">
+                    <div class="risk-lead"><div class="risk-kicker"><svg class="icon"><use href="#i-alert"/></svg>当前有 3 项资源风险</div><div class="risk-title">生产集群存在容量与节点风险</div><p class="risk-copy">建议优先处理 H800 资源池和失联节点，避免影响在线推理 SLA。</p></div>
+                    <div class="risk-item"><div class="risk-meta"><span class="risk-name">H800 / prod-a</span><span class="badge badge-warning">容量紧张</span></div><div class="risk-value">92.1%</div><div class="risk-desc">可分配仅剩 5 卡，预计 2.4 小时耗尽</div><a class="text-link" href="prototypes/sys_dispatch.html">查看调度建议 →</a></div>
+                    <div class="risk-item"><div class="risk-meta"><span class="risk-name">gpu-node-23</span><span class="badge badge-danger">节点失联</span></div><div class="risk-value" style="color:var(--danger)">18 分钟</div><div class="risk-desc">最后心跳 14:14，承载 2 个实例</div><a class="text-link" href="prototypes/sys_node_mgmt.html?status=error">定位节点 →</a></div>
+                    <div class="risk-item"><div class="risk-meta"><span class="risk-name">qwen3-32b</span><span class="badge badge-warning">SLA 预警</span></div><div class="risk-value">1.84%</div><div class="risk-desc">近 15 分钟失败率超过 1% 阈值</div><a class="text-link" href="prototypes/sys_model_monitor.html?model=qwen3-32b&amp;time=1h&amp;tab=task&amp;source=overview">诊断模型请求 →</a></div>
+                </div>
+            </section>
+
+            <section class="section" aria-labelledby="resourceTitle">
+                <div class="section-heading"><h2 class="section-title" id="resourceTitle"><span class="section-dot"></span>显卡资源</h2></div>
+                <div class="resource-grid">
+                    <button class="panel resource-card" type="button" data-resource="NVIDIA A100"><div class="resource-card-head"><div style="text-align:left"><h3 class="resource-name">NVIDIA A100</h3></div><span class="badge badge-warning">高负载</span></div><div class="resource-value-row"><span class="resource-value">120 <small>/ 128 卡</small></span><span class="resource-ratio">93.8%</span></div><div class="progress warning"><span style="width:93.8%"></span></div><div class="resource-foot"><span>空闲 8 卡</span><span class="text-link" style="margin:0">查看详情 →</span></div></button>
+                    <button class="panel resource-card" type="button" data-resource="NVIDIA H800"><div class="resource-card-head"><div style="text-align:left"><h3 class="resource-name">NVIDIA H800</h3></div><span class="badge badge-info">正常</span></div><div class="resource-value-row"><span class="resource-value">45 <small>/ 64 卡</small></span><span class="resource-ratio">70.3%</span></div><div class="progress"><span style="width:70.3%"></span></div><div class="resource-foot"><span>空闲 19 卡</span><span class="text-link" style="margin:0">查看详情 →</span></div></button>
+                    <button class="panel resource-card" type="button" data-resource="Ascend 910"><div class="resource-card-head"><div style="text-align:left"><h3 class="resource-name">Ascend 910</h3></div><span class="badge badge-success">充足</span></div><div class="resource-value-row"><span class="resource-value">30 <small>/ 64 卡</small></span><span class="resource-ratio">46.9%</span></div><div class="progress"><span style="width:46.9%;background:var(--success)"></span></div><div class="resource-foot"><span>空闲 34 卡</span><span class="text-link" style="margin:0">查看详情 →</span></div></button>
+                </div>
+            </section>
+
+            <section class="section" aria-labelledby="nodeTitle">
+                <div class="section-heading"><h2 class="section-title" id="nodeTitle"><span class="section-dot"></span>集群节点状态</h2><a class="text-link" href="prototypes/sys_infrastructure_mgmt.html">进入集群管理 →</a></div>
+                <div class="panel node-grid">
+                    <a class="node-item" href="prototypes/sys_node_mgmt.html?status=online"><div class="node-label"><span class="status-dot"></span>在线节点</div><div class="node-value">42</div><span class="node-share">89.4%</span></a>
+                    <a class="node-item" href="prototypes/sys_node_mgmt.html?status=offline"><div class="node-label"><span class="status-dot offline"></span>离线节点</div><div class="node-value">2</div><span class="node-share">4.3%</span></a>
+                    <a class="node-item" href="prototypes/sys_node_mgmt.html?status=maintenance"><div class="node-label"><span class="status-dot maintenance"></span>维护节点</div><div class="node-value">2</div><span class="node-share">4.3%</span></a>
+                    <a class="node-item" href="prototypes/sys_node_mgmt.html?status=error"><div class="node-label"><span class="status-dot error"></span>异常节点</div><div class="node-value">1</div><span class="node-share">2.1%</span></a>
+                </div>
+            </section>
+
+            <section class="section" aria-labelledby="modelHealthTitle">
+                <div class="section-heading"><h2 class="section-title" id="modelHealthTitle"><span class="section-dot"></span>模型服务态势</h2><a class="text-link" href="prototypes/sys_model_monitor.html?model=all&amp;time=1h&amp;source=overview">进入模型监测 →</a></div>
+                <div class="panel model-health-panel">
+                    <div class="model-health-summary">
+                        <div class="model-health-kicker">近 1 小时 · 在线服务</div>
+                        <div class="model-health-score"><strong>17 / 18</strong><span>服务健康</span></div>
+                        <p class="model-health-copy">1 个模型失败率超过 SLA 阈值，建议先查看任务调用，再定位 Pod 资源。</p>
+                        <div class="model-health-actions"><a class="text-link" href="prototypes/sys_model_monitor.html?model=qwen3-32b&amp;time=1h&amp;tab=task&amp;source=overview">处理 SLA 预警 →</a><a class="text-link" href="prototypes/sys_model_service.html">管理服务 →</a></div>
+                    </div>
+                    <div class="model-health-list" aria-label="重点模型健康摘要">
+                        <a class="model-health-row" href="prototypes/sys_model_monitor.html?model=qwen3-32b&amp;time=1h&amp;tab=task&amp;source=overview"><div class="model-health-name"><strong>qwen3-32b</strong><span class="badge badge-warning">SLA 预警</span></div><div class="model-health-metric"><small>调用失败率</small><strong class="warning">1.84%</strong></div><div class="model-health-metric"><small>平均时延</small><strong>318 ms</strong></div><div class="model-health-metric"><small>KV Cache</small><strong>58.4%</strong></div><span class="model-health-open">诊断 →</span></a>
+                        <a class="model-health-row" href="prototypes/sys_model_monitor.html?model=qwen2-2.5&amp;time=1h&amp;tab=service&amp;source=overview"><div class="model-health-name"><strong>qwen2-2.5</strong><span class="badge badge-success">健康</span></div><div class="model-health-metric"><small>调用失败率</small><strong>0%</strong></div><div class="model-health-metric"><small>平均时延</small><strong>172 ms</strong></div><div class="model-health-metric"><small>KV Cache</small><strong>39.2%</strong></div><span class="model-health-open">查看 →</span></a>
+                        <a class="model-health-row" href="prototypes/sys_model_monitor.html?model=whisper&amp;time=1h&amp;tab=service&amp;source=overview"><div class="model-health-name"><strong>whisper</strong><span class="badge badge-success">健康</span></div><div class="model-health-metric"><small>调用失败率</small><strong>0.03%</strong></div><div class="model-health-metric"><small>平均时延</small><strong>512 ms</strong></div><div class="model-health-metric"><small>KV Cache</small><strong>30.1%</strong></div><span class="model-health-open">查看 →</span></a>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+</div>
+
+<div class="modal-backdrop hidden" id="resourceDetailsModal" role="dialog" aria-modal="true" aria-labelledby="resModalTitle">
+    <div class="modal">
+        <div class="modal-header"><div class="modal-title-area"><h2 class="modal-title" id="resModalTitle">显卡资源详情</h2><select class="control" id="gpuTypeFilter" aria-label="显卡类型"></select><select class="control" id="nodeIpFilter" aria-label="节点 IP"><option value="all">全部节点 IP</option></select></div><button class="btn btn-icon" type="button" id="closeModal" aria-label="关闭详情弹窗"><svg class="icon"><use href="#i-x"/></svg></button></div>
+        <div class="modal-body"><table><thead><tr><th>GPU ID</th><th>节点 IP</th><th>实例名称</th><th>GPU 利用率</th><th>总显存</th><th>已用显存</th><th>显存占用率</th><th>功率</th></tr></thead><tbody id="resModalBody"></tbody></table></div>
+        <div class="modal-footer"><span id="modalSummary">-</span><button class="btn" type="button" id="modalExport"><svg class="icon"><use href="#i-download"/></svg>导出当前明细</button></div>
+    </div>
+</div>
+
+<div class="toast" id="toast" role="status" aria-live="polite"><svg class="icon" style="color:var(--success);margin-top:1px"><use href="#i-check"/></svg><div><div class="toast-title" id="toastTitle">数据已刷新</div><div class="toast-copy" id="toastCopy">平台状态已更新至最新采样时间。</div></div></div>
+
+<script>
+    const resourceDetailData = {
+        'NVIDIA A100': [
+            { gpuId: 'GPU-0', nodeIp: '192.168.1.101', instanceName: 'qwen-72b-prod-01', gpuUtil: 92, totalMem: 80, usedMem: 78, power: 320 },
+            { gpuId: 'GPU-1', nodeIp: '192.168.1.101', instanceName: 'qwen-72b-prod-01', gpuUtil: 85, totalMem: 80, usedMem: 70, power: 305 },
+            { gpuId: 'GPU-0', nodeIp: '192.168.1.102', instanceName: 'qwen-72b-prod-02', gpuUtil: 88, totalMem: 80, usedMem: 72, power: 310 },
+            { gpuId: 'GPU-0', nodeIp: '192.168.1.103', instanceName: 'qwen-32b-batch-01', gpuUtil: 99, totalMem: 80, usedMem: 79, power: 380 }
+        ],
+        'NVIDIA H800': [
+            { gpuId: 'GPU-0', nodeIp: '192.168.2.201', instanceName: 'deepseek-r1-prod-01', gpuUtil: 75, totalMem: 80, usedMem: 60, power: 450 },
+            { gpuId: 'GPU-1', nodeIp: '192.168.2.201', instanceName: 'deepseek-r1-prod-01', gpuUtil: 80, totalMem: 80, usedMem: 65, power: 480 },
+            { gpuId: 'GPU-0', nodeIp: '192.168.2.202', instanceName: 'deepseek-v3-prod-01', gpuUtil: 68, totalMem: 80, usedMem: 57, power: 420 }
+        ],
+        'Ascend 910': [
+            { gpuId: 'NPU-0', nodeIp: '192.168.3.101', instanceName: 'embedding-prod-01', gpuUtil: 45, totalMem: 32, usedMem: 12, power: 160 },
+            { gpuId: 'NPU-1', nodeIp: '192.168.3.101', instanceName: 'embedding-prod-02', gpuUtil: 51, totalMem: 32, usedMem: 15, power: 168 }
+        ]
+    };
+
+    const state = { currentGpu: 'NVIDIA A100' };
+    const byId = id => document.getElementById(id);
+    const unique = values => [...new Set(values)];
+
+    function showToast(title, copy) {
+        byId('toastTitle').textContent = title;
+        byId('toastCopy').textContent = copy;
+        byId('toast').classList.add('visible');
+        window.clearTimeout(showToast.timer);
+        showToast.timer = window.setTimeout(() => byId('toast').classList.remove('visible'), 2600);
+    }
+
+    function showResourceDetails(type) {
+        state.currentGpu = type;
+        byId('gpuTypeFilter').innerHTML = Object.keys(resourceDetailData).map(name => `<option value="${name}"${name === type ? ' selected' : ''}>${name}</option>`).join('');
+        const ips = unique(resourceDetailData[type].map(item => item.nodeIp));
+        byId('nodeIpFilter').innerHTML = '<option value="all">全部节点 IP</option>' + ips.map(ip => `<option value="${ip}">${ip}</option>`).join('');
+        renderResourceDetails();
+        byId('resourceDetailsModal').classList.remove('hidden');
+        byId('closeModal').focus();
+    }
+
+    function renderResourceDetails() {
+        const selectedIp = byId('nodeIpFilter').value;
+        const rows = resourceDetailData[state.currentGpu].filter(item => selectedIp === 'all' || item.nodeIp === selectedIp);
+        byId('resModalBody').innerHTML = rows.map(item => {
+            const memUtil = Math.round(item.usedMem / item.totalMem * 100);
+            const warning = memUtil >= 85;
+            return `<tr><td class="mono">${item.gpuId}</td><td class="mono" style="color:var(--brand)">${item.nodeIp}</td><td>${item.instanceName}</td><td class="mono">${item.gpuUtil}%</td><td class="mono">${item.totalMem} GB</td><td class="mono">${item.usedMem} GB</td><td><div class="usage-cell"><div class="progress${warning ? ' warning' : ''}"><span style="width:${memUtil}%"></span></div><span class="mono" style="color:${warning ? 'var(--warning)' : 'var(--text)'}">${memUtil}%</span></div></td><td class="mono">${item.power} W</td></tr>`;
+        }).join('');
+        byId('modalSummary').textContent = `${state.currentGpu} · 共 ${rows.length} 条卡级记录`;
+    }
+
+    function exportResourceDetails(currentOnly) {
+        const types = currentOnly ? [state.currentGpu] : Object.keys(resourceDetailData);
+        const lines = ['GPU 型号,GPU ID,节点 IP,实例名称,GPU 利用率,总显存,已用显存,显存占用率,功率'];
+        types.forEach(type => resourceDetailData[type].forEach(item => lines.push([type, item.gpuId, item.nodeIp, item.instanceName, `${item.gpuUtil}%`, `${item.totalMem}GB`, `${item.usedMem}GB`, `${Math.round(item.usedMem / item.totalMem * 100)}%`, `${item.power}W`].join(','))));
+        const blob = new Blob(['\ufeff' + lines.join('\n')], { type: 'text/csv;charset=utf-8' });
+        const link = document.createElement('a');
+        link.href = URL.createObjectURL(blob);
+        link.download = currentOnly ? `${state.currentGpu.replaceAll(' ', '_')}_资源明细.csv` : '应龙平台_算力资源明细.csv';
+        document.body.appendChild(link);
+        link.click();
+        URL.revokeObjectURL(link.href);
+        link.remove();
+        showToast('导出任务已完成', currentOnly ? '当前显卡资源明细已生成。' : '平台算力资源明细已生成。');
+    }
+
+    document.querySelectorAll('[data-resource]').forEach(button => button.addEventListener('click', () => showResourceDetails(button.dataset.resource)));
+    byId('closeModal').addEventListener('click', () => byId('resourceDetailsModal').classList.add('hidden'));
+    byId('resourceDetailsModal').addEventListener('click', event => { if (event.target === byId('resourceDetailsModal')) byId('resourceDetailsModal').classList.add('hidden'); });
+    document.addEventListener('keydown', event => { if (event.key === 'Escape') byId('resourceDetailsModal').classList.add('hidden'); });
+    byId('gpuTypeFilter').addEventListener('change', event => showResourceDetails(event.target.value));
+    byId('nodeIpFilter').addEventListener('change', renderResourceDetails);
+    byId('exportButton').addEventListener('click', () => exportResourceDetails(false));
+    byId('modalExport').addEventListener('click', () => exportResourceDetails(true));
+    byId('refreshButton').addEventListener('click', () => {
+        const now = new Date();
+        byId('refreshTime').textContent = `更新于 ${now.toLocaleTimeString('zh-CN', { hour12: false })}`;
+        showToast('数据已刷新', '平台状态已更新至最新采样时间。');
+    });
+    byId('clusterScope').addEventListener('change', event => showToast('集群范围已切换', `当前展示：${event.target.options[event.target.selectedIndex].text}`));
+</script>
 </body>
 </html>

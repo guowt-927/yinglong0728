@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>节点详情 - 应龙大模型推理平台</title>
+  <link rel="stylesheet" href="assets/css/yinglong-v2.css">
+  <link rel="stylesheet" href="assets/css/pages/sys_node_detail.css">
+</head>
+<body class="sidebar-led heading-spec-page">
+  <svg width="0" height="0" aria-hidden="true" style="position:absolute">
+    <symbol id="i-dashboard" viewBox="0 0 24 24"><rect width="7" height="9" x="3" y="3" rx="1"/><rect width="7" height="5" x="14" y="3" rx="1"/><rect width="7" height="9" x="14" y="12" rx="1"/><rect width="7" height="5" x="3" y="16" rx="1"/></symbol>
+    <symbol id="i-sliders" viewBox="0 0 24 24"><path d="M4 21v-7m0-4V3m8 18v-9m0-4V3m8 18v-5m0-4V3M1 14h6m2-6h6m2 8h6"/></symbol>
+    <symbol id="i-list" viewBox="0 0 24 24"><path d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01"/></symbol>
+    <symbol id="i-box" viewBox="0 0 24 24"><path d="m21 8-9-5-9 5 9 5 9-5Z"/><path d="m3 8 9 5 9-5M3 8v8l9 5 9-5V8M12 13v8"/></symbol>
+    <symbol id="i-server" viewBox="0 0 24 24"><rect width="20" height="8" x="2" y="2" rx="2"/><rect width="20" height="8" x="2" y="14" rx="2"/><path d="M6 6h.01M6 18h.01"/></symbol>
+    <symbol id="i-brain" viewBox="0 0 24 24"><path d="M12 5.5V20m-2.5-16A2.5 2.5 0 0 0 7 6.5V8a3 3 0 0 0-3 3v1.5A2.5 2.5 0 0 0 6.5 15H7v1.5a3.5 3.5 0 0 0 3.5 3.5H12M14.5 4A2.5 2.5 0 0 1 17 6.5V8a3 3 0 0 1 3 3v1.5a2.5 2.5 0 0 1-2.5 2.5H17v1.5a3.5 3.5 0 0 1-3.5 3.5H12"/></symbol>
+    <symbol id="i-activity" viewBox="0 0 24 24"><path d="M3 12h4l2-8 4 16 2-8h6"/></symbol>
+    <symbol id="i-file" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8Z"/><path d="M14 2v6h6M9 15h6M12 12v6"/></symbol>
+    <symbol id="i-check-user" viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="m16 11 2 2 4-4"/></symbol>
+    <symbol id="i-network" viewBox="0 0 24 24"><rect width="6" height="6" x="9" y="2" rx="1"/><rect width="6" height="6" x="2" y="16" rx="1"/><rect width="6" height="6" x="16" y="16" rx="1"/><path d="M12 8v4m-7 4v-2h14v2"/></symbol>
+    <symbol id="i-route" viewBox="0 0 24 24"><circle cx="6" cy="19" r="3"/><path d="M9 19h5.5a3.5 3.5 0 0 0 0-7h-5a3.5 3.5 0 0 1 0-7H15"/><circle cx="18" cy="5" r="3"/></symbol>
+    <symbol id="i-arrow-left" viewBox="0 0 24 24"><path d="m15 18-6-6 6-6"/><path d="M9 12h10"/></symbol>
+    <symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></symbol>
+    <symbol id="i-x" viewBox="0 0 24 24"><path d="M18 6 6 18M6 6l12 12"/></symbol>
+  </svg>
+
+  <a class="skip-link" href="#main-content">跳到主要内容</a>
+  <aside class="sidebar" aria-label="应龙主导航">
+    <a class="brand" href="../index.html"><span class="brand-mark">应</span><span class="brand-name">应龙推理平台</span><span class="env-badge">PROD</span></a>
+    <nav class="sidebar-nav">
+      <section class="nav-group"><h2 class="nav-group-title">工作台</h2><a class="nav-item" href="../index.html"><svg class="icon"><use href="#i-dashboard"/></svg><span>系统概览</span></a></section>
+      <section class="nav-group"><h2 class="nav-group-title">算力调度</h2><a class="nav-item" href="sys_dispatch.html"><svg class="icon"><use href="#i-sliders"/></svg><span>算力调度</span></a><a class="nav-item" href="sys_task_list.html"><svg class="icon"><use href="#i-list"/></svg><span>我的任务</span></a></section>
+      <section class="nav-group"><h2 class="nav-group-title">模型管理</h2><a class="nav-item" href="sys_model_repo.html"><svg class="icon"><use href="#i-box"/></svg><span>模型资产</span></a><a class="nav-item" href="sys_model_service.html"><svg class="icon"><use href="#i-server"/></svg><span>模型服务</span></a><a class="nav-item" href="sys_model_training.html"><svg class="icon"><use href="#i-brain"/></svg><span>模型训练</span></a><a class="nav-item" href="sys_model_governance.html"><svg class="icon"><use href="#i-check-user"/></svg><span>模型纳管</span></a><a class="nav-item" href="sys_model_monitor.html"><svg class="icon"><use href="#i-activity"/></svg><span>模型监测</span></a></section>
+      <section class="nav-group"><h2 class="nav-group-title">资源与运维</h2><a class="nav-item" href="sys_resource_application.html"><svg class="icon"><use href="#i-file"/></svg><span>资源申请</span></a><a class="nav-item" href="sys_resource_approval.html"><svg class="icon"><use href="#i-check-user"/></svg><span>授权审批</span></a><a class="nav-item active" href="sys_infrastructure_mgmt.html" aria-current="page"><svg class="icon"><use href="#i-network"/></svg><span>集群管理</span></a><a class="nav-item" href="sys_api_key_mgmt.html"><svg class="icon"><use href="#i-activity"/></svg><span>请求监控</span></a><a class="nav-item" href="sys_request_tracing.html"><svg class="icon"><use href="#i-route"/></svg><span>链路追踪</span></a></section>
+    </nav>
+  </aside>
+
+  <div class="app-main">
+    <header class="global-header">
+      <nav class="breadcrumb" aria-label="面包屑"><a href="../index.html">应龙</a><span>/</span><span>资源与运维</span><span>/</span><a href="sys_infrastructure_mgmt.html">集群管理</a><span>/</span><span class="breadcrumb-current" aria-current="page">节点详情</span></nav>
+      <div class="user-profile"><span>资源管理员</span><span class="user-avatar" aria-hidden="true">A</span></div>
+    </header>
+
+    <main class="page-canvas heading-spec-canvas" id="main-content">
+      <section class="section node-heading" aria-labelledby="nodeDetailTitle">
+        <div class="section-heading overview-heading">
+          <div><h1 class="page-title" id="nodeDetailTitle">node-01</h1><p class="page-description"><span class="mono">192.168.1.101</span> · 生产环境集群 A · 最近同步于 14:32:18</p></div>
+          <div class="toolbar-actions"><span class="badge badge-success"><span class="status-dot"></span>在线</span><a class="btn" href="sys_infrastructure_mgmt.html"><svg class="icon icon-sm"><use href="#i-arrow-left"/></svg>返回集群管理</a></div>
+        </div>
+      </section>
+
+      <section class="card node-overview" aria-label="节点运行概览">
+        <div class="node-identity">
+          <span class="identity-label">加速卡型号</span>
+          <strong>NVIDIA A100</strong>
+          <span class="identity-meta">Worker 节点 · 运行 14 天</span>
+        </div>
+        <article class="node-stat"><span>GPU 容量</span><strong><em>2</em> / 8</strong><small>可用 / 总数</small></article>
+        <article class="node-stat attention"><span>GPU 利用率</span><strong>64%</strong><small>当前资源水位</small></article>
+        <article class="node-stat"><span>运行实例</span><strong>2</strong><small>全部正常运行</small></article>
+      </section>
+
+      <section class="node-detail-workspace">
+        <div class="node-tabs" role="tablist" aria-label="节点详情视图">
+          <button class="node-tab active" id="tabInstances" type="button" role="tab" aria-selected="true" aria-controls="panelInstances" onclick="switchTab('instances')">实例运行情况</button>
+          <button class="node-tab" id="tabEvents" type="button" role="tab" aria-selected="false" aria-controls="panelEvents" onclick="switchTab('events')">节点事件</button>
+        </div>
+
+        <section class="tab-panel" id="panelInstances" role="tabpanel" aria-labelledby="tabInstances">
+          <div class="card table-card">
+            <div class="table-toolbar"><div class="table-title"><h2>运行实例</h2></div><span class="result-count">共 <strong>2</strong> 项</span></div>
+            <div class="table-scroll"><table><thead><tr><th>Pod 名称</th><th>所属服务</th><th>状态</th></tr></thead><tbody><tr><td class="mono cell-title">pod-qwen-72b-wx92</td><td>svc-qwen-72b-prod</td><td><span class="badge badge-success">运行中</span></td></tr><tr><td class="mono cell-title">pod-qwen-72b-ab12</td><td>svc-qwen-72b-prod</td><td><span class="badge badge-success">运行中</span></td></tr></tbody></table></div>
+          </div>
+        </section>
+
+        <section class="tab-panel hidden" id="panelEvents" role="tabpanel" aria-labelledby="tabEvents">
+          <div class="card table-card">
+            <div class="table-toolbar"><div class="table-title"><h2>系统事件日志</h2></div><div class="toolbar-actions"><span class="result-count" id="eventCount">共 3 条事件</span><div class="search-wrap"><svg class="icon"><use href="#i-search"/></svg><input class="search-input" id="eventSearch" maxlength="50" aria-label="搜索节点事件" placeholder="搜索事件名称、详情或原因" oninput="filterEvents()"><button class="search-clear hidden" id="eventSearchClear" type="button" aria-label="清除事件搜索" onclick="clearEventSearch()"><svg class="icon icon-sm"><use href="#i-x"/></svg></button></div></div></div>
+            <div class="table-scroll"><table><thead><tr><th>事件名称</th><th>类型</th><th>时间</th><th>详情</th><th>原因</th><th>来源</th></tr></thead><tbody id="eventRows"><tr data-search="node ready system checks passed gpu drivers initialized nodestartup kubelet"><td class="cell-title">Node Ready</td><td><span class="badge badge-neutral">正常</span></td><td>今天 10:23:45</td><td>系统检查通过，GPU 驱动初始化完成。</td><td class="mono">NodeStartup</td><td class="mono">kubelet</td></tr><tr data-search="high temp gpu temperature fan speed temperaturethresholdexceeded nvidia-dcgm"><td class="cell-title">High Temp</td><td><span class="badge badge-warning">警告</span></td><td>昨天 14:00:12</td><td>GPU #3 温度达到 82°C，风扇已自动提速。</td><td class="mono">TemperatureThresholdExceeded</td><td class="mono">nvidia-dcgm</td></tr><tr data-search="net failure connection master timed out networktimeout cni-plugin"><td class="cell-title">Net Failure</td><td><span class="badge badge-danger">异常</span></td><td>昨天 12:00:00</td><td>连接 Master 节点超时。</td><td class="mono">NetworkTimeout</td><td class="mono">cni-plugin</td></tr></tbody></table></div>
+            <div class="empty-state hidden" id="eventEmpty"><strong>没有匹配的节点事件</strong><span>请调整关键词后重新搜索。</span></div>
+          </div>
+        </section>
+      </section>
+    </main>
+  </div>
+
+  <script>
+    function switchTab(tab) {
+      const instances = tab === 'instances';
+      tabInstances.classList.toggle('active', instances);
+      tabEvents.classList.toggle('active', !instances);
+      tabInstances.setAttribute('aria-selected', String(instances));
+      tabEvents.setAttribute('aria-selected', String(!instances));
+      panelInstances.classList.toggle('hidden', !instances);
+      panelEvents.classList.toggle('hidden', instances);
+    }
+
+    function filterEvents() {
+      const keyword = eventSearch.value.trim().toLowerCase();
+      const rows = [...eventRows.querySelectorAll('tr')];
+      let visible = 0;
+      rows.forEach(row => {
+        const matched = !keyword || (row.dataset.search + ' ' + row.textContent).toLowerCase().includes(keyword);
+        row.classList.toggle('hidden', !matched);
+        if (matched) visible++;
+      });
+      eventCount.textContent = `共 ${visible} 条事件`;
+      eventSearchClear.classList.toggle('hidden', !keyword);
+      eventEmpty.classList.toggle('hidden', visible > 0);
+    }
+
+    function clearEventSearch() {
+      eventSearch.value = '';
+      filterEvents();
+      eventSearch.focus();
+    }
+  </script>
+</body>
+</html>

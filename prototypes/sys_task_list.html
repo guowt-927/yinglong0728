@@ -1,0 +1,225 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>我的任务 - 应龙大模型推理平台</title>
+  <link rel="stylesheet" href="assets/css/yinglong-v2.css">
+</head>
+<body class="sidebar-led heading-spec-page">
+  <svg width="0" height="0" aria-hidden="true" style="position:absolute">
+    <symbol id="i-dashboard" viewBox="0 0 24 24"><rect width="7" height="9" x="3" y="3" rx="1"/><rect width="7" height="5" x="14" y="3" rx="1"/><rect width="7" height="9" x="14" y="12" rx="1"/><rect width="7" height="5" x="3" y="16" rx="1"/></symbol>
+    <symbol id="i-sliders" viewBox="0 0 24 24"><path d="M4 21v-7m0-4V3m8 18v-9m0-4V3m8 18v-5m0-4V3M1 14h6m2-6h6m2 8h6"/></symbol>
+    <symbol id="i-list" viewBox="0 0 24 24"><path d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01"/></symbol>
+    <symbol id="i-box" viewBox="0 0 24 24"><path d="m21 8-9-5-9 5 9 5 9-5Z"/><path d="m3 8v8l9 5 9-5V8m-9 5v8"/></symbol>
+    <symbol id="i-server" viewBox="0 0 24 24"><rect width="20" height="8" x="2" y="2" rx="2"/><rect width="20" height="8" x="2" y="14" rx="2"/><path d="M6 6h.01M6 18h.01"/></symbol>
+    <symbol id="i-brain" viewBox="0 0 24 24"><path d="M9.5 4A2.5 2.5 0 0 0 7 6.5V8a3 3 0 0 0-3 3v1.5A2.5 2.5 0 0 0 6.5 15H7v1.5A3.5 3.5 0 0 0 10.5 20H12V5.5A1.5 1.5 0 0 0 10.5 4h-1Z"/><path d="M14.5 4A2.5 2.5 0 0 1 17 6.5V8a3 3 0 0 1 3 3v1.5a2.5 2.5 0 0 1-2.5 2.5H17v1.5a3.5 3.5 0 0 1-3.5 3.5H12V5.5A1.5 1.5 0 0 1 13.5 4h1Z"/></symbol>
+    <symbol id="i-activity" viewBox="0 0 24 24"><path d="M3 12h4l2-8 4 16 2-8h6"/></symbol>
+    <symbol id="i-file" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8Z"/><path d="M14 2v6h6M9 15h6M12 12v6"/></symbol>
+    <symbol id="i-check-user" viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="m16 11 2 2 4-4"/></symbol>
+    <symbol id="i-network" viewBox="0 0 24 24"><rect width="6" height="6" x="9" y="2" rx="1"/><rect width="6" height="6" x="2" y="16" rx="1"/><rect width="6" height="6" x="16" y="16" rx="1"/><path d="M12 8v4m-7 4v-2h14v2"/></symbol>
+    <symbol id="i-route" viewBox="0 0 24 24"><circle cx="6" cy="19" r="3"/><path d="M9 19h5.5a3.5 3.5 0 0 0 0-7h-5a3.5 3.5 0 0 1 0-7H15"/><circle cx="18" cy="5" r="3"/></symbol>
+    <symbol id="i-settings" viewBox="0 0 24 24"><path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.38a2 2 0 0 0-.73-2.73l-.15-.09a2 2 0 0 1-1-1.74v-.51a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2Z"/><circle cx="12" cy="12" r="3"/></symbol>
+    <symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></symbol>
+    <symbol id="i-x" viewBox="0 0 24 24"><path d="M18 6 6 18M6 6l12 12"/></symbol>
+    <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
+    <symbol id="i-check" viewBox="0 0 24 24"><path d="m20 6-11 11-5-5"/></symbol>
+    <symbol id="i-alert" viewBox="0 0 24 24"><path d="M10.3 2.9 1.8 17a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 2.9a2 2 0 0 0-3.4 0Z"/><path d="M12 9v4m0 4h.01"/></symbol>
+    <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></symbol>
+    <symbol id="i-play" viewBox="0 0 24 24"><path d="m5 3 14 9-14 9V3Z"/></symbol>
+    <symbol id="i-pause" viewBox="0 0 24 24"><path d="M8 5v14m8-14v14"/></symbol>
+  </svg>
+
+  <a class="skip-link" href="#main-content">跳到主要内容</a>
+  <aside class="sidebar" aria-label="应龙主导航">
+    <a class="brand" href="../index.html"><span class="brand-mark">应</span><span class="brand-name">应龙推理平台</span><span class="env-badge">PROD</span></a>
+    <nav class="sidebar-nav">
+      <section class="nav-group"><h2 class="nav-group-title">工作台</h2><a class="nav-item" href="../index.html"><svg class="icon"><use href="#i-dashboard"/></svg><span>系统概览</span></a></section>
+      <section class="nav-group"><h2 class="nav-group-title">算力调度</h2><a class="nav-item" href="sys_dispatch.html"><svg class="icon"><use href="#i-sliders"/></svg><span>算力调度</span></a><a class="nav-item active" href="sys_task_list.html" aria-current="page"><svg class="icon"><use href="#i-list"/></svg><span>我的任务</span></a></section>
+      <section class="nav-group"><h2 class="nav-group-title">模型管理</h2><a class="nav-item" href="sys_model_repo.html"><svg class="icon"><use href="#i-box"/></svg><span>模型资产</span></a><a class="nav-item" href="sys_model_service.html"><svg class="icon"><use href="#i-server"/></svg><span>模型服务</span></a><a class="nav-item" href="sys_model_training.html"><svg class="icon"><use href="#i-brain"/></svg><span>模型训练</span></a><a class="nav-item" href="sys_model_governance.html"><svg class="icon"><use href="#i-check-user"/></svg><span>模型纳管</span></a><a class="nav-item" href="sys_model_monitor.html"><svg class="icon"><use href="#i-activity"/></svg><span>模型监测</span></a></section>
+      <section class="nav-group"><h2 class="nav-group-title">资源与运维</h2><a class="nav-item" href="sys_resource_application.html"><svg class="icon"><use href="#i-file"/></svg><span>资源申请</span></a><a class="nav-item" href="sys_resource_approval.html"><svg class="icon"><use href="#i-check-user"/></svg><span>授权审批</span></a><a class="nav-item" href="sys_infrastructure_mgmt.html"><svg class="icon"><use href="#i-network"/></svg><span>集群管理</span></a><a class="nav-item" href="sys_api_key_mgmt.html"><svg class="icon"><use href="#i-activity"/></svg><span>请求监控</span></a><a class="nav-item" href="sys_request_tracing.html"><svg class="icon"><use href="#i-route"/></svg><span>链路追踪</span></a></section>
+    </nav>
+  </aside>
+
+  <div class="app-main">
+    <header class="global-header"><nav class="breadcrumb" aria-label="面包屑"><a href="../index.html">应龙</a><span>/</span><span>算力调度</span><span>/</span><span class="breadcrumb-current" aria-current="page">我的任务</span></nav><div class="user-profile"><span>资源管理员</span><span class="user-avatar" aria-hidden="true">A</span></div></header>
+    <main class="page-canvas heading-spec-canvas" id="main-content">
+      <section class="section task-overview" aria-labelledby="taskPageTitle">
+        <div class="section-heading overview-heading">
+          <div><h1 class="page-title" id="taskPageTitle">我的任务</h1><p class="page-description">管理任务注册信息、运行状态与关联模型服务。</p></div>
+          <div class="toolbar-actions"><button class="btn btn-primary" id="openRegisterModal" type="button"><svg class="icon icon-sm"><use href="#i-plus"/></svg>注册任务</button></div>
+        </div>
+
+        <div class="metric-grid task-metrics" aria-label="任务统计">
+          <article class="card metric-card"><div class="metric-head"><span class="metric-label">总任务数</span><span class="metric-icon" style="width:34px;height:34px"><svg class="icon"><use href="#i-list"/></svg></span></div><div class="metric-value">128 <small>个</small></div><div class="metric-foot">已注册任务总量</div></article>
+          <article class="card metric-card"><div class="metric-head"><span class="metric-label">今日提交</span><span class="metric-icon" style="width:34px;height:34px;color:var(--indigo);background:var(--indigo-soft);border-color:#c7d2fe"><svg class="icon"><use href="#i-clock"/></svg></span></div><div class="metric-value">12 <small>个</small></div><div class="metric-foot">较昨日同期 +3</div></article>
+          <article class="card metric-card"><div class="metric-head"><span class="metric-label">运行中</span><span class="metric-icon" style="width:34px;height:34px;color:var(--success);background:var(--success-soft);border-color:#a7f3d0"><svg class="icon"><use href="#i-activity"/></svg></span></div><div class="metric-value">3 <small>个</small></div><div class="metric-foot">当前无异常任务</div></article>
+        </div>
+      </section>
+
+      <section class="card table-card" aria-labelledby="taskTableTitle">
+        <div class="table-toolbar">
+          <div class="table-title"><h2 id="taskTableTitle">任务列表</h2></div>
+          <div class="filters"><div class="search-wrap"><svg class="icon"><use href="#i-search"/></svg><input class="search-input" id="taskSearch" type="search" placeholder="搜索任务 ID、名称或 Tag" aria-label="搜索任务"><button class="search-clear hidden" id="taskSearchClear" type="button" aria-label="清空搜索"><svg class="icon icon-sm"><use href="#i-x"/></svg></button></div><select class="control" id="typeFilter" aria-label="筛选任务类型"><option value="all">全部类型</option><option value="offline">离线</option><option value="online">在线</option></select><select class="control" id="statusFilter" aria-label="筛选任务状态"><option value="all">全部状态</option><option value="active">运行中</option><option value="disabled">已停用</option></select><span class="result-count">已检索到 <strong id="taskCount">2</strong> 项</span></div>
+        </div>
+        <div class="active-filters hidden" id="activeFilters"><span class="muted">当前条件</span><div id="filterChips"></div><button class="reset-link" id="resetFilters" type="button">重置筛选</button></div>
+        <div class="table-scroll">
+          <table>
+            <thead><tr><th>任务 ID</th><th>名称</th><th>Tag</th><th>类型</th><th>状态</th><th>时间</th><th style="text-align:right">操作</th></tr></thead>
+            <tbody id="taskBody">
+              <tr data-search="job-test-001 基准测试 Qwen 923" data-type="offline" data-status="active"><td class="mono">job-test-001</td><td><div class="cell-title">基准测试 Qwen</div></td><td><span class="tag">923</span></td><td>离线</td><td><span class="badge badge-success status-badge">运行中</span></td><td class="muted">2 小时前</td><td><div class="actions"><a class="text-link" href="sys_task_detail.html?task=job-test-001">详情</a><button class="text-link danger-text toggle-task" type="button" data-next="disabled">停用</button></div></td></tr>
+              <tr data-search="job-test-002 压力测试 R1 WX" data-type="online" data-status="disabled"><td class="mono">job-test-002</td><td><div class="cell-title">压力测试 R1</div></td><td><span class="tag">WX</span></td><td>在线</td><td><span class="badge badge-neutral status-badge">已停用</span></td><td class="muted">5 小时前</td><td><div class="actions"><a class="text-link" href="sys_task_detail.html?task=job-test-002">详情</a><button class="text-link success-text toggle-task" type="button" data-next="active">启用</button></div></td></tr>
+              <tr class="empty-row hidden" id="taskEmpty"><td colspan="7">未找到符合当前条件的任务，请调整搜索或筛选条件。</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <footer class="pagination"><span id="taskSummary">共 2 条记录，第 1/1 页</span><div><button class="btn" type="button" disabled>上一页</button> <button class="btn" type="button" disabled>下一页</button></div></footer>
+      </section>
+    </main>
+  </div>
+
+  <div class="modal-backdrop hidden" id="registerTaskModal" role="dialog" aria-modal="true" aria-labelledby="registerTitle">
+    <form class="modal modal-sm" id="registerForm" novalidate>
+      <header class="modal-header"><div><h2 id="registerTitle">注册新任务</h2></div><button class="btn btn-icon btn-ghost" id="closeRegisterModal" type="button" aria-label="关闭注册任务弹窗"><svg class="icon"><use href="#i-x"/></svg></button></header>
+      <div class="modal-body">
+        <section class="subsection"><h3>基本信息</h3><div class="form-grid">
+          <div class="form-field"><label for="taskName">任务名称 <span class="required">*</span></label><input class="control" id="taskName" name="taskName" type="text" placeholder="如：923 / QB推荐" required><p class="field-message danger-text hidden" id="taskNameError"><svg class="icon icon-sm"><use href="#i-alert"/></svg>请输入任务名称</p></div>
+          <div class="form-field"><label for="taskTag">业务标签</label><input class="control" id="taskTag" name="taskTag" type="text" placeholder="如：923、WX"></div>
+          <div class="form-field full"><label for="taskDescription">任务描述</label><textarea class="control" id="taskDescription" name="taskDescription" rows="2" placeholder="描述任务用途、调用场景或负责人"></textarea></div>
+          <fieldset class="form-field full" style="padding:0;border:0;margin:0"><legend class="form-label">任务类型 <span class="required">*</span></legend><div class="radio-row"><label><input type="radio" name="taskType" value="online" required>在线实时调用</label><label><input type="radio" name="taskType" value="offline" required>离线批处理</label></div><p class="field-message danger-text hidden" id="taskTypeError"><svg class="icon icon-sm"><use href="#i-alert"/></svg>请选择任务类型</p></fieldset>
+          <div class="form-field full"><label for="modelServiceSelect">关联模型服务</label><select class="control" id="modelServiceSelect"><option value="">请选择模型服务</option><option value="svc-001">Qwen-72B-Chat（v1.2）</option><option value="svc-002">DeepSeek-R1（v2.0）</option><option value="svc-error">Llama-3-70B（Maintenance）</option></select><p class="field-message hidden" id="serviceStatusMsg"></p></div>
+        </div></section>
+        <section class="subsection hidden" id="offlineConfigSection"><h3>离线任务参数配置</h3><div class="form-grid">
+          <div class="form-field"><label for="inputTokens">输入 Token 规模（预估）</label><input class="control" id="inputTokens" type="number" min="0" inputmode="numeric" placeholder="0"></div>
+          <div class="form-field"><label for="outputTokens">输出 Token 规模（预估）</label><input class="control" id="outputTokens" type="number" min="0" inputmode="numeric" placeholder="0"></div>
+          <div class="form-field full"><label for="expectedDuration">期望完成时间</label><select class="control" id="expectedDuration"><option value="">请选择期望时长</option><option value="0.5">0.5 小时</option><option value="1">1 小时</option><option value="2">2 小时</option><option value="4">4 小时</option><option value="8">8 小时</option><option value="24">24 小时</option></select></div>
+        </div></section>
+      </div>
+      <footer class="modal-footer"><span class="muted" style="font-size:11px">带 <span class="required">*</span> 为必填项</span><div class="modal-actions"><button class="btn" id="cancelRegister" type="button">取消</button><button class="btn btn-primary" type="submit"><svg class="icon icon-sm"><use href="#i-check"/></svg>提交注册</button></div></footer>
+    </form>
+  </div>
+
+  <div class="popconfirm hidden" id="taskPopconfirm" role="dialog" aria-label="确认更改任务状态"><p id="popconfirmText">确认停用该任务？</p><div class="popconfirm-actions"><button class="btn" id="cancelToggle" type="button">取消</button><button class="btn btn-danger" id="confirmToggle" type="button">确认</button></div></div>
+  <div class="toast hidden" id="toast" role="status" aria-live="polite"><svg class="icon"><use href="#i-check"/></svg><div><h3 id="toastTitle">操作成功</h3><p id="toastMessage">任务状态已更新。</p></div></div>
+
+  <script>
+    const registerModal = document.getElementById('registerTaskModal');
+    const form = document.getElementById('registerForm');
+    const taskRows = [...document.querySelectorAll('#taskBody tr[data-search]')];
+    const searchInput = document.getElementById('taskSearch');
+    const typeFilter = document.getElementById('typeFilter');
+    const statusFilter = document.getElementById('statusFilter');
+    const popconfirm = document.getElementById('taskPopconfirm');
+    let pendingToggle = null;
+
+    function showToast(title, message) {
+      const toast = document.getElementById('toast');
+      document.getElementById('toastTitle').textContent = title;
+      document.getElementById('toastMessage').textContent = message;
+      toast.classList.remove('hidden');
+      window.clearTimeout(showToast.timer);
+      showToast.timer = window.setTimeout(() => toast.classList.add('hidden'), 3200);
+    }
+
+    function openRegisterModal() { registerModal.classList.remove('hidden'); document.body.style.overflow = 'hidden'; requestAnimationFrame(() => document.getElementById('taskName').focus()); }
+    function closeRegisterModal() { registerModal.classList.add('hidden'); document.body.style.overflow = ''; clearValidation(); document.getElementById('openRegisterModal').focus(); }
+    function clearValidation() { document.getElementById('taskNameError').classList.add('hidden'); document.getElementById('taskTypeError').classList.add('hidden'); document.getElementById('taskName').removeAttribute('aria-invalid'); }
+
+    function applyFilters() {
+      const keyword = searchInput.value.trim().toLowerCase();
+      const type = typeFilter.value;
+      const status = statusFilter.value;
+      let count = 0;
+      taskRows.forEach(row => {
+        const visible = (!keyword || row.dataset.search.toLowerCase().includes(keyword)) && (type === 'all' || row.dataset.type === type) && (status === 'all' || row.dataset.status === status);
+        row.classList.toggle('hidden', !visible);
+        if (visible) count += 1;
+      });
+      document.getElementById('taskCount').textContent = count;
+      document.getElementById('taskSummary').textContent = `共 ${count} 条记录，第 1/1 页`;
+      document.getElementById('taskEmpty').classList.toggle('hidden', count !== 0);
+      document.getElementById('taskSearchClear').classList.toggle('hidden', !keyword);
+      const chips = [];
+      if (keyword) chips.push(`关键词：${searchInput.value.trim()}`);
+      if (type !== 'all') chips.push(`类型：${typeFilter.options[typeFilter.selectedIndex].text}`);
+      if (status !== 'all') chips.push(`状态：${statusFilter.options[statusFilter.selectedIndex].text}`);
+      document.getElementById('filterChips').innerHTML = chips.map(item => `<span class="filter-chip">${item}</span>`).join('');
+      document.getElementById('activeFilters').classList.toggle('hidden', chips.length === 0);
+    }
+
+    function toggleOfflineConfig() {
+      const selected = document.querySelector('input[name="taskType"]:checked');
+      document.getElementById('offlineConfigSection').classList.toggle('hidden', !selected || selected.value !== 'offline');
+      document.getElementById('taskTypeError').classList.add('hidden');
+    }
+
+    function checkServiceStatus() {
+      const value = document.getElementById('modelServiceSelect').value;
+      const message = document.getElementById('serviceStatusMsg');
+      if (value === 'svc-error') { message.innerHTML = '<svg class="icon icon-sm"><use href="#i-alert"/></svg>该服务正在维护，可能导致调用失败。'; message.className = 'field-message danger-text'; }
+      else if (value) { message.innerHTML = '<svg class="icon icon-sm"><use href="#i-check"/></svg>服务状态正常。'; message.className = 'field-message success-text'; }
+      else message.className = 'field-message hidden';
+    }
+
+    function openPopconfirm(button) {
+      pendingToggle = button;
+      const enable = button.dataset.next === 'active';
+      document.getElementById('popconfirmText').textContent = enable ? '确认启用该任务？启用后将恢复业务调用。' : '确认停用该任务？停用后新请求将被拒绝。';
+      document.getElementById('confirmToggle').textContent = enable ? '确认启用' : '确认停用';
+      document.getElementById('confirmToggle').className = enable ? 'btn btn-primary' : 'btn btn-danger';
+      const rect = button.getBoundingClientRect();
+      popconfirm.style.left = `${Math.max(8, Math.min(window.innerWidth - 232, rect.right - 224))}px`;
+      popconfirm.style.top = `${Math.max(8, rect.top - 112)}px`;
+      popconfirm.classList.remove('hidden');
+      document.getElementById('cancelToggle').focus();
+    }
+
+    function confirmTaskToggle() {
+      if (!pendingToggle) return;
+      const row = pendingToggle.closest('tr');
+      const next = pendingToggle.dataset.next;
+      const badge = row.querySelector('.status-badge');
+      row.dataset.status = next;
+      if (next === 'active') { badge.className = 'badge badge-success status-badge'; badge.textContent = '运行中'; pendingToggle.textContent = '停用'; pendingToggle.dataset.next = 'disabled'; pendingToggle.className = 'text-link danger-text toggle-task'; }
+      else { badge.className = 'badge badge-neutral status-badge'; badge.textContent = '已停用'; pendingToggle.textContent = '启用'; pendingToggle.dataset.next = 'active'; pendingToggle.className = 'text-link success-text toggle-task'; }
+      popconfirm.classList.add('hidden');
+      showToast('任务状态已更新', next === 'active' ? '任务已启用，可以接收新的业务请求。' : '任务已停用，不再接收新的业务请求。');
+      pendingToggle = null;
+      applyFilters();
+    }
+
+    document.getElementById('openRegisterModal').addEventListener('click', openRegisterModal);
+    document.getElementById('closeRegisterModal').addEventListener('click', closeRegisterModal);
+    document.getElementById('cancelRegister').addEventListener('click', closeRegisterModal);
+    document.querySelectorAll('input[name="taskType"]').forEach(input => input.addEventListener('change', toggleOfflineConfig));
+    document.getElementById('modelServiceSelect').addEventListener('change', checkServiceStatus);
+    searchInput.addEventListener('input', applyFilters);
+    typeFilter.addEventListener('change', applyFilters);
+    statusFilter.addEventListener('change', applyFilters);
+    document.getElementById('taskSearchClear').addEventListener('click', () => { searchInput.value = ''; applyFilters(); searchInput.focus(); });
+    document.getElementById('resetFilters').addEventListener('click', () => { searchInput.value = ''; typeFilter.value = 'all'; statusFilter.value = 'all'; applyFilters(); });
+    document.querySelectorAll('.toggle-task').forEach(button => button.addEventListener('click', () => openPopconfirm(button)));
+    document.getElementById('cancelToggle').addEventListener('click', () => { popconfirm.classList.add('hidden'); pendingToggle = null; });
+    document.getElementById('confirmToggle').addEventListener('click', confirmTaskToggle);
+    form.addEventListener('submit', event => {
+      event.preventDefault();
+      clearValidation();
+      const name = document.getElementById('taskName');
+      const type = document.querySelector('input[name="taskType"]:checked');
+      let valid = true;
+      if (!name.value.trim()) { document.getElementById('taskNameError').classList.remove('hidden'); name.setAttribute('aria-invalid', 'true'); valid = false; }
+      if (!type) { document.getElementById('taskTypeError').classList.remove('hidden'); valid = false; }
+      if (!valid) { (name.value.trim() ? document.querySelector('input[name="taskType"]') : name).focus(); return; }
+      const taskName = name.value.trim();
+      form.reset();
+      document.getElementById('offlineConfigSection').classList.add('hidden');
+      document.getElementById('serviceStatusMsg').className = 'field-message hidden';
+      closeRegisterModal();
+      showToast('任务注册已提交', `${taskName} 已进入注册流程。`);
+    });
+    registerModal.addEventListener('click', event => { if (event.target === registerModal) closeRegisterModal(); });
+    document.addEventListener('click', event => { if (!popconfirm.classList.contains('hidden') && !popconfirm.contains(event.target) && !event.target.closest('.toggle-task')) { popconfirm.classList.add('hidden'); pendingToggle = null; } });
+    document.addEventListener('keydown', event => { if (event.key === 'Escape') { if (!popconfirm.classList.contains('hidden')) { popconfirm.classList.add('hidden'); pendingToggle = null; } else if (!registerModal.classList.contains('hidden')) closeRegisterModal(); } });
+  </script>
+</body>
+</html>

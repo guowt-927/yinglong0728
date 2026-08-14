@@ -1,0 +1,647 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>链路追踪 - 应龙大模型推理平台</title>
+    <link href="assets/css/tailwind.css" rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/font-awesome.min.css">
+    <link rel="stylesheet" href="assets/css/font-awesome-compat.css">
+    <style>
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: #f1f5f9;
+            border-radius: 4px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 4px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8;
+        }
+        .span-bar {
+            height: 8px;
+            border-radius: 4px;
+        }
+        .waterfall-row:hover {
+            background-color: rgba(59, 130, 246, 0.05);
+        }
+        .tooltip {
+            visibility: hidden;
+            position: absolute;
+            z-index: 50;
+            background-color: #1e293b;
+            color: white;
+            text-align: left;
+            border-radius: 6px;
+            padding: 8px 12px;
+            font-size: 12px;
+            bottom: 125%;
+            left: 50%;
+            transform: translateX(-50%);
+            opacity: 0;
+            transition: opacity 0.2s;
+            white-space: nowrap;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        }
+        .tooltip::after {
+            content: "";
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            margin-left: -5px;
+            border-width: 5px;
+            border-style: solid;
+            border-color: #1e293b transparent transparent transparent;
+        }
+        .has-tooltip:hover .tooltip {
+            visibility: visible;
+            opacity: 1;
+        }
+    </style>
+    <link rel="stylesheet" href="assets/css/sherlock-theme.css">
+    <link rel="stylesheet" href="assets/css/yl-regular-toolbar.css">
+    <link rel="stylesheet" href="assets/css/pages/operations-console-v2.css">
+</head>
+<body class="ops-v2 bg-gray-50 text-gray-800 h-screen overflow-hidden flex">
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><symbol id="i-dashboard" viewBox="0 0 24 24"><rect width="7" height="9" x="3" y="3" rx="1"/><rect width="7" height="5" x="14" y="3" rx="1"/><rect width="7" height="9" x="14" y="12" rx="1"/><rect width="7" height="5" x="3" y="16" rx="1"/></symbol><symbol id="i-sliders" viewBox="0 0 24 24"><path d="M4 21v-7m0-4V3m8 18v-9m0-4V3m8 18v-5m0-4V3M1 14h6m2-6h6m2 8h6"/></symbol><symbol id="i-list" viewBox="0 0 24 24"><path d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01"/></symbol><symbol id="i-box" viewBox="0 0 24 24"><path d="m21 8-9-5-9 5 9 5 9-5Z"/><path d="m3 8 9 5 9-5M3 8v8l9 5 9-5V8M12 13v8"/></symbol><symbol id="i-server" viewBox="0 0 24 24"><rect width="20" height="8" x="2" y="2" rx="2"/><rect width="20" height="8" x="2" y="14" rx="2"/><path d="M6 6h.01M6 18h.01"/></symbol><symbol id="i-brain" viewBox="0 0 24 24"><path d="M9.5 4.5A3 3 0 0 0 4 6v1a3 3 0 0 0-1 5.5A3 3 0 0 0 4 18v.5a3 3 0 0 0 5.5 1.7M14.5 4.5A3 3 0 0 1 20 6v1a3 3 0 0 1 1 5.5A3 3 0 0 1 20 18v.5a3 3 0 0 1-5.5 1.7M12 4v16M8 9h4M12 15h4"/></symbol><symbol id="i-activity" viewBox="0 0 24 24"><path d="M3 12h4l3-9 4 18 3-9h4"/></symbol><symbol id="i-file" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8Z"/><path d="M14 2v6h6M9 15h6M12 12v6"/></symbol><symbol id="i-check-user" viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="m16 11 2 2 4-4"/></symbol><symbol id="i-network" viewBox="0 0 24 24"><rect width="6" height="6" x="9" y="2" rx="1"/><rect width="6" height="6" x="3" y="16" rx="1"/><rect width="6" height="6" x="15" y="16" rx="1"/><path d="M12 8v4m-6 4v-2h12v2"/></symbol><symbol id="i-route" viewBox="0 0 24 24"><circle cx="6" cy="19" r="3"/><path d="M9 19h5.5a3.5 3.5 0 0 0 0-7h-5a3.5 3.5 0 0 1 0-7H15"/><circle cx="18" cy="5" r="3"/></symbol><symbol id="i-settings" viewBox="0 0 24 24"><path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.38a2 2 0 0 0-.73-2.73l-.15-.09a2 2 0 0 1-1-1.74v-.51a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2Z"/><circle cx="12" cy="12" r="3"/></symbol></svg>
+
+    <aside class="sidebar" aria-label="应龙主导航"><a class="brand" href="../index.html"><span class="brand-mark">应</span><span class="brand-name">应龙推理平台</span><span class="env-badge">PROD</span></a><nav class="sidebar-nav"><section class="nav-group"><h2 class="nav-group-title">工作台</h2><a class="nav-item" href="../index.html"><svg class="icon"><use href="#i-dashboard"/></svg><span>系统概览</span></a></section><section class="nav-group"><h2 class="nav-group-title">算力调度</h2><a class="nav-item" href="sys_dispatch.html"><svg class="icon"><use href="#i-sliders"/></svg><span>算力调度</span></a><a class="nav-item" href="sys_task_list.html"><svg class="icon"><use href="#i-list"/></svg><span>我的任务</span></a></section><section class="nav-group"><h2 class="nav-group-title">模型管理</h2><a class="nav-item" href="sys_model_repo.html"><svg class="icon"><use href="#i-box"/></svg><span>模型资产</span></a><a class="nav-item" href="sys_model_service.html"><svg class="icon"><use href="#i-server"/></svg><span>模型服务</span></a><a class="nav-item" href="sys_model_training.html"><svg class="icon"><use href="#i-brain"/></svg><span>模型训练</span></a><a class="nav-item" href="sys_model_governance.html"><svg class="icon"><use href="#i-check-user"/></svg><span>模型纳管</span></a><a class="nav-item" href="sys_model_monitor.html"><svg class="icon"><use href="#i-activity"/></svg><span>模型监测</span></a></section><section class="nav-group"><h2 class="nav-group-title">资源与运维</h2><a class="nav-item" href="sys_resource_application.html"><svg class="icon"><use href="#i-file"/></svg><span>资源申请</span></a><a class="nav-item" href="sys_resource_approval.html"><svg class="icon"><use href="#i-check-user"/></svg><span>授权审批</span></a><a class="nav-item" href="sys_infrastructure_mgmt.html"><svg class="icon"><use href="#i-network"/></svg><span>集群管理</span></a><a class="nav-item" href="sys_api_key_mgmt.html"><svg class="icon"><use href="#i-activity"/></svg><span>请求监控</span></a><a class="nav-item active" href="sys_request_tracing.html" aria-current="page"><svg class="icon"><use href="#i-route"/></svg><span>链路追踪</span></a></section></nav></aside>
+
+    <!-- Main Content Area -->
+    <div class="ops-content-shell flex-1 flex flex-col overflow-hidden">
+        <header class="bg-white shadow-sm z-10 p-4 flex justify-between items-center">
+            <div><h1 class="text-xl font-semibold text-gray-800">链路追踪</h1><p class="page-description">按 Trace ID 定位请求，拆解网关、排队和推理实例的完整耗时链路。</p></div>
+            <div class="tools"><span class="text-xs text-gray-500">数据保留 7 天</span></div>
+        </header>
+        <main class="trace-workspace" id="yl-main-content">
+        
+        <!-- Left Panel: Trace List -->
+        <div class="trace-list-panel w-1/3 min-w-[350px] max-w-[450px] bg-white border-r border-gray-200 flex flex-col z-10 shadow-sm">
+            <!-- Search & Filter Header -->
+            <div class="trace-filter-panel p-4 border-b border-gray-100 bg-gray-50">
+                <h2 class="text-lg font-bold text-gray-800 mb-4">链路追踪</h2>
+                <div class="space-y-3">
+                    <div class="relative">
+                        <i class="fa-solid fa-search absolute left-3 top-2.5 text-gray-400 text-sm"></i>
+                        <input type="text" aria-label="搜索 Trace ID 或 Request ID" placeholder="Trace ID / Request ID" class="w-full pl-9 pr-3 py-2 bg-white border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                    </div>
+                    <div class="flex gap-2">
+                        <select aria-label="筛选任务类型" class="flex-1 bg-white border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
+                            <option value="">所有任务类型</option>
+                            <option value="online">在线推理</option>
+                            <option value="offline">离线任务</option>
+                        </select>
+                        <select aria-label="筛选模型" class="flex-1 bg-white border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
+                            <option value="">所有模型</option>
+                            <option value="llama3">Llama-3-70B</option>
+                            <option value="qwen">Qwen-1.5-72B</option>
+                        </select>
+                    </div>
+                    <div>
+                        <input type="datetime-local" aria-label="链路开始时间" class="w-full bg-white border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    </div>
+                    <button class="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 rounded-lg text-sm transition-colors">
+                        查询
+                    </button>
+                </div>
+            </div>
+
+            <!-- Trace List -->
+            <div class="flex-1 overflow-y-auto custom-scrollbar">
+                <table class="w-full text-left text-sm">
+                    <thead class="bg-gray-50 text-gray-500 sticky top-0 border-b border-gray-200 z-10">
+                        <tr>
+                            <th class="px-4 py-3 font-medium">TraceID / 时间</th>
+                            <th class="px-4 py-3 font-medium">类型 / 模型</th>
+                            <th class="px-4 py-3 font-medium text-right">状态 / 耗时</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-gray-100">
+                        <!-- Online Trace Item -->
+                        <tr class="trace-selected hover:bg-blue-50 cursor-pointer transition-colors bg-blue-50/50" onclick="selectTrace('online')" id="row-online">
+                            <td class="px-4 py-3">
+                                <div class="font-mono text-blue-600 font-medium truncate w-32" title="tr-8829-ax-99102">tr-8829-ax-99102</div>
+                                <div class="text-xs text-gray-500 mt-1">14:25:01.442</div>
+                            </td>
+                            <td class="px-4 py-3">
+                                <div class="flex items-center gap-1.5">
+                                    <span class="w-2 h-2 rounded-full bg-green-500"></span>
+                                    <span class="font-medium text-gray-700">在线推理</span>
+                                </div>
+                                <div class="text-xs text-gray-500 mt-1 truncate w-24" title="Llama-3-70B">Llama-3-70B</div>
+                            </td>
+                            <td class="px-4 py-3 text-right">
+                                <div class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-green-100 text-green-700 mb-1">
+                                    Success
+                                </div>
+                                <div class="text-xs font-bold text-gray-700">1,245 ms</div>
+                            </td>
+                        </tr>
+                        <!-- Offline Trace Item -->
+                        <tr class="hover:bg-blue-50 cursor-pointer transition-colors" onclick="selectTrace('offline')" id="row-offline">
+                            <td class="px-4 py-3">
+                                <div class="font-mono text-gray-600 font-medium truncate w-32" title="tr-offline-77x-12">tr-offline-77x-12</div>
+                                <div class="text-xs text-gray-500 mt-1">13:10:44.102</div>
+                            </td>
+                            <td class="px-4 py-3">
+                                <div class="flex items-center gap-1.5">
+                                    <span class="w-2 h-2 rounded-full bg-purple-500"></span>
+                                    <span class="font-medium text-gray-700">离线任务</span>
+                                </div>
+                                <div class="text-xs text-gray-500 mt-1 truncate w-24" title="Qwen-1.5-72B">Qwen-1.5-72B</div>
+                            </td>
+                            <td class="px-4 py-3 text-right">
+                                <div class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-green-100 text-green-700 mb-1">
+                                    Success
+                                </div>
+                                <div class="text-xs font-bold text-gray-700">45,210 ms</div>
+                            </td>
+                        </tr>
+                        <!-- Failed Trace Item -->
+                        <tr class="hover:bg-blue-50 cursor-pointer transition-colors">
+                            <td class="px-4 py-3">
+                                <div class="font-mono text-gray-600 font-medium truncate w-32" title="tr-err-992-bb">tr-err-992-bb</div>
+                                <div class="text-xs text-gray-500 mt-1">12:05:11.002</div>
+                            </td>
+                            <td class="px-4 py-3">
+                                <div class="flex items-center gap-1.5">
+                                    <span class="w-2 h-2 rounded-full bg-green-500"></span>
+                                    <span class="font-medium text-gray-700">在线推理</span>
+                                </div>
+                                <div class="text-xs text-gray-500 mt-1 truncate w-24" title="Llama-3-70B">Llama-3-70B</div>
+                            </td>
+                            <td class="px-4 py-3 text-right">
+                                <div class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-red-100 text-red-700 mb-1">
+                                    Failed
+                                </div>
+                                <div class="text-xs font-bold text-gray-700">5,002 ms</div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Right Panel: Trace Details -->
+        <div class="trace-detail-panel flex-1 bg-gray-50 flex flex-col overflow-hidden">
+            
+            <!-- Detail Header -->
+            <div class="trace-detail-head bg-white p-6 border-b border-gray-200 shadow-sm z-10 flex justify-between items-start">
+                <div>
+                    <div class="flex items-center gap-3 mb-2">
+                        <h2 class="text-2xl font-bold text-gray-800 font-mono" id="detail-trace-id">tr-8829-ax-99102</h2>
+                        <span class="px-2.5 py-1 bg-green-100 text-green-700 rounded text-sm font-bold" id="detail-status">Success</span>
+                        <span class="px-2.5 py-1 bg-blue-100 text-blue-700 rounded text-sm font-bold" id="detail-lane">Fast Lane (Online)</span>
+                    </div>
+                    <p class="text-sm text-gray-500">
+                        Request ID: <span class="font-mono text-gray-700 mr-4" id="detail-req-id">req-abc-12345</span>
+                        开始时间: <span class="text-gray-700 mr-4" id="detail-time">2026-03-30 14:25:01.442</span>
+                        模型: <span class="font-medium text-gray-700" id="detail-model">Llama-3-70B</span>
+                    </p>
+                </div>
+                <div class="flex gap-2">
+                    <button class="px-3 py-1.5 bg-white border border-gray-300 text-gray-600 rounded-lg text-sm hover:bg-gray-50 shadow-sm"><i class="fa-solid fa-share-alt mr-1.5"></i>分享</button>
+                    <button class="px-3 py-1.5 bg-white border border-gray-300 text-gray-600 rounded-lg text-sm hover:bg-gray-50 shadow-sm"><i class="fa-solid fa-download mr-1.5"></i>导出</button>
+                </div>
+            </div>
+
+            <!-- Detail Content Scrollable Area -->
+            <div class="trace-detail-content flex-1 overflow-y-auto p-6 custom-scrollbar space-y-6">
+                
+                <!-- Area A: Request & Inference Summary -->
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                    <!-- Basic Info & Timing -->
+                    <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-5">
+                        <h3 class="text-sm font-bold text-gray-800 border-b border-gray-100 pb-3 mb-4"><i class="fa-solid fa-info-circle text-blue-500 mr-2"></i>基础信息与耗时统计</h3>
+                        <div class="grid grid-cols-2 gap-y-4 gap-x-6">
+                            <div>
+                                <p class="text-xs text-gray-500 mb-1">客户端 IP</p>
+                                <p class="text-sm font-medium text-gray-800">182.16.44.102</p>
+                            </div>
+                            <div>
+                                <p class="text-xs text-gray-500 mb-1">入口网关</p>
+                                <p class="text-sm font-medium text-gray-800">API Gateway (us-east-1)</p>
+                            </div>
+                            <div>
+                                <p class="text-xs text-gray-500 mb-1">总耗时</p>
+                                <p class="text-lg font-bold text-blue-600" id="stat-total">1,245 ms</p>
+                            </div>
+                            <div>
+                                <p class="text-xs text-gray-500 mb-1">首字耗时 (TTFT)</p>
+                                <p class="text-lg font-bold text-green-600" id="stat-ttft">325 ms</p>
+                            </div>
+                            <div>
+                                <p class="text-xs text-gray-500 mb-1">排队等待</p>
+                                <p class="text-sm font-medium text-orange-500" id="stat-queue">12 ms</p>
+                            </div>
+                            <div>
+                                <p class="text-xs text-gray-500 mb-1">解码耗时</p>
+                                <p class="text-sm font-medium text-purple-600" id="stat-decode">920 ms</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Token & Content Summary -->
+                    <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-5 flex flex-col">
+                        <h3 class="text-sm font-bold text-gray-800 border-b border-gray-100 pb-3 mb-4"><i class="fa-solid fa-align-left text-blue-500 mr-2"></i>内容与 Token 统计</h3>
+                        <div class="flex justify-between mb-4 bg-gray-50 p-3 rounded-lg border border-gray-100">
+                            <div class="text-center">
+                                <p class="text-xs text-gray-500 mb-1">Prompt Tokens</p>
+                                <p class="text-lg font-bold text-gray-800" id="stat-prompt-tokens">1,240</p>
+                            </div>
+                            <div class="w-px bg-gray-200"></div>
+                            <div class="text-center">
+                                <p class="text-xs text-gray-500 mb-1">Completion Tokens</p>
+                                <p class="text-lg font-bold text-gray-800" id="stat-comp-tokens">256</p>
+                            </div>
+                            <div class="w-px bg-gray-200"></div>
+                            <div class="text-center">
+                                <p class="text-xs text-gray-500 mb-1">Total Tokens</p>
+                                <p class="text-lg font-bold text-blue-600" id="stat-total-tokens">1,496</p>
+                            </div>
+                        </div>
+                        <div class="flex-1 grid grid-cols-2 gap-4">
+                            <div class="flex flex-col">
+                                <p class="text-xs font-bold text-gray-600 mb-1">Prompt 截取</p>
+                                <div class="flex-1 bg-gray-50 border border-gray-200 rounded p-2 text-xs text-gray-600 font-mono overflow-y-auto custom-scrollbar max-h-24">
+                                    "System: You are a helpful assistant.\nUser: Explain quantum computing in simple terms..."
+                                </div>
+                            </div>
+                            <div class="flex flex-col">
+                                <p class="text-xs font-bold text-gray-600 mb-1">Response 截取</p>
+                                <div class="flex-1 bg-gray-50 border border-gray-200 rounded p-2 text-xs text-gray-600 font-mono overflow-y-auto custom-scrollbar max-h-24">
+                                    "Quantum computing is a type of computing that uses quantum mechanics..."
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Area B/C: Waterfall Chart -->
+                <div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
+                    <div class="p-4 border-b border-gray-100 bg-gray-50 flex justify-between items-center">
+                        <h3 class="text-sm font-bold text-gray-800"><i class="fa-solid fa-stream text-blue-500 mr-2"></i>Span 瀑布图</h3>
+                        <div class="text-xs text-gray-500 font-medium" id="waterfall-timeline-label">时间轴 (0 - 1.5s)</div>
+                    </div>
+                    <div class="p-5">
+                        
+                        <!-- Online Waterfall (Default) -->
+                        <div id="waterfall-online" class="block">
+                            <!-- Timeline Axis -->
+                            <div class="flex mb-3 text-[10px] text-gray-400 border-b border-gray-100 pb-2">
+                                <div class="w-1/3 font-medium uppercase tracking-wider">服务与操作</div>
+                                <div class="w-2/3 flex justify-between relative">
+                                    <span>0ms</span>
+                                    <span>300ms</span>
+                                    <span>600ms</span>
+                                    <span>900ms</span>
+                                    <span>1200ms</span>
+                                    <span>1500ms</span>
+                                    <!-- Grid lines -->
+                                    <div class="absolute top-4 bottom-[-200px] left-[20%] w-px bg-gray-100 -z-10"></div>
+                                    <div class="absolute top-4 bottom-[-200px] left-[40%] w-px bg-gray-100 -z-10"></div>
+                                    <div class="absolute top-4 bottom-[-200px] left-[60%] w-px bg-gray-100 -z-10"></div>
+                                    <div class="absolute top-4 bottom-[-200px] left-[80%] w-px bg-gray-100 -z-10"></div>
+                                </div>
+                            </div>
+
+                            <div class="space-y-2 relative z-0">
+                                <!-- Span 1: Gateway Check -->
+                                <div class="waterfall-row flex items-center py-1.5 rounded group relative">
+                                    <div class="w-1/3 pr-4 flex items-center gap-2">
+                                        <span class="w-2 h-2 bg-blue-500 rounded-full flex-shrink-0"></span>
+                                        <span class="text-xs font-medium text-gray-700 truncate">接收请求</span>
+                                    </div>
+                                    <div class="w-2/3 relative h-5">
+                                        <div class="absolute bg-blue-100 border border-blue-300 rounded h-full flex items-center px-1.5 shadow-sm" style="left: 0%; width: 1%;">
+                                        </div>
+                                    </div>
+                                    <div class="absolute z-50 bg-slate-800 text-white text-xs rounded p-2 shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 bottom-full mb-1 left-1/2 -translate-x-1/2 whitespace-nowrap">
+                                        接收请求<br>结果: 通过
+                                    </div>
+                                </div>
+
+                                <!-- Span 2: Inference Instance -->
+                                <div class="waterfall-row flex items-center py-1.5 rounded group relative">
+                                    <div class="w-1/3 pr-4 pl-4 flex items-center gap-2">
+                                        <div class="w-px h-4 bg-gray-300"></div>
+                                        <span class="w-2 h-2 bg-indigo-500 rounded-full flex-shrink-0"></span>
+                                        <span class="text-xs font-medium text-gray-700 truncate">推理实例</span>
+                                    </div>
+                                    <div class="w-2/3 relative h-5">
+                                        <div class="absolute bg-indigo-100 border border-indigo-300 rounded h-full flex items-center px-1.5 shadow-sm" style="left: 1%; width: 82.3%;">
+                                            <span class="text-[10px] text-indigo-800 font-bold hidden md:inline">1230ms</span>
+                                        </div>
+                                    </div>
+                                    <div class="absolute z-50 bg-slate-800 text-white text-xs rounded p-2 shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 bottom-full mb-1 left-1/2 -translate-x-1/2 whitespace-nowrap">
+                                        推理实例<br>总耗时: 1230ms
+                                    </div>
+                                </div>
+
+                                <!-- Span 2.1: Waiting -->
+                                <div class="waterfall-row flex items-center py-1.5 rounded group relative">
+                                    <div class="w-1/3 pr-4 pl-8 flex items-center gap-2">
+                                        <div class="w-px h-4 bg-gray-300"></div>
+                                        <span class="w-2 h-2 bg-pink-500 rounded-full flex-shrink-0"></span>
+                                        <span class="text-xs font-medium text-gray-700 truncate">Waiting</span>
+                                    </div>
+                                    <div class="w-2/3 relative h-5">
+                                        <div class="absolute bg-pink-100 border border-pink-300 rounded h-full flex items-center px-1.5 shadow-sm" style="left: 1%; width: 1%;">
+                                            <span class="text-[10px] text-pink-800 font-bold hidden md:inline">10ms</span>
+                                        </div>
+                                    </div>
+                                    <div class="absolute z-50 bg-slate-800 text-white text-xs rounded p-2 shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 bottom-full mb-1 left-1/2 -translate-x-1/2 whitespace-nowrap">
+                                        Waiting<br>耗时: 10ms
+                                    </div>
+                                </div>
+
+                                <!-- Span 2.2: TTFT -->
+                                <div class="waterfall-row flex items-center py-1.5 rounded group relative">
+                                    <div class="w-1/3 pr-4 pl-8 flex items-center gap-2">
+                                        <div class="w-px h-4 bg-gray-300"></div>
+                                        <span class="w-2 h-2 bg-red-500 rounded-full flex-shrink-0"></span>
+                                        <span class="text-xs font-medium text-gray-700 truncate">TTFT</span>
+                                    </div>
+                                    <div class="w-2/3 relative h-5">
+                                        <div class="absolute bg-red-100 border border-red-300 rounded h-full flex items-center px-1.5 shadow-sm" style="left: 2%; width: 20%;">
+                                            <span class="text-[10px] text-red-800 font-bold">300ms</span>
+                                        </div>
+                                    </div>
+                                    <div class="absolute z-50 bg-slate-800 text-white text-xs rounded p-2 shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 bottom-full mb-1 left-1/2 -translate-x-1/2 whitespace-nowrap">
+                                        TTFT<br>耗时: 300ms
+                                    </div>
+                                </div>
+
+                                <!-- Span 2.3: Decoding -->
+                                <div class="waterfall-row flex items-center py-1.5 rounded group relative">
+                                    <div class="w-1/3 pr-4 pl-8 flex items-center gap-2">
+                                        <div class="w-px h-4 bg-gray-300"></div>
+                                        <span class="w-2 h-2 bg-purple-500 rounded-full flex-shrink-0"></span>
+                                        <span class="text-xs font-medium text-gray-700 truncate">Decoding</span>
+                                    </div>
+                                    <div class="w-2/3 relative h-5">
+                                        <div class="absolute bg-purple-100 border border-purple-300 rounded h-full flex items-center px-1.5 shadow-sm" style="left: 22%; width: 61.3%;">
+                                            <span class="text-[10px] text-purple-800 font-bold">920ms</span>
+                                        </div>
+                                    </div>
+                                    <div class="absolute z-50 bg-slate-800 text-white text-xs rounded p-2 shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 bottom-full mb-1 left-1/2 -translate-x-1/2 whitespace-nowrap">
+                                        Decoding<br>耗时: 920ms
+                                    </div>
+                                </div>
+
+                                <!-- Span 3: Response -->
+                                <div class="waterfall-row flex items-center py-1.5 rounded group relative">
+                                    <div class="w-1/3 pr-4 pl-4 flex items-center gap-2">
+                                        <div class="w-px h-4 bg-gray-300"></div>
+                                        <span class="w-2 h-2 bg-green-500 rounded-full flex-shrink-0"></span>
+                                        <span class="text-xs font-medium text-gray-700 truncate">返回状态码</span>
+                                    </div>
+                                    <div class="w-2/3 relative h-5">
+                                        <div class="absolute bg-green-100 border border-green-300 rounded h-full flex items-center px-1.5 shadow-sm" style="left: 83.3%; width: 1%;">
+                                            <span class="text-[10px] text-green-800 font-bold hidden md:inline"></span>
+                                        </div>
+                                    </div>
+                                    <div class="absolute z-50 bg-slate-800 text-white text-xs rounded p-2 shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 bottom-full mb-1 left-1/2 -translate-x-1/2 whitespace-nowrap">
+                                        返回状态码<br>状态: 200 OK
+                                    </div>
+                                </div>
+                            </div>
+</div>
+
+                        <!-- Offline Waterfall (Hidden by default) -->
+                        <div id="waterfall-offline" class="hidden">
+                            <!-- Timeline Axis -->
+                            <div class="flex mb-3 text-[10px] text-gray-400 border-b border-gray-100 pb-2">
+                                <div class="w-1/3 font-medium uppercase tracking-wider">服务与操作</div>
+                                <div class="w-2/3 flex justify-between relative">
+                                    <span>0s</span>
+                                    <span>10s</span>
+                                    <span>20s</span>
+                                    <span>30s</span>
+                                    <span>40s</span>
+                                    <span>50s</span>
+                                    <!-- Grid lines -->
+                                    <div class="absolute top-4 bottom-[-250px] left-[20%] w-px bg-gray-100 -z-10"></div>
+                                    <div class="absolute top-4 bottom-[-250px] left-[40%] w-px bg-gray-100 -z-10"></div>
+                                    <div class="absolute top-4 bottom-[-250px] left-[60%] w-px bg-gray-100 -z-10"></div>
+                                    <div class="absolute top-4 bottom-[-250px] left-[80%] w-px bg-gray-100 -z-10"></div>
+                                </div>
+                            </div>
+
+                            <div class="space-y-2 relative z-0">
+                                <!-- Span 1: Gateway Check -->
+                                <div class="waterfall-row flex items-center py-1.5 rounded group relative">
+                                    <div class="w-1/3 pr-4 flex items-center gap-2">
+                                        <span class="w-2 h-2 bg-blue-500 rounded-full flex-shrink-0"></span>
+                                        <span class="text-xs font-medium text-gray-700 truncate">接收请求</span>
+                                    </div>
+                                    <div class="w-2/3 relative h-5">
+                                        <div class="absolute bg-blue-100 border border-blue-300 rounded h-full flex items-center px-1.5 shadow-sm" style="left: 0%; width: 1%;">
+                                        </div>
+                                    </div>
+                                    <div class="absolute z-50 bg-slate-800 text-white text-xs rounded p-2 shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 bottom-full mb-1 left-1/2 -translate-x-1/2 whitespace-nowrap">
+                                        接收请求<br>结果: 通过
+                                    </div>
+                                </div>
+
+                                <!-- Span 2: Queue Waiting -->
+                                <div class="waterfall-row flex items-center py-1.5 rounded group relative">
+                                    <div class="w-1/3 pr-4 pl-4 flex items-center gap-2">
+                                        <div class="w-px h-4 bg-gray-300"></div>
+                                        <span class="w-2 h-2 bg-orange-500 rounded-full flex-shrink-0"></span>
+                                        <span class="text-xs font-medium text-gray-700 truncate">队列排队等待</span>
+                                    </div>
+                                    <div class="w-2/3 relative h-5">
+                                        <div class="absolute bg-orange-100 border border-orange-300 rounded h-full flex items-center px-1.5 shadow-sm" style="left: 1%; width: 29%;">
+                                            <span class="text-[10px] text-orange-800 font-bold">14.5s</span>
+                                        </div>
+                                    </div>
+                                    <!-- Complex Tooltip -->
+                                    <div class="absolute z-50 bg-slate-800 text-white text-xs rounded p-3 shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 bottom-full mb-1 left-1/2 -translate-x-1/2 w-56">
+                                        <div class="font-bold border-b border-slate-600 pb-1 mb-2 text-blue-300">环境快照 (拉取时刻)</div>
+                                        <div class="grid grid-cols-2 gap-1 mb-2">
+                                            <span class="text-slate-400">总 Headroom:</span><span class="text-right font-mono">1,024</span>
+                                            <span class="text-slate-400">队列得分:</span><span class="text-right font-mono text-green-400 font-bold">0.85</span>
+                                        </div>
+                                        <div class="bg-slate-900 rounded p-2 text-[10px]">
+                                            <div class="text-slate-400 mb-1">【得分明细】</div>
+                                            <div class="grid grid-cols-2 gap-x-2 gap-y-1">
+                                                <span>优先级: <span class="text-white">0.2</span></span>
+                                                <span>积压深度: <span class="text-white">0.3</span></span>
+                                                <span>防饥饿: <span class="text-white">0.15</span></span>
+                                                <span>SLA: <span class="text-white">0.1</span></span>
+                                                <span class="col-span-2">复杂度: <span class="text-white">0.1</span></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Span 3: Inference Instance -->
+                                <div class="waterfall-row flex items-center py-1.5 rounded group relative">
+                                    <div class="w-1/3 pr-4 pl-4 flex items-center gap-2">
+                                        <div class="w-px h-4 bg-gray-300"></div>
+                                        <span class="w-2 h-2 bg-indigo-500 rounded-full flex-shrink-0"></span>
+                                        <span class="text-xs font-medium text-gray-700 truncate">推理实例</span>
+                                    </div>
+                                    <div class="w-2/3 relative h-5">
+                                        <div class="absolute bg-indigo-100 border border-indigo-300 rounded h-full flex items-center px-1.5 shadow-sm" style="left: 30%; width: 59%;">
+                                            <span class="text-[10px] text-indigo-800 font-bold hidden md:inline">29.5s</span>
+                                        </div>
+                                    </div>
+                                    <div class="absolute z-50 bg-slate-800 text-white text-xs rounded p-2 shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 bottom-full mb-1 left-1/2 -translate-x-1/2 whitespace-nowrap">
+                                        推理实例<br>总耗时: 29.5s
+                                    </div>
+                                </div>
+
+                                <!-- Span 3.1: Waiting -->
+                                <div class="waterfall-row flex items-center py-1.5 rounded group relative">
+                                    <div class="w-1/3 pr-4 pl-8 flex items-center gap-2">
+                                        <div class="w-px h-4 bg-gray-300"></div>
+                                        <span class="w-2 h-2 bg-pink-500 rounded-full flex-shrink-0"></span>
+                                        <span class="text-xs font-medium text-gray-700 truncate">Waiting</span>
+                                    </div>
+                                    <div class="w-2/3 relative h-5">
+                                        <div class="absolute bg-pink-100 border border-pink-300 rounded h-full flex items-center px-1.5 shadow-sm" style="left: 30%; width: 1%;">
+                                            <span class="text-[10px] text-pink-800 font-bold hidden md:inline">0.5s</span>
+                                        </div>
+                                    </div>
+                                    <div class="absolute z-50 bg-slate-800 text-white text-xs rounded p-2 shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 bottom-full mb-1 left-1/2 -translate-x-1/2 whitespace-nowrap">
+                                        Waiting<br>耗时: 0.5s
+                                    </div>
+                                </div>
+
+                                <!-- Span 3.2: TTFT -->
+                                <div class="waterfall-row flex items-center py-1.5 rounded group relative">
+                                    <div class="w-1/3 pr-4 pl-8 flex items-center gap-2">
+                                        <div class="w-px h-4 bg-gray-300"></div>
+                                        <span class="w-2 h-2 bg-red-500 rounded-full flex-shrink-0"></span>
+                                        <span class="text-xs font-medium text-gray-700 truncate">TTFT</span>
+                                    </div>
+                                    <div class="w-2/3 relative h-5">
+                                        <div class="absolute bg-red-100 border border-red-300 rounded h-full flex items-center px-1.5 shadow-sm" style="left: 31%; width: 4%;">
+                                            <span class="text-[10px] text-red-800 font-bold">2.0s</span>
+                                        </div>
+                                    </div>
+                                    <div class="absolute z-50 bg-slate-800 text-white text-xs rounded p-2 shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 bottom-full mb-1 left-1/2 -translate-x-1/2 whitespace-nowrap">
+                                        TTFT<br>耗时: 2.0s
+                                    </div>
+                                </div>
+
+                                <!-- Span 3.3: Decoding -->
+                                <div class="waterfall-row flex items-center py-1.5 rounded group relative">
+                                    <div class="w-1/3 pr-4 pl-8 flex items-center gap-2">
+                                        <div class="w-px h-4 bg-gray-300"></div>
+                                        <span class="w-2 h-2 bg-purple-500 rounded-full flex-shrink-0"></span>
+                                        <span class="text-xs font-medium text-gray-700 truncate">Decoding</span>
+                                    </div>
+                                    <div class="w-2/3 relative h-5">
+                                        <div class="absolute bg-purple-100 border border-purple-300 rounded h-full flex items-center px-1.5 shadow-sm" style="left: 35%; width: 54%;">
+                                            <span class="text-[10px] text-purple-800 font-bold">27.0s</span>
+                                        </div>
+                                    </div>
+                                    <div class="absolute z-50 bg-slate-800 text-white text-xs rounded p-2 shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 bottom-full mb-1 left-1/2 -translate-x-1/2 whitespace-nowrap">
+                                        Decoding<br>耗时: 27.0s
+                                    </div>
+                                </div>
+
+                                <!-- Span 4: Response -->
+                                <div class="waterfall-row flex items-center py-1.5 rounded group relative">
+                                    <div class="w-1/3 pr-4 pl-4 flex items-center gap-2">
+                                        <div class="w-px h-4 bg-gray-300"></div>
+                                        <span class="w-2 h-2 bg-green-500 rounded-full flex-shrink-0"></span>
+                                        <span class="text-xs font-medium text-gray-700 truncate">返回状态码</span>
+                                    </div>
+                                    <div class="w-2/3 relative h-5">
+                                        <div class="absolute bg-green-100 border border-green-300 rounded h-full flex items-center px-1.5 shadow-sm" style="left: 89%; width: 1%;">
+                                            <span class="text-[10px] text-green-800 font-bold hidden md:inline"></span>
+                                        </div>
+                                    </div>
+                                    <div class="absolute z-50 bg-slate-800 text-white text-xs rounded p-2 shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 bottom-full mb-1 left-1/2 -translate-x-1/2 whitespace-nowrap">
+                                        返回状态码<br>状态: 200 OK
+                                    </div>
+                                </div>
+                            </div></div>
+
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+        </main>
+    </div>
+
+    <script>
+        function selectTrace(type) {
+            // Update row styling
+            document.getElementById('row-online').classList.remove('bg-blue-50/50');
+            document.getElementById('row-offline').classList.remove('bg-blue-50/50');
+            document.getElementById('row-online').classList.remove('trace-selected');
+            document.getElementById('row-offline').classList.remove('trace-selected');
+            document.getElementById('row-' + type).classList.add('bg-blue-50/50');
+            document.getElementById('row-' + type).classList.add('trace-selected');
+
+            const wfOnline = document.getElementById('waterfall-online');
+            const wfOffline = document.getElementById('waterfall-offline');
+            const timelineLabel = document.getElementById('waterfall-timeline-label');
+
+            if (type === 'online') {
+                // Update Header
+                document.getElementById('detail-trace-id').textContent = 'tr-8829-ax-99102';
+                document.getElementById('detail-lane').textContent = 'Fast Lane (Online)';
+                document.getElementById('detail-lane').className = 'px-2.5 py-1 bg-blue-100 text-blue-700 rounded text-sm font-bold';
+                document.getElementById('detail-req-id').textContent = 'req-abc-12345';
+                document.getElementById('detail-time').textContent = '2026-03-30 14:25:01.442';
+                document.getElementById('detail-model').textContent = 'Llama-3-70B';
+                
+                // Update Stats
+                document.getElementById('stat-total').textContent = '1,245 ms';
+                document.getElementById('stat-ttft').textContent = '325 ms';
+                document.getElementById('stat-queue').textContent = '12 ms';
+                document.getElementById('stat-decode').textContent = '920 ms';
+                document.getElementById('stat-prompt-tokens').textContent = '1,240';
+                document.getElementById('stat-comp-tokens').textContent = '256';
+                document.getElementById('stat-total-tokens').textContent = '1,496';
+
+                // Toggle Waterfall
+                wfOnline.classList.remove('hidden');
+                wfOnline.classList.add('block');
+                wfOffline.classList.remove('block');
+                wfOffline.classList.add('hidden');
+                timelineLabel.textContent = '时间轴 (0 - 1.5s)';
+
+            } else if (type === 'offline') {
+                // Update Header
+                document.getElementById('detail-trace-id').textContent = 'tr-offline-77x-12';
+                document.getElementById('detail-lane').textContent = 'Slow Lane (Offline)';
+                document.getElementById('detail-lane').className = 'px-2.5 py-1 bg-purple-100 text-purple-700 rounded text-sm font-bold';
+                document.getElementById('detail-req-id').textContent = 'job-batch-992';
+                document.getElementById('detail-time').textContent = '2026-03-30 13:10:44.102';
+                document.getElementById('detail-model').textContent = 'Qwen-1.5-72B';
+                
+                // Update Stats
+                document.getElementById('stat-total').textContent = '45.2 s';
+                document.getElementById('stat-ttft').textContent = 'N/A';
+                document.getElementById('stat-queue').textContent = '12.0 s';
+                document.getElementById('stat-decode').textContent = '32.7 s';
+                document.getElementById('stat-prompt-tokens').textContent = '85,400';
+                document.getElementById('stat-comp-tokens').textContent = '12,050';
+                document.getElementById('stat-total-tokens').textContent = '97,450';
+
+                // Toggle Waterfall
+                wfOnline.classList.remove('block');
+                wfOnline.classList.add('hidden');
+                wfOffline.classList.remove('hidden');
+                wfOffline.classList.add('block');
+                timelineLabel.textContent = '时间轴 (0 - 50s)';
+            }
+        }
+    </script>
+</body>
+</html>
+
+

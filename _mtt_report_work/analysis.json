@@ -1,0 +1,327 @@
+{
+  "models": {
+    "qwen3-32b": {
+      "online": [
+        {
+          "input": 512,
+          "output": 128,
+          "concurrency": 8,
+          "ttft_max_s": 0.8029,
+          "itl_ms": 36.6701,
+          "throughput_avg": 219.7544,
+          "per_req_avg": 27.4693,
+          "limit_s": 2,
+          "qualified": true
+        },
+        {
+          "input": 2048,
+          "output": 256,
+          "concurrency": 4,
+          "ttft_max_s": 1.4382,
+          "itl_ms": 45.8608,
+          "throughput_avg": 87.5561,
+          "per_req_avg": 21.889,
+          "limit_s": 2,
+          "qualified": true
+        },
+        {
+          "input": 2048,
+          "output": 2048,
+          "concurrency": 4,
+          "ttft_max_s": 1.4321,
+          "itl_ms": 50.9338,
+          "throughput_avg": 79.8497,
+          "per_req_avg": 19.9624,
+          "limit_s": 2,
+          "qualified": true
+        },
+        {
+          "input": 4096,
+          "output": 512,
+          "concurrency": 4,
+          "ttft_max_s": 2.8694,
+          "itl_ms": 48.0382,
+          "throughput_avg": 83.4229,
+          "per_req_avg": 20.8557,
+          "limit_s": 2,
+          "qualified": false
+        },
+        {
+          "input": 8192,
+          "output": 512,
+          "concurrency": 8,
+          "ttft_max_s": 12.9801,
+          "itl_ms": 53.7514,
+          "throughput_avg": 149.0999,
+          "per_req_avg": 18.6375,
+          "limit_s": 20,
+          "qualified": true
+        },
+        {
+          "input": 8192,
+          "output": 2048,
+          "concurrency": 8,
+          "ttft_max_s": 12.85,
+          "itl_ms": 53.0136,
+          "throughput_avg": 157.9015,
+          "per_req_avg": 19.7377,
+          "limit_s": 20,
+          "qualified": true
+        }
+      ],
+      "offline": [
+        {
+          "input": 512,
+          "output": 128,
+          "concurrency": 64,
+          "latency_avg_s": 12.3502,
+          "generation_speed": 10.3825,
+          "throughput_avg": 663.3091,
+          "per_req_avg": 10.3642
+        },
+        {
+          "input": 2048,
+          "output": 256,
+          "concurrency": 64,
+          "latency_avg_s": 39.2049,
+          "generation_speed": 6.5342,
+          "throughput_avg": 417.9073,
+          "per_req_avg": 6.5298
+        },
+        {
+          "input": 2048,
+          "output": 2048,
+          "concurrency": 32,
+          "latency_avg_s": 114.1135,
+          "generation_speed": 17.9492,
+          "throughput_avg": 574.3056,
+          "per_req_avg": 17.9471
+        },
+        {
+          "input": 4096,
+          "output": 512,
+          "concurrency": 32,
+          "latency_avg_s": 51.9594,
+          "generation_speed": 9.8566,
+          "throughput_avg": 315.3233,
+          "per_req_avg": 9.8539
+        },
+        {
+          "input": 8192,
+          "output": 512,
+          "concurrency": 32,
+          "latency_avg_s": 90.9616,
+          "generation_speed": 6.0734,
+          "throughput_avg": 180.1199,
+          "per_req_avg": 5.6287
+        },
+        {
+          "input": 8192,
+          "output": 2048,
+          "concurrency": 32,
+          "latency_avg_s": 229.6653,
+          "generation_speed": 10.2427,
+          "throughput_avg": 285.3543,
+          "per_req_avg": 8.9173
+        },
+        {
+          "input": 20000,
+          "output": 1600,
+          "concurrency": 8,
+          "latency_avg_s": 122.2791,
+          "generation_speed": 13.0853,
+          "throughput_avg": 104.6785,
+          "per_req_avg": 13.0848
+        }
+      ],
+      "online_rows": 27,
+      "offline_rows": 30
+    },
+    "qwen3.5-27b": {
+      "online": [
+        {
+          "input": 512,
+          "output": 128,
+          "concurrency": 16,
+          "ttft_max_s": 1.9465,
+          "itl_ms": 90.5784,
+          "throughput_avg": 167.9976,
+          "per_req_avg": 10.4998,
+          "limit_s": 2,
+          "qualified": true
+        },
+        {
+          "input": 2048,
+          "output": 256,
+          "concurrency": 4,
+          "ttft_max_s": 1.592,
+          "itl_ms": 55.1762,
+          "throughput_avg": 72.2735,
+          "per_req_avg": 18.0684,
+          "limit_s": 2,
+          "qualified": true
+        },
+        {
+          "input": 2048,
+          "output": 2048,
+          "concurrency": 4,
+          "ttft_max_s": 1.4285,
+          "itl_ms": 52.857,
+          "throughput_avg": 67.6175,
+          "per_req_avg": 16.9044,
+          "limit_s": 2,
+          "qualified": true
+        },
+        {
+          "input": 4096,
+          "output": 512,
+          "concurrency": 4,
+          "ttft_max_s": 2.7107,
+          "itl_ms": 54.8396,
+          "throughput_avg": 72.903,
+          "per_req_avg": 18.2258,
+          "limit_s": 2,
+          "qualified": false
+        },
+        {
+          "input": 8192,
+          "output": 512,
+          "concurrency": 8,
+          "ttft_max_s": 10.063,
+          "itl_ms": 81.0925,
+          "throughput_avg": 98.4231,
+          "per_req_avg": 12.3029,
+          "limit_s": 20,
+          "qualified": true
+        },
+        {
+          "input": 8192,
+          "output": 2048,
+          "concurrency": 8,
+          "ttft_max_s": 10.1494,
+          "itl_ms": 62.4603,
+          "throughput_avg": 126.1777,
+          "per_req_avg": 15.7722,
+          "limit_s": 20,
+          "qualified": true
+        },
+        {
+          "input": 20000,
+          "output": 1600,
+          "concurrency": 4,
+          "ttft_max_s": 12.6616,
+          "itl_ms": 61.9034,
+          "throughput_avg": 64.206,
+          "per_req_avg": 16.0515,
+          "limit_s": 20,
+          "qualified": true
+        }
+      ],
+      "offline": [
+        {
+          "input": 512,
+          "output": 128,
+          "concurrency": 64,
+          "latency_avg_s": 21.5627,
+          "generation_speed": 6.4061,
+          "throughput_avg": 379.9155,
+          "per_req_avg": 5.9362
+        },
+        {
+          "input": 2048,
+          "output": 256,
+          "concurrency": 64,
+          "latency_avg_s": 45.2169,
+          "generation_speed": 6.122,
+          "throughput_avg": 362.3427,
+          "per_req_avg": 5.6616
+        },
+        {
+          "input": 2048,
+          "output": 2048,
+          "concurrency": 32,
+          "latency_avg_s": 106.6654,
+          "generation_speed": 20.7935,
+          "throughput_avg": 614.4073,
+          "per_req_avg": 19.2002
+        },
+        {
+          "input": 4096,
+          "output": 512,
+          "concurrency": 32,
+          "latency_avg_s": 46.3714,
+          "generation_speed": 11.8047,
+          "throughput_avg": 353.3216,
+          "per_req_avg": 11.0413
+        },
+        {
+          "input": 8192,
+          "output": 512,
+          "concurrency": 32,
+          "latency_avg_s": 66.9302,
+          "generation_speed": 7.9313,
+          "throughput_avg": 244.7923,
+          "per_req_avg": 7.6498
+        },
+        {
+          "input": 8192,
+          "output": 2048,
+          "concurrency": 32,
+          "latency_avg_s": 147.1389,
+          "generation_speed": 15.2446,
+          "throughput_avg": 445.4024,
+          "per_req_avg": 13.9188
+        },
+        {
+          "input": 20000,
+          "output": 1600,
+          "concurrency": 8,
+          "latency_avg_s": 73.4216,
+          "generation_speed": 21.8683,
+          "throughput_avg": 174.3355,
+          "per_req_avg": 21.7919
+        }
+      ],
+      "online_rows": 30,
+      "offline_rows": 30
+    }
+  },
+  "small_models": {
+    "embedding": [
+      {
+        "model": "Qwen3-Embedding-0.6B-Hygon",
+        "input_chars": "672",
+        "concurrency": "16",
+        "requests": "100",
+        "success": "100",
+        "failed": "0",
+        "total_time_s": "1.200603",
+        "throughput_req_s": "83.291498",
+        "avg_latency_s": "0.186096",
+        "p50_latency_s": "0.095131",
+        "p90_latency_s": "0.308388",
+        "p99_latency_s": "0.315515",
+        "embedding_dim": "1024"
+      }
+    ],
+    "reranker": [
+      {
+        "model": "Qwen3-Reranker-0.6B-Hygon",
+        "query_tokens_target": "128",
+        "document_tokens_target": "256",
+        "documents_per_request": "30",
+        "concurrency": "16",
+        "requests": "100",
+        "success": "100",
+        "failed": "0",
+        "total_time_s": "135.440563",
+        "throughput_req_s": "0.738331",
+        "throughput_candidate_doc_s": "22.149937",
+        "avg_latency_s": "21.173525",
+        "p50_latency_s": "21.32152",
+        "p90_latency_s": "24.647279",
+        "p99_latency_s": "24.900433"
+      }
+    ]
+  }
+}

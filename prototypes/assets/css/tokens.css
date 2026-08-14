@@ -1,0 +1,26 @@
+:root {
+  --yl-primary: #266eff;
+  --yl-primary-hover: #4f90ff;
+  --yl-primary-active: #175be5;
+  --yl-text-heading: #222;
+  --yl-text-primary: #333;
+  --yl-text-secondary: #666;
+  --yl-text-tertiary: #999;
+  --yl-border: #ddd;
+  --yl-divider: #eaeaea;
+  --yl-page-bg: #f5f7fa;
+  --yl-surface: #fff;
+  --yl-table-head: #fbfbfb;
+  --yl-danger: #ff4c4c;
+  --yl-warning: #faad14;
+  --yl-success: #52c41a;
+  --yl-radius-sm: 4px;
+  --yl-radius-md: 6px;
+  --yl-radius-lg: 8px;
+  --yl-space-1: 4px;
+  --yl-space-2: 8px;
+  --yl-space-3: 12px;
+  --yl-space-4: 16px;
+  --yl-space-6: 24px;
+  --yl-shadow-float: 0 10px 28px rgba(15, 23, 42, .14);
+}

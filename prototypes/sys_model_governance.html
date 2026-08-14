@@ -1,0 +1,807 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>模型纳管 - 应龙大模型推理平台</title>
+    <link rel="stylesheet" href="assets/css/yinglong-v2.css">
+    <link rel="stylesheet" href="assets/css/pages/resource-application.css">
+    <style>
+        :root {
+            --governance-blue: #266eff;
+            --governance-blue-soft: #edf4ff;
+            --governance-green: #18864b;
+            --governance-green-soft: #eaf7ef;
+            --governance-orange: #b66a00;
+            --governance-orange-soft: #fff6e5;
+            --governance-red: #d13c3c;
+            --governance-red-soft: #fff0f0;
+            --governance-ink: #172033;
+            --governance-text: #334155;
+            --governance-muted: #64748b;
+            --governance-line: #dbe2ea;
+            --governance-soft: #f8fafc;
+        }
+
+        .governance-page {
+            display: grid;
+            gap: 16px;
+        }
+
+        .governance-application-section { display: grid; gap: 10px; scroll-margin-top: 72px; }
+        .embedded-resource-heading { margin: 0; padding: 2px 0 10px; }
+        .embedded-resource-heading h2 { margin: 0; color: var(--governance-ink); font-size: 16px; }
+        .embedded-resource-heading p { margin: 3px 0 0; color: var(--governance-muted); font-size: 11px; }
+        .flow-link { cursor: pointer; }
+
+        .governance-card {
+            overflow: hidden;
+            background: #fff;
+            border: 1px solid var(--governance-line);
+            border-radius: 8px;
+            box-shadow: 0 1px 2px rgba(23, 32, 51, .035);
+        }
+
+        .governance-grid {
+            display: grid;
+            gap: 16px;
+        }
+
+        .governance-grid.two {
+            grid-template-columns: minmax(0, 1.35fr) minmax(320px, .85fr);
+        }
+
+        .governance-grid.three {
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+        }
+
+        .section-head {
+            min-height: 52px;
+            padding: 12px 16px;
+            border-bottom: 1px solid var(--governance-line);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+        }
+
+        .section-head h2 {
+            margin: 0;
+            color: var(--governance-ink);
+            font-size: 16px !important;
+            line-height: 24px !important;
+        }
+
+        .section-head p {
+            margin: 2px 0 0;
+            color: var(--governance-muted);
+            font-size: 12px;
+            line-height: 18px;
+        }
+
+        .section-body {
+            padding: 16px;
+        }
+
+        .tag {
+            display: inline-flex;
+            align-items: center;
+            min-height: 22px;
+            padding: 1px 8px;
+            border-radius: 999px;
+            font-size: 12px;
+            line-height: 18px;
+            font-weight: 500;
+            white-space: nowrap;
+        }
+
+        .tag.blue { color: var(--governance-blue); background: var(--governance-blue-soft); }
+        .tag.green { color: var(--governance-green); background: var(--governance-green-soft); }
+        .tag.orange { color: var(--governance-orange); background: var(--governance-orange-soft); }
+        .tag.red { color: var(--governance-red); background: var(--governance-red-soft); }
+        .tag.gray { color: var(--governance-muted); background: #f1f5f9; }
+
+        .catalog-card {
+            min-height: 150px;
+            padding: 14px;
+            border: 1px solid var(--governance-line);
+            border-radius: 6px;
+            background: var(--governance-soft);
+        }
+
+        .catalog-card.featured {
+            border-color: #9fbdff;
+            background: #f7faff;
+        }
+
+        .catalog-card h3 {
+            margin: 0;
+            color: var(--governance-ink);
+            font-size: 15px !important;
+            line-height: 22px !important;
+        }
+
+        .catalog-card p {
+            margin: 6px 0 0;
+            color: var(--governance-muted);
+            font-size: 12px;
+            line-height: 20px;
+        }
+
+        .catalog-card ul {
+            margin: 10px 0 0;
+            padding-left: 18px;
+            color: var(--governance-text);
+            font-size: 13px;
+            line-height: 22px;
+        }
+
+        .catalog-card li + li {
+            margin-top: 5px;
+        }
+
+        .model-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 12px;
+        }
+
+        .model-chip {
+            display: inline-flex;
+            align-items: center;
+            min-height: 30px;
+            padding: 4px 11px;
+            border: 1px solid #b9ceff;
+            border-radius: 999px;
+            color: var(--governance-blue);
+            background: #fff;
+            font-size: 13px;
+            font-weight: 700;
+            white-space: nowrap;
+        }
+
+        .governance-note {
+            margin-top: 12px;
+            overflow: hidden;
+            border: 1px solid #b9ceff;
+            border-radius: 6px;
+            background: #f7faff;
+        }
+
+        .policy-summary {
+            padding: 13px 14px 12px;
+        }
+
+        .policy-summary p {
+            margin: 0;
+            color: var(--governance-text);
+            font-size: 13px;
+            line-height: 22px;
+            font-weight: 600;
+        }
+
+        .policy-summary strong {
+            color: #174eb8;
+            font-weight: 700;
+        }
+
+        .policy-summary .iteration-emphasis {
+            color: var(--governance-blue);
+        }
+
+        .policy-ownership {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            border-top: 1px solid #d6e2ff;
+            background: #fff;
+        }
+
+        .ownership-item {
+            padding: 11px 14px;
+            color: var(--governance-muted);
+            font-size: 12px;
+            line-height: 19px;
+        }
+
+        .ownership-item + .ownership-item {
+            border-left: 1px solid #e2e8f0;
+        }
+
+        .ownership-item strong {
+            display: block;
+            margin-bottom: 2px;
+            color: var(--governance-ink);
+            font-size: 12px;
+        }
+
+        .guidance-downloads {
+            margin-top: 12px;
+            padding-top: 12px;
+            border-top: 1px solid var(--governance-line);
+        }
+
+        .guidance-downloads h3 {
+            margin: 0;
+            color: var(--governance-ink);
+            font-size: 13px;
+            line-height: 20px;
+        }
+
+        .guidance-downloads > p {
+            margin: 2px 0 9px;
+            color: var(--governance-muted);
+            font-size: 11px;
+            line-height: 18px;
+        }
+
+        .download-list {
+            display: grid;
+            gap: 7px;
+        }
+
+        .download-link {
+            display: flex;
+            align-items: center;
+            gap: 9px;
+            min-height: 44px;
+            padding: 7px 9px;
+            border: 1px solid var(--governance-line);
+            border-radius: 6px;
+            color: var(--governance-text);
+            background: #fff;
+            text-decoration: none;
+            transition: border-color .15s ease, background-color .15s ease;
+        }
+
+        .download-link:hover {
+            border-color: #9fbdff;
+            background: #f7faff;
+        }
+
+        .download-link:focus-visible {
+            outline: 2px solid var(--governance-blue);
+            outline-offset: 2px;
+        }
+
+        .download-icon {
+            width: 18px;
+            height: 18px;
+            flex: 0 0 auto;
+            color: var(--governance-blue);
+            fill: none;
+            stroke: currentColor;
+            stroke-width: 2;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+
+        .download-copy {
+            min-width: 0;
+            flex: 1;
+        }
+
+        .download-copy strong,
+        .download-copy span {
+            display: block;
+        }
+
+        .download-copy strong {
+            color: var(--governance-ink);
+            font-size: 12px;
+            line-height: 18px;
+        }
+
+        .download-copy span {
+            color: var(--governance-muted);
+            font-size: 10px;
+            line-height: 15px;
+        }
+
+        .download-action {
+            color: var(--governance-blue);
+            font-size: 11px;
+            font-weight: 700;
+            white-space: nowrap;
+        }
+
+        .flowchart {
+            padding: 16px;
+            border: 1px dashed #b5c4d8;
+            border-radius: 6px;
+            background: #fff;
+        }
+
+        .flow-stage-row {
+            display: grid;
+            grid-template-columns: repeat(6, minmax(0, 1fr));
+            gap: 12px;
+            margin-bottom: 12px;
+        }
+
+        .flow-stage {
+            min-height: 32px;
+            padding: 6px 10px;
+            border: 1px solid var(--governance-line);
+            border-radius: 6px;
+            text-align: center;
+            color: var(--governance-muted);
+            background: var(--governance-soft);
+            font-size: 12px;
+            font-weight: 700;
+        }
+
+        .flow-stage.mainline {
+            grid-column: 1 / 2;
+            color: var(--governance-blue);
+            background: var(--governance-blue-soft);
+            border-color: #b9ceff;
+        }
+
+        .flow-stage.trial {
+            grid-column: 2 / 5;
+            color: var(--governance-orange);
+            background: var(--governance-orange-soft);
+            border-color: #efd29c;
+        }
+
+        .flow-stage.formal {
+            grid-column: 5 / 7;
+            color: var(--governance-green);
+            background: var(--governance-green-soft);
+            border-color: #b9ddc7;
+        }
+
+        .flow-track {
+            position: relative;
+            display: grid;
+            grid-template-columns: repeat(6, minmax(0, 1fr));
+            gap: 18px;
+        }
+
+        .flow-track::before {
+            content: "";
+            position: absolute;
+            top: 32px;
+            left: 7%;
+            right: 7%;
+            height: 2px;
+            background: repeating-linear-gradient(90deg, #9fb2ca 0 8px, transparent 8px 14px);
+        }
+
+        .flow-node {
+            position: relative;
+            z-index: 1;
+            min-height: 174px;
+            padding: 14px;
+            border: 1px solid var(--governance-line);
+            border-radius: 6px;
+            background: #fff;
+        }
+
+        .flow-node::after {
+            content: ">";
+            position: absolute;
+            top: 20px;
+            right: -14px;
+            display: grid;
+            place-items: center;
+            width: 18px;
+            height: 24px;
+            color: #7b8ca3;
+            background: #fff;
+            font-weight: 800;
+            font-size: 16px;
+        }
+
+        .flow-node:last-child::after {
+            display: none;
+        }
+
+        .flow-node.action {
+            border-color: #9fbdff;
+            background: #f7faff;
+        }
+
+        .flow-node.done {
+            border-color: #b9ddc7;
+            background: #f8fff9;
+        }
+
+        .node-index {
+            display: grid;
+            place-items: center;
+            width: 30px;
+            height: 30px;
+            margin-bottom: 12px;
+            border: 1px solid #b7c7da;
+            border-radius: 999px;
+            color: var(--governance-blue);
+            background: #f8fbff;
+            font-weight: 700;
+            font-size: 12px;
+        }
+
+        .node-title {
+            display: block;
+            margin-bottom: 6px;
+            color: var(--governance-ink);
+            font-size: 14px;
+            line-height: 22px;
+            font-weight: 700;
+        }
+
+        .node-copy {
+            margin: 0;
+            min-height: 60px;
+            color: var(--governance-muted);
+            font-size: 12px;
+            line-height: 20px;
+        }
+
+        .node-meta {
+            display: inline-flex;
+            align-items: center;
+            min-height: 22px;
+            margin-top: 10px;
+            padding: 1px 8px;
+            border-radius: 999px;
+            color: var(--governance-muted);
+            background: #f1f5f9;
+            font-size: 12px;
+        }
+
+        .flow-link {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            min-height: 34px;
+            margin-top: 10px;
+            padding: 0 12px;
+            border: 1px solid #b9ceff;
+            border-radius: 6px;
+            color: var(--governance-blue);
+            background: #fff;
+            font-size: 12px;
+            font-weight: 700;
+        }
+
+        .flow-link.primary {
+            border-color: var(--governance-blue);
+            color: #fff;
+            background: var(--governance-blue);
+        }
+
+        .flow-link:hover {
+            border-color: #175be5;
+            color: #175be5;
+            background: #f8fbff;
+        }
+
+        .flow-link.primary:hover {
+            color: #fff;
+            background: #175be5;
+        }
+
+        .materials {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 10px;
+        }
+
+        .material-group {
+            overflow: hidden;
+            border: 1px solid var(--governance-line);
+            border-radius: 6px;
+            background: #fff;
+        }
+
+        .group-head {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+            padding: 10px 12px;
+            border-bottom: 1px solid var(--governance-line);
+            background: #fff;
+        }
+
+        .group-head b {
+            display: block;
+            color: var(--governance-ink);
+            font-size: 13px;
+        }
+
+        .group-head span {
+            color: var(--governance-muted);
+            font-size: 12px;
+        }
+
+        .check-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            padding: 10px 12px;
+            background: var(--governance-soft);
+        }
+
+        .check {
+            display: inline-flex;
+            align-items: center;
+            min-height: 26px;
+            padding: 2px 8px;
+            border: 1px solid var(--governance-line);
+            border-radius: 999px;
+            background: #fff;
+            color: var(--governance-ink);
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        @media (max-width: 1280px) {
+            .governance-grid.two {
+                grid-template-columns: 1fr;
+            }
+
+            .flow-track {
+                grid-template-columns: repeat(3, minmax(0, 1fr));
+            }
+
+            .flow-stage-row,
+            .flow-track::before,
+            .flow-node::after {
+                display: none;
+            }
+        }
+
+        @media (max-width: 900px) {
+            .governance-grid.three,
+            .materials,
+            .flow-track {
+                grid-template-columns: 1fr;
+            }
+
+        }
+    </style>
+</head>
+<body class="sidebar-led heading-spec-page">
+<svg width="0" height="0" aria-hidden="true" style="position:absolute">
+    <symbol id="i-dashboard" viewBox="0 0 24 24"><rect width="7" height="9" x="3" y="3" rx="1"/><rect width="7" height="5" x="14" y="3" rx="1"/><rect width="7" height="9" x="14" y="12" rx="1"/><rect width="7" height="5" x="3" y="16" rx="1"/></symbol><symbol id="i-sliders" viewBox="0 0 24 24"><path d="M4 21v-7m0-4V3m8 18v-9m0-4V3m8 18v-5m0-4V3M1 14h6m2-6h6m2 8h6"/></symbol><symbol id="i-list" viewBox="0 0 24 24"><path d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01"/></symbol><symbol id="i-box" viewBox="0 0 24 24"><path d="m21 8-9-5-9 5 9 5 9-5Z"/><path d="m3 8v8l9 5 9-5V8m-9 5v8"/></symbol><symbol id="i-server" viewBox="0 0 24 24"><rect width="20" height="8" x="2" y="2" rx="2"/><rect width="20" height="8" x="2" y="14" rx="2"/><path d="M6 6h.01M6 18h.01"/></symbol><symbol id="i-brain" viewBox="0 0 24 24"><path d="M9.5 4A2.5 2.5 0 0 0 7 6.5V8a3 3 0 0 0-3 3v1.5A2.5 2.5 0 0 0 6.5 15H7v1.5A3.5 3.5 0 0 0 10.5 20H12V5.5A1.5 1.5 0 0 0 10.5 4h-1Z"/><path d="M14.5 4A2.5 2.5 0 0 1 17 6.5V8a3 3 0 0 1 3 3v1.5a2.5 2.5 0 0 1-2.5 2.5H17v1.5a3.5 3.5 0 0 1-3.5 3.5H12V5.5A1.5 1.5 0 0 1 13.5 4h1Z"/></symbol><symbol id="i-activity" viewBox="0 0 24 24"><path d="M3 12h4l2-8 4 16 2-8h6"/></symbol><symbol id="i-file" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8Z"/><path d="M14 2v6h6M9 15h6M12 12v6"/></symbol><symbol id="i-check-user" viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="m16 11 2 2 4-4"/></symbol><symbol id="i-network" viewBox="0 0 24 24"><rect width="6" height="6" x="9" y="2" rx="1"/><rect width="6" height="6" x="2" y="16" rx="1"/><rect width="6" height="6" x="16" y="16" rx="1"/><path d="M12 8v4m-7 4v-2h14v2"/></symbol><symbol id="i-route" viewBox="0 0 24 24"><circle cx="6" cy="19" r="3"/><path d="M9 19h5.5a3.5 3.5 0 0 0 0-7h-5a3.5 3.5 0 0 1 0-7H15"/><circle cx="18" cy="5" r="3"/></symbol><symbol id="i-settings" viewBox="0 0 24 24"><path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.38a2 2 0 0 0-.73-2.73l-.15-.09a2 2 0 0 1-1-1.74v-.51a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2Z"/><circle cx="12" cy="12" r="3"/></symbol>
+</svg>
+<a class="skip-link" href="#main-content">跳到主要内容</a>
+<aside class="sidebar" aria-label="应龙主导航"><a class="brand" href="../index.html"><span class="brand-mark">应</span><span class="brand-name">应龙推理平台</span><span class="env-badge">PROD</span></a><nav class="sidebar-nav">
+    <section class="nav-group"><h2 class="nav-group-title">工作台</h2><a class="nav-item" href="../index.html"><svg class="icon"><use href="#i-dashboard"/></svg><span>系统概览</span></a></section><section class="nav-group"><h2 class="nav-group-title">算力调度</h2><a class="nav-item" href="sys_dispatch.html"><svg class="icon"><use href="#i-sliders"/></svg><span>算力调度</span></a><a class="nav-item" href="sys_task_list.html"><svg class="icon"><use href="#i-list"/></svg><span>我的任务</span></a></section>
+    <section class="nav-group"><h2 class="nav-group-title">模型管理</h2><a class="nav-item" href="sys_model_repo.html"><svg class="icon"><use href="#i-box"/></svg><span>模型资产</span></a><a class="nav-item" href="sys_model_service.html"><svg class="icon"><use href="#i-server"/></svg><span>模型服务</span></a><a class="nav-item" href="sys_model_training.html"><svg class="icon"><use href="#i-brain"/></svg><span>模型训练</span></a><a class="nav-item active" href="sys_model_governance.html" aria-current="page"><svg class="icon"><use href="#i-check-user"/></svg><span>模型纳管</span></a><a class="nav-item" href="sys_model_monitor.html"><svg class="icon"><use href="#i-activity"/></svg><span>模型监测</span></a></section>
+    <section class="nav-group"><h2 class="nav-group-title">资源与运维</h2><a class="nav-item" href="sys_resource_application.html"><svg class="icon"><use href="#i-file"/></svg><span>资源申请</span></a><a class="nav-item" href="sys_resource_approval.html"><svg class="icon"><use href="#i-check-user"/></svg><span>授权审批</span></a><a class="nav-item" href="sys_infrastructure_mgmt.html"><svg class="icon"><use href="#i-network"/></svg><span>集群管理</span></a><a class="nav-item" href="sys_api_key_mgmt.html"><svg class="icon"><use href="#i-activity"/></svg><span>请求监控</span></a><a class="nav-item" href="sys_request_tracing.html"><svg class="icon"><use href="#i-route"/></svg><span>链路追踪</span></a></section>
+</nav></aside>
+<div class="app-main">
+    <header class="global-header"><nav class="breadcrumb" aria-label="面包屑"><a href="../index.html">应龙</a><span>/</span><span>模型管理</span><span>/</span><span class="breadcrumb-current" aria-current="page">模型纳管</span></nav><div class="user-profile"><span>资源管理员</span><span class="user-avatar" aria-hidden="true">A</span></div></header>
+        <main class="page-canvas heading-spec-canvas" id="main-content">
+            <section class="section governance-overview" aria-labelledby="governanceTitle"><div class="section-heading overview-heading"><div><h1 class="page-title" id="governanceTitle">模型纳管</h1><p class="page-description">主线模型目录前置，先确认可复用能力，再进入非主线模型纳管流程。</p></div></div></section>
+            <div class="governance-page">
+                <section class="governance-grid two">
+                    <div class="governance-card">
+                        <div class="section-head">
+                            <div>
+                                <h2>主线模型目录</h2>
+                            </div>
+                            <span class="tag blue">持续更新</span>
+                        </div>
+                        <div class="section-body governance-grid three">
+                            <div class="catalog-card featured">
+                                <h3>通用大模型</h3>
+                                <div class="model-row">
+                                    <span class="model-chip">Qwen3-14B</span>
+                                    <span class="model-chip">Qwen3.5-27B</span>
+                                    <span class="model-chip">Qwen3.5-9B</span>
+                                    <span class="model-chip">minimax 2.7</span>
+                                </div>
+                            </div>
+                            <div class="catalog-card">
+                                <h3>嵌入模型</h3>
+                                <div class="model-row">
+                                    <span class="model-chip">Qwen3-Embedding-4B</span>
+                                    <span class="model-chip">Qwen3-VL-Embedding-2B</span>
+                                </div>
+                            </div>
+                            <div class="catalog-card">
+                                <h3>重排模型</h3>
+                                <div class="model-row">
+                                    <span class="model-chip">Qwen3-Reranker-4B</span>
+                                    <span class="model-chip">Qwen3-VL-Reranker-2B</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="section-body" style="padding-top: 0;">
+                            <div class="governance-note">
+                                <div class="policy-summary">
+                                    <p>主线模型会根据<strong>平台规划</strong>、<strong>业务共性需求</strong>、<strong>模型效果</strong>和<strong>资源成本</strong><strong class="iteration-emphasis">持续迭代</strong>。</p>
+                                </div>
+                                <div class="policy-ownership">
+                                    <div class="ownership-item"><strong>平台统一负责</strong>主线模型的部署、升级、监控和维护</div>
+                                    <div class="ownership-item"><strong>业务方申请时提供</strong>业务系统、调用场景和预估调用量</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <aside class="governance-card">
+                        <div class="section-head">
+                            <div>
+                                <h2>非主线模型纳管说明</h2>
+                            </div>
+                        </div>
+                        <div class="section-body">
+                            <div class="catalog-card">
+                                <h3>业务方承担</h3>
+                                <ul>
+                                    <li>模型选型、权重获取、授权确认</li>
+                                    <li>镜像制作、接口封装、效果验证</li>
+                                    <li>正式纳管后的部署、升级和维护</li>
+                                </ul>
+                            </div>
+                            <div class="guidance-downloads">
+                                <h3>平台纳管规范与指引</h3>
+                                <div class="download-list">
+                                    <a class="download-link" href="../doc/model_governance_specification.md" download>
+                                        <svg class="download-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="m7 10 5 5 5-5"/><path d="M12 15V3"/></svg>
+                                        <span class="download-copy"><strong>平台模型纳管规范</strong><span>Markdown · V1.0</span></span>
+                                        <span class="download-action">下载</span>
+                                    </a>
+                                    <a class="download-link" href="../doc/model_governance_guide.md" download>
+                                        <svg class="download-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="m7 10 5 5 5-5"/><path d="M12 15V3"/></svg>
+                                        <span class="download-copy"><strong>平台模型纳管操作指引</strong><span>Markdown · V1.0</span></span>
+                                        <span class="download-action">下载</span>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </aside>
+                </section>
+
+                <section id="scheme-flow" class="governance-card">
+                    <div class="section-head">
+                        <div>
+                            <h2>模型纳管流程</h2>
+                        </div>
+                    </div>
+                    <div class="section-body">
+                        <div class="flowchart">
+                            <div class="flow-stage-row" aria-hidden="true">
+                                <span class="flow-stage mainline">主线优先</span>
+                                <span class="flow-stage trial">业务试用阶段</span>
+                                <span class="flow-stage formal">正式纳管阶段</span>
+                            </div>
+                            <div class="flow-track">
+                                <div class="flow-node">
+                                    <span class="node-index">1</span>
+                                    <strong class="node-title">优先调用主线</strong>
+                                    <p class="node-copy">确认通用大模型、Embedding 或 Reranker 等主线能力是否满足场景。</p>
+                                    <span class="node-meta">优先复用</span>
+                                </div>
+                                <div class="flow-node action">
+                                    <span class="node-index">2</span>
+                                    <strong class="node-title">申请试用资源</strong>
+                                    <p class="node-copy">需要平台试用算力时，先提交试用资源申请，并按期释放资源。</p>
+                                    <button class="flow-link" type="button" onclick="openApplicationModal('试用资源')">提交试用资源申请</button>
+                                </div>
+                                <div class="flow-node">
+                                    <span class="node-index">3</span>
+                                    <strong class="node-title">完成试用验证</strong>
+                                    <p class="node-copy">业务方完成模型启动、依赖适配、接口暴露、效果验证和资源评估。</p>
+                                    <span class="node-meta">业务方负责</span>
+                                </div>
+                                <div class="flow-node">
+                                    <span class="node-index">4</span>
+                                    <strong class="node-title">准备纳管材料</strong>
+                                    <p class="node-copy">准备权重、镜像、YAML、接口文档、性能报告和测试样例。</p>
+                                    <span class="node-meta">材料齐备</span>
+                                </div>
+                                <div class="flow-node action">
+                                    <span class="node-index">5</span>
+                                    <strong class="node-title">正式资源申请</strong>
+                                    <p class="node-copy">试用通过并确认长期运行后，申请正式资源、账号权限和部署配额。</p>
+                                    <button class="flow-link primary" type="button" onclick="openApplicationModal('正式资源')">提交正式资源申请</button>
+                                </div>
+                                <div class="flow-node done">
+                                    <span class="node-index">6</span>
+                                    <strong class="node-title">自助部署维护</strong>
+                                    <p class="node-copy">平台开通权限和配额后，业务方自助部署、发布、升级和调参。</p>
+                                    <span class="node-meta">长期维护</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="governance-application-section" id="resource-application">
+                    <div class="resource-heading embedded-resource-heading">
+                        <div><h2>资源申请</h2></div>
+                        <div class="page-actions"><a class="btn" href="sys_resource_approval.html">进入授权审批</a><button class="btn trial-button" onclick="openApplicationModal('试用资源')">新建试用申请</button><button class="btn btn-primary" onclick="openApplicationModal('正式资源')">新建正式申请</button></div>
+                    </div>
+                    <section class="card table-card application-table"><div class="filter-toolbar"><div class="search-wrap"><input class="search-input" id="keyword" maxlength="50" placeholder="搜索名称、编号、业务系统或模型" oninput="renderTable()"><button class="search-clear hidden" id="keywordClear" onclick="clearKeyword()" aria-label="清除申请搜索">×</button></div><select class="control" id="typeFilter" onchange="renderTable()"><option value="">全部类型</option><option>试用资源</option><option>正式资源</option></select><select class="control" id="statusFilter" onchange="renderTable()"><option value="">全部状态</option><option>草稿</option><option>已提交</option><option>审核中</option><option>审核通过</option><option>已驳回</option></select><button class="btn btn-ghost" onclick="resetFilters()">重置</button></div><div class="table-toolbar"><div class="table-title"><h2>我的资源申请</h2></div><span class="result-count">共 <strong id="resultCount">0</strong> 项</span></div><div class="table-scroll" id="tableArea"></div><footer class="pagination"><span id="paginationText">共 0 项</span><div><button class="btn table-button" disabled>上一页</button><button class="btn table-button btn-primary">1</button><button class="btn table-button" disabled>下一页</button></div></footer></section>
+                </section>
+
+                <section class="governance-card">
+                    <div class="section-head">
+                        <div>
+                            <h2>接入材料清单</h2>
+                        </div>
+                        <span class="tag gray">7 项必备</span>
+                    </div>
+                    <div class="section-body materials">
+                        <div class="material-group">
+                            <div class="group-head">
+                                <div>
+                                    <b>基础信息</b>
+                                    <span>必备 2 项</span>
+                                </div>
+                                <span class="tag red">必须</span>
+                            </div>
+                            <div class="check-list">
+                                <span class="check">模型信息</span>
+                                <span class="check">模型权重</span>
+                            </div>
+                        </div>
+                        <div class="material-group">
+                            <div class="group-head">
+                                <div>
+                                    <b>部署交付物</b>
+                                    <span>必备 3 项</span>
+                                </div>
+                                <span class="tag red">必须</span>
+                            </div>
+                            <div class="check-list">
+                                <span class="check">部署镜像</span>
+                                <span class="check">K8s 启动 YAML</span>
+                                <span class="check">接口文档</span>
+                            </div>
+                        </div>
+                        <div class="material-group">
+                            <div class="group-head">
+                                <div>
+                                    <b>验证材料</b>
+                                    <span>必备 2 项</span>
+                                </div>
+                                <span class="tag red">必须</span>
+                            </div>
+                            <div class="check-list">
+                                <span class="check">性能测试报告</span>
+                                <span class="check">测试样例数据</span>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </main>
+</div>
+<div class="modal-backdrop hidden" id="formOverlay" role="dialog" aria-modal="true" aria-labelledby="formTitle"><section class="modal application-modal"><header class="modal-header"><div><h2 id="formTitle">新建资源申请</h2></div><button class="btn btn-icon btn-ghost" onclick="closeForm()" aria-label="关闭资源申请弹窗">×</button></header><div class="request-type-tabs" role="tablist"><button id="trialTab" onclick="switchRequestType('试用资源')">试用资源</button><button id="formalTab" onclick="switchRequestType('正式资源')">正式资源</button></div><form class="modal-body" id="requestForm" novalidate>
+  <section class="form-section"><h3 class="form-section-title">基本信息</h3><div class="form-grid"><div class="form-field"><label for="requestName">申请名称 <span class="required">*</span></label><input class="control" id="requestName" maxlength="60"></div><div class="form-field"><label for="department">申请部门 / 项目组 <span class="required">*</span></label><input class="control" id="department"></div><div class="form-field"><label for="systemName">业务系统 <span class="required">*</span></label><input class="control" id="systemName"></div><div class="form-field"><label for="applicant">申请人 <span class="required">*</span></label><input class="control" id="applicant"></div><div class="form-field"><label for="operator">部署操作人 <span class="required">*</span></label><input class="control" id="operator"></div><div class="form-field formal-only"><label for="operatorAccount">部署账号 <span class="required">*</span></label><input class="control" id="operatorAccount" placeholder="例如 li.si"></div><div class="form-field trial-only"><label for="startDate">试用开始时间 <span class="required">*</span></label><input class="control" id="startDate" type="date"></div><div class="form-field trial-only"><label for="endDate">试用结束时间 <span class="required">*</span></label><input class="control" id="endDate" type="date"></div><div class="form-field full"><label for="purpose">资源用途 <span class="required">*</span></label><textarea class="control" id="purpose" rows="3" maxlength="300"></textarea></div></div></section>
+  <section class="form-section hidden" id="formalFields"><h3 class="form-section-title">模型与上线信息</h3><div class="form-grid"><div class="form-field"><label for="modelName">模型名称 <span class="required">*</span></label><input class="control" id="modelName"></div><div class="form-field"><label for="trialPassed">是否试用通过 <span class="required">*</span></label><select class="control" id="trialPassed"><option>是，已完成试用验证</option><option>否，申请直接上线评审</option></select></div><div class="form-field"><label for="concurrency">预计并发</label><input class="control" id="concurrency" type="number" min="0" max="100000"></div><div class="form-field"><label for="launchTime">上线时间</label><input class="control" id="launchTime" type="datetime-local"></div></div><div class="material-note"><strong>正式接入前置材料</strong><div><span>模型权重</span><span>部署镜像</span><span>k8sYaml</span><span>接口文档</span><span>测试样例数据</span></div></div></section>
+  <section class="form-section"><h3 class="form-section-title">资源需求</h3><div class="form-grid"><div class="form-field"><label for="gpuType">GPU 型号 <span class="required">*</span></label><select class="control" id="gpuType"><option>910B4</option><option>L40</option><option>A10</option><option>不限制</option></select></div><div class="form-field"><label for="gpuCount">GPU 数量 <span class="required">*</span></label><input class="control" id="gpuCount" type="number" min="1" max="64"></div></div><div class="field-message danger-text" id="formError" role="alert"></div></section>
+</form><footer class="modal-footer"><span class="muted">带 * 的字段为必填项</span><div class="modal-actions"><button class="btn" onclick="closeForm()">取消</button><button class="btn" onclick="saveRequest('草稿')">保存草稿</button><button class="btn btn-primary" onclick="saveRequest('已提交')">提交申请</button></div></footer></section></div>
+<div class="modal-backdrop hidden" id="detailOverlay" role="dialog" aria-modal="true" aria-labelledby="detailTitle"><section class="modal detail-modal"><header class="modal-header"><div><h2 id="detailTitle">申请详情</h2></div><button class="btn btn-icon btn-ghost" onclick="closeDetail()" aria-label="关闭申请详情">×</button></header><div class="modal-body" id="detailBody"></div><footer class="modal-footer"><span></span><div class="modal-actions"><button class="btn" id="editBtn" onclick="editCurrent()">编辑</button><button class="btn" onclick="copyCurrent()">复制申请</button><button class="btn" id="withdrawBtn" onclick="withdrawCurrent()">撤回</button><button class="btn btn-danger" id="deleteBtn" onclick="deleteCurrent()">删除</button></div></footer></section></div>
+<div class="toast hidden" id="toast" role="status" aria-live="polite"><div><h3 id="toastTitle">操作成功</h3><p id="toastMessage"></p></div></div>
+<script>
+const STORE_KEY='ylGovernanceResourceRequestsV1';let requests=[],currentType='试用资源',editingId=null,currentDetailId=null,lastTrigger=null;
+function loadRequests(){try{requests=JSON.parse(localStorage.getItem(STORE_KEY)||'[]')}catch(e){requests=[]}if(!Array.isArray(requests))requests=[]}function saveAll(){localStorage.setItem(STORE_KEY,JSON.stringify(requests))}
+function statusClass(s){return s==='草稿'?'badge-neutral':s==='已提交'?'badge-info':s==='审核中'?'badge-warning':s==='审核通过'?'badge-success':'badge-danger'}
+function renderTable(){const kw=keyword.value.trim().toLowerCase(),type=typeFilter.value,status=statusFilter.value;const rows=requests.filter(x=>(!type||x.type===type)&&(!status||x.status===status)&&(!kw||[x.id,x.name,x.system,x.model||'',x.applicant].join(' ').toLowerCase().includes(kw)));resultCount.textContent=rows.length;paginationText.textContent=`共 ${rows.length} 项`;keywordClear.classList.toggle('hidden',!kw);tableArea.innerHTML=rows.length?`<table><thead><tr><th>申请摘要</th><th>类型</th><th>业务系统</th><th>申请人 / 操作人</th><th>资源需求</th><th>状态</th><th>更新时间</th><th style="text-align:right">操作</th></tr></thead><tbody>${rows.map(x=>`<tr><td><div class="cell-title">${x.name}</div><div class="cell-subtitle">${x.id}</div></td><td><span class="tag ${x.type==='正式资源'?'formal-tag':''}">${x.type}</span></td><td>${x.system}</td><td>${x.applicant}<div class="cell-subtitle">操作人 · ${x.operator}</div></td><td class="mono">${x.gpuCount} × ${x.gpuType}</td><td><span class="badge ${statusClass(x.status)}">${x.status}</span></td><td class="muted">${x.updatedAt}</td><td><div class="actions"><button class="text-link" onclick="openDetail('${x.id}')">查看</button><button class="text-link" onclick="copyRequest('${x.id}')">复制</button>${x.status==='草稿'?`<button class="text-link" onclick="editRequest('${x.id}')">编辑</button>`:''}${['草稿','已提交'].includes(x.status)?`<button class="text-link danger-text" onclick="withdrawRequest('${x.id}')">${x.status==='草稿'?'删除':'撤回'}</button>`:''}</div></td></tr>`).join('')}</tbody></table>`:'<div class="empty-state governance-empty"><strong>暂无资源申请</strong><p>请先阅读上方模型纳管规范与流程，再新建试用或正式资源申请。</p><div><button class="btn trial-button" onclick="openApplicationModal(\'试用资源\')">新建试用申请</button><button class="btn btn-primary" onclick="openApplicationModal(\'正式资源\')">新建正式申请</button></div></div>'}
+function clearKeyword(){keyword.value='';renderTable();keyword.focus()}function resetFilters(){keyword.value='';typeFilter.value='';statusFilter.value='';renderTable()}
+function openApplicationModal(type){lastTrigger=document.activeElement;editingId=null;requestForm.reset();switchRequestType(type);fillDefaults(type);formOverlay.classList.remove('hidden');document.body.style.overflow='hidden';requestAnimationFrame(()=>requestName.focus())}
+function fillDefaults(type){requestName.value=type==='试用资源'?'模型试用资源申请':'非主线模型正式资源申请';department.value='';systemName.value='';applicant.value='当前登录用户';operator.value='';operatorAccount.value='';purpose.value='';startDate.value='';endDate.value='';modelName.value='';concurrency.value='';launchTime.value='';gpuType.value=type==='试用资源'?'910B4':'L40';gpuCount.value=type==='试用资源'?2:4}
+function switchRequestType(type){currentType=type;trialTab.classList.toggle('active',type==='试用资源');formalTab.classList.toggle('active',type==='正式资源');document.querySelectorAll('.trial-only').forEach(x=>x.classList.toggle('hidden',type!=='试用资源'));document.querySelectorAll('.formal-only').forEach(x=>x.classList.toggle('hidden',type!=='正式资源'));formalFields.classList.toggle('hidden',type!=='正式资源');formTitle.textContent=(editingId?'编辑':'新建')+type+'申请'}
+function collect(status){return{id:editingId||nextId(),name:requestName.value.trim(),type:currentType,department:department.value.trim(),system:systemName.value.trim(),applicant:applicant.value.trim(),operator:operator.value.trim(),operatorAccount:currentType==='正式资源'?operatorAccount.value.trim():'',purpose:purpose.value.trim(),gpuType:gpuType.value,gpuCount:Number(gpuCount.value),status,createdAt:editingId?requests.find(x=>x.id===editingId)?.createdAt:now(),updatedAt:now(),startDate:startDate.value,endDate:endDate.value,model:modelName.value.trim(),trialPassed:trialPassed.value,concurrency:Number(concurrency.value||0),launchTime:launchTime.value}}
+function validateRequest(status){formError.textContent='';if(status==='草稿'){if(!requestName.value.trim()){formError.textContent='保存草稿至少需要填写申请名称。';requestName.focus();return false}return true}const base=[['申请名称',requestName],['申请部门 / 项目组',department],['业务系统',systemName],['申请人',applicant],['部署操作人',operator],['资源用途',purpose],['GPU 数量',gpuCount],...(currentType==='正式资源'?[['部署账号',operatorAccount],['模型名称',modelName]]:[])];for(const[n,el]of base){if(!el.value||(el.type==='number'&&Number(el.value)<1)){formError.textContent=`请完整填写：${n}`;el.focus();return false}}if(currentType==='试用资源'){if(!startDate.value||!endDate.value){formError.textContent='请完整填写试用开始时间和试用结束时间。';return false}if(startDate.value>endDate.value){formError.textContent='试用结束时间不能早于开始时间。';endDate.focus();return false}}return true}
+function saveRequest(status){if(!validateRequest(status))return;const item=collect(status),idx=requests.findIndex(x=>x.id===item.id);idx>=0?requests.splice(idx,1,item):requests.unshift(item);saveAll();closeForm();renderTable();showToast(status==='草稿'?'草稿已保存':'申请已提交',status==='草稿'?'可稍后继续编辑。':'审批人员可在授权审批页查看。')}
+function nextId(){const nums=requests.map(x=>Number((x.id||'').split('-').pop())||0);return`RA-202608-${String(Math.max(0,...nums)+1).padStart(3,'0')}`}function now(){return'2026-08-13 '+new Date().toTimeString().slice(0,5)}
+function editRequest(id){const x=requests.find(r=>r.id===id);if(!x)return;lastTrigger=document.activeElement;editingId=id;switchRequestType(x.type);requestName.value=x.name;department.value=x.department;systemName.value=x.system;applicant.value=x.applicant;operator.value=x.operator;operatorAccount.value=x.operatorAccount||'';purpose.value=x.purpose||'';startDate.value=x.startDate||'';endDate.value=x.endDate||'';modelName.value=x.model||'';trialPassed.value=x.trialPassed||'是，已完成试用验证';concurrency.value=x.concurrency||'';launchTime.value=x.launchTime||'';gpuType.value=x.gpuType;gpuCount.value=x.gpuCount;formOverlay.classList.remove('hidden');document.body.style.overflow='hidden'}
+function openDetail(id){lastTrigger=document.activeElement;const x=requests.find(r=>r.id===id);currentDetailId=id;detailTitle.textContent=x.name;detailBody.innerHTML=`<div class="detail-meta-strip">${x.id} · ${x.type} · ${x.status}</div><div class="detail-grid"><section class="detail-panel"><h3>申请信息</h3><dl>${dl([['申请名称',x.name],['申请部门 / 项目组',x.department],['业务系统',x.system],['申请人',x.applicant],['部署操作人',x.operator],...(x.type==='正式资源'?[['部署账号',x.operatorAccount],['模型名称',x.model]]:[]),['资源用途',x.purpose],['GPU 申请值',`${x.gpuCount} × ${x.gpuType}`],...(x.type==='试用资源'?[['试用周期',`${x.startDate||'-'} 至 ${x.endDate||'-'}`]]:[])])}</dl></section><section class="detail-panel result-panel"><h3>审批与开通结果</h3><dl>${dl([['当前状态',x.status],['审批意见','暂无'],['开通结果','待管理员审批后生成']])}</dl></section></div>`;editBtn.disabled=x.status!=='草稿';withdrawBtn.disabled=!['草稿','已提交'].includes(x.status);deleteBtn.disabled=x.status!=='草稿';detailOverlay.classList.remove('hidden');document.body.style.overflow='hidden'}
+function dl(rows){return rows.map(([k,v])=>`<div><dt>${k}</dt><dd>${v||'-'}</dd></div>`).join('')}function copyRequest(id){const source=requests.find(r=>r.id===id);if(!source)return;const x={...source,id:nextId(),name:source.name+'（复制）',status:'草稿',createdAt:now(),updatedAt:now()};requests.unshift(x);saveAll();renderTable();showToast('已复制为草稿',x.id+' 可继续编辑。')}function copyCurrent(){copyRequest(currentDetailId);closeDetail()}function editCurrent(){closeDetail();editRequest(currentDetailId)}
+function withdrawRequest(id){const i=requests.findIndex(x=>x.id===id);if(i<0)return;if(requests[i].status==='草稿'){requests.splice(i,1);showToast('草稿已删除','该申请未进入审批流程。')}else{requests[i].status='草稿';requests[i].updatedAt=now();showToast('申请已撤回','申请已恢复为草稿。')}saveAll();renderTable()}function withdrawCurrent(){withdrawRequest(currentDetailId);closeDetail()}function deleteCurrent(){const x=requests.find(r=>r.id===currentDetailId);if(!x||x.status!=='草稿')return;requests=requests.filter(r=>r.id!==currentDetailId);saveAll();closeDetail();renderTable();showToast('申请已删除','该记录已从列表移除。')}
+function closeForm(){formOverlay.classList.add('hidden');document.body.style.overflow='';if(lastTrigger)lastTrigger.focus()}function closeDetail(){detailOverlay.classList.add('hidden');document.body.style.overflow='';if(lastTrigger)lastTrigger.focus()}function showToast(title,message){toastTitle.textContent=title;toastMessage.textContent=message;toast.classList.remove('hidden');clearTimeout(showToast.timer);showToast.timer=setTimeout(()=>toast.classList.add('hidden'),3000)}
+document.querySelectorAll('.modal-backdrop').forEach(x=>x.addEventListener('click',e=>{if(e.target===x)(x.id==='formOverlay'?closeForm():closeDetail())}));document.addEventListener('keydown',e=>{if(e.key==='Escape'){if(!formOverlay.classList.contains('hidden'))closeForm();if(!detailOverlay.classList.contains('hidden'))closeDetail()}});loadRequests();renderTable();const initialType=new URLSearchParams(location.search).get('type');if(initialType==='trial'||initialType==='formal'){document.getElementById('resource-application').scrollIntoView();openApplicationModal(initialType==='trial'?'试用资源':'正式资源')}
+</script>
+</body>
+</html>

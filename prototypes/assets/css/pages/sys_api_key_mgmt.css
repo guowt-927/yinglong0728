@@ -1,0 +1,13 @@
+.tab-active { border-bottom: 2px solid var(--yl-primary); color: var(--yl-primary); }
+.fixed-top-kpi { position: sticky; top: 0; z-index: 20; background: rgba(255, 255, 255, .9); backdrop-filter: blur(8px); }
+.factor-card {
+  position: absolute;
+  z-index: 50;
+  display: none;
+  width: 200px;
+  padding: 12px;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  background: #fff;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, .1);
+}

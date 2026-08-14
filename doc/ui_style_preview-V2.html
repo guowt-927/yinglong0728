@@ -1,0 +1,1975 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>应龙大模型推理平台 - 页面设计风格与 UI 视觉规范预览</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              PRIMARY: '#266EFF',
+              50: '#eff6ff',
+              100: '#dbeafe',
+              500: '#266EFF',
+              600: '#1d4ed8',
+              700: '#1e40af',
+            }
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+    body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "PingFang SC", "Microsoft YaHei", sans-serif; }
+    .app-sidebar { position: fixed; inset: 0 auto 0 0; z-index: 60; width: 224px; background: #fff; border-right: 1px solid #e2e8f0; display: flex; flex-direction: column; }
+    .app-shell { min-height: 100vh; margin-left: 224px; display: flex; flex-direction: column; }
+    .nav-scroll { overflow-y: auto; padding: 12px 10px 16px; }
+    .focus-ring:focus-visible { outline: 2px solid #266eff; outline-offset: 2px; }
+    @media (max-width: 900px) and (min-width: 641px) {
+      .app-sidebar { width: 64px; }
+      .app-shell { margin-left: 64px; }
+      .sidebar-copy, .sidebar-group-title, .sidebar-badge { display: none; }
+      .sidebar-brand, .sidebar-link { justify-content: center; padding-left: 0; padding-right: 0; }
+    }
+    @media (max-width: 640px) {
+      .app-sidebar { display: none; }
+      .app-shell { margin-left: 0; }
+      .user-name { display: none; }
+      .page-heading { align-items: flex-start; flex-direction: column; }
+      .page-actions { justify-content: flex-start; }
+    }
+  </style>
+</head>
+<body class="bg-slate-50 text-slate-800 antialiased min-h-screen flex flex-col">
+
+  <!-- Left Sidebar (aside.app-sidebar) - Fixed 224px -->
+  <aside class="app-sidebar hidden md:flex">
+    <!-- Brand Header (56px) -->
+    <a href="index.html" class="h-14 min-h-[56px] px-4 border-b border-slate-200 flex items-center gap-2.5 bg-white text-slate-900 no-underline">
+      <div class="w-7 h-7 rounded-[7px] bg-[#266EFF] flex items-center justify-center text-white text-xs font-black shadow-xs shrink-0">
+        应
+      </div>
+      <span class="font-bold text-sm tracking-tight text-slate-900 whitespace-nowrap sidebar-copy">应龙推理平台</span>
+      <span class="text-[10px] bg-[#EFF6FF] text-[#266EFF] px-1.5 py-0.5 rounded border border-[#BFDBFE] font-mono font-semibold whitespace-nowrap sidebar-badge">PROD</span>
+    </a>
+
+    <!-- Nav Groups -->
+    <div class="nav-scroll flex-1 space-y-4">
+      <!-- Group 1: 工作台 -->
+      <div class="space-y-1">
+        <div class="px-2.5 text-[10px] font-semibold text-slate-400 sidebar-group-title">工作台</div>
+        <a href="index.html" class="flex items-center gap-2.5 px-2.5 py-2 rounded-md text-xs font-medium text-slate-600 hover:text-slate-900 hover:bg-slate-100 sidebar-link">
+          <svg class="w-4 h-4 text-slate-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path></svg>
+          <span class="sidebar-copy">系统概览</span>
+        </a>
+      </div>
+
+      <!-- Group 2: 算力调度 -->
+      <div class="space-y-1">
+        <div class="px-2.5 text-[10px] font-semibold text-slate-400 sidebar-group-title">算力调度</div>
+        <a href="sys_dispatch.html" class="flex items-center gap-2.5 px-2.5 py-2 rounded-md text-xs font-medium text-slate-600 hover:text-slate-900 hover:bg-slate-100 sidebar-link">
+          <svg class="w-4 h-4 text-slate-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+          <span class="sidebar-copy">算力调度</span>
+        </a>
+        <a href="sys_task_list.html" class="flex items-center gap-2.5 px-2.5 py-2 rounded-md text-xs font-medium text-slate-600 hover:text-slate-900 hover:bg-slate-100 sidebar-link">
+          <svg class="w-4 h-4 text-slate-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"></path></svg>
+          <span class="sidebar-copy">我的任务</span>
+        </a>
+      </div>
+
+      <!-- Group 3: 模型管理 -->
+      <div class="space-y-1">
+        <div class="px-2.5 text-[10px] font-semibold text-slate-400 sidebar-group-title">模型管理</div>
+        <a href="sys_model_repo.html" class="flex items-center gap-2.5 px-2.5 py-2 rounded-md text-xs font-medium text-slate-600 hover:text-slate-900 hover:bg-slate-100 sidebar-link">
+          <svg class="w-4 h-4 text-slate-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path></svg>
+          <span class="sidebar-copy">模型仓库</span>
+        </a>
+      </div>
+
+      <!-- Group 4: 系统规范 -->
+      <div class="space-y-1">
+        <div class="px-2.5 text-[10px] font-semibold text-slate-400 sidebar-group-title">系统规范</div>
+        <a href="#" class="flex items-center justify-between px-2.5 py-2 rounded-md text-xs font-semibold bg-[#EFF6FF] text-[#266EFF] sidebar-link">
+          <div class="flex items-center gap-2.5">
+            <svg class="w-4 h-4 text-[#266EFF] shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01"></path></svg>
+            <span class="sidebar-copy">视觉规范</span>
+          </div>
+          <span class="text-[9px] bg-[#266EFF] text-white px-1.5 py-0.5 rounded-full font-normal sidebar-badge">ACTIVE</span>
+        </a>
+      </div>
+    </div>
+  </aside>
+
+  <!-- Right App Shell (app-shell) -->
+  <div class="app-shell flex-1">
+    <!-- Right Global Header (56px) -->
+    <header class="h-14 bg-white/98 backdrop-blur-xs text-slate-900 border-b border-slate-200/90 px-6 flex items-center justify-between sticky top-0 z-30 shadow-2xs">
+      <!-- Left: Breadcrumb Navigation -->
+      <nav class="flex items-center gap-2 text-xs text-slate-500 font-medium whitespace-nowrap" aria-label="面包屑">
+        <a href="index.html" class="hover:text-[#266EFF] transition">应龙</a>
+        <span>/</span>
+        <a href="#" class="hover:text-[#266EFF] transition">基础架构</a>
+        <span>/</span>
+        <span class="text-slate-800 font-semibold" aria-current="page">视觉规范与组件指标预设</span>
+      </nav>
+
+      <!-- Right: User Profile Avatar -->
+      <div class="flex items-center gap-2.5 whitespace-nowrap">
+        <span class="text-xs font-medium text-slate-700 user-name">资源管理员</span>
+        <div class="w-7 h-7 rounded-full bg-[#266EFF] text-white font-bold text-xs flex items-center justify-center border border-blue-400 cursor-pointer shadow-2xs" title="资源管理员">
+          A
+        </div>
+      </div>
+    </header>
+
+    <!-- Main Visual Specification Showcase Canvas -->
+    <main class="flex-1 p-6 md:p-8 max-w-7xl mx-auto space-y-8 w-full">
+
+      <!-- Page Heading Section (main .page-heading) -->
+      <div class="border-b border-slate-200/90 pb-4 flex flex-col sm:flex-row sm:items-end justify-between gap-4 page-heading">
+        <div>
+          <h1 class="text-xl font-bold text-slate-900 tracking-tight">视觉规范与组件指标预设</h1>
+          <p class="text-xs text-slate-500 mt-1 leading-relaxed">遵循 PROTOTYPE_DESIGN-V2.md 规范，包含 224px 侧栏导航、56px 全局 Header 与完整 UI 组件标准。</p>
+        </div>
+
+        <div class="flex items-center gap-2 shrink-0 page-actions">
+          <select class="text-xs px-2.5 py-1.5 bg-white border border-slate-200 rounded-md font-medium text-slate-700 shadow-2xs focus:outline-none focus:border-[#266EFF]">
+            <option>全部设计规范 Token</option>
+            <option>核心组件库</option>
+          </select>
+          <button class="p-1.5 bg-white border border-slate-200 rounded-md text-slate-600 hover:text-slate-900 hover:bg-slate-50 transition shadow-2xs cursor-pointer" title="刷新页面">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path></svg>
+          </button>
+        </div>
+      </div>
+
+      <!-- Section 1: Color System (色彩体系) -->
+      <section class="space-y-4">
+        <div class="flex items-center justify-between border-l-4 border-blue-600 pl-3">
+          <div>
+            <h2 class="text-base font-bold text-slate-900">1. 色彩体系 (Color System Tokens)</h2>
+            <p class="text-xs text-slate-500">遵从高数据密度与沉稳工业风设计，背景采用低疲劳 Slate-50，区分主品牌、决策高亮与状态语义。</p>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+          <!-- Primary Color Card -->
+          <div class="bg-white p-4 rounded-xl border border-slate-200/80 shadow-xs space-y-3">
+            <div class="h-16 rounded-lg bg-[#266EFF] flex items-center justify-between p-3 text-white">
+              <span class="text-xs font-bold">主品牌色 (Primary)</span>
+              <span class="text-[10px] font-mono bg-white/20 px-1.5 py-0.5 rounded">#266EFF</span>
+            </div>
+            <div class="text-xs space-y-1">
+              <div class="font-semibold text-slate-800">Brand Blue (#266EFF) / Blue-600</div>
+              <p class="text-[11px] text-slate-500">Logo 标识、侧边栏选中态高亮、主操作按钮与高优先级聚焦</p>
+            </div>
+          </div>
+
+          <!-- Canvas Background Card -->
+          <div class="bg-white p-4 rounded-xl border border-slate-200/80 shadow-xs space-y-3">
+            <div class="h-16 rounded-lg bg-slate-100 border border-slate-200 flex items-center justify-between p-3 text-slate-800">
+              <span class="text-xs font-bold">画布背景色 (Canvas)</span>
+              <span class="text-[10px] font-mono bg-slate-200 px-1.5 py-0.5 rounded">#F8FAFC</span>
+            </div>
+            <div class="text-xs space-y-1">
+              <div class="font-semibold text-slate-800">Slate-50 / Slate-100</div>
+              <p class="text-[11px] text-slate-500">柔和浅灰底色，无纯白刺眼感，保障长时间监控与表格排版的舒适度</p>
+            </div>
+          </div>
+
+          <!-- Accent Color Card -->
+          <div class="bg-white p-4 rounded-xl border border-slate-200/80 shadow-xs space-y-3">
+            <div class="h-16 rounded-lg bg-amber-500 flex items-center justify-between p-3 text-slate-950">
+              <span class="text-xs font-bold">决策辅助色 (Accent)</span>
+              <span class="text-[10px] font-mono bg-slate-950/20 px-1.5 py-0.5 rounded">#F59E0B</span>
+            </div>
+            <div class="text-xs space-y-1">
+              <div class="font-semibold text-slate-800">Amber-500</div>
+              <p class="text-[11px] text-slate-500">用于“申请算力”、“纳管测算”等核心决策按钮与关键状态引导</p>
+            </div>
+          </div>
+
+          <!-- Surface Card -->
+          <div class="bg-white p-4 rounded-xl border border-slate-200/80 shadow-xs space-y-3">
+            <div class="h-16 rounded-lg bg-white border border-slate-200 flex items-center justify-between p-3 text-slate-900 shadow-inner">
+              <span class="text-xs font-bold">卡片表面 (Surface)</span>
+              <span class="text-[10px] font-mono bg-slate-100 px-1.5 py-0.5 rounded">#FFFFFF</span>
+            </div>
+            <div class="text-xs space-y-1">
+              <div class="font-semibold text-slate-800">White + 1px 细边框</div>
+              <p class="text-[11px] text-slate-500">数据表格、抽屉视图背景，配合 1px `border-slate-200` 极微边界</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Section 2: Badges & Status Tags (状态语义标识) -->
+      <section class="space-y-4">
+        <div class="flex items-center justify-between border-l-4 border-blue-600 pl-3">
+          <div>
+            <h2 class="text-base font-bold text-slate-900">2. 状态胶囊与 Badges (Status Semantics)</h2>
+            <p class="text-xs text-slate-500">清晰直观的状态指示灯，文字一律单行显示（whitespace-nowrap，严禁折行）。</p>
+          </div>
+        </div>
+
+        <div class="bg-white p-5 rounded-xl border border-slate-200/80 shadow-xs grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4">
+          <div class="p-3 rounded-lg bg-slate-50 border border-slate-200 space-y-2">
+            <span class="text-[10px] text-slate-400 block font-medium">运行中 / 健康 (Emerald)</span>
+            <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium bg-emerald-50 text-emerald-700 border border-emerald-200 whitespace-nowrap">
+              <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
+              健康运行中
+            </span>
+          </div>
+
+          <div class="p-3 rounded-lg bg-slate-50 border border-slate-200 space-y-2">
+            <span class="text-[10px] text-slate-400 block font-medium">试用 / 排队中 (Sky)</span>
+            <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium bg-sky-50 text-sky-700 border border-sky-200 whitespace-nowrap">
+              <span class="w-1.5 h-1.5 rounded-full bg-sky-500"></span>
+              试用版模型
+            </span>
+          </div>
+
+          <div class="p-3 rounded-lg bg-slate-50 border border-slate-200 space-y-2">
+            <span class="text-[10px] text-slate-400 block font-medium">警告 / 资源紧张 (Amber)</span>
+            <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium bg-amber-50 text-amber-700 border border-amber-200 whitespace-nowrap">
+              <span class="w-1.5 h-1.5 rounded-full bg-amber-500"></span>
+              显存预警 89%
+            </span>
+          </div>
+
+          <div class="p-3 rounded-lg bg-slate-50 border border-slate-200 space-y-2">
+            <span class="text-[10px] text-slate-400 block font-medium">故障 / 拒绝 (Rose)</span>
+            <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium bg-rose-50 text-rose-700 border border-rose-200 whitespace-nowrap">
+              <span class="w-1.5 h-1.5 rounded-full bg-rose-500"></span>
+              节点 OOM 故障
+            </span>
+          </div>
+
+          <div class="p-3 rounded-lg bg-slate-50 border border-slate-200 space-y-2">
+            <span class="text-[10px] text-slate-400 block font-medium">中性 / 离线 (Slate)</span>
+            <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium bg-slate-100 text-slate-600 border border-slate-300 whitespace-nowrap">
+              <span class="w-1.5 h-1.5 rounded-full bg-slate-400"></span>
+              已离线归档
+            </span>
+          </div>
+        </div>
+      </section>
+
+      <!-- Section 3: Typography Scale (排版与字号阶梯) -->
+      <section class="space-y-4">
+        <div class="flex items-center justify-between border-l-4 border-blue-600 pl-3">
+          <div>
+            <h2 class="text-base font-bold text-slate-900">3. 排版与阶梯规范 (Typography Scale)</h2>
+            <p class="text-xs text-slate-500">比例阶梯 1.125 (Major Second)，专为高密度控制台打造，严格阶梯，不随意跳级。</p>
+          </div>
+        </div>
+
+        <div class="bg-white p-5 rounded-xl border border-slate-200/80 shadow-xs space-y-4">
+          <div class="flex items-center border-b border-slate-100 pb-3">
+            <span class="w-32 text-xs text-slate-400 font-mono">H1 / text-xl (20px)</span>
+            <span class="text-xl font-bold text-slate-900">应龙大模型推理平台 — 算力调度控制台</span>
+          </div>
+          <div class="flex items-center border-b border-slate-100 pb-3">
+            <span class="w-32 text-xs text-slate-400 font-mono">H2 / text-base (16px)</span>
+            <span class="text-base font-semibold text-slate-800">集群节点拓扑与显存实时监控卡片</span>
+          </div>
+          <div class="flex items-center border-b border-slate-100 pb-3">
+            <span class="w-32 text-xs text-slate-400 font-mono">Body / text-sm (14px)</span>
+            <span class="text-sm text-slate-700">DeepSeek-R1-671B 部署于主线公用算力池，配置 8x NVIDIA A100 80GB 节点矩阵。</span>
+          </div>
+          <div class="flex items-center">
+            <span class="w-32 text-xs text-slate-400 font-mono">Caption / text-xs (12px)</span>
+            <span class="text-xs text-slate-500">更新时间：2026-08-11 20:00:00 • 请求 ID: req-8f921a • 触发策略: HPA Scale-up</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- Section 4: Form Controls & Buttons (按钮与表单控件) -->
+      <section class="space-y-4">
+        <div class="flex items-center justify-between border-l-4 border-blue-600 pl-3">
+          <div>
+            <h2 class="text-base font-bold text-slate-900">4. 按钮与表单交互控件 (Buttons & Inputs)</h2>
+            <p class="text-xs text-slate-500">横向内边距固定为纵向内边距的 2 倍，边框平滑，Hover 反馈清晰。</p>
+          </div>
+        </div>
+
+        <div class="bg-white p-5 rounded-xl border border-slate-200/80 shadow-xs space-y-6">
+          <!-- Button Variants -->
+          <div class="space-y-2">
+            <span class="text-xs font-semibold text-slate-700 block">按钮变体 (Button Variants)</span>
+            <div class="flex flex-wrap items-center gap-3">
+              <!-- Primary -->
+              <button class="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white text-xs font-medium rounded-md shadow-xs transition">
+                Primary 主按钮
+              </button>
+              <!-- Accent Amber -->
+              <button class="px-4 py-2 bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold text-xs rounded-md shadow-xs transition">
+                Accent 决策按钮
+              </button>
+              <!-- Secondary -->
+              <button class="px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-800 text-xs font-medium rounded-md border border-slate-300 transition">
+                Secondary 次按钮
+              </button>
+              <!-- Outline -->
+              <button class="px-4 py-2 bg-white hover:bg-slate-50 text-slate-700 text-xs font-medium rounded-md border border-slate-300 shadow-xs transition">
+                Outline 线框按钮
+              </button>
+              <!-- Danger -->
+              <button class="px-4 py-2 bg-rose-600 hover:bg-rose-700 text-white text-xs font-medium rounded-md shadow-xs transition">
+                Danger 危险操作
+              </button>
+              <!-- Disabled -->
+              <button disabled class="px-4 py-2 bg-slate-100 text-slate-400 text-xs font-medium rounded-md border border-slate-200 cursor-not-allowed">
+                Disabled 不可用
+              </button>
+            </div>
+          </div>
+
+          <!-- Form Inputs -->
+          <div class="space-y-2">
+            <span class="text-xs font-semibold text-slate-700 block">表单输入框 (Inputs & Selects)</span>
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+              <div>
+                <label class="block text-xs font-medium text-slate-600 mb-1">模型名称 (Text Input)</label>
+                <input type="text" value="DeepSeek-R1-671B-Quant" class="w-full text-xs px-3 py-2 bg-white border border-slate-300 rounded-md focus:ring-2 focus:ring-blue-500/20 focus:border-blue-600 outline-none">
+              </div>
+              <div>
+                <label class="block text-xs font-medium text-slate-600 mb-1">归属池 (Select Dropdown)</label>
+                <select class="w-full text-xs px-3 py-2 bg-white border border-slate-300 rounded-md focus:ring-2 focus:ring-blue-500/20 focus:border-blue-600 outline-none">
+                  <option>主线公用池 (高并发 SLA)</option>
+                  <option>部门专用池 (高隔离)</option>
+                  <option>实验试用池 (抢占式)</option>
+                </select>
+              </div>
+              <div>
+                <label class="block text-xs font-medium text-slate-600 mb-1">量化精度 (Radio Badges)</label>
+                <div class="flex items-center gap-2 pt-1">
+                  <span class="px-2.5 py-1 text-xs bg-blue-50 text-blue-700 border border-blue-300 font-semibold rounded-md cursor-pointer">INT4 (AWQ)</span>
+                  <span class="px-2.5 py-1 text-xs bg-white text-slate-600 border border-slate-200 rounded-md cursor-pointer hover:bg-slate-50">FP16</span>
+                  <span class="px-2.5 py-1 text-xs bg-white text-slate-600 border border-slate-200 rounded-md cursor-pointer hover:bg-slate-50">BF16</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Section 5: Data Cards & High-Density Table (高密度数据表格与三种列表范式) -->
+      <section class="space-y-6">
+        <div class="flex items-center justify-between border-l-4 border-[#266EFF] pl-3">
+          <div>
+            <h2 class="text-base font-bold text-slate-900">5. 列表组件与筛选/搜索样式规范 (Table & List Patterns)</h2>
+            <p class="text-xs text-slate-500">提供基础列表、列表带搜索框、列表带多维筛选框三类标准设计范式，满足不同数据密度与检索场景。</p>
+          </div>
+        </div>
+
+        <!-- KPI Cards Grid -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+          <div class="bg-white p-4 rounded-xl border border-slate-200/80 shadow-xs space-y-2">
+            <span class="text-xs font-medium text-slate-500">平台 GPU 卡数利用率</span>
+            <div class="flex items-baseline justify-between">
+              <span class="text-2xl font-bold text-slate-900">84.2%</span>
+              <span class="text-xs font-semibold text-emerald-600 flex items-center gap-0.5">
+                ↑ 3.1%
+              </span>
+            </div>
+            <div class="w-full h-1.5 bg-slate-100 rounded-full overflow-hidden">
+              <div class="h-full bg-[#266EFF] rounded-full" style="width: 84.2%"></div>
+            </div>
+          </div>
+
+          <div class="bg-white p-4 rounded-xl border border-slate-200/80 shadow-xs space-y-2">
+            <span class="text-xs font-medium text-slate-500">在线推理 TPS 吞吐量</span>
+            <div class="flex items-baseline justify-between">
+              <span class="text-2xl font-bold text-slate-900">14,280</span>
+              <span class="text-xs text-slate-400">Tokens/sec</span>
+            </div>
+            <p class="text-[11px] text-slate-400">峰值可承载 25,000 Tokens/s</p>
+          </div>
+
+          <div class="bg-white p-4 rounded-xl border border-slate-200/80 shadow-xs space-y-2">
+            <span class="text-xs font-medium text-slate-500">平均 TTFT 首包延迟</span>
+            <div class="flex items-baseline justify-between">
+              <span class="text-2xl font-bold text-emerald-600">128 ms</span>
+              <span class="text-xs font-semibold text-emerald-600">P95 &lt; 200ms</span>
+            </div>
+            <p class="text-[11px] text-slate-400">符合 SLA 顶级服务质量</p>
+          </div>
+
+          <div class="bg-white p-4 rounded-xl border border-slate-200/80 shadow-xs space-y-2">
+            <span class="text-xs font-medium text-slate-500">待审批算力申请单</span>
+            <div class="flex items-baseline justify-between">
+              <span class="text-2xl font-bold text-amber-600">3 单</span>
+              <span class="text-xs bg-amber-50 text-amber-700 px-2 py-0.5 rounded font-medium border border-amber-200">待处理</span>
+            </div>
+            <p class="text-[11px] text-slate-400">涉及 16x A100 80G 需求</p>
+          </div>
+        </div>
+
+        <!-- 5.1 Standard Data Table (基础列表) -->
+        <div class="space-y-2">
+          <div class="flex items-center justify-between text-xs font-semibold text-slate-700">
+            <span class="flex items-center gap-1.5 text-slate-900 font-bold">
+              <span class="w-2 h-2 rounded-full bg-[#266EFF]"></span> 5.1 基础列表规范 (Standard Data Table)
+            </span>
+            <span class="text-slate-400 text-[11px]">无顶部操作工具栏，用于直接展示固定排版的精简数据</span>
+          </div>
+          <div class="bg-white rounded-xl border border-slate-200/80 shadow-xs overflow-hidden">
+            <div class="p-4 border-b border-slate-100 flex items-center justify-between">
+              <div class="flex items-center gap-2">
+                <h3 class="text-sm font-bold text-slate-800">在线模型推理服务列表</h3>
+                <span class="text-[11px] bg-slate-100 text-slate-600 font-medium px-2 py-0.5 rounded-full border border-slate-200">共 2 条记录</span>
+              </div>
+              <button class="text-xs text-[#266EFF] hover:underline font-medium flex items-center gap-1">
+                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path></svg>
+                刷新数据
+              </button>
+            </div>
+
+            <div class="overflow-x-auto">
+              <table class="w-full text-left border-collapse">
+                <thead>
+                  <tr class="bg-slate-50 border-b border-slate-200 text-[11px] font-semibold text-slate-500 uppercase tracking-wider">
+                    <th class="py-2.5 px-4">服务名称 & ID</th>
+                    <th class="py-2.5 px-4">模型版本</th>
+                    <th class="py-2.5 px-4">归属池类型</th>
+                    <th class="py-2.5 px-4">绑卡规格 (GPU)</th>
+                    <th class="py-2.5 px-4">Pod 副本</th>
+                    <th class="py-2.5 px-4">当前状态</th>
+                    <th class="py-2.5 px-4 text-right">操作</th>
+                  </tr>
+                </thead>
+                <tbody class="divide-y divide-slate-100 text-xs text-slate-700">
+                  <tr class="hover:bg-slate-50/80 transition">
+                    <td class="py-3 px-4 font-medium text-slate-900">
+                      <div>Qwen-2.5-72B-Instruct</div>
+                      <div class="text-[10px] text-slate-400 font-mono">srv-qwen-72b-001</div>
+                    </td>
+                    <td class="py-3 px-4">v2.1.0 (FP16)</td>
+                    <td class="py-3 px-4">
+                      <span class="px-2 py-0.5 text-[11px] rounded bg-blue-50 text-blue-700 font-medium border border-blue-200">主线公用池</span>
+                    </td>
+                    <td class="py-3 px-4 font-mono">4x A100 80GB</td>
+                    <td class="py-3 px-4 font-semibold">2 / 2</td>
+                    <td class="py-3 px-4">
+                      <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[11px] bg-emerald-50 text-emerald-700 font-medium border border-emerald-200">
+                        <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span> 运行中
+                      </span>
+                    </td>
+                    <td class="py-3 px-4 text-right space-x-2">
+                      <button class="text-[#266EFF] hover:underline font-medium">查看 cURL</button>
+                      <button class="text-slate-500 hover:text-slate-800">监控</button>
+                    </td>
+                  </tr>
+                  <tr class="hover:bg-slate-50/80 transition">
+                    <td class="py-3 px-4 font-medium text-slate-900">
+                      <div>DeepSeek-R1-671B-AWQ</div>
+                      <div class="text-[10px] text-slate-400 font-mono">srv-ds-r1-002</div>
+                    </td>
+                    <td class="py-3 px-4">v1.0.0 (INT4)</td>
+                    <td class="py-3 px-4">
+                      <span class="px-2 py-0.5 text-[11px] rounded bg-blue-50 text-blue-700 font-medium border border-blue-200">主线公用池</span>
+                    </td>
+                    <td class="py-3 px-4 font-mono">8x H800 80GB</td>
+                    <td class="py-3 px-4 font-semibold">4 / 4</td>
+                    <td class="py-3 px-4">
+                      <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[11px] bg-emerald-50 text-emerald-700 font-medium border border-emerald-200">
+                        <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span> 运行中
+                      </span>
+                    </td>
+                    <td class="py-3 px-4 text-right space-x-2">
+                      <button class="text-[#266EFF] hover:underline font-medium">查看 cURL</button>
+                      <button class="text-slate-500 hover:text-slate-800">监控</button>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <!-- Standard Pagination Footer with Page Jumper -->
+            <div class="p-3 border-t border-slate-100 flex flex-col md:flex-row md:items-center justify-between gap-3 text-xs text-slate-500 bg-slate-50/50">
+              <div class="flex items-center gap-3">
+                <span>显示 1-2 条 / 共 2 条记录</span>
+                <div class="flex items-center gap-1">
+                  <span class="text-slate-400">每页:</span>
+                  <select class="text-xs px-2 py-1 bg-white border border-slate-200 rounded-md text-slate-700 font-medium focus:border-[#266EFF] outline-none cursor-pointer">
+                    <option>10 条/页</option>
+                    <option>20 条/页</option>
+                    <option>50 条/页</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="flex flex-wrap items-center gap-3">
+                <div class="flex items-center gap-1">
+                  <button disabled class="px-2.5 py-1 text-xs border border-slate-200 rounded-md bg-white text-slate-300 cursor-not-allowed">上一页</button>
+                  <button class="px-2.5 py-1 text-xs border border-[#266EFF] bg-[#266EFF] text-white font-semibold rounded-md shadow-2xs">1</button>
+                  <button disabled class="px-2.5 py-1 text-xs border border-slate-200 rounded-md bg-white text-slate-300 cursor-not-allowed">下一页</button>
+                </div>
+
+                <div class="flex items-center gap-1.5 pl-2 border-l border-slate-200">
+                  <span class="text-slate-500">前往</span>
+                  <input type="number" min="1" max="1" value="1" class="w-12 text-center py-1 bg-white border border-slate-200 rounded-md text-xs text-slate-800 font-mono focus:border-[#266EFF] focus:outline-none">
+                  <span class="text-slate-500">页</span>
+                  <button class="px-2.5 py-1 bg-slate-100 hover:bg-slate-200 text-slate-700 border border-slate-200 rounded-md text-xs font-medium cursor-pointer transition">跳转</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 5.2 Table with Search Bar (列表带搜索框) -->
+        <div class="space-y-2">
+          <div class="flex items-center justify-between text-xs font-semibold text-slate-700">
+            <span class="flex items-center gap-1.5 text-slate-900 font-bold">
+              <span class="w-2 h-2 rounded-full bg-[#266EFF]"></span> 5.2 列表带搜索框规范 (Table with Search Bar)
+            </span>
+            <span class="text-slate-400 text-[11px]">集成放大镜实时搜索框与匹配结果回显，支持关键词快捷搜索</span>
+          </div>
+          <div class="bg-white rounded-xl border border-slate-200/80 shadow-xs overflow-hidden">
+            <!-- Search Bar Header Toolbar -->
+            <div class="p-4 border-b border-slate-100 flex flex-col sm:flex-row sm:items-center justify-between gap-3 bg-white">
+              <div class="flex items-center gap-3">
+                <!-- Search Input -->
+                <div class="relative w-64">
+                  <input type="text" value="DeepSeek" placeholder="输入关键字搜索服务或模型..." class="w-full text-xs pl-8 pr-7 py-1.5 bg-white border border-slate-200 rounded-md text-slate-800 placeholder-slate-400 focus:outline-none focus:border-[#266EFF] focus:ring-1 focus:ring-[#266EFF]/20 transition">
+                  <svg class="w-3.5 h-3.5 text-slate-400 absolute left-2.5 top-2.5 pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+                  <button class="absolute right-2 top-2 text-slate-400 hover:text-slate-600">
+                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                  </button>
+                </div>
+                <span class="text-xs text-slate-500">匹配到 <strong class="text-[#266EFF] font-semibold">1</strong> 项数据</span>
+              </div>
+
+              <div class="flex items-center gap-2">
+                <button class="px-3 py-1.5 bg-[#266EFF] hover:bg-blue-600 text-white text-xs font-semibold rounded-md shadow-2xs transition flex items-center gap-1">
+                  <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path></svg>
+                  部署新服务
+                </button>
+              </div>
+            </div>
+
+            <div class="overflow-x-auto">
+              <table class="w-full text-left border-collapse">
+                <thead>
+                  <tr class="bg-slate-50 border-b border-slate-200 text-[11px] font-semibold text-slate-500 uppercase tracking-wider">
+                    <th class="py-2.5 px-4">服务名称 & ID</th>
+                    <th class="py-2.5 px-4">模型版本</th>
+                    <th class="py-2.5 px-4">归属池类型</th>
+                    <th class="py-2.5 px-4">绑卡规格 (GPU)</th>
+                    <th class="py-2.5 px-4">当前状态</th>
+                    <th class="py-2.5 px-4 text-right">操作</th>
+                  </tr>
+                </thead>
+                <tbody class="divide-y divide-slate-100 text-xs text-slate-700">
+                  <tr class="bg-blue-50/20 hover:bg-blue-50/40 transition">
+                    <td class="py-3 px-4 font-medium text-slate-900">
+                      <div class="flex items-center gap-1.5">
+                        <span class="bg-amber-100 text-amber-900 px-1 py-0.2 rounded font-bold">DeepSeek</span>-R1-671B-AWQ
+                      </div>
+                      <div class="text-[10px] text-slate-400 font-mono">srv-ds-r1-002</div>
+                    </td>
+                    <td class="py-3 px-4">v1.0.0 (INT4)</td>
+                    <td class="py-3 px-4">
+                      <span class="px-2 py-0.5 text-[11px] rounded bg-blue-50 text-blue-700 font-medium border border-blue-200">主线公用池</span>
+                    </td>
+                    <td class="py-3 px-4 font-mono">8x H800 80GB</td>
+                    <td class="py-3 px-4">
+                      <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[11px] bg-emerald-50 text-emerald-700 font-medium border border-emerald-200">
+                        <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span> 运行中
+                      </span>
+                    </td>
+                    <td class="py-3 px-4 text-right space-x-2">
+                      <button class="text-[#266EFF] hover:underline font-medium">查看 cURL</button>
+                      <button class="text-slate-500 hover:text-slate-800">监控</button>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div class="p-3 border-t border-slate-100 flex flex-col md:flex-row md:items-center justify-between gap-3 text-xs text-slate-500 bg-slate-50/50">
+              <div class="flex items-center gap-3">
+                <span>检索结果：显示第 1-1 条，共 1 条记录</span>
+                <div class="flex items-center gap-1">
+                  <span class="text-slate-400">每页:</span>
+                  <select class="text-xs px-2 py-1 bg-white border border-slate-200 rounded-md text-slate-700 font-medium focus:border-[#266EFF] outline-none cursor-pointer">
+                    <option>10 条/页</option>
+                    <option>20 条/页</option>
+                    <option>50 条/页</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="flex flex-wrap items-center gap-3">
+                <div class="flex items-center gap-1">
+                  <button disabled class="px-2.5 py-1 text-xs border border-slate-200 rounded-md bg-white text-slate-300 cursor-not-allowed">上一页</button>
+                  <button class="px-2.5 py-1 text-xs border border-[#266EFF] bg-[#266EFF] text-white font-semibold rounded-md shadow-2xs">1</button>
+                  <button disabled class="px-2.5 py-1 text-xs border border-slate-200 rounded-md bg-white text-slate-300 cursor-not-allowed">下一页</button>
+                </div>
+
+                <div class="flex items-center gap-1.5 pl-2 border-l border-slate-200">
+                  <span class="text-slate-500">前往</span>
+                  <input type="number" min="1" max="1" value="1" class="w-12 text-center py-1 bg-white border border-slate-200 rounded-md text-xs text-slate-800 font-mono focus:border-[#266EFF] focus:outline-none">
+                  <span class="text-slate-500">页</span>
+                  <button class="px-2.5 py-1 bg-slate-100 hover:bg-slate-200 text-slate-700 border border-slate-200 rounded-md text-xs font-medium cursor-pointer transition">跳转</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 5.3 Table with Multi-dimensional Filter Controls (列表带筛选框) -->
+        <div class="space-y-2">
+          <div class="flex items-center justify-between text-xs font-semibold text-slate-700">
+            <span class="flex items-center gap-1.5 text-slate-900 font-bold">
+              <span class="w-2 h-2 rounded-full bg-[#266EFF]"></span> 5.3 列表带筛选框规范 (Table with Multi-dimensional Filter Controls)
+            </span>
+            <span class="text-slate-400 text-[11px]">包含多维下拉筛选、激活条件 Chip、批量勾选排空与重置控制</span>
+          </div>
+          <div class="bg-white rounded-xl border border-slate-200/80 shadow-xs overflow-hidden">
+            <!-- Multi-field Filter Toolbar -->
+            <div class="p-4 border-b border-slate-100 space-y-3 bg-white">
+              <div class="flex flex-wrap items-center justify-between gap-3">
+                <div class="flex flex-wrap items-center gap-2.5">
+                  <!-- Search Input -->
+                  <div class="relative w-52">
+                    <input type="text" placeholder="搜索服务ID或名称..." class="w-full text-xs pl-8 pr-3 py-1.5 bg-white border border-slate-200 rounded-md text-slate-800 placeholder-slate-400 focus:outline-none focus:border-[#266EFF]">
+                    <svg class="w-3.5 h-3.5 text-slate-400 absolute left-2.5 top-2.5 pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+                  </div>
+
+                  <!-- Dropdown 1: Status -->
+                  <select class="text-xs px-2.5 py-1.5 bg-white border border-slate-200 rounded-md text-slate-700 focus:border-[#266EFF] outline-none cursor-pointer">
+                    <option>全部状态 (All Status)</option>
+                    <option selected>运行中 (Running)</option>
+                    <option>显存预警 (High VRAM)</option>
+                    <option>节点故障 (Failed)</option>
+                  </select>
+
+                  <!-- Dropdown 2: Resource Pool -->
+                  <select class="text-xs px-2.5 py-1.5 bg-white border border-slate-200 rounded-md text-slate-700 focus:border-[#266EFF] outline-none cursor-pointer">
+                    <option>全部资源池</option>
+                    <option selected>主线公用池</option>
+                    <option>部门专用池</option>
+                    <option>实验试用池</option>
+                  </select>
+
+                  <!-- Dropdown 3: Hardware -->
+                  <select class="text-xs px-2.5 py-1.5 bg-white border border-slate-200 rounded-md text-slate-700 focus:border-[#266EFF] outline-none cursor-pointer">
+                    <option>全部 GPU 卡</option>
+                    <option>NVIDIA A100 80G</option>
+                    <option>NVIDIA H800 80G</option>
+                  </select>
+
+                  <button class="text-xs text-slate-500 hover:text-rose-600 flex items-center gap-1 ml-1 cursor-pointer">
+                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path></svg>
+                    重置筛选
+                  </button>
+                </div>
+
+                <!-- Batch Action buttons -->
+                <div class="flex items-center gap-2">
+                  <span class="text-xs text-slate-500">已选择 <strong class="text-[#266EFF]">2</strong> 项</span>
+                  <button class="px-2.5 py-1 bg-rose-50 text-rose-700 border border-rose-200 hover:bg-rose-100 text-xs font-medium rounded-md transition">
+                    批量排空
+                  </button>
+                  <button class="px-2.5 py-1 bg-slate-100 text-slate-700 border border-slate-200 hover:bg-slate-200 text-xs font-medium rounded-md transition">
+                    导出配置
+                  </button>
+                </div>
+              </div>
+
+              <!-- Active Filter Chips -->
+              <div class="flex items-center gap-2 pt-1 border-t border-slate-100">
+                <span class="text-[11px] text-slate-400 font-medium">当前筛选条件:</span>
+                <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded text-[11px] bg-blue-50 text-[#266EFF] border border-blue-200">
+                  状态: 运行中
+                  <button class="hover:text-blue-900">✕</button>
+                </span>
+                <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded text-[11px] bg-blue-50 text-[#266EFF] border border-blue-200">
+                  资源池: 主线公用池
+                  <button class="hover:text-blue-900">✕</button>
+                </span>
+              </div>
+            </div>
+
+            <!-- Table with Checkbox Row Selection -->
+            <div class="overflow-x-auto">
+              <table class="w-full text-left border-collapse">
+                <thead>
+                  <tr class="bg-slate-50 border-b border-slate-200 text-[11px] font-semibold text-slate-500 uppercase tracking-wider">
+                    <th class="py-2.5 px-4 w-10">
+                      <input type="checkbox" checked class="rounded border-slate-300 text-[#266EFF] focus:ring-[#266EFF]">
+                    </th>
+                    <th class="py-2.5 px-4">服务名称 & ID</th>
+                    <th class="py-2.5 px-4">模型版本</th>
+                    <th class="py-2.5 px-4">归属池类型</th>
+                    <th class="py-2.5 px-4">绑卡规格</th>
+                    <th class="py-2.5 px-4">状态</th>
+                    <th class="py-2.5 px-4 text-right">操作</th>
+                  </tr>
+                </thead>
+                <tbody class="divide-y divide-slate-100 text-xs text-slate-700">
+                  <tr class="bg-blue-50/10 hover:bg-slate-50/80 transition">
+                    <td class="py-3 px-4">
+                      <input type="checkbox" checked class="rounded border-slate-300 text-[#266EFF] focus:ring-[#266EFF]">
+                    </td>
+                    <td class="py-3 px-4 font-medium text-slate-900">
+                      <div>Qwen-2.5-72B-Instruct</div>
+                      <div class="text-[10px] text-slate-400 font-mono">srv-qwen-72b-001</div>
+                    </td>
+                    <td class="py-3 px-4">v2.1.0 (FP16)</td>
+                    <td class="py-3 px-4">
+                      <span class="px-2 py-0.5 text-[11px] rounded bg-blue-50 text-blue-700 font-medium border border-blue-200">主线公用池</span>
+                    </td>
+                    <td class="py-3 px-4 font-mono">4x A100 80GB</td>
+                    <td class="py-3 px-4">
+                      <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[11px] bg-emerald-50 text-emerald-700 font-medium border border-emerald-200">
+                        <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span> 运行中
+                      </span>
+                    </td>
+                    <td class="py-3 px-4 text-right space-x-2">
+                      <button class="text-[#266EFF] hover:underline font-medium">查看 cURL</button>
+                      <button class="text-slate-500 hover:text-slate-800">监控</button>
+                    </td>
+                  </tr>
+                  <tr class="bg-blue-50/10 hover:bg-slate-50/80 transition">
+                    <td class="py-3 px-4">
+                      <input type="checkbox" checked class="rounded border-slate-300 text-[#266EFF] focus:ring-[#266EFF]">
+                    </td>
+                    <td class="py-3 px-4 font-medium text-slate-900">
+                      <div>DeepSeek-R1-671B-AWQ</div>
+                      <div class="text-[10px] text-slate-400 font-mono">srv-ds-r1-002</div>
+                    </td>
+                    <td class="py-3 px-4">v1.0.0 (INT4)</td>
+                    <td class="py-3 px-4">
+                      <span class="px-2 py-0.5 text-[11px] rounded bg-blue-50 text-blue-700 font-medium border border-blue-200">主线公用池</span>
+                    </td>
+                    <td class="py-3 px-4 font-mono">8x H800 80GB</td>
+                    <td class="py-3 px-4">
+                      <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[11px] bg-emerald-50 text-emerald-700 font-medium border border-emerald-200">
+                        <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span> 运行中
+                      </span>
+                    </td>
+                    <td class="py-3 px-4 text-right space-x-2">
+                      <button class="text-[#266EFF] hover:underline font-medium">查看 cURL</button>
+                      <button class="text-slate-500 hover:text-slate-800">监控</button>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <!-- Footer Pagination with Multi-page Jumper Demonstration -->
+            <div class="p-3 border-t border-slate-100 flex flex-col md:flex-row md:items-center justify-between gap-3 text-xs text-slate-500 bg-slate-50/50">
+              <div class="flex items-center gap-3">
+                <span>筛选结果：显示 11-20 条 (总计 128 条记录)</span>
+                <div class="flex items-center gap-1">
+                  <span class="text-slate-400">每页条数:</span>
+                  <select class="text-xs px-2 py-1 bg-white border border-slate-200 rounded-md text-slate-700 font-medium focus:border-[#266EFF] outline-none cursor-pointer">
+                    <option selected>10 条/页</option>
+                    <option>20 条/页</option>
+                    <option>50 条/页</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="flex flex-wrap items-center gap-3">
+                <div class="flex items-center gap-1">
+                  <button class="px-2.5 py-1 text-xs border border-slate-200 rounded-md bg-white text-slate-700 hover:bg-slate-50 shadow-2xs cursor-pointer">上一页</button>
+                  <button class="px-2.5 py-1 text-xs border border-slate-200 rounded-md bg-white text-slate-700 hover:bg-slate-50 cursor-pointer">1</button>
+                  <button class="px-2.5 py-1 text-xs border border-[#266EFF] bg-[#266EFF] text-white font-semibold rounded-md shadow-2xs">2</button>
+                  <button class="px-2.5 py-1 text-xs border border-slate-200 rounded-md bg-white text-slate-700 hover:bg-slate-50 cursor-pointer">3</button>
+                  <span class="px-1 text-slate-400">...</span>
+                  <button class="px-2.5 py-1 text-xs border border-slate-200 rounded-md bg-white text-slate-700 hover:bg-slate-50 cursor-pointer">13</button>
+                  <button class="px-2.5 py-1 text-xs border border-slate-200 rounded-md bg-white text-slate-700 hover:bg-slate-50 shadow-2xs cursor-pointer">下一页</button>
+                </div>
+
+                <div class="flex items-center gap-1.5 pl-2 border-l border-slate-200">
+                  <span class="text-slate-500">前往</span>
+                  <input type="number" min="1" max="13" value="2" class="w-12 text-center py-1 bg-white border border-slate-200 rounded-md text-xs text-slate-800 font-mono focus:border-[#266EFF] focus:outline-none">
+                  <span class="text-slate-500">页</span>
+                  <button class="px-2.5 py-1 bg-slate-100 hover:bg-slate-200 text-slate-700 border border-slate-200 rounded-md text-xs font-medium cursor-pointer transition">跳转</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 5.4 Standard Interactive Pagination Jumper Specification (支持手动跳转的分页组件标准) -->
+        <div class="space-y-2">
+          <div class="flex items-center justify-between text-xs font-semibold text-slate-700">
+            <span class="flex items-center gap-1.5 text-slate-900 font-bold">
+              <span class="w-2 h-2 rounded-full bg-[#266EFF]"></span> 5.4 分页与页码手动跳转规范 (Pagination & Quick Jumper Pattern - 对应 2.4.4)
+            </span>
+            <span class="text-slate-400 text-[11px]">包含总数统计、每页条数 Selector、激活态页码高亮与手动输入精准跳转输入框</span>
+          </div>
+          <div class="bg-white rounded-xl border border-slate-200/80 shadow-xs p-4 space-y-4">
+            <!-- Standalone Pagination Bar Preview Card -->
+            <div class="p-3.5 bg-slate-50 border border-slate-200 rounded-xl flex flex-col md:flex-row md:items-center justify-between gap-3 text-xs text-slate-600">
+              <div class="flex items-center gap-3">
+                <span class="font-medium text-slate-700">显示第 <strong class="text-slate-900 font-semibold">21-30</strong> 条 / 共 <strong class="text-[#266EFF] font-semibold">128</strong> 条记录</span>
+                <div class="flex items-center gap-1.5">
+                  <span class="text-slate-400">每页:</span>
+                  <select class="text-xs px-2.5 py-1 bg-white border border-slate-200 rounded-md text-slate-700 font-medium focus:border-[#266EFF] outline-none cursor-pointer shadow-2xs">
+                    <option>10 条/页</option>
+                    <option selected>20 条/页</option>
+                    <option>50 条/页</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="flex flex-wrap items-center gap-3">
+                <!-- Page Navigation Buttons -->
+                <div class="flex items-center gap-1">
+                  <button class="px-2.5 py-1 text-xs border border-slate-200 rounded-md bg-white text-slate-700 hover:bg-slate-50 shadow-2xs transition cursor-pointer">上一页</button>
+                  <button class="px-2.5 py-1 text-xs border border-slate-200 rounded-md bg-white text-slate-700 hover:bg-slate-50 transition cursor-pointer">1</button>
+                  <button class="px-2.5 py-1 text-xs border border-slate-200 rounded-md bg-white text-slate-700 hover:bg-slate-50 transition cursor-pointer">2</button>
+                  <button class="px-2.5 py-1 text-xs border border-[#266EFF] bg-[#266EFF] text-white font-semibold rounded-md shadow-2xs">3</button>
+                  <button class="px-2.5 py-1 text-xs border border-slate-200 rounded-md bg-white text-slate-700 hover:bg-slate-50 transition cursor-pointer">4</button>
+                  <span class="px-1 text-slate-400 font-mono">...</span>
+                  <button class="px-2.5 py-1 text-xs border border-slate-200 rounded-md bg-white text-slate-700 hover:bg-slate-50 transition cursor-pointer">7</button>
+                  <button class="px-2.5 py-1 text-xs border border-slate-200 rounded-md bg-white text-slate-700 hover:bg-slate-50 shadow-2xs transition cursor-pointer">下一页</button>
+                </div>
+
+                <!-- Quick Jumper Input Jumper -->
+                <div class="flex items-center gap-1.5 pl-2.5 border-l border-slate-200">
+                  <span class="text-slate-500">前往</span>
+                  <input type="number" min="1" max="7" value="3" class="w-12 text-center py-1 bg-white border border-slate-200 rounded-md text-xs text-slate-900 font-mono font-semibold focus:border-[#266EFF] focus:outline-none shadow-2xs">
+                  <span class="text-slate-500">页</span>
+                  <button class="px-2.5 py-1 bg-slate-100 hover:bg-slate-200 text-slate-800 border border-slate-200 rounded-md text-xs font-semibold cursor-pointer transition">跳转</button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Specs Grid Breakdown for Quick Jumper -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 text-xs pt-1">
+              <div class="bg-slate-50 p-3 rounded-lg border border-slate-200/60 space-y-1">
+                <span class="font-semibold text-slate-800">总数与步长 Selector</span>
+                <p class="text-[11px] text-slate-500">展示总记录数与区间，配套 <code class="bg-slate-200/60 px-1 rounded font-mono">10/20/50 条/页</code> 下拉菜单。</p>
+              </div>
+              <div class="bg-slate-50 p-3 rounded-lg border border-slate-200/60 space-y-1">
+                <span class="font-semibold text-slate-800">激活态页码高亮</span>
+                <p class="text-[11px] text-slate-500">当前页按钮填充品牌蓝 <code class="bg-slate-200/60 px-1 rounded font-mono">#266EFF</code>，高亮字重 <code class="bg-slate-200/60 px-1 rounded font-mono">600</code>，配 1px 同色边框。</p>
+              </div>
+              <div class="bg-slate-50 p-3 rounded-lg border border-slate-200/60 space-y-1">
+                <span class="font-semibold text-slate-800">手动输入跳转 (Jumper)</span>
+                <p class="text-[11px] text-slate-500">包含 <code class="bg-slate-200/60 px-1 rounded font-mono">input[type=number]</code> 页码输入框 + “跳转”触发展示。</p>
+              </div>
+              <div class="bg-slate-50 p-3 rounded-lg border border-slate-200/60 space-y-1">
+                <span class="font-semibold text-slate-800">边界限制与合法性</span>
+                <p class="text-[11px] text-slate-500">根据总条数与步长动态计算 <code class="bg-slate-200/60 px-1 rounded font-mono">min=1 max=N</code>，保障极佳交互严谨性。</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Section 6: Code Snippet Container (代码片段与 API 样式) -->
+      <section class="space-y-4">
+        <div class="flex items-center justify-between border-l-4 border-blue-600 pl-3">
+          <div>
+            <h2 class="text-base font-bold text-slate-900">6. 代码片段组件 (Code Snippets & Terminal)</h2>
+            <p class="text-xs text-slate-500">用于 cURL / Python 示例、stdout 实时日志流展示。</p>
+          </div>
+        </div>
+
+        <div class="bg-slate-900 text-slate-200 rounded-xl border border-slate-800 p-4 font-mono text-xs space-y-2 relative shadow-lg">
+          <div class="flex items-center justify-between border-b border-slate-800 pb-2 text-[11px] text-slate-400">
+            <div class="flex items-center gap-2">
+              <span class="w-2.5 h-2.5 rounded-full bg-rose-500"></span>
+              <span class="w-2.5 h-2.5 rounded-full bg-amber-500"></span>
+              <span class="w-2.5 h-2.5 rounded-full bg-emerald-500"></span>
+              <span class="ml-2 font-sans font-medium text-slate-300">OpenAI 兼容 API 调用示例 (Python)</span>
+            </div>
+            <button class="px-2 py-0.5 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded text-[10px] transition">
+              复制代码
+            </button>
+          </div>
+
+          <pre class="overflow-x-auto text-blue-300 leading-relaxed pt-1">
+<span class="text-purple-400">from</span> openai <span class="text-purple-400">import</span> OpenAI
+
+client = OpenAI(
+    api_key=<span class="text-emerald-400">"yl-key-8f921a948291038"</span>,
+    base_url=<span class="text-emerald-400">"https://yinglong-api.internal.net/v1"</span>
+)
+
+response = client.chat.completions.create(
+    model=<span class="text-emerald-400">"Qwen-2.5-72B-Instruct"</span>,
+    messages=[{<span class="text-emerald-400">"role"</span>: <span class="text-emerald-400">"user"</span>, <span class="text-emerald-400">"content"</span>: <span class="text-emerald-400">"请评估 DeepSeek-R1 模型的显存需求。"</span>}],
+    temperature=<span class="text-amber-400">0.7</span>
+)
+<span class="text-slate-500"># TTFT: 128ms, Completion Speed: 85 tokens/sec</span></pre>
+        </div>
+      </section>
+
+      <!-- Section 7: Modal & Dialog Pattern (弹窗/模态框样式规范) -->
+      <section class="space-y-4">
+        <div class="flex items-center justify-between border-l-4 border-[#266EFF] pl-3">
+          <div>
+            <h2 class="text-base font-bold text-slate-900">7. 弹窗/模态框样式规范 (Modal & Dialog Pattern)</h2>
+            <p class="text-xs text-slate-500">遵循半透明磨砂遮罩、1px 微细边框、清晰 Header/Body/Footer 三段结构与层次化操作按钮。</p>
+          </div>
+        </div>
+
+        <!-- Inline Modal Preview Box -->
+        <div class="bg-slate-900/10 p-4 sm:p-6 rounded-2xl border border-slate-200/80 flex items-center justify-center">
+          <div class="bg-white rounded-xl border border-slate-200/80 shadow-2xl max-w-lg w-full overflow-hidden space-y-0">
+            <!-- Modal Header -->
+            <div class="p-4 sm:p-5 border-b border-slate-100 flex items-center justify-between bg-white">
+              <div class="flex items-center gap-2">
+                <div class="w-7 h-7 rounded-lg bg-blue-50 text-[#266EFF] flex items-center justify-center">
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+                </div>
+                <div>
+                  <h3 class="text-sm font-bold text-slate-900">申请正式算力与部署在线服务</h3>
+                  <p class="text-[11px] text-slate-400">生产主线公用池 · 算力审批单 #REQ-202608-012</p>
+                </div>
+              </div>
+              <button class="text-slate-400 hover:text-slate-600 p-1 rounded-lg hover:bg-slate-100 transition">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+              </button>
+            </div>
+
+            <!-- Modal Body -->
+            <div class="p-5 space-y-4 text-xs text-slate-600 bg-white">
+              <div class="grid grid-cols-2 gap-3">
+                <div>
+                  <label class="block text-slate-700 font-semibold mb-1">拟部署模型规模 <span class="text-rose-500">*</span></label>
+                  <select class="w-full text-xs p-2 bg-white border border-slate-200 rounded-md text-slate-800 outline-none focus:border-[#266EFF]">
+                    <option>DeepSeek-R1-671B-AWQ (INT4)</option>
+                    <option>Qwen-2.5-72B-Instruct (FP16)</option>
+                  </select>
+                </div>
+                <div>
+                  <label class="block text-slate-700 font-semibold mb-1">推荐绑定 GPU 规格 <span class="text-rose-500">*</span></label>
+                  <input type="text" value="8x NVIDIA H800 80GB" readonly class="w-full text-xs p-2 bg-slate-50 border border-slate-200 rounded-md text-slate-600 font-mono" />
+                </div>
+              </div>
+
+              <div>
+                <label class="block text-slate-700 font-semibold mb-1">期望 QPS 峰值与副本配置</label>
+                <div class="flex items-center gap-2">
+                  <input type="number" value="120" class="w-full text-xs p-2 border border-slate-200 rounded-md" placeholder="预估 QPS" />
+                  <span class="text-slate-400">→</span>
+                  <input type="text" value="最小 2 副本 / 最大 6 副本" readonly class="w-full text-xs p-2 bg-slate-50 border border-slate-200 rounded-md font-mono text-slate-600" />
+                </div>
+              </div>
+
+              <!-- Warning Callout Box in Body -->
+              <div class="p-3 bg-amber-50 border border-amber-200 text-amber-800 rounded-lg text-[11px] flex items-start gap-2">
+                <svg class="w-4 h-4 text-amber-600 shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>
+                <span>算力占用提示：申请成功后，系统将自动预扣主线池 8 张 H800 显卡，超出 72 小时无流量将触发自动缩容与离线排空。</span>
+              </div>
+            </div>
+
+            <!-- Modal Footer -->
+            <div class="p-4 sm:p-5 border-t border-slate-100 bg-slate-50/80 flex items-center justify-between">
+              <span class="text-[11px] text-slate-400">提示：快捷键 Esc 可随时取消</span>
+              <div class="flex items-center gap-2">
+                <button class="px-4 py-1.5 border border-slate-200 text-slate-700 bg-white hover:bg-slate-50 text-xs font-medium rounded-lg transition">
+                  取消
+                </button>
+                <button class="px-4 py-1.5 bg-[#266EFF] hover:bg-blue-600 text-white text-xs font-semibold rounded-lg shadow-sm transition flex items-center gap-1">
+                  提交算力审批
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Section 8: Multi-Series Line Chart Standard (多条折线图与时序图表规范) -->
+      <section class="space-y-4">
+        <div class="flex items-center justify-between border-l-4 border-[#266EFF] pl-3">
+          <div>
+            <h2 class="text-base font-bold text-slate-900">8. 多条折线图与时序图表规范 (Multi-Series Line Chart)</h2>
+            <p class="text-xs text-slate-500">规范包含时间与采样粒度双重切换、多图例交互式开关控制、以及横屏 2-3 图并排分屏图表布局。</p>
+          </div>
+        </div>
+
+        <!-- Single Main Line Chart with Advanced Dual Controls & Interactive Legends -->
+        <div class="bg-white p-5 rounded-xl border border-slate-200/80 shadow-xs space-y-4">
+          <!-- Chart Header with Dual Controls -->
+          <div class="flex flex-wrap items-center justify-between gap-3 border-b border-slate-100 pb-3">
+            <div class="flex items-center gap-2.5">
+              <h3 class="text-sm font-bold text-slate-900">推理服务 QPS 吞吐与并发对比 (Multi-Series Trend)</h3>
+              <span class="text-[10px] font-semibold text-blue-700 bg-blue-50 px-2 py-0.5 rounded-full border border-blue-100 font-mono">线型规范：直折线 (Linear / Segmented)</span>
+            </div>
+
+            <!-- Dual Segmented Controls: Time Range + Sampling Granularity -->
+            <div class="flex flex-wrap items-center gap-3">
+              <!-- Control A: Time Range -->
+              <div class="flex items-center gap-1.5">
+                <span class="text-[11px] text-slate-400 font-medium">时间范围:</span>
+                <div class="flex items-center bg-slate-100 p-0.5 rounded-md text-[11px] font-medium text-slate-600">
+                  <button class="px-2 py-0.5 rounded hover:text-slate-900">1h</button>
+                  <button class="px-2 py-0.5 rounded bg-white text-[#266EFF] font-semibold shadow-2xs">6h</button>
+                  <button class="px-2 py-0.5 rounded hover:text-slate-900">24h</button>
+                  <button class="px-2 py-0.5 rounded hover:text-slate-900">7d</button>
+                  <button class="px-2 py-0.5 rounded hover:text-slate-900">30d</button>
+                </div>
+              </div>
+
+              <!-- Control B: Sampling Granularity / Resolution -->
+              <div class="flex items-center gap-1.5 border-l border-slate-200 pl-3">
+                <span class="text-[11px] text-slate-400 font-medium">采样粒度:</span>
+                <div class="flex items-center bg-slate-100 p-0.5 rounded-md text-[11px] font-medium text-slate-600">
+                  <button class="px-2 py-0.5 rounded hover:text-slate-900">1s</button>
+                  <button class="px-2 py-0.5 rounded bg-white text-[#266EFF] font-semibold shadow-2xs">5s</button>
+                  <button class="px-2 py-0.5 rounded hover:text-slate-900">1m</button>
+                  <button class="px-2 py-0.5 rounded hover:text-slate-900">5m</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Interactive Legend Badges Row -->
+          <div class="flex flex-wrap items-center justify-between gap-2 text-xs">
+            <span class="text-[11px] text-slate-400 font-medium">点击图例可隐藏/显示指定折线：</span>
+            <div class="flex flex-wrap items-center gap-2">
+              <button class="px-2.5 py-1 rounded-md border border-blue-200 bg-blue-50/50 text-slate-800 font-medium flex items-center gap-1.5 hover:bg-blue-50 transition cursor-pointer">
+                <span class="w-2.5 h-1 bg-[#266EFF] rounded-full"></span>
+                <span>当前 QPS (主线)</span>
+              </button>
+              <button class="px-2.5 py-1 rounded-md border border-emerald-200 bg-emerald-50/50 text-slate-800 font-medium flex items-center gap-1.5 hover:bg-emerald-50 transition cursor-pointer">
+                <span class="w-2.5 h-1 bg-emerald-500 rounded-full"></span>
+                <span>实时并发数</span>
+              </button>
+              <button class="px-2.5 py-1 rounded-md border border-slate-200 bg-slate-50 text-slate-700 font-medium flex items-center gap-1.5 hover:bg-slate-100 transition cursor-pointer">
+                <span class="w-2.5 border-b-2 border-dashed border-slate-500"></span>
+                <span>上周同期基线</span>
+              </button>
+              <!-- Hidden/Disabled State Legend Badge Demo -->
+              <button class="px-2.5 py-1 rounded-md border border-slate-200 bg-slate-100 text-slate-400 font-medium flex items-center gap-1.5 opacity-50 grayscale line-through cursor-pointer">
+                <span class="w-2.5 h-1 bg-purple-500 rounded-full"></span>
+                <span>预留备用池吞吐</span>
+              </button>
+              <button class="px-2.5 py-1 rounded-md border border-rose-200 bg-rose-50/50 text-rose-700 font-medium flex items-center gap-1.5 hover:bg-rose-50 transition cursor-pointer">
+                <span class="w-2.5 border-b-2 border-dotted border-rose-500"></span>
+                <span>SLA 告警上限 (80 QPS)</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- SVG Multi-Line Chart Graphic -->
+          <div class="relative w-full h-56 bg-slate-50/50 rounded-lg p-3 overflow-hidden border border-slate-100 flex flex-col justify-between">
+            <svg class="absolute inset-0 w-full h-full" preserveAspectRatio="none" viewBox="0 0 500 160">
+              <!-- Grid Lines -->
+              <line x1="0" y1="30" x2="500" y2="30" stroke="#E2E8F0" stroke-dasharray="4 4" stroke-width="1" />
+              <line x1="0" y1="70" x2="500" y2="70" stroke="#E2E8F0" stroke-dasharray="4 4" stroke-width="1" />
+              <line x1="0" y1="110" x2="500" y2="110" stroke="#E2E8F0" stroke-dasharray="4 4" stroke-width="1" />
+
+              <!-- SLA Threshold Line (Rose Red Dotted) -->
+              <line x1="0" y1="25" x2="500" y2="25" stroke="#E11D48" stroke-dasharray="3 3" stroke-width="1.5" />
+
+              <!-- Series 3: Last Week Baseline (Slate Gray Dashed, Straight Lines) -->
+              <path d="M 0 110 L 80 130 L 160 90 L 250 100 L 320 85 L 410 95 L 500 100" fill="none" stroke="#94A3B8" stroke-width="1.5" stroke-dasharray="5 4" />
+
+              <!-- Series 2: Real-time Concurrency (Emerald Green Solid, Straight Lines) -->
+              <path d="M 0 130 L 70 110 L 150 75 L 230 85 L 310 60 L 400 70 L 500 80" fill="none" stroke="#059669" stroke-width="2" />
+
+              <!-- Series 1: Primary QPS (Brand Blue Solid with Gradient Area, Straight Lines) -->
+              <defs>
+                <linearGradient id="blueGrad" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stop-color="#266EFF" stop-opacity="0.2" />
+                  <stop offset="100%" stop-color="#266EFF" stop-opacity="0.0" />
+                </linearGradient>
+              </defs>
+              <path d="M 0 120 L 90 80 L 180 40 L 260 65 L 350 45 L 430 50 L 500 35 L 500 160 L 0 160 Z" fill="url(#blueGrad)" />
+              <path d="M 0 120 L 90 80 L 180 40 L 260 65 L 350 45 L 430 50 L 500 35" fill="none" stroke="#266EFF" stroke-width="2.5" />
+
+              <!-- Data Sampling Points (Points connected by straight segments) -->
+              <circle cx="90" cy="80" r="2.5" fill="#266EFF" />
+              <circle cx="180" cy="40" r="2.5" fill="#266EFF" />
+              <circle cx="260" cy="65" r="2.5" fill="#266EFF" />
+              <circle cx="430" cy="50" r="2.5" fill="#266EFF" />
+
+              <!-- Active Hover Focus Point -->
+              <circle cx="350" cy="45" r="4" fill="#266EFF" stroke="#FFFFFF" stroke-width="2" />
+              <line x1="350" y1="0" x2="350" y2="160" stroke="#266EFF" stroke-dasharray="2 2" stroke-width="1" />
+            </svg>
+
+            <!-- Floating Tooltip Card Mock -->
+            <div class="absolute left-[62%] top-6 bg-slate-900/90 text-white p-2.5 rounded-lg shadow-xl text-[11px] font-mono space-y-1 pointer-events-none z-10 border border-slate-700">
+              <div class="text-slate-400 font-sans font-medium text-[10px] pb-1 border-b border-slate-700">时刻：15:42:00 (5s 采样)</div>
+              <div class="text-blue-300 flex items-center justify-between gap-3">
+                <span>当前 QPS:</span> <strong>68.4 /s</strong>
+              </div>
+              <div class="text-emerald-300 flex items-center justify-between gap-3">
+                <span>并发数:</span> <strong>42 reqs</strong>
+              </div>
+              <div class="text-slate-300 flex items-center justify-between gap-3">
+                <span>上周基线:</span> <strong>51.2 /s</strong>
+              </div>
+            </div>
+
+            <!-- X-Axis Labels -->
+            <div class="flex items-center justify-between text-[10px] text-slate-400 font-mono mt-auto relative z-0 pt-2 border-t border-slate-200">
+              <span>15:30</span>
+              <span>15:33</span>
+              <span>15:36</span>
+              <span>15:39</span>
+              <span class="text-[#266EFF] font-bold">15:42 (当前)</span>
+              <span>15:45</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Horizontal Multi-Chart Grid Standard (横屏 2 图并排多条折线图规范) -->
+        <div class="space-y-2 pt-2">
+          <div class="flex items-center justify-between">
+            <span class="text-xs font-bold text-slate-800 flex items-center gap-1.5">
+              <span class="w-1.5 h-1.5 rounded-full bg-[#266EFF]"></span> 横屏双视图规范：单个屏幕支持 2 个 1:1 对齐的多条折线图表 (Horizontal Dual-Chart Grid)
+            </span>
+            <span class="text-[11px] text-slate-400">相同时间轴 · 1:1 左右对称 · 十字光标同步 hover</span>
+          </div>
+
+          <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+            <!-- Chart Card 1 (Left): QPS 吞吐与实时并发多线对比 -->
+            <div class="bg-white p-4.5 rounded-xl border border-slate-200/80 shadow-xs space-y-3">
+              <div class="flex items-center justify-between border-b border-slate-100 pb-2.5">
+                <div class="flex items-center gap-2">
+                  <span class="w-2.5 h-2.5 rounded-full bg-[#266EFF]"></span>
+                  <span class="text-xs font-bold text-slate-900">图表 1：QPS 吞吐与并发数多线对比</span>
+                </div>
+                <div class="flex items-center gap-2 text-[10px] font-mono">
+                  <span class="text-[#266EFF] bg-blue-50 px-1.5 py-0.5 rounded font-bold">QPS: 68.4/s</span>
+                  <span class="text-emerald-700 bg-emerald-50 px-1.5 py-0.5 rounded font-bold">并发: 42</span>
+                </div>
+              </div>
+              <div class="relative w-full h-44 bg-slate-50/50 rounded-lg p-2.5 overflow-hidden border border-slate-100 flex flex-col justify-between">
+                <svg class="absolute inset-0 w-full h-full" preserveAspectRatio="none" viewBox="0 0 400 120">
+                  <line x1="0" y1="35" x2="400" y2="35" stroke="#E2E8F0" stroke-dasharray="4 4" />
+                  <line x1="0" y1="75" x2="400" y2="75" stroke="#E2E8F0" stroke-dasharray="4 4" />
+                  <!-- QPS Blue Path (Straight Segments) -->
+                  <path d="M 0 95 L 80 50 L 160 70 L 220 45 L 280 35 L 340 40 L 400 25 L 400 120 L 0 120 Z" fill="#266EFF" fill-opacity="0.08" />
+                  <path d="M 0 95 L 80 50 L 160 70 L 220 45 L 280 35 L 340 40 L 400 25" fill="none" stroke="#266EFF" stroke-width="2.5" />
+                  <!-- Concurrent Green Path (Straight Segments) -->
+                  <path d="M 0 105 L 80 75 L 160 85 L 220 65 L 280 55 L 340 60 L 400 45" fill="none" stroke="#059669" stroke-width="2" />
+                  <!-- Baseline Gray Dash -->
+                  <path d="M 0 100 L 80 70 L 160 75 L 220 62 L 280 60 L 340 55 L 400 50" fill="none" stroke="#94A3B8" stroke-width="1.5" stroke-dasharray="4 4" />
+                  <!-- Sampling Data Dots -->
+                  <circle cx="80" cy="50" r="2" fill="#266EFF" />
+                  <circle cx="160" cy="70" r="2" fill="#266EFF" />
+                  <circle cx="220" cy="45" r="2" fill="#266EFF" />
+                  <circle cx="340" cy="40" r="2" fill="#266EFF" />
+                  <!-- Synchronized Crosshair -->
+                  <line x1="280" y1="0" x2="280" y2="120" stroke="#266EFF" stroke-dasharray="2 2" stroke-width="1" />
+                  <circle cx="280" cy="35" r="3.5" fill="#266EFF" stroke="#FFF" stroke-width="2" />
+                  <circle cx="280" cy="55" r="3" fill="#059669" stroke="#FFF" stroke-width="1.5" />
+                </svg>
+                <div class="flex items-center justify-between text-[10px] text-slate-400 font-mono mt-auto pt-1.5 border-t border-slate-200 relative z-10">
+                  <span>15:30</span>
+                  <span>15:35</span>
+                  <span class="text-[#266EFF] font-bold">15:42 (采样)</span>
+                  <span>15:45</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Chart Card 2 (Right): GPU 显存与 TTFT 延迟分位数对比 -->
+            <div class="bg-white p-4.5 rounded-xl border border-slate-200/80 shadow-xs space-y-3">
+              <div class="flex items-center justify-between border-b border-slate-100 pb-2.5">
+                <div class="flex items-center gap-2">
+                  <span class="w-2.5 h-2.5 rounded-full bg-amber-500"></span>
+                  <span class="text-xs font-bold text-slate-900">图表 2：显存利用率与 TTFT 延迟 (直折线)</span>
+                </div>
+                <div class="flex items-center gap-2 text-[10px] font-mono">
+                  <span class="text-amber-700 bg-amber-50 px-1.5 py-0.5 rounded font-bold">VRAM: 88.4%</span>
+                  <span class="text-rose-700 bg-rose-50 px-1.5 py-0.5 rounded font-bold">P99: 118ms</span>
+                </div>
+              </div>
+              <div class="relative w-full h-44 bg-slate-50/50 rounded-lg p-2.5 overflow-hidden border border-slate-100 flex flex-col justify-between">
+                <svg class="absolute inset-0 w-full h-full" preserveAspectRatio="none" viewBox="0 0 400 120">
+                  <line x1="0" y1="35" x2="400" y2="35" stroke="#E2E8F0" stroke-dasharray="4 4" />
+                  <line x1="0" y1="75" x2="400" y2="75" stroke="#E2E8F0" stroke-dasharray="4 4" />
+                  <!-- VRAM Amber Path (Straight Segments) -->
+                  <path d="M 0 85 L 80 65 L 160 40 L 220 32 L 280 30 L 340 25 L 400 20" fill="none" stroke="#D97706" stroke-width="2.5" />
+                  <!-- TTFT P99 Rose Path (Straight Segments) -->
+                  <path d="M 0 50 L 80 30 L 160 60 L 220 40 L 280 45 L 340 35 L 400 30" fill="none" stroke="#E11D48" stroke-width="1.5" stroke-dasharray="3 2" />
+                  <!-- TTFT P50 Emerald Path (Straight Segments) -->
+                  <path d="M 0 100 L 80 85 L 160 90 L 220 80 L 280 75 L 340 70 L 400 65" fill="none" stroke="#059669" stroke-width="2" />
+                  <!-- Sampling Vertices -->
+                  <circle cx="80" cy="65" r="2" fill="#D97706" />
+                  <circle cx="160" cy="40" r="2" fill="#D97706" />
+                  <circle cx="220" cy="32" r="2" fill="#D97706" />
+                  <circle cx="340" cy="25" r="2" fill="#D97706" />
+                  <!-- Synchronized Crosshair -->
+                  <line x1="280" y1="0" x2="280" y2="120" stroke="#266EFF" stroke-dasharray="2 2" stroke-width="1" />
+                  <circle cx="280" cy="30" r="3.5" fill="#D97706" stroke="#FFF" stroke-width="2" />
+                  <circle cx="280" cy="45" r="3" fill="#E11D48" stroke="#FFF" stroke-width="1.5" />
+                </svg>
+                <div class="flex items-center justify-between text-[10px] text-slate-400 font-mono mt-auto pt-1.5 border-t border-slate-200 relative z-10">
+                  <span>15:30</span>
+                  <span>15:35</span>
+                  <span class="text-amber-600 font-bold">15:42 (采样)</span>
+                  <span>15:45</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Section 9: Icon Card & KPI Feature Card Standard (带图标的卡片展示规范) -->
+      <section class="space-y-4">
+        <div class="flex items-center justify-between border-l-4 border-[#266EFF] pl-3">
+          <div>
+            <h2 class="text-base font-bold text-slate-900">9. 带图标的指标与特性卡片规范 (Icon Cards Pattern)</h2>
+            <p class="text-xs text-slate-500">包含横向 KPI 指标数据卡片、纵向单操作入口卡片以及纵向多操作项/组合操作卡片三大形态。</p>
+          </div>
+        </div>
+
+        <!-- Pattern A: Horizontal KPI Icon Cards -->
+        <div class="space-y-2">
+          <span class="text-xs font-bold text-slate-800 flex items-center gap-1.5">
+            <span class="w-1.5 h-1.5 rounded-full bg-[#266EFF]"></span> 形态 A：横向 KPI 数据卡片 (Horizontal KPI Icon Card)
+          </span>
+          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+            <!-- Blue Primary Icon Card -->
+            <div class="bg-white p-4 rounded-xl border border-slate-200/80 shadow-xs hover:border-slate-300 transition flex items-center gap-3.5 group">
+              <div class="w-10 h-10 rounded-lg bg-blue-50 text-[#266EFF] border border-blue-100 flex items-center justify-center shrink-0 group-hover:bg-[#266EFF] group-hover:text-white transition">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path></svg>
+              </div>
+              <div>
+                <div class="text-xs text-slate-500 font-medium">集群在册 GPU 总卡数</div>
+                <div class="text-xl font-bold font-mono text-slate-900 mt-0.5">128 卡 <span class="text-xs font-normal text-slate-400">(A100/H800)</span></div>
+                <div class="text-[10px] text-emerald-600 bg-emerald-50 px-1.5 py-0.2 rounded font-semibold inline-block mt-1">
+                  ↑ 环比上月 +16 卡
+                </div>
+              </div>
+            </div>
+
+            <!-- Emerald Health Icon Card -->
+            <div class="bg-white p-4 rounded-xl border border-slate-200/80 shadow-xs hover:border-slate-300 transition flex items-center gap-3.5 group">
+              <div class="w-10 h-10 rounded-lg bg-emerald-50 text-emerald-600 border border-emerald-100 flex items-center justify-center shrink-0 group-hover:bg-emerald-600 group-hover:text-white transition">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+              </div>
+              <div>
+                <div class="text-xs text-slate-500 font-medium">全平台推理平均首包 (TTFT)</div>
+                <div class="text-xl font-bold font-mono text-slate-900 mt-0.5">118 ms</div>
+                <div class="text-[10px] text-emerald-600 bg-emerald-50 px-1.5 py-0.2 rounded font-semibold inline-block mt-1">
+                  ↓ 延迟降低 -14%
+                </div>
+              </div>
+            </div>
+
+            <!-- Amber Warning Icon Card -->
+            <div class="bg-white p-4 rounded-xl border border-slate-200/80 shadow-xs hover:border-slate-300 transition flex items-center gap-3.5 group">
+              <div class="w-10 h-10 rounded-lg bg-amber-50 text-amber-600 border border-amber-100 flex items-center justify-center shrink-0 group-hover:bg-amber-600 group-hover:text-white transition">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+              </div>
+              <div>
+                <div class="text-xs text-slate-500 font-medium">显存利用峰值 (VRAM)</div>
+                <div class="text-xl font-bold font-mono text-slate-900 mt-0.5">88.4%</div>
+                <div class="text-[10px] text-amber-600 bg-amber-50 px-1.5 py-0.2 rounded font-semibold inline-block mt-1">
+                  ⚠ 接近 90% 预警阈值
+                </div>
+              </div>
+            </div>
+
+            <!-- Indigo Violet Icon Card -->
+            <div class="bg-white p-4 rounded-xl border border-slate-200/80 shadow-xs hover:border-slate-300 transition flex items-center gap-3.5 group">
+              <div class="w-10 h-10 rounded-lg bg-indigo-50 text-indigo-600 border border-indigo-100 flex items-center justify-center shrink-0 group-hover:bg-indigo-600 group-hover:text-white transition">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"></path></svg>
+              </div>
+              <div>
+                <div class="text-xs text-slate-500 font-medium">已纳管模型总数</div>
+                <div class="text-xl font-bold font-mono text-slate-900 mt-0.5">24 款</div>
+                <div class="text-[10px] text-indigo-600 bg-indigo-50 px-1.5 py-0.2 rounded font-semibold inline-block mt-1">
+                  18 公用 / 6 试用
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Pattern B: Vertical Single Action Feature Icon Cards -->
+        <div class="space-y-2 pt-2">
+          <span class="text-xs font-bold text-slate-800 flex items-center gap-1.5">
+            <span class="w-1.5 h-1.5 rounded-full bg-[#266EFF]"></span> 形态 B：纵向单操作入口卡片 (Single Action Feature Icon Card)
+          </span>
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+            <!-- Feature Card 1 -->
+            <div class="bg-white p-5 rounded-xl border border-slate-200/80 shadow-xs hover:border-[#266EFF]/50 hover:shadow-md transition space-y-3 flex flex-col justify-between group">
+              <div class="space-y-3">
+                <div class="flex items-center justify-between">
+                  <div class="w-10 h-10 rounded-lg bg-blue-50 text-[#266EFF] border border-blue-100 flex items-center justify-center group-hover:bg-[#266EFF] group-hover:text-white transition">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z"></path></svg>
+                  </div>
+                  <span class="text-[10px] font-semibold bg-blue-50 text-[#266EFF] px-2 py-0.5 rounded-full border border-blue-100">在线评估工具</span>
+                </div>
+                <div>
+                  <h4 class="text-sm font-bold text-slate-900 group-hover:text-[#266EFF] transition">算力评估与部署测算器</h4>
+                  <p class="text-xs text-slate-500 mt-1 line-clamp-2 leading-relaxed">根据模型规模 (7B~671B)、上下文长度与 Target QPS 快速推算显存及最优绑卡方案。</p>
+                </div>
+              </div>
+              <div class="pt-2 border-t border-slate-100 flex items-center justify-between">
+                <span class="text-[11px] text-slate-400">工具估算准确度 98%</span>
+                <button class="text-xs font-semibold text-[#266EFF] hover:underline flex items-center gap-1 cursor-pointer">
+                  立即测算 →
+                </button>
+              </div>
+            </div>
+
+            <!-- Feature Card 2 -->
+            <div class="bg-white p-5 rounded-xl border border-slate-200/80 shadow-xs hover:border-emerald-500/50 hover:shadow-md transition space-y-3 flex flex-col justify-between group">
+              <div class="space-y-3">
+                <div class="flex items-center justify-between">
+                  <div class="w-10 h-10 rounded-lg bg-emerald-50 text-emerald-600 border border-emerald-100 flex items-center justify-center group-hover:bg-emerald-600 group-hover:text-white transition">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"></path></svg>
+                  </div>
+                  <span class="text-[10px] font-semibold bg-emerald-50 text-emerald-700 px-2 py-0.5 rounded-full border border-emerald-100">代码生成</span>
+                </div>
+                <div>
+                  <h4 class="text-sm font-bold text-slate-900 group-hover:text-emerald-600 transition">OpenAI 兼容 API 代码生成器</h4>
+                  <p class="text-xs text-slate-500 mt-1 line-clamp-2 leading-relaxed">选择签发的 API Key 与目标模型，自动输出 cURL、Python 与 Node.js 调用的零门槛代码。</p>
+                </div>
+              </div>
+              <div class="pt-2 border-t border-slate-100 flex items-center justify-between">
+                <span class="text-[11px] text-slate-400">支持 OpenAPI 3.0</span>
+                <button class="text-xs font-semibold text-emerald-600 hover:underline flex items-center gap-1 cursor-pointer">
+                  生成 cURL →
+                </button>
+              </div>
+            </div>
+
+            <!-- Feature Card 3 -->
+            <div class="bg-white p-5 rounded-xl border border-slate-200/80 shadow-xs hover:border-amber-500/50 hover:shadow-md transition space-y-3 flex flex-col justify-between group">
+              <div class="space-y-3">
+                <div class="flex items-center justify-between">
+                  <div class="w-10 h-10 rounded-lg bg-amber-50 text-amber-600 border border-amber-100 flex items-center justify-center group-hover:bg-amber-600 group-hover:text-white transition">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 7v10c0 2.21 3.582 4 8 4s8-1.79 8-4V7M4 7c0 2.21 3.582 4 8 4s8-1.79 8-4M4 7c0-2.21 3.582-4 8-4s8 1.79 8 4m0 5c0 2.21-3.582 4-8 4s8-1.79-8-4"></path></svg>
+                  </div>
+                  <span class="text-[10px] font-semibold bg-amber-50 text-amber-700 px-2 py-0.5 rounded-full border border-amber-100">卡级可观测</span>
+                </div>
+                <div>
+                  <h4 class="text-sm font-bold text-slate-900 group-hover:text-amber-600 transition">硬件 Topology 拓扑与卡级监控</h4>
+                  <p class="text-xs text-slate-500 mt-1 line-clamp-2 leading-relaxed">直观呈现 NVLink 高速互联拓扑、每张卡显存/功耗/温度，并支持快速一键节点排空。</p>
+                </div>
+              </div>
+              <div class="pt-2 border-t border-slate-100 flex items-center justify-between">
+                <span class="text-[11px] text-slate-400">实时采样率 1 秒</span>
+                <button class="text-xs font-semibold text-amber-600 hover:underline flex items-center gap-1 cursor-pointer">
+                  查看拓扑 →
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Pattern C: Vertical Multi-Action Feature Icon Cards (新增：纵向多操作项/组合操作卡片) -->
+        <div class="space-y-2 pt-2">
+          <span class="text-xs font-bold text-slate-800 flex items-center gap-1.5">
+            <span class="w-1.5 h-1.5 rounded-full bg-[#266EFF]"></span> 形态 C：纵向多操作项/组合操作卡片 (Multi-Action Feature Icon Card)
+          </span>
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+            <!-- Multi-Action Card 1: Primary + Secondary + Text Link combination -->
+            <div class="bg-white p-5 rounded-xl border border-slate-200/80 shadow-xs hover:border-[#266EFF]/50 hover:shadow-md transition space-y-4 flex flex-col justify-between group">
+              <div class="space-y-3">
+                <div class="flex items-center justify-between">
+                  <div class="w-10 h-10 rounded-lg bg-blue-50 text-[#266EFF] border border-blue-100 flex items-center justify-center shrink-0">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+                  </div>
+                  <div class="flex items-center gap-1.5">
+                    <span class="text-[10px] font-semibold bg-emerald-50 text-emerald-700 px-2 py-0.5 rounded-full border border-emerald-200">服务运行中</span>
+                    <button class="text-slate-400 hover:text-slate-600 p-1 rounded hover:bg-slate-100 transition cursor-pointer">
+                      <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 5v.01M12 12v.01M12 19v.01M12 6a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2z"></path></svg>
+                    </button>
+                  </div>
+                </div>
+                <div>
+                  <h4 class="text-sm font-bold text-slate-900 group-hover:text-[#266EFF] transition">DeepSeek-R1 算力集群调度</h4>
+                  <p class="text-xs text-slate-500 mt-1 line-clamp-2 leading-relaxed">包含 8x H800 节点自动扩缩容，支持蓝绿无损切流与副本健康探针。</p>
+                </div>
+              </div>
+
+              <!-- Multi-Action Footer Button Combo -->
+              <div class="pt-3 border-t border-slate-100 space-y-2">
+                <div class="flex items-center gap-2">
+                  <button class="flex-1 px-3 py-1.5 bg-[#266EFF] hover:bg-blue-600 text-white text-xs font-semibold rounded-lg shadow-2xs transition flex items-center justify-center gap-1 cursor-pointer">
+                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"></path></svg>
+                    <span>申请扩容</span>
+                  </button>
+                  <button class="px-2.5 py-1.5 border border-slate-200 text-slate-700 bg-white hover:bg-slate-50 text-xs font-medium rounded-lg transition cursor-pointer">
+                    扩缩策略
+                  </button>
+                </div>
+                <div class="flex items-center justify-between text-[11px] pt-1">
+                  <span class="text-slate-400">当前 4 副本 / 目标 6</span>
+                  <button class="text-[#266EFF] font-semibold hover:underline flex items-center gap-0.5 cursor-pointer">
+                    实时 stdout 日志 →
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Multi-Action Card 2: Action Chips Array -->
+            <div class="bg-white p-5 rounded-xl border border-slate-200/80 shadow-xs hover:border-indigo-500/50 hover:shadow-md transition space-y-4 flex flex-col justify-between group">
+              <div class="space-y-3">
+                <div class="flex items-center justify-between">
+                  <div class="w-10 h-10 rounded-lg bg-indigo-50 text-indigo-600 border border-indigo-100 flex items-center justify-center shrink-0">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 7a2 2 0 012 2m4 0a6 6 0 01-7.743 5.743L11 17H9v2H7v2H4a1 1 0 01-1-1v-2.586a1 1 0 01.293-.707l5.964-5.964A6 6 0 1121 9z"></path></svg>
+                  </div>
+                  <span class="text-[10px] font-semibold bg-amber-50 text-amber-700 px-2 py-0.5 rounded-full border border-amber-200">配额用量 85%</span>
+                </div>
+                <div>
+                  <h4 class="text-sm font-bold text-slate-900 group-hover:text-indigo-600 transition">API 鉴权 Key 与配额安全控制</h4>
+                  <p class="text-xs text-slate-500 mt-1 line-clamp-2 leading-relaxed">多租户密钥轮换、IP 白名单管控与 QPS 峰值熔断防护机制。</p>
+                </div>
+              </div>
+
+              <!-- Multi-Action Chips Grid -->
+              <div class="pt-3 border-t border-slate-100 space-y-2">
+                <div class="text-[11px] font-medium text-slate-400">快捷安全操作：</div>
+                <div class="grid grid-cols-3 gap-1.5">
+                  <button class="px-2 py-1 bg-slate-50 hover:bg-indigo-50 hover:text-indigo-600 text-slate-700 border border-slate-200 text-[11px] font-medium rounded transition text-center cursor-pointer">
+                    🔑 轮换 Key
+                  </button>
+                  <button class="px-2 py-1 bg-slate-50 hover:bg-indigo-50 hover:text-indigo-600 text-slate-700 border border-slate-200 text-[11px] font-medium rounded transition text-center cursor-pointer">
+                    ⚡ 限流 QPS
+                  </button>
+                  <button class="px-2 py-1 bg-slate-50 hover:bg-indigo-50 hover:text-indigo-600 text-slate-700 border border-slate-200 text-[11px] font-medium rounded transition text-center cursor-pointer">
+                    🛡️ IP 白名单
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Multi-Action Card 3: Split Action Bar + Diagnostics -->
+            <div class="bg-white p-5 rounded-xl border border-slate-200/80 shadow-xs hover:border-amber-500/50 hover:shadow-md transition space-y-4 flex flex-col justify-between group">
+              <div class="space-y-3">
+                <div class="flex items-center justify-between">
+                  <div class="w-10 h-10 rounded-lg bg-amber-50 text-amber-600 border border-amber-100 flex items-center justify-center shrink-0">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path></svg>
+                  </div>
+                  <span class="text-[10px] font-semibold bg-blue-50 text-blue-700 px-2 py-0.5 rounded-full border border-blue-200">NVLink 拓扑正常</span>
+                </div>
+                <div>
+                  <h4 class="text-sm font-bold text-slate-900 group-hover:text-amber-600 transition">硬件健康诊断与节点离线排空</h4>
+                  <p class="text-xs text-slate-500 mt-1 line-clamp-2 leading-relaxed">一键发起 GPU 显存 ECC 错误扫描、温度/功耗自检与故障节点隔离。</p>
+                </div>
+              </div>
+
+              <!-- Multi-Action Split Button Row -->
+              <div class="pt-3 border-t border-slate-100 flex items-center justify-between gap-2">
+                <button class="px-3 py-1.5 bg-amber-500 hover:bg-amber-600 text-white text-xs font-semibold rounded-lg shadow-2xs transition flex items-center gap-1 cursor-pointer">
+                  <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"></path></svg>
+                  <span>一键自检</span>
+                </button>
+                <button class="px-2.5 py-1.5 bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-medium rounded-lg transition cursor-pointer">
+                  隔离节点
+                </button>
+                <button class="text-xs text-slate-500 hover:text-slate-800 font-medium underline cursor-pointer">
+                  报告 →
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      <!-- Section 10: Double Confirmation Pattern (操作二次确认规范 - 对齐规范 2.9) -->
+      <section class="space-y-4">
+        <div class="flex items-center justify-between border-l-4 border-rose-500 pl-3">
+          <div>
+            <h2 class="text-base font-bold text-slate-900">10. 操作二次确认规范 (Double Confirmation Standards - 对应规范 2.9)</h2>
+            <p class="text-xs text-slate-500">规范高风险破坏性动作的两级二次确认机制：全局破坏性操作 Modal 弹窗与局部行内 Popconfirm 气泡。</p>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          <!-- 2.9.1 High-Risk Danger Confirmation Modal -->
+          <div class="space-y-2">
+            <div class="flex items-center justify-between">
+              <span class="text-xs font-bold text-slate-800 flex items-center gap-1.5">
+                <span class="w-1.5 h-1.5 rounded-full bg-rose-500"></span> 2.9.1 破坏性/高风险操作二次确认 Modal (Danger Confirmation Modal)
+              </span>
+              <code class="text-[10px] bg-slate-100 text-slate-500 px-1.5 py-0.5 rounded font-mono">Modal 范式</code>
+            </div>
+            
+            <div class="bg-slate-900/10 p-4 rounded-xl border border-slate-200 backdrop-blur-2xs">
+              <!-- Simulated Modal Window -->
+              <div class="bg-white rounded-xl border border-rose-200 shadow-xl max-w-md mx-auto p-5 space-y-4">
+                <div class="flex items-start gap-3">
+                  <div class="w-10 h-10 rounded-full bg-rose-50 text-rose-600 border border-rose-100 flex items-center justify-center shrink-0">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>
+                  </div>
+                  <div>
+                    <h3 class="text-sm font-bold text-slate-900">确认销毁推理服务 Endpoint？</h3>
+                    <p class="text-xs text-slate-500 mt-1 leading-relaxed">此操作将立即下线 <code class="bg-slate-100 px-1 py-0.5 rounded font-mono text-slate-800 font-semibold">deepseek-r1-prod</code> 并释放 8 张 H800 GPU，导致线上 API 依赖中断且无法撤销。</p>
+                  </div>
+                </div>
+
+                <!-- Strict Input Match Area -->
+                <div class="bg-rose-50/60 p-3 rounded-lg border border-rose-100 space-y-2">
+                  <label class="text-[11px] font-medium text-rose-800 block">
+                    请输入服务名称 <strong class="font-mono underline">deepseek-r1-prod</strong> 以确认操作：
+                  </label>
+                  <input type="text" value="deepseek-r1-prod" class="w-full px-3 py-1.5 text-xs bg-white border border-rose-300 rounded-lg focus:outline-none focus:border-rose-500 focus:ring-1 focus:ring-rose-500/20 font-mono text-slate-800">
+                </div>
+
+                <!-- Footer Action Buttons -->
+                <div class="flex items-center justify-end gap-2 pt-2 border-t border-slate-100">
+                  <button class="px-3 py-1.5 border border-slate-200 text-slate-700 bg-white hover:bg-slate-50 text-xs font-medium rounded-lg transition cursor-pointer">
+                    取消
+                  </button>
+                  <button class="px-3.5 py-1.5 bg-rose-600 hover:bg-rose-700 text-white text-xs font-semibold rounded-lg shadow-sm transition flex items-center gap-1 cursor-pointer">
+                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg>
+                    <span>确认销毁 (不可撤销)</span>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 2.9.2 Inline Popconfirm Popover Demo -->
+          <div class="space-y-2">
+            <div class="flex items-center justify-between">
+              <span class="text-xs font-bold text-slate-800 flex items-center gap-1.5">
+                <span class="w-1.5 h-1.5 rounded-full bg-amber-500"></span> 2.9.2 行内/局部二次确认 Popconfirm (Inline Popconfirm)
+              </span>
+              <code class="text-[10px] bg-slate-100 text-slate-500 px-1.5 py-0.5 rounded font-mono">Popconfirm 气泡</code>
+            </div>
+
+            <div class="bg-white p-5 rounded-xl border border-slate-200/80 shadow-xs space-y-4">
+              <p class="text-xs text-slate-500 leading-relaxed">表格单行或卡片中的轻量级局部确认，直接在触发源按钮正上方浮现指示气泡，点击外部窗口自动关闭。</p>
+
+              <div class="bg-slate-50 p-6 rounded-xl border border-slate-200/80 flex items-center justify-around relative">
+                <span class="text-xs text-slate-500 font-medium">表格行内操作点击示例：</span>
+                <div class="relative">
+                  <!-- Simulated Popconfirm Floating Box -->
+                  <div class="absolute bottom-full mb-2 right-0 z-20 w-64 p-3.5 bg-white border border-slate-200 shadow-xl rounded-xl space-y-2.5 text-xs animate-in fade-in zoom-in-95">
+                    <div class="flex items-start gap-2">
+                      <svg class="w-4 h-4 text-amber-500 shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>
+                      <span class="text-slate-800 font-semibold leading-snug">确定要清空 node-a100-01 节点的离线 Model Cache 吗？</span>
+                    </div>
+                    <div class="flex items-center justify-end gap-1.5 pt-1 border-t border-slate-100">
+                      <button class="px-2.5 py-1 border border-slate-200 text-slate-600 bg-white hover:bg-slate-50 text-[11px] rounded font-medium">取消</button>
+                      <button class="px-2.5 py-1 bg-rose-600 hover:bg-rose-700 text-white text-[11px] font-semibold rounded shadow-2xs">确定清空</button>
+                    </div>
+                  </div>
+                  <button class="px-3 py-1.5 bg-rose-50 text-rose-700 border border-rose-200 text-xs font-semibold rounded-lg hover:bg-rose-100 transition shadow-2xs">
+                    清空缓存
+                  </button>
+                </div>
+              </div>
+
+              <div class="bg-slate-50 p-3 rounded-lg border border-slate-200/60 text-[11px] text-slate-500 space-y-1">
+                <span class="font-bold text-slate-700 block">应用场景：</span>
+                <p>适用于影响局部的快捷重置、暂停微调任务、重置 API 密钥或取消算力申请单，无需打断主视图视角。</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Section 11: Operation Failure & Error Feedback Pattern (操作失败与异常告警规范 - 对齐规范 2.10) -->
+      <section class="space-y-4">
+        <div class="flex items-center justify-between border-l-4 border-rose-600 pl-3">
+          <div>
+            <h2 class="text-base font-bold text-slate-900">11. 操作失败与异常反馈规范 (Error Feedback Standards - 对应规范 2.10)</h2>
+            <p class="text-xs text-slate-500">定义全局 Toast、区域 Banner 告警、表单项校验错误及表格行内失败状态等 4 级异常反馈范式。</p>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <!-- 2.10.1 Toast Floating Error -->
+          <div class="bg-white p-4 rounded-xl border border-slate-200/80 shadow-xs space-y-2">
+            <div class="flex items-center justify-between">
+              <span class="text-xs font-bold text-slate-800 flex items-center gap-1.5">
+                <span class="w-1.5 h-1.5 rounded-full bg-rose-500"></span> 2.10.1 全局浮动错误 Toast (Global Floating Toast)
+              </span>
+              <code class="text-[10px] bg-slate-100 text-slate-500 px-1 rounded font-mono">fixed top-5 right-5</code>
+            </div>
+            
+            <div class="bg-white border-l-4 border-l-rose-500 border border-slate-200 shadow-lg rounded-xl p-3.5 flex items-start justify-between gap-3 text-xs">
+              <div class="flex items-start gap-2.5">
+                <svg class="w-4 h-4 text-rose-500 shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                <div>
+                  <div class="font-bold text-slate-900">API 密钥签发失败</div>
+                  <div class="text-[11px] text-slate-500 font-mono mt-0.5">HTTP 502 Bad Gateway: Upstream quota engine unreachable.</div>
+                </div>
+              </div>
+              <span class="text-slate-400 hover:text-slate-600 text-xs cursor-pointer">✕</span>
+            </div>
+            <p class="text-[11px] text-slate-400">适用于全局异步 API 请求报错、网络超时断开。</p>
+          </div>
+
+          <!-- 2.10.2 Banner Area Alert -->
+          <div class="bg-white p-4 rounded-xl border border-slate-200/80 shadow-xs space-y-2">
+            <div class="flex items-center justify-between">
+              <span class="text-xs font-bold text-slate-800 flex items-center gap-1.5">
+                <span class="w-1.5 h-1.5 rounded-full bg-rose-500"></span> 2.10.2 页面/区域级 Banner 告警 (In-Page Banner)
+              </span>
+              <code class="text-[10px] bg-slate-100 text-slate-500 px-1 rounded font-mono">In-Page Banner</code>
+            </div>
+
+            <div class="bg-rose-50 border border-rose-200 text-rose-900 rounded-xl p-3.5 text-xs space-y-1.5">
+              <div class="font-bold flex items-center justify-between">
+                <div class="flex items-center gap-1.5">
+                  <svg class="w-4 h-4 text-rose-600 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                  <span>[高危区域告警] GPU 节点 node-a100-03 显存发生 ECC 故障</span>
+                </div>
+                <button class="text-rose-700 font-bold hover:underline text-[11px] cursor-pointer shrink-0">排查日志 →</button>
+              </div>
+              <div class="text-[11px] text-rose-700/90 font-mono pl-5">
+                ErrCode: ERR_GPU_MEM_ECC_UNRECOVERABLE (显卡 #2 离线)
+              </div>
+            </div>
+            <p class="text-[11px] text-slate-400">适用于硬件节点崩溃、服务降级或显存耗尽等模块级故障。</p>
+          </div>
+
+          <!-- 2.10.3 Form Inline Error -->
+          <div class="bg-white p-4 rounded-xl border border-slate-200/80 shadow-xs space-y-2">
+            <div class="flex items-center justify-between">
+              <span class="text-xs font-bold text-slate-800 flex items-center gap-1.5">
+                <span class="w-1.5 h-1.5 rounded-full bg-rose-500"></span> 2.10.3 表单项行内校验错误 (Inline Validation)
+              </span>
+              <code class="text-[10px] bg-slate-100 text-slate-500 px-1 rounded font-mono">Field Validation</code>
+            </div>
+
+            <div class="bg-slate-50 p-3 rounded-lg border border-slate-200 space-y-1">
+              <label class="text-[11px] font-semibold text-slate-700 block">申请 GPU 卡数 (A100)：</label>
+              <input type="text" value="999 Cards" class="w-full px-2.5 py-1.5 text-xs bg-white border border-rose-500 rounded-lg focus:outline-none font-mono text-slate-800">
+              <span class="text-[11px] text-rose-600 flex items-center gap-1 mt-1 font-medium">
+                ⚠️ 申请卡数超出部门可用剩余配额 (剩余 2 卡)
+              </span>
+            </div>
+            <p class="text-[11px] text-slate-400">适用于表单必填校验、参数越界或名称重名冲突。</p>
+          </div>
+
+          <!-- 2.10.4 Table Inline Failure Status Badge -->
+          <div class="bg-white p-4 rounded-xl border border-slate-200/80 shadow-xs space-y-2">
+            <div class="flex items-center justify-between">
+              <span class="text-xs font-bold text-slate-800 flex items-center gap-1.5">
+                <span class="w-1.5 h-1.5 rounded-full bg-rose-500"></span> 2.10.4 表格行内失败状态 (Row Failure Status)
+              </span>
+              <code class="text-[10px] bg-slate-100 text-slate-500 px-1 rounded font-mono">Row Status Badge</code>
+            </div>
+
+            <div class="bg-slate-50 p-3 rounded-lg border border-slate-200 flex items-center justify-between text-xs">
+              <div class="space-y-0.5">
+                <div class="font-bold text-slate-800">DeepSeek-R1-SFT-v2</div>
+                <div class="text-[10px] text-slate-400 font-mono">Job ID: sft-task-88421</div>
+              </div>
+              <div class="flex items-center gap-2">
+                <span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[11px] font-semibold bg-rose-50 text-rose-700 border border-rose-200">
+                  <span class="w-1.5 h-1.5 rounded-full bg-rose-500 animate-pulse"></span> 训练中断 (OOM)
+                </span>
+                <button class="text-[#266EFF] font-semibold hover:underline text-[11px] cursor-pointer">原因 →</button>
+              </div>
+            </div>
+            <p class="text-[11px] text-slate-400">适用于微调中断、部署失败、健康检查异常等数据列表行内状态。</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Section 12: Icon Library Usage Guidelines Showcase (图标库引用与使用规范 - 对齐规范 2.11) -->
+      <section class="space-y-4">
+        <div class="flex items-center justify-between border-l-4 border-emerald-500 pl-3">
+          <div>
+            <h2 class="text-base font-bold text-slate-900">12. 图标库与 Logo 引用规范 (Icon Library & Brand Logo Guidelines - 对应规范 2.11)</h2>
+            <p class="text-xs text-slate-500">规范统一使用 Lucide 矢量图标库与标准大模型厂商 Logo 矩阵，严格控制 14px~24px 尺寸阶梯与居中容器样式。</p>
+          </div>
+        </div>
+
+        <div class="bg-white rounded-xl border border-slate-200/80 shadow-xs p-5 space-y-5">
+          <!-- Icon Size Scale Display Grid -->
+          <div class="grid grid-cols-1 sm:grid-cols-4 gap-4 text-xs">
+            <!-- Size 1: 14px Micro -->
+            <div class="bg-slate-50 p-3.5 rounded-xl border border-slate-200/80 space-y-2">
+              <div class="flex items-center justify-between">
+                <span class="font-bold text-slate-800">14px 微型图标</span>
+                <code class="text-[10px] bg-slate-200/60 px-1 rounded font-mono">w-3.5 h-3.5</code>
+              </div>
+              <div class="flex items-center gap-2 pt-1 text-slate-700">
+                <button class="px-2.5 py-1 bg-white border border-slate-200 rounded text-xs flex items-center gap-1">
+                  <svg class="w-3.5 h-3.5 text-[#266EFF] shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
+                  <span>添加节点</span>
+                </button>
+                <span class="inline-flex items-center gap-1 text-[11px] text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded border border-emerald-200">
+                  <svg class="w-3.5 h-3.5 text-emerald-600 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                  <span>已就绪</span>
+                </span>
+              </div>
+              <p class="text-[11px] text-slate-400">用于按钮内部图标、表格内联状态指示、面包屑斜杠。</p>
+            </div>
+
+            <!-- Size 2: 16px Body Standard -->
+            <div class="bg-slate-50 p-3.5 rounded-xl border border-slate-200/80 space-y-2">
+              <div class="flex items-center justify-between">
+                <span class="font-bold text-slate-800">16px 标准图标</span>
+                <code class="text-[10px] bg-slate-200/60 px-1 rounded font-mono">w-4 h-4</code>
+              </div>
+              <div class="flex items-center gap-3 pt-1 text-slate-700">
+                <div class="flex items-center gap-1.5 font-medium text-xs text-slate-800 bg-white px-2.5 py-1 rounded border border-slate-200">
+                  <svg class="w-4 h-4 text-[#266EFF] shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path></svg>
+                  <span>推理服务</span>
+                </div>
+                <svg class="w-4 h-4 text-slate-400 hover:text-slate-600 cursor-pointer shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+              </div>
+              <p class="text-[11px] text-slate-400">用于侧边栏菜单、下拉列表项、Toast 关闭按钮。</p>
+            </div>
+
+            <!-- Size 3: 20px Card Header -->
+            <div class="bg-slate-50 p-3.5 rounded-xl border border-slate-200/80 space-y-2">
+              <div class="flex items-center justify-between">
+                <span class="font-bold text-slate-800">20px 模块图标</span>
+                <code class="text-[10px] bg-slate-200/60 px-1 rounded font-mono">w-5 h-5</code>
+              </div>
+              <div class="flex items-center gap-2 pt-1">
+                <div class="w-8 h-8 rounded-lg bg-blue-50 text-[#266EFF] border border-blue-100 flex items-center justify-center shrink-0">
+                  <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 19h10a2 2 0 002-2V7a2 2 0 00-2-2H7a2 2 0 00-2 2v10a2 2 0 002 2zM9 9h6v6H9V9z"></path></svg>
+                </div>
+                <span class="text-xs font-bold text-slate-900">算力拓扑引擎</span>
+              </div>
+              <p class="text-[11px] text-slate-400">用于卡片标题旁图标、Modal 页头、告警 Banner。</p>
+            </div>
+
+            <!-- Size 4: 24px KPI Feature Display -->
+            <div class="bg-slate-50 p-3.5 rounded-xl border border-slate-200/80 space-y-2">
+              <div class="flex items-center justify-between">
+                <span class="font-bold text-slate-800">24px 展示图标</span>
+                <code class="text-[10px] bg-slate-200/60 px-1 rounded font-mono">w-6 h-6</code>
+              </div>
+              <div class="flex items-center gap-2 pt-1">
+                <div class="w-10 h-10 rounded-xl bg-amber-50 text-amber-600 border border-amber-100 flex items-center justify-center shrink-0">
+                  <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.75" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+                </div>
+                <div>
+                  <div class="text-[10px] text-slate-400">实时 QPS 吞吐</div>
+                  <div class="text-sm font-bold font-mono text-slate-900">14,250 tps</div>
+                </div>
+              </div>
+              <p class="text-[11px] text-slate-400">用于 KPI 统计卡片 Badge 内部大图标、缺省插图。</p>
+            </div>
+          </div>
+
+          <!-- Guidelines Rules Banner -->
+          <div class="bg-slate-50 p-4 rounded-xl border border-slate-200/80 grid grid-cols-1 sm:grid-cols-3 gap-4 text-xs">
+            <div class="space-y-1">
+              <span class="font-semibold text-slate-800 flex items-center gap-1.5">
+                <span class="w-1.5 h-1.5 rounded-full bg-[#266EFF]"></span> 库选型: Lucide Icons
+              </span>
+              <p class="text-[11px] text-slate-500 leading-relaxed"> React 引入 <code class="bg-slate-200/60 px-1 rounded font-mono">lucide-react</code>，标准 HTML 页面使用 24x24 viewBox 的 SVG 矢量线条。</p>
+            </div>
+            <div class="space-y-1">
+              <span class="font-semibold text-slate-800 flex items-center gap-1.5">
+                <span class="w-1.5 h-1.5 rounded-full bg-rose-500"></span> 严禁 Emoji 与混搭
+              </span>
+              <p class="text-[11px] text-slate-500 leading-relaxed">严禁混用 FontAwesome / Material 等库，严禁直接使用 Emoji (🚀, 📦) 充当主导航或表头图标。</p>
+            </div>
+            <div class="space-y-1">
+              <span class="font-semibold text-slate-800 flex items-center gap-1.5">
+                <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span> 混排防塌陷规则
+              </span>
+              <p class="text-[11px] text-slate-500 leading-relaxed">与文字同行排布时必须搭配 <code class="bg-slate-200/60 px-1 rounded font-mono">flex items-center gap-1.5 shrink-0</code>，防止文本溢出挤压图标。</p>
+            </div>
+          </div>
+
+          <!-- Model Brand & Provider Logo Assets Showcase -->
+          <div class="border-t border-slate-100 pt-4 space-y-3">
+            <div class="flex items-center justify-between">
+              <span class="text-xs font-bold text-slate-800 flex items-center gap-1.5">
+                <span class="w-1.5 h-1.5 rounded-full bg-indigo-500"></span> 核心大模型厂商 Logo 矩阵与容器样式 (Model Provider Brand Logos)
+              </span>
+              <span class="text-[11px] text-slate-400 font-mono">目录: /model-icon/ 或 /icon/</span>
+            </div>
+
+            <div class="grid grid-cols-2 sm:grid-cols-5 gap-3 text-xs">
+              <!-- Provider 1: DeepSeek -->
+              <div class="bg-slate-50 p-3 rounded-xl border border-slate-200/80 flex items-center gap-2.5">
+                <img src="/model-icon/deepseek.jpg" class="w-7 h-7 rounded-lg object-contain border border-slate-200/80 bg-white p-0.5 shrink-0 shadow-2xs" alt="DeepSeek" />
+                <div class="truncate">
+                  <div class="font-bold text-slate-900 truncate">DeepSeek</div>
+                  <div class="text-[10px] text-slate-400 font-mono">deepseek.jpg</div>
+                </div>
+              </div>
+
+              <!-- Provider 2: Qwen -->
+              <div class="bg-slate-50 p-3 rounded-xl border border-slate-200/80 flex items-center gap-2.5">
+                <img src="/model-icon/qianwen.jpg" class="w-7 h-7 rounded-lg object-contain border border-slate-200/80 bg-white p-0.5 shrink-0 shadow-2xs" alt="通义千问" />
+                <div class="truncate">
+                  <div class="font-bold text-slate-900 truncate">通义千问</div>
+                  <div class="text-[10px] text-slate-400 font-mono">qianwen.jpg</div>
+                </div>
+              </div>
+
+              <!-- Provider 3: Hunyuan -->
+              <div class="bg-slate-50 p-3 rounded-xl border border-slate-200/80 flex items-center gap-2.5">
+                <img src="/model-icon/hunyun.png" class="w-7 h-7 rounded-lg object-contain border border-slate-200/80 bg-white p-0.5 shrink-0 shadow-2xs" alt="腾讯混元" />
+                <div class="truncate">
+                  <div class="font-bold text-slate-900 truncate">腾讯混元</div>
+                  <div class="text-[10px] text-slate-400 font-mono">hunyun.png</div>
+                </div>
+              </div>
+
+              <!-- Provider 4: MiniMax -->
+              <div class="bg-slate-50 p-3 rounded-xl border border-slate-200/80 flex items-center gap-2.5">
+                <img src="/model-icon/minimax.jpeg" class="w-7 h-7 rounded-lg object-contain border border-slate-200/80 bg-white p-0.5 shrink-0 shadow-2xs" alt="MiniMax" />
+                <div class="truncate">
+                  <div class="font-bold text-slate-900 truncate">MiniMax</div>
+                  <div class="text-[10px] text-slate-400 font-mono">minimax.jpeg</div>
+                </div>
+              </div>
+
+              <!-- Fallback Badge -->
+              <div class="bg-slate-50 p-3 rounded-xl border border-slate-200/80 flex items-center gap-2.5">
+                <div class="w-7 h-7 rounded-lg bg-blue-50 text-[#266EFF] border border-blue-200 font-bold text-xs flex items-center justify-center shrink-0 shadow-2xs">
+                  自
+                </div>
+                <div class="truncate">
+                  <div class="font-bold text-slate-900 truncate">自定义模型</div>
+                  <div class="text-[10px] text-slate-400 font-mono">Fallback 回退</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Section 13: Custom Date/Time Range Filter Showcase (自定义时间段筛选组件 - 对应规范 2.12) -->
+      <section class="space-y-4">
+        <div class="flex items-center justify-between border-l-4 border-indigo-600 pl-3">
+          <div>
+            <h2 class="text-base font-bold text-slate-900">13. 自定义时间段筛选组件规范 (Custom Date/Time Range Filter - 对应规范 2.12)</h2>
+            <p class="text-xs text-slate-500">涵盖快捷相对粒度与精确秒级 Popover 2 种核心业务场景。</p>
+          </div>
+        </div>
+
+        <div class="bg-white rounded-xl border border-slate-200/80 shadow-xs p-5 space-y-6">
+          
+          <!-- Scenario 1: Quick Relative Time Range Segment -->
+          <div class="space-y-2.5 border-b border-slate-100 pb-5">
+            <div class="flex items-center justify-between">
+              <span class="text-xs font-bold text-slate-800 flex items-center gap-1.5">
+                <span class="w-1.5 h-1.5 rounded-full bg-[#266EFF]"></span> 场景一：快捷相对时间段切换器 (Quick Relative Time Range Segment)
+              </span>
+              <code class="text-[10px] bg-slate-100 text-slate-500 px-1.5 py-0.5 rounded font-mono">Segmented Pills Control</code>
+            </div>
+            
+            <div class="bg-slate-50 p-4 rounded-xl border border-slate-200/80 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+              <div class="space-y-1">
+                <div class="text-xs font-bold text-slate-800">算力调度实时概览监控</div>
+                <p class="text-[11px] text-slate-500">高频快筛，点击“自定义...”可扩展指定起止时间。</p>
+              </div>
+
+              <!-- Segment Control Component -->
+              <div class="bg-slate-200/80 p-0.5 rounded-lg border border-slate-200/90 inline-flex items-center gap-0.5 shrink-0 shadow-2xs">
+                <button class="px-2.5 py-1 text-xs font-medium rounded-md text-slate-600 hover:text-slate-900 transition cursor-pointer">实时</button>
+                <button class="px-2.5 py-1 text-xs font-medium rounded-md text-slate-600 hover:text-slate-900 transition cursor-pointer">15m</button>
+                <button class="px-2.5 py-1 text-xs font-semibold rounded-md bg-white text-[#266EFF] shadow-2xs cursor-pointer">1h</button>
+                <button class="px-2.5 py-1 text-xs font-medium rounded-md text-slate-600 hover:text-slate-900 transition cursor-pointer">24h</button>
+                <button class="px-2.5 py-1 text-xs font-medium rounded-md text-slate-600 hover:text-slate-900 transition cursor-pointer">7d</button>
+                <button class="px-2.5 py-1 text-xs font-medium rounded-md text-slate-600 hover:text-slate-900 transition cursor-pointer">30d</button>
+                <div class="h-3.5 w-px bg-slate-300 mx-0.5"></div>
+                <button class="px-2.5 py-1 text-xs font-medium rounded-md text-slate-700 hover:text-[#266EFF] hover:bg-white/60 transition flex items-center gap-1 cursor-pointer">
+                  <span>自定义...</span>
+                  <svg class="w-3 h-3 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Scenario 2: Precision Datetime Range Picker Popover -->
+          <div class="space-y-2.5">
+            <div class="flex items-center justify-between">
+              <span class="text-xs font-bold text-slate-800 flex items-center gap-1.5">
+                <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span> 场景二：精确绝对时间段选择器 (Precision Datetime Range Picker)
+              </span>
+              <code class="text-[10px] bg-slate-100 text-slate-500 px-1.5 py-0.5 rounded font-mono">Precision Datetime Popover</code>
+            </div>
+
+            <!-- Trigger Button Demo & Expanded Popover Mock -->
+            <div class="bg-slate-50 p-4 rounded-xl border border-slate-200/80 space-y-4">
+              <!-- Trigger Input -->
+              <div class="flex items-center justify-between">
+                <div class="text-xs font-medium text-slate-600">链路追踪与日志查询过滤 (Request Tracing Filter)：</div>
+                <div class="inline-flex items-center gap-2 bg-white border border-[#266EFF] px-3 py-1.5 rounded-md text-xs font-mono text-slate-800 shadow-xs cursor-pointer ring-2 ring-blue-100">
+                  <svg class="w-3.5 h-3.5 text-[#266EFF] shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+                  <span>2026-08-12 00:00:00 ~ 2026-08-13 23:59:59</span>
+                  <svg class="w-3 h-3 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                </div>
+              </div>
+
+              <!-- Expanded Popover Component UI Representation -->
+              <div class="bg-white rounded-xl border border-slate-200 shadow-lg p-4 space-y-4 max-w-2xl mx-auto">
+                <div class="flex flex-col sm:flex-row gap-4 border-b border-slate-100 pb-4">
+                  <!-- Quick Presets Left Bar -->
+                  <div class="w-full sm:w-28 space-y-1 shrink-0 border-r border-slate-100 pr-3">
+                    <div class="text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-2">快捷预设</div>
+                    <button class="w-full text-left px-2 py-1 rounded text-xs text-slate-600 hover:bg-slate-100">今天</button>
+                    <button class="w-full text-left px-2 py-1 rounded text-xs text-slate-600 hover:bg-slate-100">昨天</button>
+                    <button class="w-full text-left px-2 py-1 rounded text-xs text-slate-600 hover:bg-slate-100">近 3 天</button>
+                    <button class="w-full text-left px-2 py-1 rounded text-xs font-semibold bg-blue-50 text-[#266EFF]">近 7 天</button>
+                    <button class="w-full text-left px-2 py-1 rounded text-xs text-slate-600 hover:bg-slate-100">近 30 天</button>
+                    <button class="w-full text-left px-2 py-1 rounded text-xs text-slate-600 hover:bg-slate-100">本月</button>
+                  </div>
+
+                  <!-- Date Range Picker Main Panel -->
+                  <div class="flex-1 space-y-3">
+                    <div class="grid grid-cols-2 gap-3 text-xs">
+                      <div>
+                        <label class="text-[10px] text-slate-400 block mb-1">开始时间 (Start)</label>
+                        <input type="text" value="2026-08-12 00:00:00" class="w-full px-2.5 py-1 bg-slate-50 border border-slate-200 rounded font-mono text-xs text-slate-800 focus:outline-none focus:border-[#266EFF]">
+                      </div>
+                      <div>
+                        <label class="text-[10px] text-slate-400 block mb-1">结束时间 (End)</label>
+                        <input type="text" value="2026-08-13 23:59:59" class="w-full px-2.5 py-1 bg-slate-50 border border-slate-200 rounded font-mono text-xs text-slate-800 focus:outline-none focus:border-[#266EFF]">
+                      </div>
+                    </div>
+
+                    <!-- Mini Calendar Representation -->
+                    <div class="bg-slate-50 p-2.5 rounded-lg border border-slate-100 text-xs space-y-2">
+                      <div class="flex items-center justify-between text-slate-700 font-bold">
+                        <span>2026 年 8 月</span>
+                        <div class="flex gap-1 text-slate-400">
+                          <span class="hover:text-slate-700 cursor-pointer">‹</span>
+                          <span class="hover:text-slate-700 cursor-pointer">›</span>
+                        </div>
+                      </div>
+                      <div class="grid grid-cols-7 gap-1 text-center text-[10px] text-slate-400 font-mono">
+                        <span>日</span><span>一</span><span>二</span><span>三</span><span>四</span><span>五</span><span>六</span>
+                        <span class="text-slate-300">10</span><span class="text-slate-300">11</span>
+                        <span class="bg-[#266EFF] text-white font-bold rounded">12</span>
+                        <span class="bg-blue-100 text-[#266EFF]">13</span>
+                        <span class="text-slate-600">14</span><span class="text-slate-600">15</span><span class="text-slate-600">16</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Footer Operations -->
+                <div class="flex items-center justify-between text-xs pt-1">
+                  <span class="text-slate-500">跨度统计: <strong class="text-slate-800 font-mono">2 天 (48 小时)</strong></span>
+                  <div class="flex items-center gap-2">
+                    <button class="px-3 py-1 bg-slate-100 hover:bg-slate-200 text-slate-600 rounded text-xs font-medium cursor-pointer">重置</button>
+                    <button class="px-3 py-1 bg-[#266EFF] hover:bg-blue-600 text-white rounded text-xs font-semibold shadow-2xs cursor-pointer">应用生效</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+  <!-- Page Footer -->
+  <footer class="bg-white border-t border-slate-200 py-4 px-6 text-center text-xs text-slate-500 mt-auto">
+    <span>应龙大模型推理平台 — 设计系统与 UI 视觉规范预览</span>
+    <span class="mx-2">•</span>
+    <span>2026.08 架构委员会发</span>
+  </footer>
+
+</body>
+</html>

@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>集群列表 - 应龙大模型推理平台</title>
+    <link href="assets/css/tailwind.css" rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/font-awesome.min.css">
+    <link rel="stylesheet" href="assets/css/font-awesome-compat.css">
+    <link rel="stylesheet" href="assets/css/sherlock-theme.css">
+    <link rel="stylesheet" href="assets/css/yl-regular-toolbar.css">
+</head>
+<body class="bg-gray-50 text-gray-800">
+
+<div class="flex h-screen overflow-hidden">
+    <!-- Sidebar -->
+    <aside data-yl-sidebar class="w-64 bg-slate-900 text-white flex-shrink-0 hidden md:flex flex-col">
+        <div class="p-6 border-b border-slate-800">
+            <h1 class="text-2xl font-bold text-blue-400">应龙 <span class="text-sm text-gray-400 font-normal">v1.0</span></h1>
+            <p class="text-xs text-gray-500 mt-1">大模型推理平台</p>
+        </div>
+        <nav class="flex-1 overflow-y-auto py-4">
+            <ul class="space-y-1 px-4">
+                <li><p class="px-2 text-xs font-semibold text-gray-500 uppercase tracking-wider mb-2">工作台</p></li>
+                <li><a href="../index.html" class="flex items-center px-4 py-2 text-gray-400 hover:text-white hover:bg-slate-800 rounded-lg transition-colors"><i class="fa-solid fa-chart-pie w-6"></i><span>系统概览</span></a></li>
+                
+                <li class="mt-4"><p class="px-2 text-xs font-semibold text-gray-500 uppercase tracking-wider mb-2">算力调度</p></li>
+                <li><a href="sys_dispatch.html" class="flex items-center px-4 py-2 text-gray-400 hover:text-white hover:bg-slate-800 rounded-lg transition-colors"><i class="fa-solid fa-sliders-h w-6"></i><span>算力调度</span></a></li>
+                <li><a href="sys_task_list.html" class="flex items-center px-4 py-2 text-gray-400 hover:text-white hover:bg-slate-800 rounded-lg transition-colors"><i class="fa-solid fa-tasks w-6"></i><span>我的任务</span></a></li>
+
+                <li class="mt-4"><p class="px-2 text-xs font-semibold text-gray-500 uppercase tracking-wider mb-2">模型管理</p></li>
+                <li><a href="sys_model_repo.html" class="flex items-center px-4 py-2 text-gray-400 hover:text-white hover:bg-slate-800 rounded-lg transition-colors"><i class="fa-solid fa-box w-6"></i><span>模型资产</span></a></li>
+                <li><a href="sys_model_training.html" class="flex items-center px-4 py-2 text-gray-400 hover:text-white hover:bg-slate-800 rounded-lg transition-colors"><i class="fa-solid fa-brain w-6"></i><span>模型训练</span></a></li>
+                <li><a href="sys_model_governance.html" class="flex items-center px-4 py-2 text-gray-400 hover:text-white hover:bg-slate-800 rounded-lg transition-colors"><i class="fa-solid fa-user-check w-6"></i><span>模型纳管</span></a></li>
+                <li><a href="sys_model_service.html" class="flex items-center px-4 py-2 text-gray-400 hover:text-white hover:bg-slate-800 rounded-lg transition-colors"><i class="fa-solid fa-server w-6"></i><span>模型服务</span></a></li>
+                <li><a href="sys_model_monitor.html" class="flex items-center px-4 py-2 text-gray-400 hover:text-white hover:bg-slate-800 rounded-lg transition-colors"><i class="fa-solid fa-chart-line w-6"></i><span>模型监测</span></a></li>
+
+                <li class="mt-4"><p class="px-2 text-xs font-semibold text-gray-500 uppercase tracking-wider mb-2">资源与运维</p></li>
+                <li><a href="sys_resource_application.html" class="flex items-center px-4 py-2 text-gray-400 hover:text-white hover:bg-slate-800 rounded-lg transition-colors"><i class="fa-solid fa-file-circle-plus w-6"></i><span>资源申请</span></a></li>
+                <li><a href="sys_resource_approval.html" class="flex items-center px-4 py-2 text-gray-400 hover:text-white hover:bg-slate-800 rounded-lg transition-colors"><i class="fa-solid fa-user-check w-6"></i><span>授权审批</span></a></li>
+                <li><a href="sys_infrastructure_mgmt.html" class="flex items-center px-4 py-2 bg-blue-600 text-white rounded-lg transition-colors" aria-current="page"><i class="fa-solid fa-network-wired w-6"></i><span>集群管理</span></a></li>
+                <li><a href="sys_api_key_mgmt.html" class="flex items-center px-4 py-2 text-gray-400 hover:text-white hover:bg-slate-800 rounded-lg transition-colors"><i class="fa-solid fa-chart-bar w-6"></i><span>请求监控</span></a></li>
+                <li><a href="sys_request_tracing.html" class="flex items-center px-4 py-2 text-gray-400 hover:text-white hover:bg-slate-800 rounded-lg transition-colors"><i class="fa-solid fa-route w-6"></i><span>链路追踪</span></a></li>
+            </ul>
+        </nav>
+        <div class="p-4 border-t border-slate-800">
+             <div class="flex items-center gap-3"><div class="w-8 h-8 rounded-full bg-red-500 flex items-center justify-center text-sm font-bold">S</div><div><p class="text-sm font-medium">System Admin</p></div></div>
+        </div>
+    </aside>
+
+    <div class="flex-1 flex flex-col h-full overflow-hidden">
+        <header class="bg-white shadow-sm z-10 p-4 flex justify-between items-center">
+            
+            <h2 class="text-xl font-semibold text-gray-800">集群列表</h2>
+            <button onclick="document.getElementById('newClusterModal').classList.remove('hidden')" class="px-4 py-2 bg-blue-600 text-white rounded-lg text-sm hover:bg-blue-700"><i class="fa-solid fa-plus mr-2"></i>新建集群</button>
+        </header>
+
+        <main class="flex-1 overflow-y-auto p-6">
+            <div class="space-y-6">
+                <!-- Cluster 1 -->
+                <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-6 flex flex-col md:flex-row gap-6 items-center">
+                    <div class="w-16 h-16 bg-blue-100 rounded-xl flex items-center justify-center text-blue-600 text-2xl"><i class="fa-solid fa-server"></i></div>
+                    <div class="flex-1">
+                        <div class="flex items-center gap-3">
+                            
+                            <span class="px-2 py-1 bg-green-100 text-green-700 text-xs rounded font-bold">Running</span>
+                        </div>
+                        <p class="text-sm text-gray-500 mt-1">Region: Beijing-Zone-B · K8s v1.28</p>
+                        <div class="grid grid-cols-3 gap-8 mt-4">
+                            <div><p class="text-xs text-gray-400 uppercase">节点数</p><p class="font-bold">20</p></div>
+                            <div><p class="text-xs text-gray-400 uppercase">GPU 利用率</p><p class="font-bold text-blue-600">85%</p></div>
+                            <div><p class="text-xs text-gray-400 uppercase">待处理任务</p><p class="font-bold">128</p></div>
+                        </div>
+                    </div>
+                    <div class="flex flex-col gap-2">
+                         <button class="px-4 py-2 border border-gray-200 rounded text-sm hover:bg-gray-50 text-gray-600">配置</button>
+                         <a href="sys_node_mgmt.html" class="flex items-center justify-center px-4 py-2 bg-gray-50 text-blue-600 rounded text-sm hover:bg-blue-50 font-medium">节点管理</a>
+                    </div>
+                </div>
+
+                <!-- Cluster 2 -->
+                <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-6 flex flex-col md:flex-row gap-6 items-center">
+                    <div class="w-16 h-16 bg-purple-100 rounded-xl flex items-center justify-center text-purple-600 text-2xl"><i class="fa-solid fa-flask"></i></div>
+                    <div class="flex-1">
+                         <div class="flex items-center gap-3">
+                            
+                            <span class="px-2 py-1 bg-green-100 text-green-700 text-xs rounded font-bold">Running</span>
+                        </div>
+                        <p class="text-sm text-gray-500 mt-1">Region: Beijing-Zone-C · K8s v1.28</p>
+                        <div class="grid grid-cols-3 gap-8 mt-4">
+                            <div><p class="text-xs text-gray-400 uppercase">节点数</p><p class="font-bold">5</p></div>
+                            <div><p class="text-xs text-gray-400 uppercase">GPU 利用率</p><p class="font-bold text-green-600">20%</p></div>
+                            <div><p class="text-xs text-gray-400 uppercase">待处理任务</p><p class="font-bold">0</p></div>
+                        </div>
+                    </div>
+                    <div class="flex flex-col gap-2">
+                         <button class="px-4 py-2 border border-gray-200 rounded text-sm hover:bg-gray-50 text-gray-600">配置</button>
+                         <a href="sys_node_mgmt.html" class="flex items-center justify-center px-4 py-2 bg-gray-50 text-blue-600 rounded text-sm hover:bg-blue-50 font-medium">节点管理</a>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+</div>
+
+<!-- New Cluster Modal -->
+<div id="newClusterModal" class="hidden fixed inset-0 bg-gray-900 bg-opacity-50 flex items-center justify-center z-50">
+    <div class="bg-white rounded-xl shadow-lg w-full max-w-lg overflow-hidden">
+        <div class="p-6 border-b border-gray-100 flex justify-between items-center bg-gray-50">
+            <h3 class="text-lg font-bold text-gray-800">新建/注册集群</h3>
+            <button onclick="document.getElementById('newClusterModal').classList.add('hidden')" class="text-gray-400 hover:text-gray-600" aria-label="关闭" title="关闭"><i class="fa-solid fa-times"></i></button>
+        </div>
+        
+        <div class="p-6">
+            <!-- Tabs -->
+            <div class="flex border-b border-gray-200 mb-6">
+                <button onclick="switchClusterTab('account')" id="tab-account" class="px-4 py-2 text-sm font-medium text-blue-600 border-b-2 border-blue-600 focus:outline-none">账号密码注册</button>
+                <button onclick="switchClusterTab('config')" id="tab-config" class="px-4 py-2 text-sm font-medium text-gray-500 hover:text-gray-700 focus:outline-none">配置文件注册</button>
+            </div>
+
+            <div class="space-y-4">
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">集群名称</label>
+                    <input type="text" placeholder="例如：Production-Cluster-C" class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-500 outline-none">
+                </div>
+                 <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Master 节点 IP</label>
+                    <input type="text" placeholder="192.168.x.x" class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-500 outline-none">
+                </div>
+
+                <!-- Account Method -->
+                <div id="form-account" class="space-y-4">
+                    <div class="grid grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">SSH 账号</label>
+                            <input type="text" placeholder="root" class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-500 outline-none">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">SSH 密码</label>
+                            <input type="password" class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-500 outline-none">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Config Method -->
+                <div id="form-config" class="hidden space-y-4">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">KubeConfig 配置文件 (YAML)</label>
+                        <div class="border-2 border-dashed border-gray-300 rounded-lg p-6 flex flex-col items-center justify-center text-gray-500 hover:bg-gray-50 cursor-pointer">
+                            <i class="fa-solid fa-file-upload text-2xl mb-2"></i>
+                            <span class="text-xs">点击上传或拖拽文件至此</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="p-6 border-t border-gray-100 flex justify-end gap-3 bg-gray-50">
+            <button onclick="document.getElementById('newClusterModal').classList.add('hidden')" class="px-4 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-100">取消</button>
+            <button class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 font-medium">开始注册</button>
+        </div>
+    </div>
+</div>
+
+<script>
+    function switchClusterTab(tab) {
+        const accountForm = document.getElementById('form-account');
+        const configForm = document.getElementById('form-config');
+        const accountTab = document.getElementById('tab-account');
+        const configTab = document.getElementById('tab-config');
+
+        if (tab === 'account') {
+            accountForm.classList.remove('hidden');
+            configForm.classList.add('hidden');
+            
+            accountTab.className = 'px-4 py-2 text-sm font-medium text-blue-600 border-b-2 border-blue-600 focus:outline-none';
+            configTab.className = 'px-4 py-2 text-sm font-medium text-gray-500 hover:text-gray-700 focus:outline-none';
+        } else {
+            accountForm.classList.add('hidden');
+            configForm.classList.remove('hidden');
+
+            accountTab.className = 'px-4 py-2 text-sm font-medium text-gray-500 hover:text-gray-700 focus:outline-none';
+            configTab.className = 'px-4 py-2 text-sm font-medium text-blue-600 border-b-2 border-blue-600 focus:outline-none';
+        }
+    }
+</script>
+
+</body>
+</html>
+
+
