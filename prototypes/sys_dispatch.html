@@ -31,17 +31,22 @@
     <symbol id="i-alert" viewBox="0 0 24 24"><path d="M10.3 2.9 1.8 17a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 2.9a2 2 0 0 0-3.4 0Z"/><path d="M12 9v4m0 4h.01"/></symbol>
     <symbol id="i-check" viewBox="0 0 24 24"><path d="m20 6-11 11-5-5"/></symbol>
     <symbol id="i-arrow" viewBox="0 0 24 24"><path d="m9 18 6-6-6-6"/></symbol>
+    <symbol id="i-calendar" viewBox="0 0 24 24"><rect width="18" height="18" x="3" y="4" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></symbol>
+    <symbol id="i-chevron-down" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></symbol>
+    <symbol id="i-chevron-left" viewBox="0 0 24 24"><path d="m15 18-6-6 6-6"/></symbol>
+    <symbol id="i-chevron-right" viewBox="0 0 24 24"><path d="m9 18 6-6-6-6"/></symbol>
   </svg>
 
   <a class="skip-link" href="#main-content">跳到主要内容</a>
   <aside class="sidebar" aria-label="应龙主导航">
-    <a class="brand" href="../index.html"><span class="brand-mark">应</span><span class="brand-name">应龙推理平台</span><span class="env-badge">PROD</span></a>
+    <a class="brand" href="../index.html" aria-label="应龙 AI算力基座首页"><span class="brand-mark" aria-hidden="true"><img src="../doc/logo/icon_01.svg" alt=""></span><span class="brand-copy"><span class="brand-name">应龙</span><span class="brand-subtitle">AI算力基座</span></span></a>
     <nav class="sidebar-nav">
       <section class="nav-group"><h2 class="nav-group-title">工作台</h2><a class="nav-item" href="../index.html"><svg class="icon"><use href="#i-dashboard"/></svg><span>系统概览</span></a></section>
       <section class="nav-group"><h2 class="nav-group-title">算力调度</h2><a class="nav-item active" href="sys_dispatch.html" aria-current="page"><svg class="icon"><use href="#i-sliders"/></svg><span>算力调度</span></a><a class="nav-item" href="sys_task_list.html"><svg class="icon"><use href="#i-list"/></svg><span>我的任务</span></a></section>
       <section class="nav-group"><h2 class="nav-group-title">模型管理</h2><a class="nav-item" href="sys_model_repo.html"><svg class="icon"><use href="#i-box"/></svg><span>模型资产</span></a><a class="nav-item" href="sys_model_service.html"><svg class="icon"><use href="#i-server"/></svg><span>模型服务</span></a><a class="nav-item" href="sys_model_training.html"><svg class="icon"><use href="#i-brain"/></svg><span>模型训练</span></a><a class="nav-item" href="sys_model_governance.html"><svg class="icon"><use href="#i-check-user"/></svg><span>模型纳管</span></a><a class="nav-item" href="sys_model_monitor.html"><svg class="icon"><use href="#i-activity"/></svg><span>模型监测</span></a></section>
-      <section class="nav-group"><h2 class="nav-group-title">资源与运维</h2><a class="nav-item" href="sys_resource_application.html"><svg class="icon"><use href="#i-file"/></svg><span>资源申请</span></a><a class="nav-item" href="sys_resource_approval.html"><svg class="icon"><use href="#i-check-user"/></svg><span>授权审批</span></a><a class="nav-item" href="sys_infrastructure_mgmt.html"><svg class="icon"><use href="#i-network"/></svg><span>集群管理</span></a><a class="nav-item" href="sys_api_key_mgmt.html"><svg class="icon"><use href="#i-activity"/></svg><span>请求监控</span></a><a class="nav-item" href="sys_request_tracing.html"><svg class="icon"><use href="#i-route"/></svg><span>链路追踪</span></a></section>
+      <section class="nav-group"><h2 class="nav-group-title">资源与运维</h2><a class="nav-item" href="sys_resource_application.html"><svg class="icon"><use href="#i-file"/></svg><span>资源申请</span></a><a class="nav-item" href="sys_resource_approval.html"><svg class="icon"><use href="#i-check-user"/></svg><span>授权审批</span></a><a class="nav-item" href="sys_infrastructure_mgmt.html"><svg class="icon"><use href="#i-network"/></svg><span>集群管理</span></a><a class="nav-item" href="sys_request_tracing.html"><svg class="icon"><use href="#i-route"/></svg><span>链路追踪</span></a></section>
     </nav>
+  <div class="sidebar-foot"><div class="sidebar-version" tabindex="0" aria-describedby="sidebarVersionDetails"><span>系统版本</span><strong>v1.0.0</strong><span class="sidebar-version-popover" id="sidebarVersionDetails" role="tooltip"><strong>版本信息</strong><span><span>前端版本</span><b>v1.0.0</b></span><span><span>后端版本</span><b>v1.0.0</b></span></span></div></div>
   </aside>
 
   <div class="app-main">
@@ -52,74 +57,64 @@
     <main class="page-canvas heading-spec-canvas" id="main-content">
       <section class="section dispatch-overview" aria-labelledby="dispatchTitle">
         <div class="section-heading overview-heading">
-          <div><h1 class="page-title" id="dispatchTitle">算力调度</h1><p class="page-description">观察调度域健康、任务积压与算力占用，并在沙盘中推演策略影响。</p></div>
-          <div class="toolbar-actions"><label class="muted nowrap" for="domainSelect">当前调度域</label><select class="control" id="domainSelect"><option>Qwen-7B 混合算力池（8 Nodes）</option><option>Llama-3-70B 专属池（16 Nodes）</option></select><span class="badge badge-success">域健康：平稳</span><button class="btn btn-icon" type="button" id="refreshButton" aria-label="刷新调度数据" title="刷新调度数据"><svg class="icon"><use href="#i-refresh"/></svg></button></div>
-        </div>
-        <div class="insight">
-          <span class="insight-icon"><svg class="icon icon-lg"><use href="#i-sparkles"/></svg></span>
-          <div><strong class="insight-title">智能调度建议</strong><p>检测到 <strong>Llama-3 调度域</strong> Headroom 余量超过 40%，但“离线普通”通道中的 <strong>Batch-财务报表分析</strong> 已积压超过 2 小时。建议提优至离线 VIP 并分配 20% 算力，预计缩短 80% 等待时间。</p></div>
-          <button class="btn" type="button" onclick="openSandbox('Batch-财务报表分析','FIN_JOB_012','normal')"><svg class="icon icon-sm"><use href="#i-play"/></svg>立即推演</button>
+          <div><h1 class="page-title" id="dispatchTitle">算力调度</h1><p class="page-description">分别观察在线与离线调度的资源、请求、吞吐和任务运行情况。</p></div>
+          <div class="toolbar-actions dispatch-toolbar">
+            <div class="header-control date-range-control"><span class="header-control-label">时间范围</span><button class="time-range-trigger" id="timeRangeTrigger" type="button" aria-haspopup="dialog" aria-expanded="false" aria-controls="timeRangePopover"><svg class="icon"><use href="#i-calendar"/></svg><span class="mono" id="timeRangeText">2026-08-12 00:00:00 ~ 2026-08-13 23:59:59</span><svg class="icon icon-sm trigger-chevron"><use href="#i-chevron-down"/></svg></button>
+              <div class="precision-time-popover hidden" id="timeRangePopover" role="dialog" aria-modal="false" aria-labelledby="timePopoverTitle">
+                <div class="precision-time-head"><h2 id="timePopoverTitle">选择趋势时间范围</h2><button class="btn btn-icon btn-ghost" id="closeTimePopover" type="button" aria-label="关闭时间范围选择器"><svg class="icon"><use href="#i-x"/></svg></button></div>
+                <div class="precision-time-fields"><div class="time-input-field"><label for="chartStartTime">开始时间</label><input class="control mono" id="chartStartTime" type="datetime-local" step="1" value="2026-08-12T00:00:00" required></div><span aria-hidden="true">至</span><div class="time-input-field"><label for="chartEndTime">结束时间</label><input class="control mono" id="chartEndTime" type="datetime-local" step="1" value="2026-08-13T23:59:59" required></div></div>
+                <div class="precision-time-body"><aside class="time-presets" aria-label="快捷时间范围"><h3>快捷选择</h3><button type="button" data-time-preset="today">今天</button><button type="button" data-time-preset="yesterday">昨天</button><button type="button" data-time-preset="3d">近 3 天</button><button type="button" data-time-preset="7d">近 7 天</button><button type="button" data-time-preset="30d">近 30 天</button><button type="button" data-time-preset="month">本月</button></aside><div class="dual-calendar"><section class="calendar-panel"><header><button class="calendar-nav" id="calendarPrev" type="button" aria-label="查看上个月"><svg class="icon icon-sm"><use href="#i-chevron-left"/></svg></button><h3 id="calendarLeftTitle">2026 年 8 月</h3><span class="calendar-nav-spacer"></span></header><div class="calendar-grid calendar-weekdays" aria-hidden="true"><span>一</span><span>二</span><span>三</span><span>四</span><span>五</span><span>六</span><span>日</span></div><div class="calendar-grid" id="calendarLeftDays"></div></section><section class="calendar-panel"><header><span class="calendar-nav-spacer"></span><h3 id="calendarRightTitle">2026 年 9 月</h3><button class="calendar-nav" id="calendarNext" type="button" aria-label="查看下个月"><svg class="icon icon-sm"><use href="#i-chevron-right"/></svg></button></header><div class="calendar-grid calendar-weekdays" aria-hidden="true"><span>一</span><span>二</span><span>三</span><span>四</span><span>五</span><span>六</span><span>日</span></div><div class="calendar-grid" id="calendarRightDays"></div></section></div></div>
+                <div class="precision-time-footer"><p class="field-error hidden" id="chartTimeError" role="alert"></p><div class="precision-time-actions"><button class="btn btn-ghost" id="resetTimeRange" type="button">重置</button><button class="btn" id="cancelTimeRange" type="button">取消</button><button class="btn btn-primary" id="applyTimeRange" type="button"><svg class="icon icon-sm"><use href="#i-check"/></svg>确认应用</button></div></div>
+              </div>
+            </div>
+            <div class="header-control domain-control"><label class="header-control-label" for="domainSelect">当前调度域</label><select class="control" id="domainSelect"><option>Qwen-7B 混合算力池（8 Nodes）</option><option>Llama-3-70B 专属池（16 Nodes）</option></select></div>
+            <button class="btn btn-icon refresh-control" type="button" id="refreshButton" aria-label="刷新调度数据" title="刷新调度数据"><svg class="icon"><use href="#i-refresh"/></svg></button>
+          </div>
         </div>
       </section>
 
       <section class="metric-grid dispatch-metrics" aria-label="调度域核心指标">
         <article class="card metric-card split-metric"><div class="metric-head"><span class="metric-label">硬件资源</span><svg class="icon muted"><use href="#i-cpu"/></svg></div><div class="metric-split"><div><span class="metric-type online">在线</span><strong>A100×12 · H800×8</strong></div><div><span class="metric-type offline">离线</span><strong>A100×4 · L40S×8</strong></div></div></article>
-        <article class="card metric-card split-metric instance-metric"><div class="metric-head"><span class="metric-label">实例数量</span></div><div class="metric-split"><div><span class="metric-type online">在线</span><strong>24 <small>个</small></strong></div><div><span class="metric-type offline">离线</span><strong>8 <small>个</small></strong></div></div><a class="metric-link" href="sys_model_monitor.html"><svg class="icon icon-sm"><use href="#i-activity"/></svg>查看模型监测<svg class="icon icon-sm"><use href="#i-arrow"/></svg></a></article>
-        <article class="card metric-card split-metric"><div class="metric-head"><span class="metric-label">底层实例积压</span></div><div class="metric-split"><div><span class="metric-type online">在线</span><strong>2 <small>/ 1,024</small></strong></div><div><span class="metric-type offline">离线</span><strong>10 <small>/ 1,024</small></strong></div></div></article>
-        <article class="card metric-card split-metric"><div class="metric-head"><span class="metric-label">KV Cache 水位</span></div><div class="metric-split"><div><span class="metric-type online">在线</span><strong class="warning-text">78%</strong></div><div><span class="metric-type offline">离线</span><strong>46%</strong></div></div></article>
+        <article class="card metric-card split-metric"><div class="metric-head"><span class="metric-label">实例数</span></div><div class="metric-split"><div><span class="metric-type online">在线</span><strong>24 <small>个</small></strong></div><div><span class="metric-type offline">离线</span><strong>8 <small>个</small></strong></div></div></article>
+        <article class="card metric-card split-metric"><div class="metric-head"><span class="metric-label">底层实例积压</span></div><div class="metric-split"><div><span class="metric-type online">在线</span><strong>2 <small>个</small></strong></div><div><span class="metric-type offline">离线</span><strong>10 <small>个</small></strong></div></div></article>
+        <article class="card metric-card split-metric"><div class="metric-head"><span class="metric-label">总调用数</span><span class="metric-note">近 5 min 统计</span></div><div class="metric-split"><div><span class="metric-type online">在线</span><strong>1,284,759 <small>次</small></strong></div><div><span class="metric-type offline">离线</span><strong>486,320 <small>次</small></strong></div></div></article>
       </section>
 
-      <section class="card chart-time-filter" aria-labelledby="chartTimeTitle">
-        <div class="chart-time-copy"><h2 id="chartTimeTitle">趋势时间范围</h2></div>
-        <form class="chart-time-form" id="chartTimeForm" novalidate>
-          <div class="chart-time-field"><label for="chartStartTime">开始时间</label><input class="control mono" id="chartStartTime" type="datetime-local" value="2026-08-12T00:00" required></div>
-          <span class="time-separator" aria-hidden="true">至</span>
-          <div class="chart-time-field"><label for="chartEndTime">结束时间</label><input class="control mono" id="chartEndTime" type="datetime-local" value="2026-08-13T00:00" required></div>
-          <button class="btn btn-primary" id="chartTimeQuery" type="submit"><svg class="icon icon-sm"><use href="#i-search"/></svg>查询</button>
-        </form>
-        <div class="chart-time-status"><span class="badge badge-info" id="chartTimeStatus">当前：08-12 00:00 至 08-13 00:00</span><p class="field-error hidden" id="chartTimeError" role="alert"></p></div>
-      </section>
+      <section id="dispatchPanel" role="tabpanel" aria-labelledby="dispatchTabOnline">
+        <header class="dispatch-view-head"><h2 id="dispatchViewTitle">在线调度运行态势</h2><div class="dispatch-view-actions"><nav class="dispatch-view-tabs" role="tablist" aria-label="在线与离线调度视图"><button class="active" id="dispatchTabOnline" type="button" role="tab" aria-selected="true" aria-controls="dispatchPanel" data-dispatch-tab="online"><span class="status-dot online"></span>在线</button><button id="dispatchTabOffline" type="button" role="tab" aria-selected="false" aria-controls="dispatchPanel" data-dispatch-tab="offline"><span class="status-dot offline"></span>离线</button></nav><span class="badge badge-info" id="dispatchViewBadge">在线</span></div></header>
 
-      <section class="dispatch-chart-grid" aria-label="调度趋势图表">
+        <section class="card table-card dispatch-task-table" aria-labelledby="queueTitle">
+        <div class="table-toolbar">
+          <div class="table-title"><h2 id="queueTitle">任务列表</h2></div>
+          <div class="filters"><span class="badge badge-info" id="taskModeBadge">在线任务</span><div class="search-wrap"><svg class="icon"><use href="#i-search"/></svg><input class="search-input" id="queueSearch" type="search" placeholder="搜索任务 ID 或任务名称" aria-label="搜索任务"><button class="search-clear hidden" id="queueSearchClear" type="button" aria-label="清空搜索"><svg class="icon icon-sm"><use href="#i-x"/></svg></button></div><span class="result-count">已检索到 <strong id="queueCount">0</strong> 项</span></div>
+        </div>
+        <div class="active-filters hidden" id="activeFilters"><span class="muted">当前条件</span><div id="filterChips"></div><button class="reset-link" id="resetFilters" type="button">重置筛选</button></div>
+        <div class="table-scroll"><table><thead id="queueHead"></thead><tbody id="queueBody"></tbody></table></div>
+        <footer class="pagination"><span id="queueSummary">共 0 条记录，第 1/1 页</span><div><button class="btn" type="button" disabled>上一页</button> <button class="btn" type="button" disabled>下一页</button></div></footer>
+        </section>
+
+        <section class="dispatch-chart-grid" aria-label="调度趋势图表">
         <article class="card dispatch-chart-card" aria-labelledby="throughputTitle">
           <header class="dispatch-chart-header">
-            <div><h2 id="throughputTitle">输出吞吐与响应时间</h2></div>
-            <div class="chart-controls">
-              <div class="chart-control"><span>任务类型</span><div class="chart-segment" role="group" aria-label="吞吐图任务类型"><button class="active" type="button" data-chart="throughput" data-control="type" data-value="online" aria-pressed="true">在线</button><button type="button" data-chart="throughput" data-control="type" data-value="offline" aria-pressed="false">离线</button></div></div>
-            </div>
+            <div><h2 id="throughputTitle">输出吞吐</h2></div>
           </header>
           <div class="chart-legend-row"><div class="chart-legend-list" id="throughputLegend" aria-label="吞吐图图例"></div></div>
-          <div class="dispatch-chart-canvas"><canvas id="throughputChart" role="img" aria-label="输出 TPS 与平均等待时间趋势图。16 点前输出 TPS 约为每秒 340 万，16 点后降至约每秒 50 万；平均等待时间保持低位。">输出 TPS 与平均等待时间趋势图</canvas></div>
+          <div class="dispatch-chart-canvas"><canvas id="throughputChart" role="img" aria-label="在线调度输出 TPS 趋势图。">输出 TPS 趋势图</canvas></div>
         </article>
         <article class="card dispatch-chart-card" aria-labelledby="allocationTitle">
           <header class="dispatch-chart-header">
             <div><h2 id="allocationTitle">任务实时算力分配占比（%）</h2></div>
-            <div class="chart-controls">
-              <div class="chart-control"><span>任务类型</span><div class="chart-segment" role="group" aria-label="算力分配图任务类型"><button class="active" type="button" data-chart="allocation" data-control="type" data-value="online" aria-pressed="true">在线</button><button type="button" data-chart="allocation" data-control="type" data-value="offline" aria-pressed="false">离线</button></div></div>
-            </div>
           </header>
           <div class="chart-legend-row"><div class="chart-legend-list" id="allocationLegend" aria-label="算力分配图图例"></div></div>
-          <div class="dispatch-chart-canvas"><canvas id="allocationChart" role="img" aria-label="任务实时算力分配占比趋势图。16 点前负控和微信摘要占比约 90%，16 点后涉外智能体摘要占比升至约 95%，应控长文本保持低位。">任务实时算力分配占比趋势图</canvas></div>
+          <div class="dispatch-chart-canvas"><canvas id="allocationChart" role="img" aria-label="在线任务实时算力分配占比趋势图。">任务实时算力分配占比趋势图</canvas></div>
         </article>
-      </section>
+        <article class="card dispatch-chart-card is-wide" aria-labelledby="requestTitle">
+          <header class="dispatch-chart-header"><div><h2 id="requestTitle">请求数趋势</h2></div></header>
+          <div class="chart-legend-row"><div class="chart-legend-list" id="requestLegend" aria-label="请求数趋势图图例"></div></div>
+          <div class="dispatch-chart-canvas"><canvas id="requestChart" role="img" aria-label="在线成功请求、失败请求与拒绝请求趋势图。">成功请求、失败请求与拒绝请求趋势图</canvas></div>
+        </article>
+        </section>
 
-      <section class="card table-card" aria-labelledby="queueTitle">
-        <div class="table-toolbar">
-          <div class="table-title"><h2 id="queueTitle">当前任务队列明细</h2></div>
-          <div class="filters"><div class="queue-type-control"><span>任务类型</span><div class="queue-type-segment" role="group" aria-label="切换在线或离线任务"><button class="active" type="button" data-queue-type="online" aria-pressed="true">在线</button><button type="button" data-queue-type="offline" aria-pressed="false">离线</button></div></div><div class="search-wrap"><svg class="icon"><use href="#i-search"/></svg><input class="search-input" id="queueSearch" type="search" placeholder="搜索任务 ID 或任务名称" aria-label="搜索任务"><button class="search-clear hidden" id="queueSearchClear" type="button" aria-label="清空搜索"><svg class="icon icon-sm"><use href="#i-x"/></svg></button></div><span class="result-count">已检索到 <strong id="queueCount">1</strong> 项</span></div>
-        </div>
-        <div class="active-filters hidden" id="activeFilters"><span class="muted">当前条件</span><div id="filterChips"></div><button class="reset-link" id="resetFilters" type="button">重置筛选</button></div>
-        <div class="table-scroll">
-          <table>
-            <thead><tr><th>任务 ID</th><th>任务名称</th><th>任务状态</th><th>调度模式</th><th>类型</th><th>当前算力权重</th><th style="text-align:right">调用数</th><th style="text-align:right">调用失败数</th><th style="text-align:right">推理延迟</th><th style="text-align:right">操作</th></tr></thead>
-            <tbody id="queueBody">
-              <tr data-name="TASK-ONLINE-001 Agent-实时客服" data-channel="online"><td class="mono">TASK-ONLINE-001</td><td><div class="cell-title">Agent-实时客服</div></td><td><span class="badge badge-success">运行中</span></td><td>离线vip</td><td><span class="tag">在线</span></td><td class="mono">45%</td><td class="mono numeric-cell">1,284,759</td><td class="mono numeric-cell">23</td><td class="mono numeric-cell success-text">128 ms</td><td><div class="actions"><a class="text-link" href="sys_task_detail.html?task=TASK-ONLINE-001">详情</a><button class="text-link" type="button" onclick="openSandbox('Agent-实时客服','TASK-ONLINE-001','online')">配置算力</button></div></td></tr>
-              <tr data-name="TASK-OFFLINE-012 Batch-财务报表分析" data-channel="offline"><td class="mono">TASK-OFFLINE-012</td><td><div class="cell-title">Batch-财务报表分析</div></td><td><span class="badge badge-warning">排队中</span></td><td>动态权重</td><td><span class="tag">离线</span></td><td class="mono">12.5%</td><td class="mono numeric-cell">486,320</td><td class="mono numeric-cell danger-text">148</td><td class="mono numeric-cell warning-text">2.8 s</td><td><div class="actions"><a class="text-link" href="sys_task_detail.html?task=TASK-OFFLINE-012">详情</a><button class="text-link" type="button" onclick="openSandbox('Batch-财务报表分析','TASK-OFFLINE-012','normal')">配置算力</button></div></td></tr>
-              <tr class="empty-row hidden" id="queueEmpty"><td colspan="10">未找到符合当前条件的任务，请调整搜索条件。</td></tr>
-            </tbody>
-          </table>
-        </div>
-        <footer class="pagination"><span id="queueSummary">共 1 条记录，第 1/1 页</span><div><button class="btn" type="button" disabled>上一页</button> <button class="btn" type="button" disabled>下一页</button></div></footer>
       </section>
     </main>
   </div>
@@ -160,17 +155,50 @@
     </section>
   </div>
 
+  <div class="modal-backdrop hidden" id="computeViewModal" role="dialog" aria-modal="true" aria-labelledby="computeViewTitle">
+    <section class="modal compute-view-modal">
+      <header class="modal-header"><h2 id="computeViewTitle">查看算力</h2><button class="btn btn-icon btn-ghost" type="button" id="closeComputeView" aria-label="关闭查看算力弹窗"><svg class="icon"><use href="#i-x"/></svg></button></header>
+      <div class="modal-body compute-view-body">
+        <div class="compute-summary" aria-label="算力实例摘要"><article><small>服务实例数</small><strong id="computeServiceCount">0</strong><span>个</span></article><article><small>运行实例数</small><strong id="computeRunningCount">0</strong><span>个</span></article></div>
+        <div class="compute-table-wrap"><table><thead><tr><th>实例名称</th><th>节点</th><th>显卡</th></tr></thead><tbody id="computeInstanceBody"></tbody></table></div>
+      </div>
+      <footer class="modal-footer"><span>实例数据来自当前调度域</span><button class="btn btn-primary" type="button" id="confirmComputeView">完成</button></footer>
+    </section>
+  </div>
+
   <div class="toast hidden" id="toast" role="status" aria-live="polite"><svg class="icon"><use href="#i-check"/></svg><div><h3 id="toastTitle">操作成功</h3><p id="toastMessage">调度配置已更新。</p></div></div>
 
   <script>
     let throughputChart;
     let allocationChart;
+    let requestChart;
     let originalChannel = 'normal';
     let capacityTrigger = null;
+    let computeTrigger = null;
     const modal = document.getElementById('sandboxModal');
-    const queueRows = [...document.querySelectorAll('#queueBody tr[data-name]')];
+    const computeModal = document.getElementById('computeViewModal');
     const searchInput = document.getElementById('queueSearch');
     let activeQueueType = 'online';
+
+    const taskData = {
+      online: [
+        { id: 'TASK-ONLINE-001', name: 'Agent-实时客服', status: '运行中', statusClass: 'badge-success', type: '在线', calls: 1284759, success: 1284736, failures: 23, latency: '128 ms', instances: [
+          { name: 'agent-cs-prod-01', node: 'gpu-node-08', gpu: 'NVIDIA A100 × 2' },
+          { name: 'agent-cs-prod-02', node: 'gpu-node-11', gpu: 'NVIDIA A100 × 2' },
+          { name: 'agent-cs-prod-03', node: 'gpu-node-16', gpu: 'NVIDIA H800 × 2' }
+        ] },
+        { id: 'TASK-ONLINE-008', name: '智能问答-在线服务', status: '运行中', statusClass: 'badge-success', type: '在线', calls: 886420, success: 886414, failures: 6, latency: '96 ms', instances: [
+          { name: 'qa-online-prod-01', node: 'gpu-node-03', gpu: 'NVIDIA H800 × 4' },
+          { name: 'qa-online-prod-02', node: 'gpu-node-04', gpu: 'NVIDIA H800 × 4' }
+        ] }
+      ],
+      offline: [
+        { id: 'TASK-OFFLINE-012', name: 'Batch-财务报表分析', status: '排队中', statusClass: 'badge-warning', schedule: '动态权重', type: '离线', weight: '12.5%', calls: 486320, success: 486172, failures: 148, latency: '2.8 s', channel: 'normal' },
+        { id: 'TASK-OFFLINE-021', name: '批量知识抽取', status: '运行中', statusClass: 'badge-success', schedule: '离线 VIP', type: '离线', weight: '30%', calls: 328640, success: 328617, failures: 23, latency: '1.6 s', channel: 'vip' }
+      ]
+    };
+
+    const escapeHtml = value => String(value).replace(/[&<>"']/g, character => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#039;' })[character]);
 
     function showToast(title, message) {
       const toast = document.getElementById('toast');
@@ -183,15 +211,18 @@
 
     function applyQueueFilters() {
       const keyword = searchInput.value.trim().toLowerCase();
-      let count = 0;
-      queueRows.forEach(row => {
-        const visible = (!keyword || row.dataset.name.toLowerCase().includes(keyword)) && row.dataset.channel === activeQueueType;
-        row.classList.toggle('hidden', !visible);
-        if (visible) count += 1;
-      });
-      document.getElementById('queueCount').textContent = count;
-      document.getElementById('queueSummary').textContent = `共 ${count} 条记录，第 1/1 页`;
-      document.getElementById('queueEmpty').classList.toggle('hidden', count !== 0);
+      const rows = taskData[activeQueueType].filter(task => !keyword || `${task.id} ${task.name}`.toLowerCase().includes(keyword));
+      const isOnline = activeQueueType === 'online';
+      document.getElementById('queueHead').innerHTML = isOnline
+        ? '<tr><th>任务 ID</th><th>任务名称</th><th>任务状态</th><th>类型</th><th class="numeric-cell">总调用数</th><th class="numeric-cell">成功调用数</th><th class="numeric-cell">调用失败数</th><th class="numeric-cell">推理延迟</th><th class="numeric-cell">操作</th></tr>'
+        : '<tr><th>任务 ID</th><th>任务名称</th><th>任务状态</th><th>调度模式</th><th>类型</th><th>当前算力权重</th><th class="numeric-cell">总调用数</th><th class="numeric-cell">成功调用数</th><th class="numeric-cell">调用失败数</th><th class="numeric-cell">推理延迟</th><th class="numeric-cell">操作</th></tr>';
+      document.getElementById('queueBody').innerHTML = rows.length ? rows.map(task => {
+        const commonStart = `<tr><td class="mono">${escapeHtml(task.id)}</td><td><div class="cell-title">${escapeHtml(task.name)}</div></td><td><span class="badge ${task.statusClass}">${task.status}</span></td>`;
+        if (isOnline) return `${commonStart}<td><span class="tag">在线</span></td><td class="mono numeric-cell">${task.calls.toLocaleString()}</td><td class="mono numeric-cell success-text">${task.success.toLocaleString()}</td><td class="mono numeric-cell ${task.failures ? 'danger-text' : ''}">${task.failures.toLocaleString()}</td><td class="mono numeric-cell">${task.latency}</td><td><div class="actions"><a class="text-link" href="sys_task_detail.html?task=${encodeURIComponent(task.id)}">详情</a><button class="text-link" type="button" onclick="openComputeView('${task.id}')">查看算力</button></div></td></tr>`;
+        return `${commonStart}<td>${task.schedule}</td><td><span class="tag">离线</span></td><td class="mono">${task.weight}</td><td class="mono numeric-cell">${task.calls.toLocaleString()}</td><td class="mono numeric-cell success-text">${task.success.toLocaleString()}</td><td class="mono numeric-cell danger-text">${task.failures.toLocaleString()}</td><td class="mono numeric-cell">${task.latency}</td><td><div class="actions"><a class="text-link" href="sys_task_detail.html?task=${encodeURIComponent(task.id)}">详情</a><button class="text-link" type="button" onclick="openSandbox('${task.name}','${task.id}','${task.channel}')">配置算力</button></div></td></tr>`;
+      }).join('') : `<tr class="empty-row"><td colspan="${isOnline ? 9 : 11}">未找到符合当前条件的任务，请调整搜索条件。</td></tr>`;
+      document.getElementById('queueCount').textContent = rows.length;
+      document.getElementById('queueSummary').textContent = `共 ${rows.length} 条记录，第 1/1 页`;
       document.getElementById('queueSearchClear').classList.toggle('hidden', !keyword);
       const chips = [];
       if (keyword) chips.push(`关键词：${searchInput.value.trim()}`);
@@ -220,6 +251,25 @@
     }
 
     function closeSandbox() { modal.classList.add('hidden'); document.body.style.overflow = ''; capacityTrigger?.focus(); }
+
+    function openComputeView(taskId) {
+      const task = taskData.online.find(item => item.id === taskId);
+      if (!task) return;
+      computeTrigger = document.activeElement;
+      document.getElementById('computeServiceCount').textContent = task.instances.length;
+      document.getElementById('computeRunningCount').textContent = task.instances.length;
+      document.getElementById('computeInstanceBody').innerHTML = task.instances.map(instance => `<tr><td class="mono">${escapeHtml(instance.name)}</td><td class="mono">${escapeHtml(instance.node)}</td><td>${escapeHtml(instance.gpu)}</td></tr>`).join('');
+      computeModal.classList.remove('hidden');
+      document.body.style.overflow = 'hidden';
+      requestAnimationFrame(() => document.getElementById('closeComputeView').focus());
+    }
+
+    function closeComputeView() {
+      computeModal.classList.add('hidden');
+      document.body.style.overflow = '';
+      computeTrigger?.focus();
+    }
+
     function resetSandbox() {
       const initialChannel = originalChannel === 'normal' ? 'normal' : 'vip';
       document.querySelector(`input[name="channel"][value="${initialChannel}"]`).checked = true;
@@ -252,12 +302,16 @@
 
     const dispatchChartState = {
       throughput: { type: 'online' },
-      allocation: { type: 'online' }
+      allocation: { type: 'online' },
+      request: { type: 'online' }
     };
     const dispatchTimeState = {
-      start: new Date('2026-08-12T00:00'),
-      end: new Date('2026-08-13T00:00')
+      start: new Date('2026-08-12T00:00:00'),
+      end: new Date('2026-08-13T23:59:59')
     };
+    let calendarAnchor = new Date(2026, 7, 1);
+    let calendarPickingEnd = false;
+    let timePopoverTrigger = null;
 
     const lineStyle = (color, extra = {}) => ({
       borderColor: color,
@@ -295,16 +349,28 @@
           if (isOnline) return Math.max(180000, (index < switchPoint ? 3380000 : 520000) + wave(index, .011) * (index < switchPoint ? 270000 : 180000));
           return Math.max(120000, (index < switchPoint ? 460000 : 2860000) + wave(index, .019) * (index < switchPoint ? 150000 : 310000));
         });
-        const wait = labels.map((_, index) => isOnline
-          ? clamp((index < switchPoint ? .055 : .13) + wave(index, .031) * .025, .01, .19)
-          : clamp((index < switchPoint ? 112 : 24) + wave(index, .024) * (index < switchPoint ? 16 : 7), 8, 140));
         return {
           labels,
-          waitUnit: isOnline ? '秒' : '分钟',
-          waitMax: isOnline ? .25 : 150,
           datasets: [
-            { label: '输出 TPS', data: output, yAxisID: 'y', ...lineStyle('#266EFF', { borderWidth: 2.5, backgroundColor: 'rgba(38,110,255,.09)', fill: true }) },
-            { label: '平均等待时间', data: wait, yAxisID: 'y1', ...lineStyle('#059669') }
+            { label: '输出 TPS', data: output, yAxisID: 'y', ...lineStyle('#266EFF', { borderWidth: 2.5, backgroundColor: 'rgba(38,110,255,.09)', fill: true }) }
+          ]
+        };
+      }
+
+      if (chartName === 'request') {
+        const isOnline = type === 'online';
+        const successBase = isOnline ? 214000 : 81000;
+        const failureBase = isOnline ? 165 : 290;
+        const rejectedBase = isOnline ? 78 : 135;
+        const success = labels.map((_, index) => Math.max(1000, successBase + wave(index, .014) * successBase * .18));
+        const failures = labels.map((_, index) => Math.max(0, failureBase + wave(index, .029) * failureBase * .36));
+        const rejected = labels.map((_, index) => Math.max(0, rejectedBase + wave(index, .041) * rejectedBase * .42));
+        return {
+          labels,
+          datasets: [
+            { label: '成功请求', data: success, yAxisID: 'y', ...lineStyle('#059669', { borderWidth: 2.5, backgroundColor: 'rgba(5,150,105,.08)', fill: true }) },
+            { label: '失败请求', data: failures, yAxisID: 'y1', ...lineStyle('#E11D48') },
+            { label: '拒绝请求', data: rejected, yAxisID: 'y1', ...lineStyle('#D97706', { borderDash: [5, 4] }) }
           ]
         };
       }
@@ -365,9 +431,11 @@
       const type = dispatchChartState[chartName].type;
       const canvas = document.getElementById(`${chartName}Chart`);
       if (chartName === 'throughput') {
-        canvas.setAttribute('aria-label', type === 'online' ? '在线任务输出 TPS 与平均等待时间趋势图。' : '离线任务输出 TPS 与平均排队时间趋势图。');
-      } else {
+        canvas.setAttribute('aria-label', type === 'online' ? '在线任务输出 TPS 趋势图。' : '离线任务输出 TPS 趋势图。');
+      } else if (chartName === 'allocation') {
         canvas.setAttribute('aria-label', type === 'online' ? '在线任务实时算力分配占比趋势图。' : '离线任务实时算力分配占比趋势图。');
+      } else {
+        canvas.setAttribute('aria-label', type === 'online' ? '在线成功请求、失败请求与拒绝请求趋势图。' : '离线成功请求、失败请求与拒绝请求趋势图。');
       }
     }
 
@@ -375,6 +443,7 @@
       const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
       const series = buildChartSeries(chartName);
       const isThroughput = chartName === 'throughput';
+      const isRequest = chartName === 'request';
       const chart = new Chart(document.getElementById(`${chartName}Chart`), {
         type: 'line',
         data: { labels: series.labels, datasets: series.datasets },
@@ -395,15 +464,17 @@
               titleFont: { size: 11 },
               bodyFont: { size: 10, family: 'Consolas, monospace' },
               padding: 10,
-              callbacks: { label: context => isThroughput ? (context.dataset.yAxisID === 'y' ? `${context.dataset.label}：${Math.round(context.parsed.y).toLocaleString()}` : `${context.dataset.label}：${Number(context.parsed.y).toFixed(dispatchChartState.throughput.type === 'online' ? 2 : 1)} ${series.waitUnit}`) : `${context.dataset.label}：${context.parsed.y}%` }
+              callbacks: { label: context => isThroughput ? `${context.dataset.label}：${Math.round(context.parsed.y).toLocaleString()} Tokens/s` : (isRequest ? `${context.dataset.label}：${Math.round(context.parsed.y).toLocaleString()} req/5min` : `${context.dataset.label}：${context.parsed.y}%`) }
             }
           },
           scales: {
             x: { grid: { color: '#E2E8F0', borderDash: [4, 4], drawTicks: false }, ticks: { color: '#94A3B8', font: { size: 9, family: 'Consolas, monospace' }, maxRotation: 0, autoSkip: true, maxTicksLimit: 7 } },
             y: isThroughput
               ? { beginAtZero: true, suggestedMax: 4000000, grid: { color: '#E2E8F0', borderDash: [4, 4] }, ticks: { color: '#94A3B8', font: { size: 9 }, callback: value => value === 0 ? '0' : `${value / 1000000}M` }, title: { display: true, text: 'Tokens / s', align: 'end', color: '#64748B', font: { size: 9, weight: 'normal' } } }
-              : { beginAtZero: true, max: 100, grid: { color: '#E2E8F0', borderDash: [4, 4] }, ticks: { color: '#94A3B8', font: { size: 9 }, stepSize: 20, callback: value => `${value}%` } },
-            ...(isThroughput ? { y1: { beginAtZero: true, suggestedMax: series.waitMax, position: 'right', grid: { drawOnChartArea: false }, ticks: { color: '#94A3B8', font: { size: 9 } }, title: { display: true, text: `时长（${series.waitUnit}）`, align: 'end', color: '#64748B', font: { size: 9, weight: 'normal' } } } } : {})
+              : (isRequest
+                ? { beginAtZero: true, grid: { color: '#E2E8F0', borderDash: [4, 4] }, ticks: { color: '#94A3B8', font: { size: 9 }, callback: value => value === 0 ? '0' : `${Math.round(value / 1000)}k` }, title: { display: true, text: '成功请求（req/5min）', align: 'end', color: '#64748B', font: { size: 9, weight: 'normal' } } }
+                : { beginAtZero: true, max: 100, grid: { color: '#E2E8F0', borderDash: [4, 4] }, ticks: { color: '#94A3B8', font: { size: 9 }, stepSize: 20, callback: value => `${value}%` } }),
+            ...(isRequest ? { y1: { beginAtZero: true, position: 'right', grid: { drawOnChartArea: false }, ticks: { color: '#94A3B8', font: { size: 9 } }, title: { display: true, text: '失败 / 拒绝（req/5min）', align: 'end', color: '#64748B', font: { size: 9, weight: 'normal' } } } } : {})
           }
         }
       });
@@ -415,22 +486,154 @@
     function refreshDispatchChart(chartName) {
       if (chartName === 'throughput' && throughputChart) throughputChart.destroy();
       if (chartName === 'allocation' && allocationChart) allocationChart.destroy();
+      if (chartName === 'request' && requestChart) requestChart.destroy();
       const chart = createDispatchChart(chartName);
       if (chartName === 'throughput') throughputChart = chart;
-      else allocationChart = chart;
+      else if (chartName === 'allocation') allocationChart = chart;
+      else requestChart = chart;
     }
 
     function initDispatchCharts() {
       refreshDispatchChart('throughput');
       refreshDispatchChart('allocation');
+      refreshDispatchChart('request');
     }
+
+    function switchDispatchTab(mode, syncUrl = true) {
+      activeQueueType = mode === 'offline' ? 'offline' : 'online';
+      Object.keys(dispatchChartState).forEach(chartName => { dispatchChartState[chartName].type = activeQueueType; });
+      document.querySelectorAll('[data-dispatch-tab]').forEach(button => {
+        const active = button.dataset.dispatchTab === activeQueueType;
+        button.classList.toggle('active', active);
+        button.setAttribute('aria-selected', String(active));
+      });
+      const isOnline = activeQueueType === 'online';
+      const activeTabId = isOnline ? 'dispatchTabOnline' : 'dispatchTabOffline';
+      document.getElementById('dispatchPanel').setAttribute('aria-labelledby', activeTabId);
+      document.getElementById('dispatchViewTitle').textContent = isOnline ? '在线调度运行态势' : '离线调度运行态势';
+      document.getElementById('dispatchViewBadge').textContent = isOnline ? '在线' : '离线';
+      document.getElementById('taskModeBadge').textContent = isOnline ? '在线任务' : '离线任务';
+      searchInput.value = '';
+      applyQueueFilters();
+      initDispatchCharts();
+      if (syncUrl) {
+        const params = new URLSearchParams(window.location.search);
+        params.set('mode', activeQueueType);
+        window.history.replaceState({}, '', `${window.location.pathname}?${params.toString()}`);
+      }
+    }
+
+    function padDatePart(value) { return String(value).padStart(2, '0'); }
 
     function formatChartRange(date) {
-      return `${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')} ${String(date.getHours()).padStart(2, '0')}:${String(date.getMinutes()).padStart(2, '0')}`;
+      return `${date.getFullYear()}-${padDatePart(date.getMonth() + 1)}-${padDatePart(date.getDate())} ${padDatePart(date.getHours())}:${padDatePart(date.getMinutes())}:${padDatePart(date.getSeconds())}`;
     }
 
-    function applyChartTimeRange(event) {
-      event.preventDefault();
+    function formatDateTimeInput(date) {
+      return `${date.getFullYear()}-${padDatePart(date.getMonth() + 1)}-${padDatePart(date.getDate())}T${padDatePart(date.getHours())}:${padDatePart(date.getMinutes())}:${padDatePart(date.getSeconds())}`;
+    }
+
+    function readPendingTimeRange() {
+      return {
+        start: new Date(document.getElementById('chartStartTime').value),
+        end: new Date(document.getElementById('chartEndTime').value)
+      };
+    }
+
+    function setPendingInputs(start, end) {
+      document.getElementById('chartStartTime').value = formatDateTimeInput(start);
+      document.getElementById('chartEndTime').value = formatDateTimeInput(end);
+      renderCalendars();
+    }
+
+    function sameCalendarDay(left, right) {
+      return left.getFullYear() === right.getFullYear() && left.getMonth() === right.getMonth() && left.getDate() === right.getDate();
+    }
+
+    function renderCalendarMonth(monthDate, titleId, daysId) {
+      const year = monthDate.getFullYear();
+      const month = monthDate.getMonth();
+      document.getElementById(titleId).textContent = `${year} 年 ${month + 1} 月`;
+      const firstWeekday = (new Date(year, month, 1).getDay() + 6) % 7;
+      const totalDays = new Date(year, month + 1, 0).getDate();
+      const pending = readPendingTimeRange();
+      const startDay = new Date(pending.start.getFullYear(), pending.start.getMonth(), pending.start.getDate()).getTime();
+      const endDay = new Date(pending.end.getFullYear(), pending.end.getMonth(), pending.end.getDate()).getTime();
+      const cells = Array.from({ length: firstWeekday }, () => '<span class="calendar-day-empty"></span>');
+      for (let day = 1; day <= totalDays; day += 1) {
+        const date = new Date(year, month, day);
+        const time = date.getTime();
+        const classes = ['calendar-day'];
+        if (time > startDay && time < endDay) classes.push('in-range');
+        if (sameCalendarDay(date, pending.start)) classes.push('range-start');
+        if (sameCalendarDay(date, pending.end)) classes.push('range-end');
+        const dateValue = `${year}-${padDatePart(month + 1)}-${padDatePart(day)}`;
+        cells.push(`<button class="${classes.join(' ')}" type="button" data-calendar-date="${dateValue}" aria-label="${year}年${month + 1}月${day}日">${day}</button>`);
+      }
+      document.getElementById(daysId).innerHTML = cells.join('');
+    }
+
+    function renderCalendars() {
+      renderCalendarMonth(calendarAnchor, 'calendarLeftTitle', 'calendarLeftDays');
+      renderCalendarMonth(new Date(calendarAnchor.getFullYear(), calendarAnchor.getMonth() + 1, 1), 'calendarRightTitle', 'calendarRightDays');
+    }
+
+    function openTimePopover() {
+      timePopoverTrigger = document.activeElement;
+      calendarAnchor = new Date(dispatchTimeState.start.getFullYear(), dispatchTimeState.start.getMonth(), 1);
+      calendarPickingEnd = false;
+      setPendingInputs(dispatchTimeState.start, dispatchTimeState.end);
+      document.querySelectorAll('[data-time-preset]').forEach(button => button.classList.remove('active'));
+      document.getElementById('chartTimeError').classList.add('hidden');
+      document.getElementById('timeRangePopover').classList.remove('hidden');
+      document.getElementById('timeRangeTrigger').setAttribute('aria-expanded', 'true');
+      requestAnimationFrame(() => document.getElementById('chartStartTime').focus());
+    }
+
+    function closeTimePopover(restoreFocus = true) {
+      document.getElementById('timeRangePopover').classList.add('hidden');
+      document.getElementById('timeRangeTrigger').setAttribute('aria-expanded', 'false');
+      document.getElementById('chartTimeError').classList.add('hidden');
+      if (restoreFocus) (timePopoverTrigger || document.getElementById('timeRangeTrigger')).focus();
+    }
+
+    function applyTimePreset(preset) {
+      const now = new Date();
+      const end = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 23, 59, 59);
+      let start = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 0, 0, 0);
+      if (preset === 'yesterday') { start.setDate(start.getDate() - 1); end.setDate(end.getDate() - 1); }
+      if (preset === '3d') start.setDate(start.getDate() - 2);
+      if (preset === '7d') start.setDate(start.getDate() - 6);
+      if (preset === '30d') start.setDate(start.getDate() - 29);
+      if (preset === 'month') start = new Date(now.getFullYear(), now.getMonth(), 1, 0, 0, 0);
+      calendarAnchor = new Date(start.getFullYear(), start.getMonth(), 1);
+      calendarPickingEnd = false;
+      setPendingInputs(start, end);
+      document.querySelectorAll('[data-time-preset]').forEach(button => button.classList.toggle('active', button.dataset.timePreset === preset));
+    }
+
+    function handleCalendarDay(dateValue) {
+      const [year, month, day] = dateValue.split('-').map(Number);
+      if (!calendarPickingEnd) {
+        const start = new Date(year, month - 1, day, 0, 0, 0);
+        const end = new Date(year, month - 1, day, 23, 59, 59);
+        calendarPickingEnd = true;
+        setPendingInputs(start, end);
+      } else {
+        const pending = readPendingTimeRange();
+        const selected = new Date(year, month - 1, day, 23, 59, 59);
+        if (selected < pending.start) {
+          const start = new Date(year, month - 1, day, 0, 0, 0);
+          setPendingInputs(start, pending.end);
+        } else {
+          setPendingInputs(pending.start, selected);
+        }
+        calendarPickingEnd = false;
+      }
+      document.querySelectorAll('[data-time-preset]').forEach(button => button.classList.remove('active'));
+    }
+
+    function applyChartTimeRange() {
       const startInput = document.getElementById('chartStartTime');
       const endInput = document.getElementById('chartEndTime');
       const error = document.getElementById('chartTimeError');
@@ -438,24 +641,25 @@
       const end = new Date(endInput.value);
       let message = '';
       if (!startInput.value || !endInput.value || Number.isNaN(start.getTime()) || Number.isNaN(end.getTime())) message = '请选择完整的开始时间和结束时间。';
-      else if (start >= end) message = '结束时间必须晚于开始时间。';
-      else if (end - start > 30 * 24 * 60 * 60 * 1000) message = '单次查询的时间跨度不能超过 30 天。';
+      else if (start > end) message = '开始时间不能晚于结束时间。';
+      else if (end - start > 90 * 24 * 60 * 60 * 1000) message = '所选范围超过日志保存期限，单次查询最长为 90 天。';
       error.textContent = message;
       error.classList.toggle('hidden', !message);
       startInput.setAttribute('aria-invalid', String(Boolean(message)));
       endInput.setAttribute('aria-invalid', String(Boolean(message)));
-      if (message) { (start >= end ? endInput : startInput).focus(); return; }
+      if (message) { (start > end ? endInput : startInput).focus(); return; }
       dispatchTimeState.start = start;
       dispatchTimeState.end = end;
-      document.getElementById('chartTimeStatus').textContent = `当前：${formatChartRange(start)} 至 ${formatChartRange(end)}`;
-      const queryButton = document.getElementById('chartTimeQuery');
-      const originalContent = queryButton.innerHTML;
-      queryButton.disabled = true;
-      queryButton.innerHTML = '<svg class="icon icon-sm query-spinner" viewBox="0 0 24 24"><path d="M21 12a9 9 0 1 1-6.2-8.6"/></svg>查询中';
+      document.getElementById('timeRangeText').textContent = `${formatChartRange(start)} ~ ${formatChartRange(end)}`;
+      const applyButton = document.getElementById('applyTimeRange');
+      const originalContent = applyButton.innerHTML;
+      applyButton.disabled = true;
+      applyButton.textContent = '应用中…';
       window.setTimeout(() => {
         initDispatchCharts();
-        queryButton.innerHTML = originalContent;
-        queryButton.disabled = false;
+        applyButton.innerHTML = originalContent;
+        applyButton.disabled = false;
+        closeTimePopover();
         showToast('趋势图已更新', `时间范围：${formatChartRange(start)} 至 ${formatChartRange(end)}`);
       }, 220);
     }
@@ -467,37 +671,36 @@
       showToast('算力配置已应用', `${channel === 'vip' ? '优先队列' : '共享队列'}配置已生效，专属算力权重为 ${quota}%。`);
     }
     searchInput.addEventListener('input', applyQueueFilters);
-    document.querySelectorAll('[data-queue-type]').forEach(button => button.addEventListener('click', () => {
-      activeQueueType = button.dataset.queueType;
-      document.querySelectorAll('[data-queue-type]').forEach(item => {
-        const active = item === button;
-        item.classList.toggle('active', active);
-        item.setAttribute('aria-pressed', String(active));
-      });
-      applyQueueFilters();
-    }));
+    document.querySelectorAll('[data-dispatch-tab]').forEach(button => button.addEventListener('click', () => switchDispatchTab(button.dataset.dispatchTab)));
     document.getElementById('queueSearchClear').addEventListener('click', () => { searchInput.value = ''; applyQueueFilters(); searchInput.focus(); });
     document.getElementById('resetFilters').addEventListener('click', () => { searchInput.value = ''; applyQueueFilters(); });
     document.getElementById('quotaRange').addEventListener('input', updateSimulation);
-    document.getElementById('chartTimeForm').addEventListener('submit', applyChartTimeRange);
+    document.getElementById('timeRangeTrigger').addEventListener('click', () => document.getElementById('timeRangePopover').classList.contains('hidden') ? openTimePopover() : closeTimePopover());
+    document.getElementById('closeTimePopover').addEventListener('click', () => closeTimePopover());
+    document.getElementById('cancelTimeRange').addEventListener('click', () => closeTimePopover());
+    document.getElementById('resetTimeRange').addEventListener('click', () => { calendarAnchor = new Date(dispatchTimeState.start.getFullYear(), dispatchTimeState.start.getMonth(), 1); setPendingInputs(dispatchTimeState.start, dispatchTimeState.end); document.querySelectorAll('[data-time-preset]').forEach(button => button.classList.remove('active')); });
+    document.getElementById('applyTimeRange').addEventListener('click', applyChartTimeRange);
+    document.querySelectorAll('[data-time-preset]').forEach(button => button.addEventListener('click', () => applyTimePreset(button.dataset.timePreset)));
+    document.getElementById('calendarPrev').addEventListener('click', () => { calendarAnchor = new Date(calendarAnchor.getFullYear(), calendarAnchor.getMonth() - 1, 1); renderCalendars(); });
+    document.getElementById('calendarNext').addEventListener('click', () => { calendarAnchor = new Date(calendarAnchor.getFullYear(), calendarAnchor.getMonth() + 1, 1); renderCalendars(); });
+    document.getElementById('timeRangePopover').addEventListener('click', event => { const button = event.target.closest('[data-calendar-date]'); if (button) handleCalendarDay(button.dataset.calendarDate); });
+    document.getElementById('chartStartTime').addEventListener('change', () => { const date = new Date(document.getElementById('chartStartTime').value); if (!Number.isNaN(date.getTime())) calendarAnchor = new Date(date.getFullYear(), date.getMonth(), 1); renderCalendars(); });
+    document.getElementById('chartEndTime').addEventListener('change', renderCalendars);
     document.getElementById('refreshButton').addEventListener('click', () => showToast('数据已刷新', '调度域指标已更新至最新采样时间。'));
-    document.querySelectorAll('.chart-segment').forEach(segment => segment.addEventListener('click', event => {
-      const button = event.target.closest('button[data-chart]');
-      if (!button) return;
-      segment.querySelectorAll('button').forEach(item => {
-        const active = item === button;
-        item.classList.toggle('active', active);
-        item.setAttribute('aria-pressed', String(active));
-      });
-      const chartName = button.dataset.chart;
-      const control = button.dataset.control;
-      dispatchChartState[chartName][control] = button.dataset.value;
-      refreshDispatchChart(chartName);
-    }));
+    document.getElementById('domainSelect').addEventListener('change', event => showToast('调度域已切换', `当前展示：${event.target.options[event.target.selectedIndex].text}`));
+    document.getElementById('closeComputeView').addEventListener('click', closeComputeView);
+    document.getElementById('confirmComputeView').addEventListener('click', closeComputeView);
     modal.addEventListener('click', event => { if (event.target === modal) closeSandbox(); });
-    document.addEventListener('keydown', event => { if (event.key === 'Escape' && !modal.classList.contains('hidden')) closeSandbox(); });
-    applyQueueFilters();
-    initDispatchCharts();
+    computeModal.addEventListener('click', event => { if (event.target === computeModal) closeComputeView(); });
+    document.addEventListener('click', event => { const control = document.querySelector('.date-range-control'); if (!document.getElementById('timeRangePopover').classList.contains('hidden') && !control.contains(event.target)) closeTimePopover(false); });
+    document.addEventListener('keydown', event => {
+      if (event.key !== 'Escape') return;
+      if (!document.getElementById('timeRangePopover').classList.contains('hidden')) { closeTimePopover(); return; }
+      if (!modal.classList.contains('hidden')) closeSandbox();
+      if (!computeModal.classList.contains('hidden')) closeComputeView();
+    });
+    const initialMode = new URLSearchParams(window.location.search).get('mode') === 'offline' ? 'offline' : 'online';
+    switchDispatchTab(initialMode, false);
   </script>
 </body>
 </html>

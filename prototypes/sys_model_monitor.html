@@ -1,531 +1,301 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="zh-CN">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>模型监测 - 应龙大模型推理平台</title>
-    <link rel="stylesheet" href="assets/css/yinglong-v2.css">
-    <link rel="stylesheet" href="assets/css/pages/sys_model_monitor.css">
-    <script src="assets/js/chart.js"></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>模型监测 - 应龙大模型推理平台</title>
+  <link rel="stylesheet" href="assets/css/yinglong-v2.css">
+  <link rel="stylesheet" href="assets/css/pages/sys_model_monitor.css">
+  <script src="assets/js/chart.js"></script>
 </head>
 <body class="sidebar-led heading-spec-page">
+  <svg width="0" height="0" aria-hidden="true" style="position:absolute">
+    <symbol id="i-dashboard" viewBox="0 0 24 24"><rect width="7" height="9" x="3" y="3" rx="1"/><rect width="7" height="5" x="14" y="3" rx="1"/><rect width="7" height="9" x="14" y="12" rx="1"/><rect width="7" height="5" x="3" y="16" rx="1"/></symbol>
+    <symbol id="i-sliders" viewBox="0 0 24 24"><path d="M4 21v-7m0-4V3m8 18v-9m0-4V3m8 18v-5m0-4V3M1 14h6m2-6h6m2 8h6"/></symbol>
+    <symbol id="i-list" viewBox="0 0 24 24"><path d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01"/></symbol>
+    <symbol id="i-box" viewBox="0 0 24 24"><path d="m21 8-9-5-9 5 9 5 9-5Z"/><path d="m3 8v8l9 5 9-5V8m-9 5v8"/></symbol>
+    <symbol id="i-server" viewBox="0 0 24 24"><rect width="20" height="8" x="2" y="2" rx="2"/><rect width="20" height="8" x="2" y="14" rx="2"/><path d="M6 6h.01M6 18h.01"/></symbol>
+    <symbol id="i-brain" viewBox="0 0 24 24"><path d="M9.5 4A2.5 2.5 0 0 0 7 6.5V8a3 3 0 0 0-3 3v1.5A2.5 2.5 0 0 0 6.5 15H7v1.5A3.5 3.5 0 0 0 10.5 20H12V5.5A1.5 1.5 0 0 0 10.5 4h-1Z"/><path d="M14.5 4A2.5 2.5 0 0 1 17 6.5V8a3 3 0 0 1 3 3v1.5a2.5 2.5 0 0 1-2.5 2.5H17v1.5a3.5 3.5 0 0 1-3.5 3.5H12V5.5A1.5 1.5 0 0 1 13.5 4h1Z"/></symbol>
+    <symbol id="i-activity" viewBox="0 0 24 24"><path d="M3 12h4l2-8 4 16 2-8h6"/></symbol>
+    <symbol id="i-file" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8Z"/><path d="M14 2v6h6M9 15h6M12 12v6"/></symbol>
+    <symbol id="i-check-user" viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="m16 11 2 2 4-4"/></symbol>
+    <symbol id="i-network" viewBox="0 0 24 24"><rect width="6" height="6" x="9" y="2" rx="1"/><rect width="6" height="6" x="2" y="16" rx="1"/><rect width="6" height="6" x="16" y="16" rx="1"/><path d="M12 8v4m-7 4v-2h14v2"/></symbol>
+    <symbol id="i-route" viewBox="0 0 24 24"><circle cx="6" cy="19" r="3"/><path d="M9 19h5.5a3.5 3.5 0 0 0 0-7h-5a3.5 3.5 0 0 1 0-7H15"/><circle cx="18" cy="5" r="3"/></symbol>
+    <symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></symbol>
+    <symbol id="i-refresh" viewBox="0 0 24 24"><path d="M20 11a8 8 0 1 0-2.3 5.7L20 14"/><path d="M20 4v7h-7"/></symbol>
+    <symbol id="i-arrow" viewBox="0 0 24 24"><path d="m9 18 6-6-6-6"/></symbol>
+    <symbol id="i-cpu" viewBox="0 0 24 24"><rect width="16" height="16" x="4" y="4" rx="2"/><rect width="6" height="6" x="9" y="9" rx="1"/><path d="M9 1v3m6-3v3M9 20v3m6-3v3M20 9h3m-3 5h3M1 9h3m-3 5h3"/></symbol>
+  </svg>
 
-<svg width="0" height="0" aria-hidden="true" style="position:absolute">
-  <symbol id="i-dashboard" viewBox="0 0 24 24"><rect width="7" height="9" x="3" y="3" rx="1"/><rect width="7" height="5" x="14" y="3" rx="1"/><rect width="7" height="9" x="14" y="12" rx="1"/><rect width="7" height="5" x="3" y="16" rx="1"/></symbol><symbol id="i-sliders" viewBox="0 0 24 24"><path d="M4 21v-7m0-4V3m8 18v-9m0-4V3m8 18v-5m0-4V3M1 14h6m2-6h6m2 8h6"/></symbol><symbol id="i-list" viewBox="0 0 24 24"><path d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01"/></symbol><symbol id="i-box" viewBox="0 0 24 24"><path d="m21 8-9-5-9 5 9 5 9-5Z"/><path d="m3 8v8l9 5 9-5V8m-9 5v8"/></symbol><symbol id="i-server" viewBox="0 0 24 24"><rect width="20" height="8" x="2" y="2" rx="2"/><rect width="20" height="8" x="2" y="14" rx="2"/><path d="M6 6h.01M6 18h.01"/></symbol><symbol id="i-brain" viewBox="0 0 24 24"><path d="M9.5 4A2.5 2.5 0 0 0 7 6.5V8a3 3 0 0 0-3 3v1.5A2.5 2.5 0 0 0 6.5 15H7v1.5A3.5 3.5 0 0 0 10.5 20H12V5.5A1.5 1.5 0 0 0 10.5 4h-1Z"/><path d="M14.5 4A2.5 2.5 0 0 1 17 6.5V8a3 3 0 0 1 3 3v1.5a2.5 2.5 0 0 1-2.5 2.5H17v1.5a3.5 3.5 0 0 1-3.5 3.5H12V5.5A1.5 1.5 0 0 1 13.5 4h1Z"/></symbol><symbol id="i-activity" viewBox="0 0 24 24"><path d="M3 12h4l2-8 4 16 2-8h6"/></symbol><symbol id="i-file" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8Z"/><path d="M14 2v6h6M9 15h6M12 12v6"/></symbol><symbol id="i-check-user" viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="m16 11 2 2 4-4"/></symbol><symbol id="i-network" viewBox="0 0 24 24"><rect width="6" height="6" x="9" y="2" rx="1"/><rect width="6" height="6" x="2" y="16" rx="1"/><rect width="6" height="6" x="16" y="16" rx="1"/><path d="M12 8v4m-7 4v-2h14v2"/></symbol><symbol id="i-route" viewBox="0 0 24 24"><circle cx="6" cy="19" r="3"/><path d="M9 19h5.5a3.5 3.5 0 0 0 0-7h-5a3.5 3.5 0 0 1 0-7H15"/><circle cx="18" cy="5" r="3"/></symbol><symbol id="i-settings" viewBox="0 0 24 24"><path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.38a2 2 0 0 0-.73-2.73l-.15-.09a2 2 0 0 1-1-1.74v-.51a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2Z"/><circle cx="12" cy="12" r="3"/></symbol><symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></symbol><symbol id="i-refresh" viewBox="0 0 24 24"><path d="M20 11a8 8 0 1 0-2.3 5.7L20 14"/><path d="M20 4v7h-7"/></symbol>
-</svg>
-<a class="skip-link" href="#main-content">跳到主要内容</a>
-<aside class="sidebar" aria-label="应龙主导航"><a class="brand" href="../index.html"><span class="brand-mark">应</span><span class="brand-name">应龙推理平台</span><span class="env-badge">PROD</span></a><nav class="sidebar-nav">
-  <section class="nav-group"><h2 class="nav-group-title">工作台</h2><a class="nav-item" href="../index.html"><svg class="icon"><use href="#i-dashboard"/></svg><span>系统概览</span></a></section><section class="nav-group"><h2 class="nav-group-title">算力调度</h2><a class="nav-item" href="sys_dispatch.html"><svg class="icon"><use href="#i-sliders"/></svg><span>算力调度</span></a><a class="nav-item" href="sys_task_list.html"><svg class="icon"><use href="#i-list"/></svg><span>我的任务</span></a></section>
-  <section class="nav-group"><h2 class="nav-group-title">模型管理</h2><a class="nav-item" href="sys_model_repo.html"><svg class="icon"><use href="#i-box"/></svg><span>模型资产</span></a><a class="nav-item" href="sys_model_service.html"><svg class="icon"><use href="#i-server"/></svg><span>模型服务</span></a><a class="nav-item" href="sys_model_training.html"><svg class="icon"><use href="#i-brain"/></svg><span>模型训练</span></a><a class="nav-item" href="sys_model_governance.html"><svg class="icon"><use href="#i-check-user"/></svg><span>模型纳管</span></a><a class="nav-item active" href="sys_model_monitor.html" aria-current="page"><svg class="icon"><use href="#i-activity"/></svg><span>模型监测</span></a></section>
-  <section class="nav-group"><h2 class="nav-group-title">资源与运维</h2><a class="nav-item" href="sys_resource_application.html"><svg class="icon"><use href="#i-file"/></svg><span>资源申请</span></a><a class="nav-item" href="sys_resource_approval.html"><svg class="icon"><use href="#i-check-user"/></svg><span>授权审批</span></a><a class="nav-item" href="sys_infrastructure_mgmt.html"><svg class="icon"><use href="#i-network"/></svg><span>集群管理</span></a><a class="nav-item" href="sys_api_key_mgmt.html"><svg class="icon"><use href="#i-activity"/></svg><span>请求监控</span></a><a class="nav-item" href="sys_request_tracing.html"><svg class="icon"><use href="#i-route"/></svg><span>链路追踪</span></a></section>
-</nav></aside>
-<div class="app-main"><header class="global-header"><nav class="breadcrumb" aria-label="面包屑"><a href="../index.html">应龙</a><span>/</span><span>模型管理</span><span>/</span><span class="breadcrumb-current" aria-current="page">模型监测</span></nav><div class="user-profile"><span>资源管理员</span><span class="user-avatar" aria-hidden="true">A</span></div></header>
-<main class="page-canvas heading-spec-canvas" id="main-content">
-  <section class="section monitor-overview" aria-labelledby="monitorTitle"><div class="section-heading overview-heading"><div><h1 class="page-title" id="monitorTitle">模型监测</h1><p class="page-description">按时间与模型观察调用、失败、推理时延、实例请求和 KV Cache 资源状态。</p></div><div class="toolbar-actions monitor-filters">
-    <div class="monitor-filter"><label for="timeRangeSelect">时间段</label><select id="timeRangeSelect" onchange="handleTimeRangeChange()" class="control"><option value="1h">最近1小时</option><option value="6h">最近6小时</option><option value="24h" selected>最近24小时</option><option value="7d">最近7天</option><option value="custom">自定义时间段</option></select></div>
-    <div id="customTimeInputs" class="custom-time hidden"><input type="datetime-local" id="startTimeInput" class="control" value="2026-06-01T09:00" aria-label="开始时间"><span class="muted">至</span><input type="datetime-local" id="endTimeInput" class="control" value="2026-06-02T09:00" aria-label="结束时间"></div>
-    <div class="monitor-filter"><label for="modelSelect">指定模型</label><select id="modelSelect" class="control"><option value="all" selected>全部模型</option><option value="qwen3-32b">qwen3-32b</option><option value="qwen2-2.5">qwen2-2.5</option><option value="whisper">whisper</option></select></div>
-    <button id="queryButton" onclick="triggerFilterQuery()" class="btn btn-primary" type="button"><svg class="icon icon-sm"><use href="#i-search"/></svg><span>应用筛选</span></button>
-  </div></div></section>
-  <aside class="monitor-context" id="overviewContext" hidden aria-label="首页异常上下文"><div class="monitor-context-copy"><svg class="icon"><use href="#i-activity"/></svg><span><strong>已从系统概览带入诊断条件。</strong> 当前页用于继续定位任务、服务和 Pod 资源。</span></div><a href="../index.html">返回系统概览 →</a></aside>
-  <div class="monitor-stack">
-    <section aria-labelledby="metricTitle"><div class="monitor-section-head"><div><h2 id="metricTitle">性能与容量诊断</h2></div><p id="scopeSummary">当前范围：最近24小时 · 全部模型</p></div><div id="modelMetricsListContainer" class="model-ribbon-list"></div></section>
-    <section class="card table-card" aria-label="监测维度统计"><div class="monitor-tabs" role="tablist" aria-label="监测维度"><button id="tabButtonTask" class="monitor-tab active" type="button" role="tab" aria-selected="true" aria-controls="tabPanelTask" onclick="switchTab('task')"><svg class="icon icon-sm"><use href="#i-list"/></svg>按任务统计</button><button id="tabButtonService" class="monitor-tab" type="button" role="tab" aria-selected="false" aria-controls="tabPanelService" onclick="switchTab('service')"><svg class="icon icon-sm"><use href="#i-server"/></svg>按模型服务统计</button></div>
-      <div id="tabPanelTask" class="monitor-tabpanel table-scroll" role="tabpanel" aria-labelledby="tabButtonTask"><table><thead><tr><th>任务名称</th><th>任务 Tag / 标签</th><th style="text-align:center">调用数量</th><th style="text-align:center">调用失败数</th><th style="text-align:right">推理延迟</th></tr></thead><tbody id="taskTableBody"></tbody></table></div>
-      <div id="tabPanelService" class="monitor-tabpanel" role="tabpanel" aria-labelledby="tabButtonService" hidden><div class="table-scroll"><table><thead><tr><th>模型服务</th><th>Pod 实例</th><th style="text-align:center">Running / Waiting Reqs</th><th style="text-align:center">KV Cache 占用率</th></tr></thead><tbody id="serviceTableBody"></tbody></table></div><div class="pod-trend-area"><div class="monitor-section-head"><div><h2>Pod 资源使用趋势（KV Cache & GPU）</h2></div></div><div id="podChartsContainer" class="pod-chart-grid"></div></div></div>
-    </section>
+  <a class="skip-link" href="#main-content">跳到主要内容</a>
+  <aside class="sidebar" aria-label="应龙主导航">
+    <a class="brand" href="../index.html" aria-label="应龙 AI算力基座首页"><span class="brand-mark" aria-hidden="true"><img src="../doc/logo/icon_01.svg" alt=""></span><span class="brand-copy"><span class="brand-name">应龙</span><span class="brand-subtitle">AI算力基座</span></span></a>
+    <nav class="sidebar-nav">
+      <section class="nav-group"><h2 class="nav-group-title">工作台</h2><a class="nav-item" href="../index.html"><svg class="icon"><use href="#i-dashboard"/></svg><span>系统概览</span></a></section>
+      <section class="nav-group"><h2 class="nav-group-title">算力调度</h2><a class="nav-item" href="sys_dispatch.html"><svg class="icon"><use href="#i-sliders"/></svg><span>算力调度</span></a><a class="nav-item" href="sys_task_list.html"><svg class="icon"><use href="#i-list"/></svg><span>我的任务</span></a></section>
+      <section class="nav-group"><h2 class="nav-group-title">模型管理</h2><a class="nav-item" href="sys_model_repo.html"><svg class="icon"><use href="#i-box"/></svg><span>模型资产</span></a><a class="nav-item" href="sys_model_service.html"><svg class="icon"><use href="#i-server"/></svg><span>模型服务</span></a><a class="nav-item" href="sys_model_training.html"><svg class="icon"><use href="#i-brain"/></svg><span>模型训练</span></a><a class="nav-item" href="sys_model_governance.html"><svg class="icon"><use href="#i-check-user"/></svg><span>模型纳管</span></a><a class="nav-item active" href="sys_model_monitor.html" aria-current="page"><svg class="icon"><use href="#i-activity"/></svg><span>模型监测</span></a></section>
+      <section class="nav-group"><h2 class="nav-group-title">资源与运维</h2><a class="nav-item" href="sys_resource_application.html"><svg class="icon"><use href="#i-file"/></svg><span>资源申请</span></a><a class="nav-item" href="sys_resource_approval.html"><svg class="icon"><use href="#i-check-user"/></svg><span>授权审批</span></a><a class="nav-item" href="sys_infrastructure_mgmt.html"><svg class="icon"><use href="#i-network"/></svg><span>集群管理</span></a><a class="nav-item" href="sys_request_tracing.html"><svg class="icon"><use href="#i-route"/></svg><span>链路追踪</span></a></section>
+    </nav>
+  <div class="sidebar-foot"><div class="sidebar-version" tabindex="0" aria-describedby="sidebarVersionDetails"><span>系统版本</span><strong>v1.0.0</strong><span class="sidebar-version-popover" id="sidebarVersionDetails" role="tooltip"><strong>版本信息</strong><span><span>前端版本</span><b>v1.0.0</b></span><span><span>后端版本</span><b>v1.0.0</b></span></span></div></div>
+  </aside>
+
+  <div class="app-main">
+    <header class="global-header"><nav class="breadcrumb" aria-label="面包屑"><a href="../index.html">应龙</a><span>/</span><span>模型管理</span><span>/</span><span class="breadcrumb-current" aria-current="page">模型监测</span></nav><div class="user-profile"><span>资源管理员</span><span class="user-avatar" aria-hidden="true">A</span></div></header>
+    <main class="page-canvas heading-spec-canvas" id="main-content">
+      <section class="section monitor-overview" aria-labelledby="monitorTitle">
+        <div class="section-heading overview-heading">
+          <div><h1 class="page-title" id="monitorTitle">模型监测</h1><p class="page-description">围绕单个模型查看在线与离线核心指标、Pod 算力资源和关联任务。</p></div>
+          <div class="toolbar-actions monitor-filters">
+            <div class="monitor-filter"><label for="timeRangeSelect">时间范围</label><select id="timeRangeSelect" class="control"><option value="1h">最近 1 小时</option><option value="6h">最近 6 小时</option><option value="24h" selected>最近 24 小时</option><option value="7d">最近 7 天</option></select></div>
+            <div class="monitor-filter"><label for="modelSelect">模型</label><select id="modelSelect" class="control"><option value="qwen3-32b" selected>qwen3-32b</option><option value="qwen2-2.5">qwen2-2.5</option><option value="whisper">whisper</option></select></div>
+            <button id="queryButton" class="btn btn-primary" type="button"><svg class="icon icon-sm"><use href="#i-search"/></svg>应用筛选</button>
+          </div>
+        </div>
+      </section>
+
+      <aside class="monitor-context" id="overviewContext" hidden aria-label="首页异常上下文"><div class="monitor-context-copy"><svg class="icon"><use href="#i-activity"/></svg><span><strong>已从系统概览带入诊断条件。</strong> 当前模型和时间范围已同步。</span></div><a href="../index.html">返回系统概览 →</a></aside>
+
+      <div class="monitor-stack">
+        <section aria-labelledby="metricTitle">
+          <div class="monitor-section-head"><h2 id="metricTitle">模型性能核心指标</h2></div>
+          <div id="modelMetricsListContainer" class="model-mode-grid"></div>
+        </section>
+
+        <section class="card table-card monitor-detail-card" aria-labelledby="resourceTitle">
+          <div class="monitor-detail-head"><div class="monitor-section-head resource-title-head"><h2 id="resourceTitle">资源使用</h2><div class="dispatch-view-tabs" role="group" aria-label="在线与离线数据口径"><button class="active" id="resourceModeOnline" type="button" aria-pressed="true" data-resource-mode="online"><span class="status-dot online"></span>在线</button><button id="resourceModeOffline" type="button" aria-pressed="false" data-resource-mode="offline"><span class="status-dot offline"></span>离线</button></div></div></div>
+          <div class="monitor-tabs" role="tablist" aria-label="模型监测详细维度"><button id="tabButtonResource" class="monitor-tab active" type="button" role="tab" aria-selected="true" aria-controls="tabPanelResource" data-tab="resource"><svg class="icon icon-sm"><use href="#i-cpu"/></svg>资源使用情况</button><button id="tabButtonTask" class="monitor-tab" type="button" role="tab" aria-selected="false" aria-controls="tabPanelTask" data-tab="task"><svg class="icon icon-sm"><use href="#i-list"/></svg>按任务统计</button><button id="tabButtonService" class="monitor-tab" type="button" role="tab" aria-selected="false" aria-controls="tabPanelService" data-tab="service"><svg class="icon icon-sm"><use href="#i-server"/></svg>按模型服务统计</button></div>
+          <div id="tabPanelResource" class="monitor-tabpanel resource-tabpanel" role="tabpanel" aria-labelledby="tabButtonResource">
+            <div class="resource-filters"><div class="monitor-filter"><label for="serviceFilter">模型服务名称</label><select id="serviceFilter" class="control"></select></div><div class="monitor-filter"><label for="nodeFilter">节点 IP</label><select id="nodeFilter" class="control"></select></div><button class="btn" id="resetResourceFilters" type="button"><svg class="icon icon-sm"><use href="#i-refresh"/></svg>重置</button></div>
+            <div id="podChartsContainer" class="pod-chart-grid"></div>
+            <div class="resource-empty hidden" id="resourceEmpty">当前筛选条件下没有匹配的 Pod。</div>
+          </div>
+          <div id="tabPanelTask" class="monitor-tabpanel" role="tabpanel" aria-labelledby="tabButtonTask" hidden>
+            <div class="table-toolbar compact-toolbar task-count-toolbar"><span class="result-count">共 <strong id="taskCount">0</strong> 项</span></div>
+            <div class="table-scroll"><table><thead><tr><th>任务名称</th><th>任务类型</th><th class="numeric-cell">调用数量</th><th class="numeric-cell">调用失败数</th><th class="numeric-cell">推理延迟</th><th class="numeric-cell">操作</th></tr></thead><tbody id="taskTableBody"></tbody></table></div>
+          </div>
+          <div id="tabPanelService" class="monitor-tabpanel" role="tabpanel" aria-labelledby="tabButtonService" hidden><div class="table-scroll"><table><thead><tr><th>模型服务</th><th>服务类型</th><th>实例名称</th><th>节点 IP</th><th class="numeric-cell">Running / Waiting</th><th class="numeric-cell">KV Cache</th></tr></thead><tbody id="serviceTableBody"></tbody></table></div></div>
+        </section>
+      </div>
+    </main>
   </div>
-</main></div>
 
-<script>
-    // Full dataset structured dynamically
-    const monitorDatabase = {
-        "1h": {
-            all: {
-                models: [
-                    { name: "qwen3-32b", type: "文本生成", calls: "34,910", failures: "642", avgLatency: "318ms", kv: "58.4%", color: "blue" },
-                    { name: "qwen2-2.5", type: "句子相似度", calls: "18,450", failures: "0", avgLatency: "172ms", kv: "39.2%", color: "green" },
-                    { name: "whisper", type: "语音识别", calls: "8,920", failures: "3", avgLatency: "512ms", kv: "30.1%", color: "purple" }
-                ],
-                tasks: [
-                    { name: "901-摘要-批量处理", tag: "Offline-Batch", calls: "15,000", failures: "312", avgLatency: "338ms" },
-                    { name: "902-话题-评测服务", tag: "Online-Eval", calls: "9,910", failures: "180", avgLatency: "305ms" },
-                    { name: "903-身份-验证鉴权", tag: "Online-Prod", calls: "10,000", failures: "150", avgLatency: "288ms" },
-                    { name: "904-摘要-多语翻译", tag: "Benchmark", calls: "18,450", failures: "0", avgLatency: "172ms" },
-                    { name: "905-视听-自动字幕", tag: "Online-Audio", calls: "8,920", failures: "3", avgLatency: "512ms" }
-                ]
-            },
-            "qwen3-32b": {
-                models: [
-                    { name: "qwen3-32b", type: "文本生成", calls: "34,910", failures: "642", avgLatency: "318ms", kv: "58.4%", color: "blue" }
-                ],
-                tasks: [
-                    { name: "901-摘要-批量处理", tag: "Offline-Batch", calls: "15,000", failures: "312", avgLatency: "338ms" },
-                    { name: "902-话题-评测服务", tag: "Online-Eval", calls: "9,910", failures: "180", avgLatency: "305ms" },
-                    { name: "903-身份-验证鉴权", tag: "Online-Prod", calls: "10,000", failures: "150", avgLatency: "288ms" }
-                ]
-            },
-            "qwen2-2.5": {
-                models: [
-                    { name: "qwen2-2.5", type: "句子相似度", calls: "18,450", failures: "0", avgLatency: "172ms", kv: "39.2%", color: "green" }
-                ],
-                tasks: [
-                    { name: "904-摘要-多语翻译", tag: "Benchmark", calls: "18,450", failures: "0", avgLatency: "172ms" }
-                ]
-            },
-            "whisper": {
-                models: [
-                    { name: "whisper", type: "语音识别", calls: "8,920", failures: "3", avgLatency: "512ms", kv: "30.1%", color: "purple" }
-                ],
-                tasks: [
-                    { name: "905-视听-自动字幕", tag: "Online-Audio", calls: "8,920", failures: "3", avgLatency: "512ms" }
-                ]
-            }
+  <script>
+    const modelData = {
+      'qwen3-32b': {
+        type: '文本生成',
+        modes: {
+          online: { calls: 850241, failures: 24, latency: 320, kv: 68.5, running: 18, waiting: 2 },
+          offline: { calls: 350000, failures: 8, latency: 340, kv: 61.2, running: 6, waiting: 4 }
         },
-        "6h": {
-            all: {
-                models: [
-                    { name: "qwen3-32b", type: "文本生成", calls: "212,400", failures: "5", avgLatency: "322ms", kv: "64.2%", color: "blue" },
-                    { name: "qwen2-2.5", type: "句子相似度", calls: "105,620", failures: "2", avgLatency: "176ms", kv: "40.5%", color: "green" },
-                    { name: "whisper", type: "语音识别", calls: "67,200", failures: "8", avgLatency: "520ms", kv: "32.4%", color: "purple" }
-                ],
-                tasks: [
-                    { name: "901-摘要-批量处理", tag: "Offline-Batch", calls: "92,400", failures: "2", avgLatency: "341ms" },
-                    { name: "902-话题-评测服务", tag: "Online-Eval", calls: "50,000", failures: "1", avgLatency: "308ms" },
-                    { name: "903-身份-验证鉴权", tag: "Online-Prod", calls: "70,000", failures: "2", avgLatency: "292ms" },
-                    { name: "904-摘要-多语翻译", tag: "Benchmark", calls: "105,620", failures: "2", avgLatency: "176ms" },
-                    { name: "905-视听-自动字幕", tag: "Online-Audio", calls: "67,200", failures: "8", avgLatency: "520ms" }
-                ]
-            },
-            "qwen3-32b": {
-                models: [
-                    { name: "qwen3-32b", type: "文本生成", calls: "212,400", failures: "5", avgLatency: "322ms", kv: "64.2%", color: "blue" }
-                ],
-                tasks: [
-                    { name: "901-摘要-批量处理", tag: "Offline-Batch", calls: "92,400", failures: "2", avgLatency: "341ms" },
-                    { name: "902-话题-评测服务", tag: "Online-Eval", calls: "50,000", failures: "1", avgLatency: "308ms" },
-                    { name: "903-身份-验证鉴权", tag: "Online-Prod", calls: "70,000", failures: "2", avgLatency: "292ms" }
-                ]
-            },
-            "qwen2-2.5": {
-                models: [
-                    { name: "qwen2-2.5", type: "句子相似度", calls: "105,620", failures: "2", avgLatency: "176ms", kv: "40.5%", color: "green" }
-                ],
-                tasks: [
-                    { name: "904-摘要-多语翻译", tag: "Benchmark", calls: "105,620", failures: "2", avgLatency: "176ms" }
-                ]
-            },
-            "whisper": {
-                models: [
-                    { name: "whisper", type: "语音识别", calls: "67,200", failures: "8", avgLatency: "520ms", kv: "32.4%", color: "purple" }
-                ],
-                tasks: [
-                    { name: "905-视听-自动字幕", tag: "Online-Audio", calls: "67,200", failures: "8", avgLatency: "520ms" }
-                ]
-            }
+        tasks: [
+          { id: 'TASK-ONLINE-001', name: '话题评测服务', mode: 'online', calls: 200241, failures: 6, latency: '310 ms' },
+          { id: 'TASK-ONLINE-003', name: '身份验证鉴权', mode: 'online', calls: 300000, failures: 10, latency: '290 ms' },
+          { id: 'TASK-OFFLINE-001', name: '摘要批量处理', mode: 'offline', calls: 350000, failures: 8, latency: '340 ms' }
+        ],
+        pods: [
+          { service: 'qwen3-32b-service-A', mode: 'online', node: '192.168.16.21', instance: 'qwen3-32b-a-pod-01', state: 'ACTIVE', kv: 66, gpu: 82 },
+          { service: 'qwen3-32b-service-A', mode: 'online', node: '192.168.16.22', instance: 'qwen3-32b-a-pod-02', state: 'ACTIVE', kv: 71, gpu: 88 },
+          { service: 'qwen3-32b-service-B', mode: 'offline', node: '192.168.16.31', instance: 'qwen3-32b-b-pod-01', state: 'ACTIVE', kv: 58, gpu: 76 },
+          { service: 'qwen3-32b-service-B', mode: 'offline', node: '192.168.16.32', instance: 'qwen3-32b-b-pod-02', state: 'STANDBY', kv: 28, gpu: 34 }
+        ]
+      },
+      'qwen2-2.5': {
+        type: '句子相似度',
+        modes: {
+          online: { calls: 421980, failures: 6, latency: 180, kv: 42.1, running: 10, waiting: 0 },
+          offline: { calls: 126540, failures: 2, latency: 205, kv: 38.4, running: 4, waiting: 1 }
         },
-        "24h": {
-            all: {
-                models: [
-                    { name: "qwen3-32b", type: "文本生成", calls: "850,241", failures: "24", avgLatency: "320ms", kv: "68.5%", color: "blue" },
-                    { name: "qwen2-2.5", type: "句子相似度", calls: "421,980", failures: "6", avgLatency: "180ms", kv: "42.1%", color: "green" },
-                    { name: "whisper", type: "语音识别", calls: "230,120", failures: "45", avgLatency: "515ms", kv: "35.2%", color: "purple" }
-                ],
-                tasks: [
-                    { name: "901-摘要-批量处理", tag: "Offline-Batch", calls: "350,000", failures: "8", avgLatency: "340ms" },
-                    { name: "902-话题-评测服务", tag: "Online-Eval", calls: "200,241", failures: "6", avgLatency: "310ms" },
-                    { name: "903-身份-验证鉴权", tag: "Online-Prod", calls: "300,000", failures: "10", avgLatency: "290ms" },
-                    { name: "904-摘要-多语翻译", tag: "Benchmark", calls: "421,980", failures: "6", avgLatency: "180ms" },
-                    { name: "905-视听-自动字幕", tag: "Online-Audio", calls: "230,120", failures: "45", avgLatency: "515ms" }
-                ]
-            },
-            "qwen3-32b": {
-                models: [
-                    { name: "qwen3-32b", type: "文本生成", calls: "850,241", failures: "24", avgLatency: "320ms", kv: "68.5%", color: "blue" }
-                ],
-                tasks: [
-                    { name: "901-摘要-批量处理", tag: "Offline-Batch", calls: "350,000", failures: "8", avgLatency: "340ms" },
-                    { name: "902-话题-评测服务", tag: "Online-Eval", calls: "200,241", failures: "6", avgLatency: "310ms" },
-                    { name: "903-身份-验证鉴权", tag: "Online-Prod", calls: "300,000", failures: "10", avgLatency: "290ms" }
-                ]
-            },
-            "qwen2-2.5": {
-                models: [
-                    { name: "qwen2-2.5", type: "句子相似度", calls: "421,980", failures: "6", avgLatency: "180ms", kv: "42.1%", color: "green" }
-                ],
-                tasks: [
-                    { name: "904-摘要-多语翻译", tag: "Benchmark", calls: "421,980", failures: "6", avgLatency: "180ms" }
-                ]
-            },
-            "whisper": {
-                models: [
-                    { name: "whisper", type: "语音识别", calls: "230,120", failures: "45", avgLatency: "515ms", kv: "35.2%", color: "purple" }
-                ],
-                tasks: [
-                    { name: "905-视听-自动字幕", tag: "Online-Audio", calls: "230,120", failures: "45", avgLatency: "515ms" }
-                ]
-            }
+        tasks: [
+          { id: 'TASK-ONLINE-006', name: '在线语义匹配', mode: 'online', calls: 295440, failures: 4, latency: '176 ms' },
+          { id: 'TASK-OFFLINE-004', name: '多语相似度评测', mode: 'offline', calls: 126540, failures: 2, latency: '205 ms' }
+        ],
+        pods: [
+          { service: 'qwen2-2.5-service', mode: 'online', node: '192.168.18.11', instance: 'qwen2-2.5-pod-01', state: 'ACTIVE', kv: 43, gpu: 64 },
+          { service: 'qwen2-2.5-service', mode: 'online', node: '192.168.18.12', instance: 'qwen2-2.5-pod-02', state: 'ACTIVE', kv: 39, gpu: 59 },
+          { service: 'qwen2-2.5-service', mode: 'offline', node: '192.168.18.13', instance: 'qwen2-2.5-pod-03', state: 'STANDBY', kv: 18, gpu: 24 }
+        ]
+      },
+      whisper: {
+        type: '语音转写',
+        modes: {
+          online: { calls: 230120, failures: 45, latency: 515, kv: 35.2, running: 8, waiting: 1 },
+          offline: { calls: 98240, failures: 12, latency: 680, kv: 31.8, running: 3, waiting: 3 }
         },
-        "7d": {
-            all: {
-                models: [
-                    { name: "qwen3-32b", type: "文本生成", calls: "5,910,210", failures: "154", avgLatency: "324ms", kv: "67.0%", color: "blue" },
-                    { name: "qwen2-2.5", type: "句子相似度", calls: "2,980,450", failures: "42", avgLatency: "179ms", kv: "41.0%", color: "green" },
-                    { name: "whisper", type: "语音识别", calls: "1,550,210", failures: "128", avgLatency: "516ms", kv: "33.8%", color: "purple" }
-                ],
-                tasks: [
-                    { name: "901-摘要-批量处理", tag: "Offline-Batch", calls: "2,400,000", failures: "62", avgLatency: "343ms" },
-                    { name: "902-话题-评测服务", tag: "Online-Eval", calls: "1,510,210", failures: "42", avgLatency: "312ms" },
-                    { name: "903-身份-验证鉴权", tag: "Online-Prod", calls: "2,000,000", failures: "50", avgLatency: "293ms" },
-                    { name: "904-摘要-多语翻译", tag: "Benchmark", calls: "2,980,450", failures: "42", avgLatency: "179ms" },
-                    { name: "905-视听-自动字幕", tag: "Online-Audio", calls: "1,550,210", failures: "128", avgLatency: "516ms" }
-                ]
-            },
-            "qwen3-32b": {
-                models: [
-                    { name: "qwen3-32b", type: "文本生成", calls: "5,910,210", failures: "154", avgLatency: "324ms", kv: "67.0%", color: "blue" }
-                ],
-                tasks: [
-                    { name: "901-摘要-批量处理", tag: "Offline-Batch", calls: "2,400,000", failures: "62", avgLatency: "343ms" },
-                    { name: "902-话题-评测服务", tag: "Online-Eval", calls: "1,510,210", failures: "42", avgLatency: "312ms" },
-                    { name: "903-身份-验证鉴权", tag: "Online-Prod", calls: "2,000,000", failures: "50", avgLatency: "293ms" }
-                ]
-            },
-            "qwen2-2.5": {
-                models: [
-                    { name: "qwen2-2.5", type: "句子相似度", calls: "2,980,450", failures: "42", avgLatency: "179ms", kv: "41.0%", color: "green" }
-                ],
-                tasks: [
-                    { name: "904-摘要-多语翻译", tag: "Benchmark", calls: "2,980,450", failures: "42", avgLatency: "179ms" }
-                ]
-            },
-            "whisper": {
-                models: [
-                    { name: "whisper", type: "语音识别", calls: "1,550,210", failures: "128", avgLatency: "516ms", kv: "33.8%", color: "purple" }
-                ],
-                tasks: [
-                    { name: "905-视听-自动字幕", tag: "Online-Audio", calls: "1,550,210", failures: "128", avgLatency: "516ms" }
-                ]
-            }
-        }
+        tasks: [
+          { id: 'TASK-ONLINE-009', name: '实时会议转写', mode: 'online', calls: 230120, failures: 45, latency: '515 ms' },
+          { id: 'TASK-OFFLINE-009', name: '历史录音字幕生成', mode: 'offline', calls: 98240, failures: 12, latency: '680 ms' }
+        ],
+        pods: [
+          { service: 'whisper-service-online', mode: 'online', node: '192.168.20.15', instance: 'whisper-pod-01', state: 'ACTIVE', kv: 36, gpu: 71 },
+          { service: 'whisper-service-offline', mode: 'offline', node: '192.168.20.16', instance: 'whisper-pod-02', state: 'ACTIVE', kv: 33, gpu: 68 }
+        ]
+      }
     };
 
-    // Reference pointer for Custom range (matches 24h as baseline)
-    monitorDatabase["custom"] = monitorDatabase["24h"];
+    const rangeFactors = { '1h': .045, '6h': .25, '24h': 1, '7d': 6.85 };
+    let activeTab = 'resource';
+    let activeResourceMode = 'online';
+    let applied = { model: 'qwen3-32b', range: '24h' };
+    let podCharts = [];
 
-    // Enrich service details with dynamic running/waiting pod counts based on timeRange and active state
-    Object.keys(monitorDatabase).forEach(timeRange => {
-        Object.keys(monitorDatabase[timeRange]).forEach(modelCategory => {
-            if (monitorDatabase[timeRange][modelCategory].models) {
-                let expandedServices = [];
-                monitorDatabase[timeRange][modelCategory].models.forEach(model => {
-                    let serviceCount = model.name.includes("qwen") ? 2 : 1;
-                    const letters = ['A', 'B'];
-                    for (let s = 0; s < serviceCount; s++) {
-                        let serviceName = serviceCount > 1 ? `${model.name}-service-${letters[s]}` : `${model.name}-service`;
-                        // Default pod per service based on type
-                        let podCount = model.name.includes("qwen3") ? 3 : (model.name.includes("whisper") ? 2 : 4);
-                        for (let i = 1; i <= podCount; i++) {
-                            let podSuffix = i.toString().padStart(2, '0');
-                            let isActive = i <= (podCount - 1);
-                            let baseCalls = Math.floor(parseInt(model.calls.replace(/,/g, '')) / (podCount * serviceCount));
-                            let callsNum = baseCalls + Math.floor(Math.random() * (baseCalls * 0.2));
-                            
-                            let failuresNum = 0;
-                            if (parseInt(model.failures) > 0 && Math.random() > 0.5) {
-                                 failuresNum = 1;
-                            }
-                            
-                            let latencyBase = parseInt(model.avgLatency.replace('ms', ''));
-                            let latencyNum = latencyBase + Math.floor(Math.random() * 20 - 10);
-                            
-                            let kvBase = parseFloat(model.kv.replace('%', ''));
-                            let kvNum = kvBase + (Math.random() * 10 - 5);
+    function formatNumber(value) { return Math.round(value).toLocaleString('zh-CN'); }
+    function failureRate(failures, calls) { return calls ? `${(failures / calls * 100).toFixed(2)}%` : '0.00%'; }
 
-                            let running = isActive ? (timeRange === "7d" ? 4 : (timeRange === "24h" ? 3 : 2)) : (timeRange === "7d" ? 1 : 0);
-                            let waiting = isActive ? (timeRange === "7d" ? 1 : 0) : (timeRange === "7d" ? 3 : 2);
-                            
-                            let podNameBase = serviceCount > 1 ? `${model.name}-${letters[s].toLowerCase()}` : model.name;
-                            let podName = `${podNameBase}-pod-${podSuffix}`;
+    function renderMetrics() {
+      const data = modelData[applied.model];
+      const factor = rangeFactors[applied.range] || 1;
+      document.getElementById('modelMetricsListContainer').innerHTML = ['online', 'offline'].map(mode => {
+        const metric = data.modes[mode];
+        const calls = Math.round(metric.calls * factor);
+        const failures = Math.round(metric.failures * factor);
+        const label = mode === 'online' ? '在线 ONLINE' : '离线 OFFLINE';
+        return `<article class="card model-mode-card is-${mode}"><div class="mode-card-head"><div class="model-core"><span class="model-core-icon"><svg class="icon"><use href="#i-brain"/></svg></span><div><h3>${applied.model}</h3><p>${data.type}</p></div></div><span class="mode-badge">${label}</span></div><div class="ribbon-metrics"><div class="ribbon-metric"><small>总调用数量</small><strong>${formatNumber(calls)}</strong></div><div class="ribbon-metric"><small>调用失败数 / 率</small><strong class="${failures ? 'danger-text' : ''}">${formatNumber(failures)} <em>/ ${failureRate(failures, calls)}</em></strong></div><div class="ribbon-metric"><small>平均推理延迟</small><strong>${metric.latency} ms</strong></div><div class="ribbon-metric"><small>Running / Waiting</small><strong><span class="success-text">${metric.running}</span> / <span class="warning-text">${metric.waiting}</span></strong></div><div class="ribbon-metric"><small>KV Cache 占用</small><strong>${metric.kv}%</strong><div class="ribbon-progress"><span style="width:${metric.kv}%"></span></div></div></div></article>`;
+      }).join('');
+    }
 
-                            expandedServices.push({
-                                name: serviceName,
-                                pod: `${podName} (${isActive ? 'Active' : 'Standby'})`,
-                                rawPod: podName,
-                                nodeName: `node-${Math.floor(Math.random() * 10 + 1).toString().padStart(2, '0')}`,
-                                gpuId: `GPU ${Math.floor(Math.random() * 4)}`,
-                                calls: callsNum.toLocaleString(),
-                                failures: failuresNum.toString(),
-                                avgLatency: latencyNum + "ms",
-                                kv: kvNum.toFixed(1) + "%",
-                                kvValue: Math.floor(kvNum),
-                                gpuValue: Math.floor(Math.random() * 30 + 60),
-                                running: running,
-                                waiting: waiting
-                            });
-                        }
-                    }
-                });
-                monitorDatabase[timeRange][modelCategory].services = expandedServices;
-            }
-        });
+    function populateResourceFilters() {
+      const pods = modelData[applied.model].pods.filter(item => item.mode === activeResourceMode);
+      const currentService = document.getElementById('serviceFilter').value;
+      const currentNode = document.getElementById('nodeFilter').value;
+      const services = [...new Set(pods.map(item => item.service))];
+      const nodes = [...new Set(pods.map(item => item.node))];
+      document.getElementById('serviceFilter').innerHTML = '<option value="all">全部模型服务</option>' + services.map(value => `<option value="${value}">${value}</option>`).join('');
+      document.getElementById('nodeFilter').innerHTML = '<option value="all">全部节点 IP</option>' + nodes.map(value => `<option value="${value}">${value}</option>`).join('');
+      if (services.includes(currentService)) document.getElementById('serviceFilter').value = currentService;
+      if (nodes.includes(currentNode)) document.getElementById('nodeFilter').value = currentNode;
+    }
+
+    function series(base, offset) {
+      const pattern = [-8, -4, 1, 6, 3, 9, 4];
+      return pattern.map((delta, index) => Math.max(1, Math.min(99, base + delta + ((offset + index) % 3 - 1) * 2)));
+    }
+
+    function renderPodCharts() {
+      podCharts.forEach(chart => chart.destroy());
+      podCharts = [];
+      const service = document.getElementById('serviceFilter').value;
+      const node = document.getElementById('nodeFilter').value;
+      const pods = modelData[applied.model].pods.filter(item => item.mode === activeResourceMode && (service === 'all' || item.service === service) && (node === 'all' || item.node === node));
+      const container = document.getElementById('podChartsContainer');
+      container.innerHTML = '';
+      document.getElementById('resourceEmpty').classList.toggle('hidden', pods.length !== 0);
+      pods.forEach((pod, index) => {
+        const canvasId = `podChart-${index}`;
+        const article = document.createElement('article');
+        article.className = 'card pod-chart-card';
+        article.innerHTML = `<div class="pod-chart-head"><div class="pod-chart-title"><span class="chart-index">${String(index + 1).padStart(2, '0')}</span><div><h3>${pod.node}</h3><p>${pod.instance}</p></div></div><span class="badge ${pod.state === 'ACTIVE' ? 'badge-success' : 'badge-neutral'}">${pod.state}</span></div><div class="pod-service-name">${pod.service}</div><div class="pod-chart-canvas"><canvas id="${canvasId}" role="img" aria-label="${pod.node} 节点 ${pod.instance} 的 KV Cache 与 GPU 使用趋势">KV Cache 与 GPU 使用趋势</canvas></div>`;
+        container.appendChild(article);
+        const chart = new Chart(document.getElementById(canvasId), { type: 'line', data: { labels: ['00:00', '04:00', '08:00', '12:00', '16:00', '20:00', '当前'], datasets: [
+          { label: 'KV Cache (%)', data: series(pod.kv, index), borderColor: '#059669', backgroundColor: 'rgba(5,150,105,.08)', borderWidth: 2, tension: .3, pointRadius: 0, fill: true },
+          { label: 'GPU 使用率 (%)', data: series(pod.gpu, index + 2), borderColor: '#266EFF', backgroundColor: 'rgba(38,110,255,.06)', borderWidth: 2, tension: .3, pointRadius: 0, fill: true }
+        ] }, options: { maintainAspectRatio: false, animation: { duration: matchMedia('(prefers-reduced-motion: reduce)').matches ? 0 : 180 }, interaction: { mode: 'index', intersect: false }, plugins: { legend: { position: 'top', align: 'end', labels: { usePointStyle: true, pointStyle: 'line', boxWidth: 16, color: '#64748b', font: { size: 10 } } } }, scales: { y: { beginAtZero: true, max: 100, ticks: { callback: value => `${value}%`, font: { size: 9 } }, grid: { color: '#e2e8f0', borderDash: [4, 4] } }, x: { grid: { display: false }, ticks: { color: '#94a3b8', font: { size: 9 } } } } } });
+        podCharts.push(chart);
+      });
+    }
+
+    function renderTasks() {
+      const factor = rangeFactors[applied.range] || 1;
+      const rows = modelData[applied.model].tasks.filter(task => task.mode === activeResourceMode);
+      document.getElementById('taskCount').textContent = rows.length;
+      document.getElementById('taskTableBody').innerHTML = rows.length ? rows.map(task => `<tr><td><div class="cell-title">${task.name}</div><div class="cell-subtitle mono">${task.id}</div></td><td><span class="badge ${task.mode === 'online' ? 'badge-info' : 'badge-neutral'}">${task.mode === 'online' ? '在线' : '离线'}</span></td><td class="mono numeric-cell">${formatNumber(task.calls * factor)}</td><td class="mono numeric-cell ${task.failures ? 'danger-text' : 'muted'}">${formatNumber(task.failures * factor)}</td><td class="mono numeric-cell">${task.latency}</td><td class="numeric-cell"><a class="text-link detail-link" href="sys_task_detail.html?task=${encodeURIComponent(task.id)}&source=monitor">详情<svg class="icon icon-sm"><use href="#i-arrow"/></svg></a></td></tr>`).join('') : '<tr><td colspan="6" class="empty-cell">当前筛选条件下没有任务。</td></tr>';
+    }
+
+    function renderServices() {
+      const pods = modelData[applied.model].pods.filter(pod => pod.mode === activeResourceMode);
+      document.getElementById('serviceTableBody').innerHTML = pods.length ? pods.map(pod => `<tr><td><div class="cell-title">${pod.service}</div></td><td><span class="badge ${pod.mode === 'online' ? 'badge-info' : 'badge-neutral'}">${pod.mode === 'online' ? '在线服务' : '离线服务'}</span></td><td class="mono">${pod.instance}</td><td class="mono">${pod.node}</td><td class="mono numeric-cell"><span class="success-text">${pod.state === 'ACTIVE' ? 3 : 0}</span> / <span class="${pod.state === 'ACTIVE' ? 'muted' : 'warning-text'}">${pod.state === 'ACTIVE' ? 0 : 2}</span></td><td class="mono numeric-cell">${pod.kv}%</td></tr>`).join('') : '<tr><td colspan="6" class="empty-cell">当前数据口径下没有模型服务实例。</td></tr>';
+    }
+
+    function switchResourceMode(mode) {
+      activeResourceMode = mode === 'offline' ? 'offline' : 'online';
+      document.querySelectorAll('[data-resource-mode]').forEach(button => {
+        const active = button.dataset.resourceMode === activeResourceMode;
+        button.classList.toggle('active', active);
+        button.setAttribute('aria-pressed', String(active));
+        button.tabIndex = active ? 0 : -1;
+      });
+      populateResourceFilters();
+      document.getElementById('serviceFilter').value = 'all';
+      document.getElementById('nodeFilter').value = 'all';
+      if (activeTab === 'resource') renderPodCharts();
+      renderTasks();
+      renderServices();
+      const params = new URLSearchParams(location.search);
+      params.set('resourceMode', activeResourceMode);
+      history.replaceState({}, '', `${location.pathname}?${params.toString()}`);
+    }
+
+    function renderDashboard(resetResource = false) {
+      applied = { model: document.getElementById('modelSelect').value, range: document.getElementById('timeRangeSelect').value };
+      renderMetrics();
+      if (resetResource) { document.getElementById('serviceFilter').value = 'all'; document.getElementById('nodeFilter').value = 'all'; }
+      populateResourceFilters();
+      if (activeTab === 'resource') renderPodCharts();
+      renderTasks();
+      renderServices();
+      const params = new URLSearchParams(window.location.search);
+      params.set('model', applied.model); params.set('time', applied.range); params.set('tab', activeTab); params.set('resourceMode', activeResourceMode);
+      history.replaceState({}, '', `${location.pathname}?${params.toString()}`);
+    }
+
+    function switchTab(tab, options = {}) {
+      activeTab = ['resource', 'task', 'service'].includes(tab) ? tab : 'resource';
+      document.querySelectorAll('[data-tab]').forEach(button => {
+        const active = button.dataset.tab === activeTab;
+        button.classList.toggle('active', active);
+        button.setAttribute('aria-selected', String(active));
+        button.tabIndex = active ? 0 : -1;
+      });
+      document.getElementById('tabPanelResource').hidden = activeTab !== 'resource';
+      document.getElementById('tabPanelTask').hidden = activeTab !== 'task';
+      document.getElementById('tabPanelService').hidden = activeTab !== 'service';
+      if (activeTab === 'resource' && options.render !== false) requestAnimationFrame(renderPodCharts);
+      if (options.syncUrl !== false) {
+        const params = new URLSearchParams(location.search);
+        params.set('model', applied.model); params.set('time', applied.range); params.set('tab', activeTab); params.set('resourceMode', activeResourceMode);
+        history.replaceState({}, '', `${location.pathname}?${params.toString()}`);
+      }
+    }
+
+    document.getElementById('queryButton').addEventListener('click', () => renderDashboard(true));
+    document.getElementById('serviceFilter').addEventListener('change', renderPodCharts);
+    document.getElementById('nodeFilter').addEventListener('change', renderPodCharts);
+    document.getElementById('resetResourceFilters').addEventListener('click', () => { document.getElementById('serviceFilter').value = 'all'; document.getElementById('nodeFilter').value = 'all'; renderPodCharts(); });
+    document.querySelectorAll('[data-resource-mode]').forEach(button => {
+      button.addEventListener('click', () => switchResourceMode(button.dataset.resourceMode));
+      button.addEventListener('keydown', event => {
+        if (!['ArrowLeft', 'ArrowRight'].includes(event.key)) return;
+        event.preventDefault();
+        const tabs = [...document.querySelectorAll('[data-resource-mode]')];
+        const nextIndex = (tabs.indexOf(button) + (event.key === 'ArrowRight' ? 1 : -1) + tabs.length) % tabs.length;
+        tabs[nextIndex].focus();
+        switchResourceMode(tabs[nextIndex].dataset.resourceMode);
+      });
+    });
+    document.querySelectorAll('[data-tab]').forEach(button => {
+      button.addEventListener('click', () => switchTab(button.dataset.tab));
+      button.addEventListener('keydown', event => {
+        if (!['ArrowLeft', 'ArrowRight'].includes(event.key)) return;
+        event.preventDefault();
+        const tabs = [...document.querySelectorAll('[data-tab]')];
+        const nextIndex = (tabs.indexOf(button) + (event.key === 'ArrowRight' ? 1 : -1) + tabs.length) % tabs.length;
+        tabs[nextIndex].focus();
+        switchTab(tabs[nextIndex].dataset.tab);
+      });
     });
 
-    let activeTab = 'task'; // 'task' or 'service'
-    let appliedFilters = { timeRange: '24h', model: 'all' };
-
-    const validRanges = ['1h', '6h', '24h', '7d', 'custom'];
-    const validModels = ['all', 'qwen3-32b', 'qwen2-2.5', 'whisper'];
-
-    function syncUrlState() {
-        const params = new URLSearchParams(window.location.search);
-        params.set('model', appliedFilters.model);
-        params.set('time', appliedFilters.timeRange);
-        params.set('tab', activeTab);
-        window.history.replaceState({}, '', `${window.location.pathname}?${params.toString()}`);
-    }
-
-    function applyUrlContext() {
-        const params = new URLSearchParams(window.location.search);
-        const timeRange = params.get('time');
-        const model = params.get('model');
-        const tab = params.get('tab');
-        if (validRanges.includes(timeRange)) document.getElementById('timeRangeSelect').value = timeRange;
-        if (validModels.includes(model)) document.getElementById('modelSelect').value = model;
-        if (params.get('source') === 'overview') document.getElementById('overviewContext').hidden = false;
-        handleTimeRangeChange();
-        switchTab(tab === 'service' ? 'service' : 'task', { deferChart: true });
-        renderDashboard();
-        syncUrlState();
-    }
-
-    function handleTimeRangeChange() {
-        const value = document.getElementById('timeRangeSelect').value;
-        const customInputsDiv = document.getElementById('customTimeInputs');
-        if (value === 'custom') {
-            customInputsDiv.classList.remove('hidden');
-            customInputsDiv.classList.add('flex');
-        } else {
-            customInputsDiv.classList.add('hidden');
-            customInputsDiv.classList.remove('flex');
-        }
-    }
-
-    function triggerFilterQuery() {
-        const btn = document.getElementById('queryButton');
-        const originalContent = btn.innerHTML;
-        btn.disabled = true;
-        btn.innerHTML = '<svg class="icon icon-sm query-spinner" viewBox="0 0 24 24"><path d="M21 12a9 9 0 1 1-6.2-8.6"/></svg><span>查询中...</span>';
-        setTimeout(() => {
-            btn.innerHTML = originalContent;
-            btn.disabled = false;
-            renderDashboard();
-            syncUrlState();
-        }, 300);
-    }
-
-    function switchTab(tabType, options = {}) {
-        activeTab = tabType;
-        const tabTask = document.getElementById('tabButtonTask');
-        const tabService = document.getElementById('tabButtonService');
-        const panelTask = document.getElementById('tabPanelTask');
-        const panelService = document.getElementById('tabPanelService');
-
-        const showTask = tabType === 'task';
-        tabTask.classList.toggle('active', showTask);
-        tabService.classList.toggle('active', !showTask);
-        tabTask.setAttribute('aria-selected', String(showTask));
-        tabService.setAttribute('aria-selected', String(!showTask));
-        panelTask.hidden = !showTask;
-        panelService.hidden = showTask;
-        if (!showTask && !options.deferChart) requestAnimationFrame(updateKvTrendChart);
-        syncUrlState();
-    }
-
-    function renderDashboard() {
-        const timeRange = document.getElementById('timeRangeSelect').value;
-        const modelSelected = document.getElementById('modelSelect').value;
-        appliedFilters = { timeRange, model: modelSelected };
-
-        const rangeData = monitorDatabase[timeRange] || monitorDatabase["24h"];
-        const selectedData = rangeData[modelSelected] || rangeData["all"];
-        const rangeText = document.getElementById('timeRangeSelect').options[document.getElementById('timeRangeSelect').selectedIndex].text;
-        const modelText = document.getElementById('modelSelect').options[document.getElementById('modelSelect').selectedIndex].text;
-        document.getElementById('scopeSummary').textContent = `当前范围：${rangeText} · ${modelText} · 指标、任务与服务口径已同步`;
-
-        // 1. Render Model Ribbons (总调用数量，调用失败数，推理延迟。kv cache 占用率)
-        const metricsContainer = document.getElementById('modelMetricsListContainer');
-        metricsContainer.innerHTML = '';
-
-        selectedData.models.forEach(model => {
-            let modelTotalRunning = 0;
-            let modelTotalWaiting = 0;
-            if (selectedData.services) {
-                selectedData.services.forEach(svc => {
-                    if (svc.name.includes(model.name) || svc.pod.includes(model.name)) {
-                        modelTotalRunning += svc.running;
-                        modelTotalWaiting += svc.waiting;
-                    }
-                });
-            }
-            const failureCount = parseInt(model.failures.replace(/,/g, ''));
-            const callCount = parseInt(model.calls.replace(/,/g, ''));
-            const failureRate = callCount ? (failureCount / callCount * 100).toFixed(2) : '0.00';
-            const hasFailures = failureCount > 0;
-            const ribbonTone = model.color === 'purple' ? 'is-purple' : (model.color === 'green' ? 'is-green' : '');
-
-            const ribbonHtml = `
-                <article class="card model-ribbon ${ribbonTone}"><div class="model-core"><span class="model-core-icon"><svg class="icon"><use href="#i-brain"/></svg></span><div><h3>${model.name}</h3><div class="model-core-meta"><span class="tag">${model.type}</span><span class="online-state">ONLINE</span></div></div></div><div class="ribbon-metrics">
-                  <div class="ribbon-metric"><small>总调用数量</small><strong class="ribbon-value">${model.calls}</strong></div>
-                  <div class="ribbon-metric"><small>调用失败数 / 率</small><strong class="ribbon-value ${hasFailures ? 'danger-text' : ''}">${model.failures}<span class="ribbon-value-note"> / ${failureRate}%</span></strong></div>
-                  <div class="ribbon-metric"><small>推理时延平均</small><strong class="ribbon-value">${model.avgLatency}</strong></div>
-                  <div class="ribbon-metric"><small>Running / Waiting Reqs</small><strong class="ribbon-value"><span class="success-text">${modelTotalRunning}</span> / <span class="warning-text">${modelTotalWaiting}</span></strong></div>
-                  <div class="ribbon-metric"><small>KV Cache 占用</small><strong class="ribbon-value">${model.kv}</strong><div class="ribbon-progress"><span style="width:${model.kv}"></span></div></div>
-                </div></article>
-            `;
-            metricsContainer.innerHTML += ribbonHtml;
-        });
-
-        // 2. Render Task Tab (任务名称，任务tag， 调用数量，调用失败数，推理延迟)
-        const taskTableBody = document.getElementById('taskTableBody');
-        taskTableBody.innerHTML = '';
-        selectedData.tasks.forEach(task => {
-            const hasFailure = parseInt(task.failures) > 0;
-            const rowHtml = `
-                <tr><td><div class="cell-title">${task.name}</div></td><td><span class="tag">${task.tag}</span></td><td class="mono" style="text-align:center">${task.calls}</td><td class="mono ${hasFailure ? 'danger-text' : 'muted'}" style="text-align:center">${task.failures}</td><td class="mono" style="text-align:right;color:var(--brand)">${task.avgLatency || task.latency}</td>
-                </tr>
-            `;
-            taskTableBody.innerHTML += rowHtml;
-        });
-
-        // 3. Render Service Tab (模型服务，pod，running/waiting，kv cache占用率)
-        const serviceTableBody = document.getElementById('serviceTableBody');
-        serviceTableBody.innerHTML = '';
-        selectedData.services.forEach(svc => {
-            const rowHtml = `
-                <tr><td><div class="cell-title">${svc.name}</div></td><td class="mono muted">${svc.pod}</td><td class="mono" style="text-align:center"><span class="success-text">${svc.running}</span> / <span class="${svc.waiting > 0 ? 'warning-text' : 'muted'}">${svc.waiting}</span></td><td style="text-align:center"><span class="tag">${svc.kv}</span></td>
-                </tr>
-            `;
-            serviceTableBody.innerHTML += rowHtml;
-        });
-
-        // Pod 趋势仅在服务视图中渲染，避免首屏生成无效图表。
-        if (activeTab === 'service') updateKvTrendChart();
-    }
-
-    let podChartInstances = [];
-
-    function updateKvTrendChart() {
-        const timeRange = appliedFilters.timeRange;
-        const modelSelected = appliedFilters.model;
-        const container = document.getElementById('podChartsContainer');
-        if(!container) return;
-        
-        // Destroy existing instances
-        podChartInstances.forEach(instance => instance.destroy());
-        podChartInstances = [];
-        container.innerHTML = '';
-
-        const rangeData = monitorDatabase[timeRange] || monitorDatabase["24h"];
-        const selectedData = rangeData[modelSelected] || rangeData["all"];
-
-        // Labels mapping based on timeRange
-        let labels = [];
-        if (timeRange === '1h') {
-            labels = ['00', '10', '20', '30', '40', '50'];
-        } else if (timeRange === '6h') {
-            labels = ['-5h', '-4h', '-3h', '-2h', '-1h', 'Now'];
-        } else if (timeRange === '7d') {
-            labels = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
-        } else {
-            labels = ['00:00', '04:00', '08:00', '12:00', '16:00', '20:00', 'Now'];
-        }
-
-        selectedData.services.forEach((svc, index) => {
-            const chartDiv = document.createElement('div');
-            chartDiv.className = 'card pod-chart-card';
-            
-            const canvasId = `podChart_${index}`;
-            chartDiv.innerHTML = `
-                <div class="pod-chart-head"><div><h3>${svc.rawPod}</h3></div><span class="badge ${svc.pod.includes('Active') ? 'badge-success' : 'badge-neutral'}">${svc.pod.includes('Active') ? 'ACTIVE' : 'STANDBY'}</span></div>
-                <div class="pod-chart-canvas"><canvas id="${canvasId}" role="img" aria-label="${svc.rawPod} 的 KV Cache 与 GPU 利用率趋势">KV Cache 与 GPU 利用率趋势</canvas></div>
-            `;
-            container.appendChild(chartDiv);
-
-            // Generate mock data for this pod
-            let kvData = [];
-            let gpuData = [];
-            
-            let baseKv = svc.kvValue;
-            let baseGpu = svc.gpuValue;
-
-            for(let i=0; i<labels.length; i++) {
-                kvData.push(Math.max(5, Math.min(95, baseKv + Math.floor(Math.random() * 20 - 10))));
-                gpuData.push(Math.max(10, Math.min(99, baseGpu + Math.floor(Math.random() * 25 - 10))));
-            }
-
-            const ctx = document.getElementById(canvasId).getContext('2d');
-            const instance = new Chart(ctx, {
-                type: 'line',
-                data: {
-                    labels: labels,
-                    datasets: [
-                        {
-                            label: 'KV Cache (%)',
-                            data: kvData,
-                            borderColor: '#059669',
-                            backgroundColor: 'rgba(16, 185, 129, 0.1)',
-                            borderWidth: 2,
-                            tension: 0.25,
-                            pointRadius: 0,
-                            fill: true,
-                        },
-                        {
-                            label: 'GPU Util (%)',
-                            data: gpuData,
-                            borderColor: '#266EFF',
-                            backgroundColor: 'rgba(38, 110, 255, 0.1)',
-                            borderWidth: 2,
-                            tension: 0.25,
-                            pointRadius: 0,
-                            fill: true,
-                        }
-                    ]
-                },
-                options: {
-                    maintainAspectRatio: false,
-                    animation: { duration: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 0 : 180 },
-                    plugins: { 
-                        legend: { position: 'top', labels: { usePointStyle: true, pointStyle: 'line', boxWidth: 18, color: '#64748b', font: { size: 10 } } }
-                    },
-                    scales: {
-                        y: { 
-                            beginAtZero: true, 
-                            max: 100, 
-                            ticks: { callback: function(value) { return value + "%"; }, font: { size: 10 } },
-                            grid: { color: '#e2e8f0', borderDash: [4,4] }
-                        },
-                        x: { 
-                            grid: { display: false },
-                            ticks: { color: '#94a3b8', font: { size: 9 } }
-                        }
-                    },
-                    interaction: {
-                        mode: 'index',
-                        intersect: false,
-                    }
-                }
-            });
-            podChartInstances.push(instance);
-        });
-    }
-
-    // Initial load
-    document.addEventListener('DOMContentLoaded', () => {
-        applyUrlContext();
+    const params = new URLSearchParams(location.search);
+    if (modelData[params.get('model')]) document.getElementById('modelSelect').value = params.get('model');
+    if (rangeFactors[params.get('time')]) document.getElementById('timeRangeSelect').value = params.get('time');
+    if (params.get('resourceMode') === 'offline') activeResourceMode = 'offline';
+    document.querySelectorAll('[data-resource-mode]').forEach(button => {
+      const active = button.dataset.resourceMode === activeResourceMode;
+      button.classList.toggle('active', active);
+      button.setAttribute('aria-pressed', String(active));
+      button.tabIndex = active ? 0 : -1;
     });
-</script>
+    if (params.get('source') === 'overview') document.getElementById('overviewContext').hidden = false;
+    switchTab(params.get('tab'), { render: false, syncUrl: false });
+    renderDashboard(true);
+  </script>
 </body>
 </html>
-
-

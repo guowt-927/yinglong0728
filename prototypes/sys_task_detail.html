@@ -1,278 +1,481 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="zh-CN">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>任务详情 - 应龙大模型推理平台</title>
-    <link href="assets/css/tailwind.css" rel="stylesheet">
-    <script src="assets/js/chart.js"></script>
-    <link rel="stylesheet" href="assets/css/font-awesome.min.css">
-    <link rel="stylesheet" href="assets/css/font-awesome-compat.css">
-    <link rel="stylesheet" href="assets/css/sherlock-theme.css">
-    <link rel="stylesheet" href="assets/css/yl-regular-toolbar.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>任务详情 - 应龙大模型推理平台</title>
+  <link rel="stylesheet" href="assets/css/yinglong-v2.css">
+  <link rel="stylesheet" href="assets/css/pages/sys_dispatch.css">
+  <link rel="stylesheet" href="assets/css/pages/sys_task_detail.css">
+  <script src="assets/js/chart.js"></script>
 </head>
-<body class="bg-gray-50 text-gray-800">
+<body class="sidebar-led heading-spec-page">
+  <svg width="0" height="0" aria-hidden="true" style="position:absolute">
+    <symbol id="i-dashboard" viewBox="0 0 24 24"><rect width="7" height="9" x="3" y="3" rx="1"/><rect width="7" height="5" x="14" y="3" rx="1"/><rect width="7" height="9" x="14" y="12" rx="1"/><rect width="7" height="5" x="3" y="16" rx="1"/></symbol>
+    <symbol id="i-sliders" viewBox="0 0 24 24"><path d="M4 21v-7m0-4V3m8 18v-9m0-4V3m8 18v-5m0-4V3M1 14h6m2-6h6m2 8h6"/></symbol>
+    <symbol id="i-list" viewBox="0 0 24 24"><path d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01"/></symbol>
+    <symbol id="i-box" viewBox="0 0 24 24"><path d="m21 8-9-5-9 5 9 5 9-5Z"/><path d="m3 8v8l9 5 9-5V8m-9 5v8"/></symbol>
+    <symbol id="i-server" viewBox="0 0 24 24"><rect width="20" height="8" x="2" y="2" rx="2"/><rect width="20" height="8" x="2" y="14" rx="2"/><path d="M6 6h.01M6 18h.01"/></symbol>
+    <symbol id="i-brain" viewBox="0 0 24 24"><path d="M9.5 4A2.5 2.5 0 0 0 7 6.5V8a3 3 0 0 0-3 3v1.5A2.5 2.5 0 0 0 6.5 15H7v1.5A3.5 3.5 0 0 0 10.5 20H12V5.5A1.5 1.5 0 0 0 10.5 4h-1Z"/><path d="M14.5 4A2.5 2.5 0 0 1 17 6.5V8a3 3 0 0 1 3 3v1.5a2.5 2.5 0 0 1-2.5 2.5H17v1.5a3.5 3.5 0 0 1-3.5 3.5H12V5.5A1.5 1.5 0 0 1 13.5 4h1Z"/></symbol>
+    <symbol id="i-activity" viewBox="0 0 24 24"><path d="M3 12h4l2-8 4 16 2-8h6"/></symbol>
+    <symbol id="i-file" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8Z"/><path d="M14 2v6h6M9 15h6M12 12v6"/></symbol>
+    <symbol id="i-check-user" viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="m16 11 2 2 4-4"/></symbol>
+    <symbol id="i-network" viewBox="0 0 24 24"><rect width="6" height="6" x="9" y="2" rx="1"/><rect width="6" height="6" x="2" y="16" rx="1"/><rect width="6" height="6" x="16" y="16" rx="1"/><path d="M12 8v4m-7 4v-2h14v2"/></symbol>
+    <symbol id="i-route" viewBox="0 0 24 24"><circle cx="6" cy="19" r="3"/><path d="M9 19h5.5a3.5 3.5 0 0 0 0-7h-5a3.5 3.5 0 0 1 0-7H15"/><circle cx="18" cy="5" r="3"/></symbol>
+    <symbol id="i-arrow-left" viewBox="0 0 24 24"><path d="m15 18-6-6 6-6"/></symbol>
+    <symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></symbol>
+    <symbol id="i-alert" viewBox="0 0 24 24"><path d="M10.3 2.9 1.8 17a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 2.9a2 2 0 0 0-3.4 0Z"/><path d="M12 9v4m0 4h.01"/></symbol>
+    <symbol id="i-calendar" viewBox="0 0 24 24"><rect width="18" height="18" x="3" y="4" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></symbol>
+    <symbol id="i-chevron-down" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></symbol>
+    <symbol id="i-chevron-left" viewBox="0 0 24 24"><path d="m15 18-6-6 6-6"/></symbol>
+    <symbol id="i-chevron-right" viewBox="0 0 24 24"><path d="m9 18 6-6-6-6"/></symbol>
+    <symbol id="i-x" viewBox="0 0 24 24"><path d="M18 6 6 18M6 6l12 12"/></symbol>
+    <symbol id="i-check" viewBox="0 0 24 24"><path d="m20 6-11 11-5-5"/></symbol>
+    <symbol id="i-send" viewBox="0 0 24 24"><path d="m22 2-7 20-4-9-9-4Z"/><path d="M22 2 11 13"/></symbol>
+  </svg>
 
-<div class="flex h-screen overflow-hidden">
-    <!-- Sidebar -->
-    <aside data-yl-sidebar class="w-64 bg-slate-900 text-white flex-shrink-0 hidden md:flex flex-col">
-        <div class="p-6 border-b border-slate-800">
-            <h1 class="text-2xl font-bold text-blue-400">应龙 <span class="text-sm text-gray-400 font-normal">v1.0</span></h1>
-            <p class="text-xs text-gray-500 mt-1">大模型推理平台</p>
+  <a class="skip-link" href="#main-content">跳到主要内容</a>
+  <aside class="sidebar" aria-label="应龙主导航">
+    <a class="brand" href="../index.html" aria-label="应龙 AI算力基座首页"><span class="brand-mark" aria-hidden="true"><img src="../doc/logo/icon_01.svg" alt=""></span><span class="brand-copy"><span class="brand-name">应龙</span><span class="brand-subtitle">AI算力基座</span></span></a>
+    <nav class="sidebar-nav">
+      <section class="nav-group"><h2 class="nav-group-title">工作台</h2><a class="nav-item" href="../index.html"><svg class="icon"><use href="#i-dashboard"/></svg><span>系统概览</span></a></section>
+      <section class="nav-group"><h2 class="nav-group-title">算力调度</h2><a class="nav-item" href="sys_dispatch.html"><svg class="icon"><use href="#i-sliders"/></svg><span>算力调度</span></a><a class="nav-item active" href="sys_task_list.html" aria-current="page"><svg class="icon"><use href="#i-list"/></svg><span>我的任务</span></a></section>
+      <section class="nav-group"><h2 class="nav-group-title">模型管理</h2><a class="nav-item" href="sys_model_repo.html"><svg class="icon"><use href="#i-box"/></svg><span>模型资产</span></a><a class="nav-item" href="sys_model_service.html"><svg class="icon"><use href="#i-server"/></svg><span>模型服务</span></a><a class="nav-item" href="sys_model_training.html"><svg class="icon"><use href="#i-brain"/></svg><span>模型训练</span></a><a class="nav-item" href="sys_model_governance.html"><svg class="icon"><use href="#i-check-user"/></svg><span>模型纳管</span></a><a class="nav-item" href="sys_model_monitor.html"><svg class="icon"><use href="#i-activity"/></svg><span>模型监测</span></a></section>
+      <section class="nav-group"><h2 class="nav-group-title">资源与运维</h2><a class="nav-item" href="sys_resource_application.html"><svg class="icon"><use href="#i-file"/></svg><span>资源申请</span></a><a class="nav-item" href="sys_resource_approval.html"><svg class="icon"><use href="#i-check-user"/></svg><span>授权审批</span></a><a class="nav-item" href="sys_infrastructure_mgmt.html"><svg class="icon"><use href="#i-network"/></svg><span>集群管理</span></a><a class="nav-item" href="sys_request_tracing.html"><svg class="icon"><use href="#i-route"/></svg><span>链路追踪</span></a></section>
+    </nav>
+  <div class="sidebar-foot"><div class="sidebar-version" tabindex="0" aria-describedby="sidebarVersionDetails"><span>系统版本</span><strong>v1.0.0</strong><span class="sidebar-version-popover" id="sidebarVersionDetails" role="tooltip"><strong>版本信息</strong><span><span>前端版本</span><b>v1.0.0</b></span><span><span>后端版本</span><b>v1.0.0</b></span></span></div></div>
+  </aside>
+
+  <div class="app-main">
+    <header class="global-header"><nav class="breadcrumb" aria-label="面包屑"><a href="../index.html">应龙</a><span>/</span><a href="sys_task_list.html">我的任务</a><span>/</span><span class="breadcrumb-current" aria-current="page">任务详情</span></nav><div class="user-profile"><span>资源管理员</span><span class="user-avatar" aria-hidden="true">A</span></div></header>
+    <main class="page-canvas heading-spec-canvas" id="main-content">
+      <section class="section task-detail-overview" aria-labelledby="taskTitle">
+        <div class="section-heading overview-heading">
+          <div class="task-title-wrap"><a class="btn btn-icon" href="sys_task_list.html" aria-label="返回我的任务"><svg class="icon"><use href="#i-arrow-left"/></svg></a><div><div class="task-title-line"><h1 class="page-title" id="taskTitle">基准测试 Qwen</h1><span class="badge badge-info" id="taskTypeBadge">离线</span><span class="badge badge-success" id="taskStatusBadge">运行中</span></div><p class="page-description"><span class="mono" id="taskId">job-test-001</span> · 关联模型 <span id="taskModel">Qwen-72B-Chat</span></p></div></div>
+          <div class="toolbar-actions"><button class="btn btn-primary" id="openOnlineTest" type="button"><svg class="icon icon-sm"><use href="#i-send"/></svg>在线测试</button><button class="btn btn-danger" id="stopTask" type="button">终止任务</button></div>
         </div>
-        <nav class="flex-1 overflow-y-auto py-4">
-            <ul class="space-y-1 px-4">
-                <li><p class="px-2 text-xs font-semibold text-gray-500 uppercase tracking-wider mb-2">工作台</p></li>
-                <li><a href="../index.html" class="flex items-center px-4 py-2 text-gray-400 hover:text-white hover:bg-slate-800 rounded-lg transition-colors"><i class="fa-solid fa-chart-pie w-6"></i><span>系统概览</span></a></li>
-                
-                <li class="mt-4"><p class="px-2 text-xs font-semibold text-gray-500 uppercase tracking-wider mb-2">算力调度</p></li>
-                <li><a href="sys_dispatch.html" class="flex items-center px-4 py-2 text-gray-400 hover:text-white hover:bg-slate-800 rounded-lg transition-colors"><i class="fa-solid fa-sliders-h w-6"></i><span>算力调度</span></a></li>
-                <li><a href="sys_task_list.html" class="flex items-center px-4 py-2 bg-blue-600 text-white rounded-lg transition-colors" aria-current="page"><i class="fa-solid fa-tasks w-6"></i><span>我的任务</span></a></li>
+      </section>
 
-                <li class="mt-4"><p class="px-2 text-xs font-semibold text-gray-500 uppercase tracking-wider mb-2">模型管理</p></li>
-                <li><a href="sys_model_repo.html" class="flex items-center px-4 py-2 text-gray-400 hover:text-white hover:bg-slate-800 rounded-lg transition-colors"><i class="fa-solid fa-box w-6"></i><span>模型资产</span></a></li>
-                <li><a href="sys_model_training.html" class="flex items-center px-4 py-2 text-gray-400 hover:text-white hover:bg-slate-800 rounded-lg transition-colors"><i class="fa-solid fa-brain w-6"></i><span>模型训练</span></a></li>
-                <li><a href="sys_model_governance.html" class="flex items-center px-4 py-2 text-gray-400 hover:text-white hover:bg-slate-800 rounded-lg transition-colors"><i class="fa-solid fa-user-check w-6"></i><span>模型纳管</span></a></li>
-                <li><a href="sys_model_service.html" class="flex items-center px-4 py-2 text-gray-400 hover:text-white hover:bg-slate-800 rounded-lg transition-colors"><i class="fa-solid fa-server w-6"></i><span>模型服务</span></a></li>
-                <li><a href="sys_model_monitor.html" class="flex items-center px-4 py-2 text-gray-400 hover:text-white hover:bg-slate-800 rounded-lg transition-colors"><i class="fa-solid fa-chart-line w-6"></i><span>模型监测</span></a></li>
-
-                <li class="mt-4"><p class="px-2 text-xs font-semibold text-gray-500 uppercase tracking-wider mb-2">资源与运维</p></li>
-                <li><a href="sys_resource_application.html" class="flex items-center px-4 py-2 text-gray-400 hover:text-white hover:bg-slate-800 rounded-lg transition-colors"><i class="fa-solid fa-file-circle-plus w-6"></i><span>资源申请</span></a></li>
-                <li><a href="sys_resource_approval.html" class="flex items-center px-4 py-2 text-gray-400 hover:text-white hover:bg-slate-800 rounded-lg transition-colors"><i class="fa-solid fa-user-check w-6"></i><span>授权审批</span></a></li>
-                <li><a href="sys_infrastructure_mgmt.html" class="flex items-center px-4 py-2 text-gray-400 hover:text-white hover:bg-slate-800 rounded-lg transition-colors"><i class="fa-solid fa-network-wired w-6"></i><span>集群管理</span></a></li>
-                <li><a href="sys_api_key_mgmt.html" class="flex items-center px-4 py-2 text-gray-400 hover:text-white hover:bg-slate-800 rounded-lg transition-colors"><i class="fa-solid fa-chart-bar w-6"></i><span>请求监控</span></a></li>
-                <li><a href="sys_request_tracing.html" class="flex items-center px-4 py-2 text-gray-400 hover:text-white hover:bg-slate-800 rounded-lg transition-colors"><i class="fa-solid fa-route w-6"></i><span>链路追踪</span></a></li>
-            </ul>
-        </nav>
-        <div class="p-4 border-t border-slate-800">
-             <div class="flex items-center gap-3"><div class="w-8 h-8 rounded-full bg-red-500 flex items-center justify-center text-sm font-bold">S</div><div><p class="text-sm font-medium">System Admin</p></div></div>
+      <section aria-labelledby="metricTitle">
+        <div class="detail-section-head"><h2 id="metricTitle">任务统计指标</h2><div class="statistics-controls"><label class="statistics-mode-field" for="statisticsMode"><span>统计方式</span><select class="control" id="statisticsMode"><option value="range" selected>时间范围</option><option value="day">按天</option><option value="hour">按小时</option></select></label><div class="header-control date-range-control"><span class="header-control-label">时间范围</span><button class="time-range-trigger" id="timeRangeTrigger" type="button" aria-haspopup="dialog" aria-expanded="false" aria-controls="timeRangePopover"><svg class="icon"><use href="#i-calendar"/></svg><span class="mono" id="timeRangeText">2026-08-13 14:42:40 ~ 2026-08-14 14:42:40</span><svg class="icon icon-sm trigger-chevron"><use href="#i-chevron-down"/></svg></button>
+          <div class="precision-time-popover hidden" id="timeRangePopover" role="dialog" aria-modal="false" aria-labelledby="timePopoverTitle">
+            <div class="precision-time-head"><div><h3 id="timePopoverTitle">选择统计时间范围</h3><p>时间精确到秒，单次查询最长 90 天。</p></div><button class="btn btn-icon btn-ghost" id="closeTimePopover" type="button" aria-label="关闭时间范围选择器"><svg class="icon"><use href="#i-x"/></svg></button></div>
+            <div class="precision-time-fields"><div class="time-input-field"><label for="chartStartTime">开始时间</label><input class="control mono" id="chartStartTime" type="datetime-local" step="1" value="2026-08-13T14:42:40" required></div><span aria-hidden="true">至</span><div class="time-input-field"><label for="chartEndTime">结束时间</label><input class="control mono" id="chartEndTime" type="datetime-local" step="1" value="2026-08-14T14:42:40" required></div></div>
+            <div class="precision-time-body"><aside class="time-presets" aria-label="快捷时间范围"><h3>快捷选择</h3><button type="button" data-time-preset="today">今天</button><button type="button" data-time-preset="yesterday">昨天</button><button type="button" data-time-preset="3d">近 3 天</button><button type="button" data-time-preset="7d">近 7 天</button><button type="button" data-time-preset="30d">近 30 天</button><button type="button" data-time-preset="month">本月</button></aside><div class="dual-calendar"><section class="calendar-panel"><header><button class="calendar-nav" id="calendarPrev" type="button" aria-label="查看上个月"><svg class="icon icon-sm"><use href="#i-chevron-left"/></svg></button><h3 id="calendarLeftTitle">2026 年 8 月</h3><span class="calendar-nav-spacer"></span></header><div class="calendar-grid calendar-weekdays" aria-hidden="true"><span>一</span><span>二</span><span>三</span><span>四</span><span>五</span><span>六</span><span>日</span></div><div class="calendar-grid" id="calendarLeftDays"></div></section><section class="calendar-panel"><header><span class="calendar-nav-spacer"></span><h3 id="calendarRightTitle">2026 年 9 月</h3><button class="calendar-nav" id="calendarNext" type="button" aria-label="查看下个月"><svg class="icon icon-sm"><use href="#i-chevron-right"/></svg></button></header><div class="calendar-grid calendar-weekdays" aria-hidden="true"><span>一</span><span>二</span><span>三</span><span>四</span><span>五</span><span>六</span><span>日</span></div><div class="calendar-grid" id="calendarRightDays"></div></section></div></div>
+            <div class="precision-time-footer"><p class="field-error hidden" id="chartTimeError" role="alert"></p><div class="precision-time-actions"><button class="btn btn-ghost" id="resetTimeRange" type="button">重置</button><button class="btn" id="cancelTimeRange" type="button">取消</button><button class="btn btn-primary" id="applyTimeRange" type="button"><svg class="icon icon-sm"><use href="#i-check"/></svg>确认应用</button></div></div>
+          </div>
+        </div><button class="btn btn-primary statistics-submit" id="runStatistics" type="button"><svg class="icon icon-sm"><use href="#i-search"/></svg>统计</button></div></div>
+        <div class="metric-grid detail-metrics">
+          <article class="card metric-card"><div class="metric-head"><span class="metric-label">输入 Tokens 总数</span></div><div class="metric-value" id="metricInputTokens">0</div></article>
+          <article class="card metric-card"><div class="metric-head"><span class="metric-label">输出 Tokens 总数</span></div><div class="metric-value" id="metricOutputTokens">0</div></article>
+          <article class="card metric-card"><div class="metric-head"><span class="metric-label">请求总数</span></div><div class="metric-value" id="metricRequestTotal">0</div></article>
+          <article class="card metric-card"><div class="metric-head"><span class="metric-label">请求中数</span></div><div class="metric-value inflight-text" id="metricRequestPending">0</div></article>
+          <article class="card metric-card"><div class="metric-head"><span class="metric-label">请求成功数</span></div><div class="metric-value success-text" id="metricRequestSuccess">0</div></article>
+          <article class="card metric-card"><div class="metric-head"><span class="metric-label">请求失败数</span></div><div class="metric-value danger-text" id="metricRequestFailed">0</div></article>
+          <article class="card metric-card"><div class="metric-head"><span class="metric-label">请求拒绝数</span></div><div class="metric-value warning-text" id="metricRequestRejected">0</div></article>
         </div>
-    </aside>
+        <section class="card statistics-breakdown-card hidden" id="statisticsBreakdownCard" aria-labelledby="statisticsBreakdownTitle"><header class="statistics-breakdown-head"><h3 id="statisticsBreakdownTitle">统计明细</h3><span class="result-count" id="statisticsBreakdownSummary">共 0 条</span></header><div class="table-scroll"><table><thead><tr><th id="statisticsPeriodHead">统计周期</th><th class="numeric-cell">输入 Tokens 总数</th><th class="numeric-cell">输出 Tokens 总数</th><th class="numeric-cell">请求总数</th><th class="numeric-cell">请求中数</th><th class="numeric-cell">请求成功数</th><th class="numeric-cell">请求失败数</th><th class="numeric-cell">请求拒绝数</th></tr></thead><tbody id="statisticsBreakdownBody"></tbody></table></div></section>
+      </section>
 
-    <div class="flex-1 flex flex-col h-full overflow-hidden">
-        <header class="bg-white shadow-sm z-10 p-4 flex items-center justify-between">
-            <div class="flex items-center">
-                <a href="sys_task_list.html" class="text-gray-500 hover:text-blue-600 mr-4"><i class="fa-solid fa-arrow-left"></i></a>
-                <div>
-                    <h2 class="text-xl font-semibold text-gray-800">任务详情: 基准测试 Qwen</h2>
-                    <div class="flex items-center gap-2 mt-1">
-                        <span class="px-2 py-0.5 bg-blue-100 text-blue-700 rounded text-xs font-bold">Tag: 923</span>
-                        <span class="px-2 py-0.5 bg-green-100 text-green-700 rounded text-xs font-bold">运行中</span>
-                    </div>
-                </div>
-            </div>
-            <div class="flex gap-3">
-                 <!-- Download Button Removed -->
-                 <button class="px-4 py-2 bg-red-50 text-red-600 border border-red-200 rounded-lg hover:bg-red-100">终止任务</button>
-            </div>
-        </header>
+      <section class="card request-chart-card" aria-labelledby="trendTitle"><div class="detail-section-head"><h2 id="trendTitle">请求趋势</h2></div><div class="request-chart-canvas"><canvas id="requestTrendChart" role="img" aria-label="任务成功请求、失败请求与拒绝请求趋势图">请求趋势图</canvas></div></section>
 
-        <main class="flex-1 overflow-y-auto p-6">
-            
-            <!-- Task Info / Integration -->
-            <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100 mb-6">
-                <div class="flex justify-between items-center mb-4 border-b border-gray-100 pb-2">
-                    
-                    <!-- Tabs -->
-                    <div class="flex space-x-2">
-                        <button onclick="switchTab('api')" id="tab-api" class="px-3 py-1.5 text-sm font-medium text-blue-600 border-b-2 border-blue-600 focus:outline-none">API 调用</button>
-                        
-                    </div>
-                </div>
+      <section class="card table-card" aria-labelledby="requestLogTitle">
+        <div class="table-toolbar"><div class="table-title"><h2 id="requestLogTitle">请求日志</h2></div><div class="filters"><label class="filter-label" for="logStatusFilter">状态</label><select class="control" id="logStatusFilter"><option value="all">全部状态</option><option value="success">成功</option><option value="failed">失败</option><option value="rejected">拒绝</option></select><span class="result-count">共 <strong id="logCount">5</strong> 条</span></div></div>
+        <div class="table-scroll"><table><thead><tr><th>创建时间</th><th>Request ID</th><th>请求输入</th><th>请求输出</th><th>状态</th><th class="numeric-cell">输入 Tokens</th><th class="numeric-cell">输出 Tokens</th><th class="numeric-cell">总耗时</th></tr></thead><tbody id="requestLogBody">
+          <tr data-status="success"><td class="mono muted">14:23:01</td><td class="mono">req-7f21a01</td><td><button class="log-content-link" type="button" data-log-id="req-7f21a01" data-log-tab="input">查看完整输入</button></td><td><button class="log-content-link" type="button" data-log-id="req-7f21a01" data-log-tab="output">查看完整输出</button></td><td><span class="badge badge-success">成功</span></td><td class="mono numeric-cell">386</td><td class="mono numeric-cell">1,240</td><td class="mono numeric-cell">450 ms</td></tr>
+          <tr data-status="success"><td class="mono muted">14:22:48</td><td class="mono">req-7f219bc</td><td><button class="log-content-link" type="button" data-log-id="req-7f219bc" data-log-tab="input">查看完整输入</button></td><td><button class="log-content-link" type="button" data-log-id="req-7f219bc" data-log-tab="output">查看完整输出</button></td><td><span class="badge badge-success">成功</span></td><td class="mono numeric-cell">214</td><td class="mono numeric-cell">850</td><td class="mono numeric-cell">328 ms</td></tr>
+          <tr data-status="failed"><td class="mono muted">14:21:16</td><td class="mono">req-7f21811</td><td><button class="log-content-link" type="button" data-log-id="req-7f21811" data-log-tab="input">查看完整输入</button></td><td><button class="log-content-link" type="button" data-log-id="req-7f21811" data-log-tab="output">查看错误信息</button></td><td><span class="badge badge-danger">失败</span></td><td class="mono numeric-cell">8,192</td><td class="mono numeric-cell">0</td><td class="mono numeric-cell">30.0 s</td></tr>
+          <tr data-status="rejected"><td class="mono muted">14:19:33</td><td class="mono">req-7f215ca</td><td><button class="log-content-link" type="button" data-log-id="req-7f215ca" data-log-tab="input">查看完整输入</button></td><td><button class="log-content-link" type="button" data-log-id="req-7f215ca" data-log-tab="output">查看拒绝原因</button></td><td><span class="badge badge-warning">拒绝</span></td><td class="mono numeric-cell">142</td><td class="mono numeric-cell">0</td><td class="mono numeric-cell">18 ms</td></tr>
+          <tr data-status="success"><td class="mono muted">14:18:07</td><td class="mono">req-7f213ef</td><td><button class="log-content-link" type="button" data-log-id="req-7f213ef" data-log-tab="input">查看完整输入</button></td><td><button class="log-content-link" type="button" data-log-id="req-7f213ef" data-log-tab="output">查看完整输出</button></td><td><span class="badge badge-success">成功</span></td><td class="mono numeric-cell">1,024</td><td class="mono numeric-cell">620</td><td class="mono numeric-cell">512 ms</td></tr>
+          <tr class="empty-row hidden" id="logEmpty"><td colspan="8">当前状态下暂无请求日志。</td></tr>
+        </tbody></table></div>
+      </section>
+    </main>
+  </div>
 
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                    <div class="space-y-4">
-                         <div>
-                            <label class="block text-xs font-bold text-gray-500 uppercase mb-1">API Key</label>
-                            <div class="flex items-center gap-2">
-                                <code class="bg-gray-100 px-3 py-1.5 rounded text-sm font-mono text-gray-700 flex-1">sk-mw839s8d...k2j9 (Hidden)</code>
-                                <button class="text-blue-600 hover:text-blue-800 text-sm" aria-label="复制任务编号" title="复制任务编号"><i class="fa-regular fa-copy"></i></button>
-                            </div>
-                        </div>
-                     
-                    </div>
-                    
-                    <!-- Code Blocks Container -->
-                    <div>
-                        <!-- API Call Example -->
-                        <div id="content-api" class="block">
-                            <label class="block text-xs font-bold text-gray-500 uppercase mb-1">Python API 调用示例</label>
-                            <div class="bg-slate-900 rounded-lg p-3 overflow-x-auto">
-<pre class="text-xs font-mono text-gray-300">
-import openai
+  <div class="detail-drawer-backdrop hidden" id="detailDrawerBackdrop"></div>
 
-client = openai.Client(
-    api_key="sk-mw83...", 
-    base_url="http://api.yinglong.ai/v1"
-)
-response = client.chat.completions.create(
-    model="qwen-72b",
-    messages=[{"role": "user", "content": "Hello"}]
-)
-</pre>
-                            </div>
-                        </div>
-
-                        <!-- Consumer Example -->
-                        <div id="content-consumer" class="hidden">
-                            <label class="block text-xs font-bold text-gray-500 uppercase mb-1">RabbitMQ Consumer 示例</label>
-                            <div class="bg-slate-900 rounded-lg p-3 overflow-x-auto">
-<pre class="text-xs font-mono text-gray-300">
-import pika
-
-# RabbitMQ Consumption
-connection = pika.BlockingConnection(
-    pika.ConnectionParameters(host='localhost'))
-channel = connection.channel()
-
-def callback(ch, method, properties, body):
-    print(f"Received: {body.decode()}")
-
-channel.basic_consume(
-    queue='qwen_72b_benchmark_out_v1', 
-    on_message_callback=callback, 
-    auto_ack=True
-)
-
-channel.start_consuming()
-</pre>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Stats Cards & Time Selector -->
-            <div class="mb-6">
-                <div class="flex justify-between items-center mb-4">
-                    <h3 class="font-bold text-gray-800">任务统计指标</h3>
-                    <select class="px-3 py-1.5 border border-gray-300 rounded-lg text-sm bg-white focus:ring-2 focus:ring-blue-500 outline-none">
-                        <option value="1h">最近 1 小时</option>
-                        <option value="6h">最近 6 小时</option>
-                        <option value="12h">最近 12 小时</option>
-                        <option value="24h" selected>最近 24 小时</option>
-                        <option value="7d">最近 7 天</option>
-                    </select>
-                </div>
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                    <div class="bg-white p-5 rounded-xl shadow-sm border border-gray-100">
-                        <div class="flex items-center gap-3 mb-2">
-                            <div class="w-8 h-8 rounded-lg bg-blue-100 text-blue-600 flex items-center justify-center"><i class="fa-solid fa-comment-alt"></i></div>
-                            <span class="text-xs font-bold text-gray-500 uppercase">输出 Tokens</span>
-                        </div>
-                        <p class="text-2xl font-bold text-gray-800">4.2M</p>
-                        
-                    </div>
-                    <div class="bg-white p-5 rounded-xl shadow-sm border border-gray-100">
-                        <div class="flex items-center gap-3 mb-2">
-                            <div class="w-8 h-8 rounded-lg bg-purple-100 text-purple-600 flex items-center justify-center"><i class="fa-solid fa-chart-pie"></i></div>
-                            <span class="text-xs font-bold text-gray-500 uppercase">算力占比估计</span>
-                        </div>
-                        <p class="text-2xl font-bold text-gray-800">15.5%</p>
-                        
-                    </div>
-                    <div class="bg-white p-5 rounded-xl shadow-sm border border-gray-100">
-                        <div class="flex items-center gap-3 mb-2">
-                            <div class="w-8 h-8 rounded-lg bg-orange-100 text-orange-600 flex items-center justify-center"><i class="fa-solid fa-tachometer-alt"></i></div>
-                            <span class="text-xs font-bold text-gray-500 uppercase">请求数</span>
-                        </div>
-                        <p class="text-2xl font-bold text-gray-800">45</p>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Charts -->
-            <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100 mb-6">
-                
-                <div class="h-64 relative">
-                    <canvas id="detailTpsChart"></canvas>
-                </div>
-            </div>
-
-            <!-- Logs -->
-            <div class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
-                 <div class="p-4 border-b border-gray-100 bg-gray-50">
-                    
-                </div>
-                <table class="w-full text-left text-sm">
-                <thead>
-                    <tr class="bg-gray-50 text-gray-500 border-b border-gray-100">
-                        <th class="px-6 py-3">Time</th>
-                        <th class="px-6 py-3">Request ID</th>
-                        <th class="px-6 py-3">Stage (环节)</th>
-                        <th class="px-6 py-3 w-1/4">Prompt Preview</th>
-                        <th class="px-6 py-3 w-1/4">Response Preview</th>
-                        <th class="px-6 py-3">Tokens</th>
-                        <th class="px-6 py-3">Latency</th>
-                    </tr>
-                </thead>
-                <tbody class="divide-y divide-gray-100">
-                    <tr class="hover:bg-gray-50">
-                        <td class="px-6 py-3 text-gray-500">14:23:01</td>
-                        <td class="px-6 py-3 font-mono text-xs">req-001</td>
-                        <td class="px-6 py-3"><span class="px-2 py-0.5 bg-green-100 text-green-700 rounded text-xs">模型响应</span></td>
-                        <td class="px-6 py-3 truncate max-w-xs text-gray-600">Explain quantum computing...</td>
-                        <td class="px-6 py-3 truncate max-w-xs text-gray-600">Quantum computing is...</td>
-                        <td class="px-6 py-3">1,240</td>
-                        <td class="px-6 py-3">450ms</td>
-                    </tr>
-                     <tr class="hover:bg-gray-50">
-                        <td class="px-6 py-3 text-gray-500">14:23:05</td>
-                        <td class="px-6 py-3 font-mono text-xs">req-002</td>
-                        <td class="px-6 py-3"><span class="px-2 py-0.5 bg-blue-100 text-blue-700 rounded text-xs">模型推理</span></td>
-                        <td class="px-6 py-3 truncate max-w-xs text-gray-600">Translate to French...</td>
-                        <td class="px-6 py-3 truncate max-w-xs text-gray-600">La informatique...</td>
-                        <td class="px-6 py-3">850</td>
-                        <td class="px-6 py-3">--</td>
-                    </tr>
-                    <tr class="hover:bg-gray-50">
-                        <td class="px-6 py-3 text-gray-500">14:23:06</td>
-                        <td class="px-6 py-3 font-mono text-xs">req-003</td>
-                        <td class="px-6 py-3"><span class="px-2 py-0.5 bg-yellow-100 text-yellow-700 rounded text-xs">队列消费</span></td>
-                        <td class="px-6 py-3 truncate max-w-xs text-gray-600">Summarize this article...</td>
-                        <td class="px-6 py-3 text-gray-400 italic">Pending...</td>
-                        <td class="px-6 py-3">--</td>
-                        <td class="px-6 py-3">--</td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-        </main>
+  <aside class="detail-drawer" id="logDetailDrawer" role="dialog" aria-modal="true" aria-labelledby="logDrawerTitle" aria-hidden="true">
+    <header class="detail-drawer-header"><div><h2 id="logDrawerTitle">请求内容详情</h2><span class="mono muted" id="logDrawerRequestId">req-7f21a01</span></div><button class="btn btn-icon btn-ghost" id="closeLogDrawer" type="button" aria-label="关闭请求内容详情"><svg class="icon"><use href="#i-x"/></svg></button></header>
+    <div class="detail-drawer-body">
+      <div class="request-meta-grid"><div><small>请求状态</small><strong id="logDrawerStatus">成功</strong></div><div><small>输入 Tokens</small><strong id="logDrawerInputTokens">386</strong></div><div><small>输出 Tokens</small><strong id="logDrawerOutputTokens">1,240</strong></div><div><small>总耗时</small><strong id="logDrawerLatency">450 ms</strong></div></div>
+      <div class="content-tabs" role="tablist" aria-label="请求输入与输出"><button class="active" type="button" role="tab" aria-selected="true" data-content-tab="input">请求输入</button><button type="button" role="tab" aria-selected="false" data-content-tab="output">请求输出</button></div>
+      <section class="content-viewer" aria-live="polite"><div class="content-viewer-head"><h3 id="logContentTitle">请求输入</h3><button class="text-link" id="copyLogContent" type="button">复制内容</button></div><pre id="logContentViewer"></pre></section>
     </div>
-</div>
+    <footer class="detail-drawer-footer"><span>内容来自当前请求日志记录</span><button class="btn btn-primary" id="finishLogDrawer" type="button">完成</button></footer>
+  </aside>
 
-<script>
-function initTaskDetail() {
-    // Init Chart
-    const ctx = document.getElementById('detailTpsChart').getContext('2d');
-    new Chart(ctx, {
-        type: 'line',
-        data: {
-            labels: ['14:00', '14:05', '14:10', '14:15', '14:20', '14:25', '14:30'],
-            datasets: [{
-                label: 'TPS (Tokens/sec)',
-                data: [120, 135, 140, 132, 145, 150, 148],
-                borderColor: '#3b82f6',
-                backgroundColor: 'rgba(59, 130, 246, 0.1)',
-                fill: true,
-                tension: 0.4
-            }]
-        },
-        options: {
-            maintainAspectRatio: false,
-            plugins: { legend: { display: false } },
-            scales: { y: { beginAtZero: true }, x: { grid: { display: false } } }
-        }
-    });
-}
+  <aside class="detail-drawer online-test-drawer" id="onlineTestDrawer" role="dialog" aria-modal="true" aria-labelledby="onlineTestTitle" aria-hidden="true">
+    <header class="detail-drawer-header"><h2 id="onlineTestTitle">在线测试</h2><button class="btn btn-icon btn-ghost" id="closeOnlineTest" type="button" aria-label="关闭在线测试"><svg class="icon"><use href="#i-x"/></svg></button></header>
+    <div class="detail-drawer-body test-console">
+      <section class="request-builder" aria-labelledby="requestBuilderTitle"><h3 id="requestBuilderTitle">请求配置</h3><div class="endpoint-builder"><select class="control method-select" id="testMethod" aria-label="请求方法"><option>POST</option></select><input class="control mono" id="testEndpoint" type="text" value="http://192.192.140.6:31899/v1/chat/completions" aria-label="请求地址"><button class="btn btn-primary send-test-button" id="sendTestRequest" type="button"><svg class="icon icon-sm"><use href="#i-send"/></svg>发送</button></div></section>
+      <section class="test-panel" aria-labelledby="requestHeadersTitle"><h3 id="requestHeadersTitle">Headers</h3><div class="header-editor"><div><input class="control mono" value="Authorization" aria-label="请求头名称"><input class="control mono" id="testAuthorization" value="Bearer YL-LxgFV32jncm-demo-key" aria-label="Authorization 值"></div><div><input class="control mono" value="Content-Type" aria-label="请求头名称"><input class="control mono" value="application/json" aria-label="Content-Type 值"></div></div></section>
+      <section class="test-panel request-body-panel" aria-labelledby="requestBodyTitle"><div class="test-panel-head"><h3 id="requestBodyTitle">Body</h3><span>JSON</span></div><textarea class="request-body-editor" id="testRequestBody" spellcheck="false" aria-label="可编辑请求体"></textarea><p class="field-error hidden" id="testRequestError" role="alert"></p></section>
+      <section class="test-panel response-panel" aria-labelledby="responseTitle"><div class="response-head"><h3 id="responseTitle">响应结果</h3><div class="response-meta hidden" id="responseMeta"><span class="response-status">200 OK</span><span id="responseLatency">482 ms</span><span id="responseSize">1.2 KB</span></div></div><div class="response-empty" id="responseEmpty">点击“发送”后在此查看模拟响应结果。</div><pre class="response-viewer hidden" id="responseViewer"></pre></section>
+    </div>
+    <footer class="detail-drawer-footer"><button class="btn" id="resetOnlineTest" type="button">重置请求体</button></footer>
+  </aside>
 
-if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', initTaskDetail);
-} else {
-    initTaskDetail();
-}
-</script>
+  <div class="toast hidden" id="toast" role="status" aria-live="polite"><svg class="icon"><use href="#i-alert"/></svg><div><h3>任务已终止</h3><p>该任务将不再接收新的请求。</p></div></div>
+
+  <script>
+    const taskProfiles = {
+      'job-test-001': { name: '基准测试 Qwen', type: '离线', model: 'Qwen-72B-Chat', status: '运行中' },
+      'job-test-002': { name: '压力测试 R1', type: '在线', model: 'DeepSeek-R1', status: '已停止' },
+      'TASK-ONLINE-001': { name: '话题评测服务', type: '在线', model: 'qwen3-32b', status: '运行中' },
+      'TASK-ONLINE-003': { name: '身份验证鉴权', type: '在线', model: 'qwen3-32b', status: '运行中' },
+      'TASK-OFFLINE-001': { name: '摘要批量处理', type: '离线', model: 'qwen3-32b', status: '运行中' },
+      'TASK-ONLINE-006': { name: '在线语义匹配', type: '在线', model: 'qwen2-2.5', status: '运行中' },
+      'TASK-OFFLINE-004': { name: '多语相似度评测', type: '离线', model: 'qwen2-2.5', status: '已完成' },
+      'TASK-ONLINE-009': { name: '实时会议转写', type: '在线', model: 'whisper', status: '运行中' },
+      'TASK-OFFLINE-009': { name: '历史录音字幕生成', type: '离线', model: 'whisper', status: '运行中' }
+    };
+
+    const requestLogData = {
+      'req-7f21a01': { status: '成功', inputTokens: '386', outputTokens: '1,240', latency: '450 ms', input: { model: 'Qwen-72B-Chat', messages: [{ role: 'system', content: '你是一名技术科普助手，请使用清晰、准确、易懂的中文回答问题。' }, { role: 'user', content: '请详细解释量子计算的基本原理，并比较量子比特与经典比特在信息表示、并行计算和测量方式上的差异。' }], temperature: 0.6, top_p: 0.95, max_tokens: 1600 }, output: { id: 'chatcmpl-7f21a01', choices: [{ index: 0, message: { role: 'assistant', content: '量子计算利用叠加、纠缠和干涉处理信息。经典比特只能处于 0 或 1，而量子比特可以处于二者的叠加态；多个量子比特通过纠缠形成无法独立描述的整体状态。量子算法通过设计干涉过程增强正确答案的概率，但测量会使量子态坍缩，因此并非简单地一次读取所有并行分支。' }, finish_reason: 'stop' }], usage: { prompt_tokens: 386, completion_tokens: 1240, total_tokens: 1626 } } },
+      'req-7f219bc': { status: '成功', inputTokens: '214', outputTokens: '850', latency: '328 ms', input: { model: 'Qwen-72B-Chat', messages: [{ role: 'user', content: '请将下面的产品技术说明翻译成法语，并保持术语、编号和 Markdown 结构不变：量子计算平台支持混合算力调度、任务隔离和请求追踪。' }], temperature: 0.2 }, output: { choices: [{ message: { role: 'assistant', content: 'La plateforme d’informatique quantique prend en charge l’ordonnancement hybride des ressources de calcul, l’isolation des tâches et le traçage des requêtes.' } }], usage: { prompt_tokens: 214, completion_tokens: 850, total_tokens: 1064 } } },
+      'req-7f21811': { status: '失败', inputTokens: '8,192', outputTokens: '0', latency: '30.0 s', input: { model: 'Qwen-72B-Chat', messages: [{ role: 'user', content: '请阅读以下完整合同文本，识别付款、违约、知识产权、数据安全和争议解决条款中的潜在风险，并按照严重程度输出结构化报告。合同正文较长，此处展示已完整提交的 8,192 Tokens 内容。' }], max_tokens: 2400 }, output: { error: { code: 'MODEL_RESPONSE_TIMEOUT', message: '模型实例在 30 秒内未完成响应。', request_id: 'req-7f21811', retryable: true } } },
+      'req-7f215ca': { status: '拒绝', inputTokens: '142', outputTokens: '0', latency: '18 ms', input: { model: 'Qwen-72B-Chat', messages: [{ role: 'user', content: '请一次性批量生成 500 条不同风格的营销文案，每条不少于 200 字。' }], n: 500 }, output: { error: { code: 'CONCURRENCY_LIMIT_EXCEEDED', message: '请求超过当前任务允许的并发和批量生成上限。', limit: 32 } } },
+      'req-7f213ef': { status: '成功', inputTokens: '1,024', outputTokens: '620', latency: '512 ms', input: { model: 'Qwen-72B-Chat', messages: [{ role: 'user', content: '请从会议纪要中提取行动项，输出负责人、截止日期、优先级和依赖关系。会议讨论涉及模型上线、GPU 扩容、压测和权限审批。' }], response_format: { type: 'json_object' } }, output: { action_items: [{ owner: '模型组', task: '完成模型灰度上线', due: '2026-08-18', priority: 'P0' }, { owner: '算力组', task: '扩容 H800 资源池', due: '2026-08-17', priority: 'P0' }, { owner: '测试组', task: '执行并发压测', due: '2026-08-19', priority: 'P1' }] } }
+    };
+
+    const taskId = new URLSearchParams(location.search).get('task') || 'job-test-001';
+    const profile = taskProfiles[taskId] || { name: '任务详情', type: '在线', model: 'Qwen-72B-Chat', status: '运行中' };
+    document.getElementById('taskTitle').textContent = profile.name;
+    document.getElementById('taskId').textContent = taskId;
+    document.getElementById('taskModel').textContent = profile.model;
+    document.getElementById('taskTypeBadge').textContent = profile.type;
+    document.getElementById('taskStatusBadge').textContent = profile.status;
+    if (profile.status !== '运行中') { document.getElementById('taskStatusBadge').className = 'badge badge-neutral'; document.getElementById('stopTask').disabled = true; }
+
+    const detailTimeState = { start: new Date('2026-08-13T14:42:40'), end: new Date('2026-08-14T14:42:40') };
+    let calendarAnchor = new Date(2026, 7, 1);
+    let calendarPickingEnd = false;
+    let requestChart;
+    let activeLogId = 'req-7f21a01';
+    let activeLogTab = 'input';
+    let activeDrawer = null;
+    let drawerTrigger = null;
+
+    function padDatePart(value) { return String(value).padStart(2, '0'); }
+    function formatFullDateTime(date) { return `${date.getFullYear()}-${padDatePart(date.getMonth() + 1)}-${padDatePart(date.getDate())} ${padDatePart(date.getHours())}:${padDatePart(date.getMinutes())}:${padDatePart(date.getSeconds())}`; }
+    function formatDateTimeInput(date) { return `${date.getFullYear()}-${padDatePart(date.getMonth() + 1)}-${padDatePart(date.getDate())}T${padDatePart(date.getHours())}:${padDatePart(date.getMinutes())}:${padDatePart(date.getSeconds())}`; }
+    function sameCalendarDay(left, right) { return left.getFullYear() === right.getFullYear() && left.getMonth() === right.getMonth() && left.getDate() === right.getDate(); }
+    function readPendingTimeRange() { return { start: new Date(document.getElementById('chartStartTime').value), end: new Date(document.getElementById('chartEndTime').value) }; }
+    function setPendingInputs(start, end) { document.getElementById('chartStartTime').value = formatDateTimeInput(start); document.getElementById('chartEndTime').value = formatDateTimeInput(end); renderCalendars(); }
+
+    function renderCalendarMonth(monthDate, titleId, daysId) {
+      const year = monthDate.getFullYear();
+      const month = monthDate.getMonth();
+      document.getElementById(titleId).textContent = `${year} 年 ${month + 1} 月`;
+      const firstWeekday = (new Date(year, month, 1).getDay() + 6) % 7;
+      const totalDays = new Date(year, month + 1, 0).getDate();
+      const pending = readPendingTimeRange();
+      const startDay = new Date(pending.start.getFullYear(), pending.start.getMonth(), pending.start.getDate()).getTime();
+      const endDay = new Date(pending.end.getFullYear(), pending.end.getMonth(), pending.end.getDate()).getTime();
+      const cells = Array.from({ length: firstWeekday }, () => '<span class="calendar-day-empty"></span>');
+      for (let day = 1; day <= totalDays; day += 1) {
+        const date = new Date(year, month, day);
+        const time = date.getTime();
+        const classes = ['calendar-day'];
+        if (time > startDay && time < endDay) classes.push('in-range');
+        if (sameCalendarDay(date, pending.start)) classes.push('range-start');
+        if (sameCalendarDay(date, pending.end)) classes.push('range-end');
+        const value = `${year}-${padDatePart(month + 1)}-${padDatePart(day)}`;
+        cells.push(`<button class="${classes.join(' ')}" type="button" data-calendar-date="${value}" aria-label="${year}年${month + 1}月${day}日">${day}</button>`);
+      }
+      document.getElementById(daysId).innerHTML = cells.join('');
+    }
+
+    function renderCalendars() {
+      renderCalendarMonth(calendarAnchor, 'calendarLeftTitle', 'calendarLeftDays');
+      renderCalendarMonth(new Date(calendarAnchor.getFullYear(), calendarAnchor.getMonth() + 1, 1), 'calendarRightTitle', 'calendarRightDays');
+    }
+
+    function openTimePopover() {
+      calendarAnchor = new Date(detailTimeState.start.getFullYear(), detailTimeState.start.getMonth(), 1);
+      calendarPickingEnd = false;
+      setPendingInputs(detailTimeState.start, detailTimeState.end);
+      document.querySelectorAll('[data-time-preset]').forEach(button => button.classList.remove('active'));
+      document.getElementById('chartTimeError').classList.add('hidden');
+      document.getElementById('timeRangePopover').classList.remove('hidden');
+      document.getElementById('timeRangeTrigger').setAttribute('aria-expanded', 'true');
+      requestAnimationFrame(() => document.getElementById('chartStartTime').focus());
+    }
+
+    function closeTimePopover(restoreFocus = true) {
+      document.getElementById('timeRangePopover').classList.add('hidden');
+      document.getElementById('timeRangeTrigger').setAttribute('aria-expanded', 'false');
+      document.getElementById('chartTimeError').classList.add('hidden');
+      if (restoreFocus) document.getElementById('timeRangeTrigger').focus();
+    }
+
+    function applyTimePreset(preset) {
+      const now = new Date();
+      const end = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 23, 59, 59);
+      let start = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 0, 0, 0);
+      if (preset === 'yesterday') { start.setDate(start.getDate() - 1); end.setDate(end.getDate() - 1); }
+      if (preset === '3d') start.setDate(start.getDate() - 2);
+      if (preset === '7d') start.setDate(start.getDate() - 6);
+      if (preset === '30d') start.setDate(start.getDate() - 29);
+      if (preset === 'month') start = new Date(now.getFullYear(), now.getMonth(), 1, 0, 0, 0);
+      calendarAnchor = new Date(start.getFullYear(), start.getMonth(), 1);
+      calendarPickingEnd = false;
+      setPendingInputs(start, end);
+      document.querySelectorAll('[data-time-preset]').forEach(button => button.classList.toggle('active', button.dataset.timePreset === preset));
+    }
+
+    function handleCalendarDay(dateValue) {
+      const [year, month, day] = dateValue.split('-').map(Number);
+      if (!calendarPickingEnd) { setPendingInputs(new Date(year, month - 1, day, 0, 0, 0), new Date(year, month - 1, day, 23, 59, 59)); calendarPickingEnd = true; }
+      else {
+        const pending = readPendingTimeRange();
+        const selected = new Date(year, month - 1, day, 23, 59, 59);
+        if (selected < pending.start) setPendingInputs(new Date(year, month - 1, day, 0, 0, 0), pending.end);
+        else setPendingInputs(pending.start, selected);
+        calendarPickingEnd = false;
+      }
+      document.querySelectorAll('[data-time-preset]').forEach(button => button.classList.remove('active'));
+    }
+
+    function applyDetailTimeRange() {
+      const startInput = document.getElementById('chartStartTime');
+      const endInput = document.getElementById('chartEndTime');
+      const start = new Date(startInput.value);
+      const end = new Date(endInput.value);
+      let message = '';
+      if (!startInput.value || !endInput.value || Number.isNaN(start.getTime()) || Number.isNaN(end.getTime())) message = '请选择完整的开始时间和结束时间。';
+      else if (start > end) message = '开始时间不能晚于结束时间。';
+      else if (end - start > 90 * 24 * 60 * 60 * 1000) message = '所选范围超过日志保存期限，单次查询最长为 90 天。';
+      document.getElementById('chartTimeError').textContent = message;
+      document.getElementById('chartTimeError').classList.toggle('hidden', !message);
+      startInput.setAttribute('aria-invalid', String(Boolean(message)));
+      endInput.setAttribute('aria-invalid', String(Boolean(message)));
+      if (message) { (start > end ? endInput : startInput).focus(); return; }
+      detailTimeState.start = start;
+      detailTimeState.end = end;
+      document.getElementById('timeRangeText').textContent = `${formatFullDateTime(start)} ~ ${formatFullDateTime(end)}`;
+      runStatistics();
+      closeTimePopover();
+    }
+
+    function buildHourlyStatistics() {
+      const rows = [];
+      const cursor = new Date(detailTimeState.start);
+      cursor.setMinutes(0, 0, 0);
+      while (cursor < detailTimeState.end) {
+        const bucketStart = new Date(cursor);
+        const bucketEnd = new Date(cursor.getTime() + 60 * 60 * 1000);
+        const overlapStart = Math.max(bucketStart.getTime(), detailTimeState.start.getTime());
+        const overlapEnd = Math.min(bucketEnd.getTime(), detailTimeState.end.getTime());
+        const coverage = Math.max(0, overlapEnd - overlapStart) / (60 * 60 * 1000);
+        const seed = Math.floor(bucketStart.getTime() / (60 * 60 * 1000));
+        const requests = Math.max(1, Math.round((1280 + (seed % 11) * 83) * coverage));
+        const failed = Math.min(requests, Math.round((1 + seed % 4) * coverage));
+        const rejected = Math.min(requests - failed, Math.round((seed % 3) * coverage));
+        const pending = Math.min(requests - failed - rejected, Math.round((1 + seed % 5) * coverage));
+        rows.push({
+          period: `${bucketStart.getFullYear()}-${padDatePart(bucketStart.getMonth() + 1)}-${padDatePart(bucketStart.getDate())} ${padDatePart(bucketStart.getHours())}:00`,
+          inputTokens: requests * (132 + seed % 24),
+          outputTokens: requests * (84 + seed % 18),
+          requests,
+          pending,
+          success: requests - failed - rejected - pending,
+          failed,
+          rejected
+        });
+        cursor.setHours(cursor.getHours() + 1);
+      }
+      return rows;
+    }
+
+    function buildDailyStatistics(hourlyRows) {
+      const groups = new Map();
+      hourlyRows.forEach(row => {
+        const day = row.period.slice(0, 10);
+        if (!groups.has(day)) groups.set(day, { period: day, inputTokens: 0, outputTokens: 0, requests: 0, pending: 0, success: 0, failed: 0, rejected: 0 });
+        const group = groups.get(day);
+        ['inputTokens', 'outputTokens', 'requests', 'pending', 'success', 'failed', 'rejected'].forEach(key => { group[key] += row[key]; });
+      });
+      return [...groups.values()];
+    }
+
+    function renderStatistics() {
+      const hourlyRows = buildHourlyStatistics();
+      const mode = document.getElementById('statisticsMode').value;
+      const rows = mode === 'day' ? buildDailyStatistics(hourlyRows) : hourlyRows;
+      const totals = hourlyRows.reduce((sum, row) => ({
+        inputTokens: sum.inputTokens + row.inputTokens,
+        outputTokens: sum.outputTokens + row.outputTokens,
+        requests: sum.requests + row.requests,
+        pending: sum.pending + row.pending,
+        success: sum.success + row.success,
+        failed: sum.failed + row.failed,
+        rejected: sum.rejected + row.rejected
+      }), { inputTokens: 0, outputTokens: 0, requests: 0, pending: 0, success: 0, failed: 0, rejected: 0 });
+      document.getElementById('metricInputTokens').textContent = totals.inputTokens.toLocaleString('zh-CN');
+      document.getElementById('metricOutputTokens').textContent = totals.outputTokens.toLocaleString('zh-CN');
+      document.getElementById('metricRequestTotal').textContent = totals.requests.toLocaleString('zh-CN');
+      document.getElementById('metricRequestPending').textContent = totals.pending.toLocaleString('zh-CN');
+      document.getElementById('metricRequestSuccess').textContent = totals.success.toLocaleString('zh-CN');
+      document.getElementById('metricRequestFailed').textContent = totals.failed.toLocaleString('zh-CN');
+      document.getElementById('metricRequestRejected').textContent = totals.rejected.toLocaleString('zh-CN');
+      const breakdownCard = document.getElementById('statisticsBreakdownCard');
+      breakdownCard.classList.toggle('hidden', mode === 'range');
+      if (mode === 'range') return;
+      const isDaily = mode === 'day';
+      document.getElementById('statisticsBreakdownTitle').textContent = isDaily ? '按天统计' : '按小时统计';
+      document.getElementById('statisticsPeriodHead').textContent = isDaily ? '日期' : '时间';
+      document.getElementById('statisticsBreakdownSummary').textContent = `共 ${rows.length} ${isDaily ? '天' : '小时'}`;
+      document.getElementById('statisticsBreakdownBody').innerHTML = rows.map(row => `<tr><td class="mono">${row.period}</td><td class="mono numeric-cell">${row.inputTokens.toLocaleString('zh-CN')}</td><td class="mono numeric-cell">${row.outputTokens.toLocaleString('zh-CN')}</td><td class="mono numeric-cell">${row.requests.toLocaleString('zh-CN')}</td><td class="mono numeric-cell inflight-text">${row.pending.toLocaleString('zh-CN')}</td><td class="mono numeric-cell success-text">${row.success.toLocaleString('zh-CN')}</td><td class="mono numeric-cell danger-text">${row.failed.toLocaleString('zh-CN')}</td><td class="mono numeric-cell warning-text">${row.rejected.toLocaleString('zh-CN')}</td></tr>`).join('');
+    }
+
+    function runStatistics() {
+      renderStatistics();
+      renderChart();
+    }
+
+    function renderChart() {
+      if (requestChart) requestChart.destroy();
+      const duration = Math.max(1, detailTimeState.end - detailTimeState.start);
+      const scale = Math.max(.05, Math.min(8, duration / 86400000));
+      const base = [5200, 6400, 5980, 7100, 6850, 7490, 8190];
+      const values = base.map(value => Math.round(value * scale));
+      const step = duration / 6;
+      const showDate = duration > 86400000;
+      const labels = Array.from({ length: 7 }, (_, index) => { const date = new Date(detailTimeState.start.getTime() + step * index); const time = `${padDatePart(date.getHours())}:${padDatePart(date.getMinutes())}`; return showDate ? `${padDatePart(date.getMonth() + 1)}-${padDatePart(date.getDate())} ${time}` : time; });
+      requestChart = new Chart(document.getElementById('requestTrendChart'), { type: 'line', data: { labels, datasets: [
+        { label: '成功请求', data: values, yAxisID: 'y', borderColor: '#266EFF', backgroundColor: 'rgba(38,110,255,.08)', borderWidth: 2.5, tension: .3, pointRadius: 0, fill: true },
+        { label: '失败请求', data: values.map((value, index) => Math.max(1, Math.round(value * (.001 + index * .00008)))), yAxisID: 'y1', borderColor: '#E11D48', borderWidth: 2, tension: .3, pointRadius: 0 },
+        { label: '拒绝请求', data: values.map((value, index) => Math.max(1, Math.round(value * (.00045 + index * .00004)))), yAxisID: 'y1', borderColor: '#D97706', borderWidth: 2, tension: .3, pointRadius: 0 }
+      ] }, options: { maintainAspectRatio: false, animation: { duration: matchMedia('(prefers-reduced-motion: reduce)').matches ? 0 : 180 }, interaction: { mode: 'index', intersect: false }, plugins: { legend: { position: 'top', align: 'end', labels: { usePointStyle: true, pointStyle: 'line', boxWidth: 18, color: '#64748b', font: { size: 10 } } } }, scales: { x: { grid: { display: false }, ticks: { color: '#94a3b8', font: { size: 9 } } }, y: { beginAtZero: true, grid: { color: '#e2e8f0', borderDash: [4,4] }, ticks: { color: '#94a3b8', font: { size: 9 } } }, y1: { beginAtZero: true, position: 'right', grid: { drawOnChartArea: false }, ticks: { color: '#94a3b8', font: { size: 9 } } } } } });
+    }
+
+    function openDrawer(drawer, trigger) {
+      ['logDetailDrawer', 'onlineTestDrawer'].forEach(id => { document.getElementById(id).classList.remove('open'); document.getElementById(id).setAttribute('aria-hidden', 'true'); });
+      activeDrawer = drawer;
+      drawerTrigger = trigger;
+      document.getElementById('detailDrawerBackdrop').classList.remove('hidden');
+      drawer.classList.add('open');
+      drawer.setAttribute('aria-hidden', 'false');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeActiveDrawer() {
+      if (!activeDrawer) return;
+      activeDrawer.classList.remove('open');
+      activeDrawer.setAttribute('aria-hidden', 'true');
+      document.getElementById('detailDrawerBackdrop').classList.add('hidden');
+      document.body.style.overflow = '';
+      const trigger = drawerTrigger;
+      activeDrawer = null;
+      drawerTrigger = null;
+      if (trigger) trigger.focus();
+    }
+
+    function renderLogContent() {
+      const log = requestLogData[activeLogId];
+      document.getElementById('logDrawerRequestId').textContent = activeLogId;
+      document.getElementById('logDrawerStatus').textContent = log.status;
+      document.getElementById('logDrawerInputTokens').textContent = log.inputTokens;
+      document.getElementById('logDrawerOutputTokens').textContent = log.outputTokens;
+      document.getElementById('logDrawerLatency').textContent = log.latency;
+      document.getElementById('logContentTitle').textContent = activeLogTab === 'input' ? '请求输入' : '请求输出';
+      document.getElementById('logContentViewer').textContent = JSON.stringify(log[activeLogTab], null, 2);
+      document.querySelectorAll('[data-content-tab]').forEach(button => { const active = button.dataset.contentTab === activeLogTab; button.classList.toggle('active', active); button.setAttribute('aria-selected', String(active)); });
+    }
+
+    function openLogDrawer(button) {
+      activeLogId = button.dataset.logId;
+      activeLogTab = button.dataset.logTab;
+      renderLogContent();
+      openDrawer(document.getElementById('logDetailDrawer'), button);
+      requestAnimationFrame(() => document.getElementById('closeLogDrawer').focus());
+    }
+
+    function defaultTestBody() {
+      return JSON.stringify({ model: profile.model, messages: [{ role: 'system', content: '你是应龙推理平台的在线测试助手。' }, { role: 'user', content: '请用三句话介绍当前模型的主要能力。' }], temperature: 0.6, top_p: 0.95, max_tokens: 512, stream: false }, null, 2);
+    }
+
+    function resetOnlineTest() {
+      document.getElementById('testRequestBody').value = defaultTestBody();
+      document.getElementById('testRequestError').classList.add('hidden');
+      document.getElementById('responseMeta').classList.add('hidden');
+      document.getElementById('responseViewer').classList.add('hidden');
+      document.getElementById('responseEmpty').classList.remove('hidden');
+    }
+
+    function openOnlineTestDrawer() {
+      if (!document.getElementById('testRequestBody').value) resetOnlineTest();
+      openDrawer(document.getElementById('onlineTestDrawer'), document.getElementById('openOnlineTest'));
+      requestAnimationFrame(() => document.getElementById('testEndpoint').focus());
+    }
+
+    function sendTestRequest() {
+      const error = document.getElementById('testRequestError');
+      const endpoint = document.getElementById('testEndpoint').value.trim();
+      let body;
+      try { body = JSON.parse(document.getElementById('testRequestBody').value); }
+      catch { error.textContent = '请求体不是有效的 JSON，请检查逗号、引号和括号。'; error.classList.remove('hidden'); document.getElementById('testRequestBody').focus(); return; }
+      if (!endpoint) { error.textContent = '请输入请求地址。'; error.classList.remove('hidden'); document.getElementById('testEndpoint').focus(); return; }
+      error.classList.add('hidden');
+      const button = document.getElementById('sendTestRequest');
+      const original = button.innerHTML;
+      button.disabled = true;
+      button.textContent = '发送中…';
+      document.getElementById('responseEmpty').textContent = '正在模拟请求…';
+      window.setTimeout(() => {
+        const prompt = body.messages?.find(message => message.role === 'user')?.content || '测试请求';
+        const response = { id: `chatcmpl-test-${Date.now().toString().slice(-6)}`, object: 'chat.completion', created: Math.floor(Date.now() / 1000), model: body.model || profile.model, choices: [{ index: 0, message: { role: 'assistant', content: `已成功接收在线测试请求。针对“${String(prompt).slice(0, 48)}${String(prompt).length > 48 ? '…' : ''}”，模型返回了模拟响应结果。` }, finish_reason: 'stop' }], usage: { prompt_tokens: 46, completion_tokens: 68, total_tokens: 114 } };
+        document.getElementById('responseViewer').textContent = JSON.stringify(response, null, 2);
+        document.getElementById('responseLatency').textContent = '482 ms';
+        document.getElementById('responseSize').textContent = `${(JSON.stringify(response).length / 1024).toFixed(1)} KB`;
+        document.getElementById('responseMeta').classList.remove('hidden');
+        document.getElementById('responseViewer').classList.remove('hidden');
+        document.getElementById('responseEmpty').classList.add('hidden');
+        button.innerHTML = original;
+        button.disabled = false;
+      }, 620);
+    }
+
+    function filterLogs() {
+      const status = document.getElementById('logStatusFilter').value;
+      const rows = [...document.querySelectorAll('#requestLogBody tr[data-status]')];
+      let count = 0;
+      rows.forEach(row => { const visible = status === 'all' || row.dataset.status === status; row.classList.toggle('hidden', !visible); if (visible) count += 1; });
+      document.getElementById('logCount').textContent = count;
+      document.getElementById('logEmpty').classList.toggle('hidden', count !== 0);
+    }
+
+    document.getElementById('timeRangeTrigger').addEventListener('click', () => document.getElementById('timeRangePopover').classList.contains('hidden') ? openTimePopover() : closeTimePopover());
+    document.getElementById('closeTimePopover').addEventListener('click', () => closeTimePopover());
+    document.getElementById('cancelTimeRange').addEventListener('click', () => closeTimePopover());
+    document.getElementById('resetTimeRange').addEventListener('click', () => { calendarAnchor = new Date(detailTimeState.start.getFullYear(), detailTimeState.start.getMonth(), 1); setPendingInputs(detailTimeState.start, detailTimeState.end); });
+    document.getElementById('applyTimeRange').addEventListener('click', applyDetailTimeRange);
+    document.getElementById('runStatistics').addEventListener('click', runStatistics);
+    document.getElementById('statisticsMode').addEventListener('change', renderStatistics);
+    document.querySelectorAll('[data-time-preset]').forEach(button => button.addEventListener('click', () => applyTimePreset(button.dataset.timePreset)));
+    document.getElementById('calendarPrev').addEventListener('click', () => { calendarAnchor = new Date(calendarAnchor.getFullYear(), calendarAnchor.getMonth() - 1, 1); renderCalendars(); });
+    document.getElementById('calendarNext').addEventListener('click', () => { calendarAnchor = new Date(calendarAnchor.getFullYear(), calendarAnchor.getMonth() + 1, 1); renderCalendars(); });
+    document.getElementById('timeRangePopover').addEventListener('click', event => { const button = event.target.closest('[data-calendar-date]'); if (button) handleCalendarDay(button.dataset.calendarDate); });
+    document.getElementById('chartStartTime').addEventListener('change', () => { const date = new Date(document.getElementById('chartStartTime').value); if (!Number.isNaN(date.getTime())) calendarAnchor = new Date(date.getFullYear(), date.getMonth(), 1); renderCalendars(); });
+    document.getElementById('chartEndTime').addEventListener('change', renderCalendars);
+    document.querySelectorAll('.log-content-link').forEach(button => button.addEventListener('click', () => openLogDrawer(button)));
+    document.querySelectorAll('[data-content-tab]').forEach(button => button.addEventListener('click', () => { activeLogTab = button.dataset.contentTab; renderLogContent(); }));
+    document.getElementById('copyLogContent').addEventListener('click', async () => { try { await navigator.clipboard.writeText(document.getElementById('logContentViewer').textContent); document.getElementById('copyLogContent').textContent = '已复制'; setTimeout(() => { document.getElementById('copyLogContent').textContent = '复制内容'; }, 1500); } catch { document.getElementById('copyLogContent').textContent = '请手动复制'; } });
+    document.getElementById('closeLogDrawer').addEventListener('click', closeActiveDrawer);
+    document.getElementById('finishLogDrawer').addEventListener('click', closeActiveDrawer);
+    document.getElementById('openOnlineTest').addEventListener('click', openOnlineTestDrawer);
+    document.getElementById('closeOnlineTest').addEventListener('click', closeActiveDrawer);
+    document.getElementById('resetOnlineTest').addEventListener('click', resetOnlineTest);
+    document.getElementById('sendTestRequest').addEventListener('click', sendTestRequest);
+    document.getElementById('detailDrawerBackdrop').addEventListener('click', closeActiveDrawer);
+    document.getElementById('logStatusFilter').addEventListener('change', filterLogs);
+    document.getElementById('stopTask').addEventListener('click', () => { document.getElementById('taskStatusBadge').textContent = '已终止'; document.getElementById('taskStatusBadge').className = 'badge badge-danger'; document.getElementById('stopTask').disabled = true; const toast = document.getElementById('toast'); toast.classList.remove('hidden'); setTimeout(() => toast.classList.add('hidden'), 3000); });
+    document.addEventListener('click', event => { const control = document.querySelector('.date-range-control'); if (!document.getElementById('timeRangePopover').classList.contains('hidden') && !control.contains(event.target)) closeTimePopover(false); });
+    document.addEventListener('keydown', event => { if (event.key !== 'Escape') return; if (!document.getElementById('timeRangePopover').classList.contains('hidden')) closeTimePopover(); else if (activeDrawer) closeActiveDrawer(); });
+    resetOnlineTest();
+    runStatistics();
+  </script>
 </body>
 </html>
-
-

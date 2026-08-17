@@ -60,28 +60,24 @@
         }
         .brand {
             display: flex;
-            min-height: 56px;
+            min-height: 68px;
             align-items: center;
-            gap: 10px;
+            gap: 11px;
             padding: 0 16px;
             border-bottom: 1px solid var(--border);
             text-decoration: none;
         }
         .brand-mark {
             display: grid;
-            width: 28px;
-            height: 28px;
-            flex: 0 0 auto;
+            width: 38px;
+            height: 38px;
+            flex: 0 0 38px;
             place-items: center;
-            border-radius: 7px;
-            color: #fff;
-            background: var(--brand);
-            box-shadow: 0 2px 6px rgba(38, 110, 255, .22);
-            font-size: 12px;
-            font-weight: 800;
         }
-        .brand-name { color: var(--ink); font-size: 15px; font-weight: 650; white-space: nowrap; }
-        .env-badge { padding: 1px 6px; border: 1px solid #bfdbfe; border-radius: 4px; color: var(--brand); background: #eff6ff; font: 600 10px/16px var(--font-mono); white-space: nowrap; }
+        .brand-mark img { display: block; width: 38px; height: 38px; object-fit: contain; }
+        .brand-copy { display: flex; min-width: 0; flex-direction: column; }
+        .brand-name { color: var(--ink); font-size: 15px; font-weight: 700; line-height: 20px; white-space: nowrap; }
+        .brand-subtitle { color: var(--muted); font-size: 11px; line-height: 16px; white-space: nowrap; }
         .sidebar-nav { flex: 1; overflow-y: auto; padding: 12px 10px 16px; }
         .nav-group + .nav-group { margin-top: 14px; }
         .nav-group-title { margin: 0 0 5px; padding: 0 10px; color: var(--subtle); font-size: 11px; line-height: 20px; font-weight: 600; }
@@ -100,6 +96,49 @@
         }
         .nav-item:hover { color: var(--ink); background: #f1f5f9; }
         .nav-item.active { color: var(--brand); background: #eff6ff; font-weight: 600; }
+        .sidebar-foot { padding: 10px 12px 12px; border-top: 1px solid var(--border); }
+        .sidebar-version {
+            position: relative;
+            display: flex;
+            min-height: 34px;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+            padding: 7px 9px;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            color: var(--muted);
+            background: #f8fafc;
+            font-size: 11px;
+            cursor: help;
+        }
+        .sidebar-version strong { color: var(--ink); font: 650 11px/18px var(--font-mono); }
+        .sidebar-version-popover {
+            position: absolute;
+            z-index: 90;
+            right: 0;
+            bottom: calc(100% + 8px);
+            left: 0;
+            display: grid;
+            gap: 6px;
+            padding: 10px 12px;
+            border-radius: 7px;
+            color: #e2e8f0;
+            background: #0f172a;
+            box-shadow: 0 10px 24px rgba(15, 23, 42, .24);
+            font-size: 11px;
+            line-height: 18px;
+            opacity: 0;
+            pointer-events: none;
+            transform: translateY(4px);
+            transition: opacity .16s ease, transform .16s ease;
+        }
+        .sidebar-version-popover::after { content: ""; position: absolute; top: 100%; left: 24px; border: 5px solid transparent; border-top-color: #0f172a; }
+        .sidebar-version-popover strong { color: #fff; font-family: var(--font-sans); font-size: 12px; }
+        .sidebar-version-popover span { display: flex; justify-content: space-between; gap: 12px; }
+        .sidebar-version:hover .sidebar-version-popover,
+        .sidebar-version:focus .sidebar-version-popover,
+        .sidebar-version:focus-within .sidebar-version-popover { opacity: 1; transform: translateY(0); }
         .avatar { display: grid; width: 28px; height: 28px; flex: 0 0 auto; place-items: center; border: 1px solid #60a5fa; border-radius: 50%; color: #fff; background: var(--brand); font-size: 11px; font-weight: 700; }
 
         .content { width: calc(100% - var(--sidebar-width)); min-width: 0; margin-left: var(--sidebar-width); }
@@ -143,24 +182,23 @@
         .section-note { color: var(--muted); font-size: 12px; }
         .panel { border: 1px solid rgba(226, 232, 240, .9); border-radius: var(--radius); background: #fff; box-shadow: 0 1px 2px rgba(15, 23, 42, .025); }
 
-        .kpi-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); overflow: hidden; }
+        .kpi-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); overflow: hidden; }
         .kpi { display: flex; min-width: 0; align-items: center; gap: 12px; min-height: 94px; padding: 15px 16px; border-right: 1px solid var(--border); border-bottom: 1px solid var(--border); }
-        .kpi:nth-child(3n) { border-right: 0; }
-        .kpi:nth-last-child(-n+3) { border-bottom: 0; }
+        .kpi:nth-child(4n) { border-right: 0; }
+        .kpi:nth-last-child(-n+4) { border-bottom: 0; }
         .kpi-icon { display: grid; width: 40px; height: 40px; flex: 0 0 auto; place-items: center; border: 1px solid #dbeafe; border-radius: 8px; color: var(--brand); background: #eff6ff; }
         .kpi-icon.success { border-color: #a7f3d0; color: var(--success); background: #ecfdf5; }
         .kpi-icon.warning { border-color: #fde68a; color: var(--warning); background: #fffbeb; }
         .kpi-icon.danger { border-color: #fecdd3; color: var(--danger); background: #fff1f2; }
+        .kpi-icon.info { border-color: #bae6fd; color: var(--info); background: #f0f9ff; }
         .kpi-copy { min-width: 0; }
         .kpi-label { color: var(--muted); font-size: 12px; white-space: nowrap; }
         .kpi-value-row { display: flex; min-width: 0; align-items: baseline; gap: 7px; margin-top: 1px; }
         .kpi-value { color: var(--ink); font: 700 22px/30px var(--font-mono); white-space: nowrap; }
         .kpi-unit { color: var(--muted); font-size: 11px; }
-        .kpi-trend { display: inline-flex; align-items: center; gap: 3px; margin-top: 2px; color: var(--success); font-size: 10px; white-space: nowrap; }
-        .kpi-trend.warning { color: var(--warning); }
-        .kpi-trend.danger { color: var(--danger); }
+        .kpi-meta { margin-top: 3px; color: var(--muted); font-size: 10px; white-space: nowrap; }
 
-        .risk-panel { display: grid; grid-template-columns: minmax(240px, 1.15fr) repeat(3, minmax(180px, 1fr)); overflow: hidden; }
+        .risk-panel { display: grid; grid-template-columns: minmax(240px, 1.05fr) repeat(2, minmax(220px, 1fr)); overflow: hidden; }
         .risk-lead { padding: 16px; border-right: 1px solid var(--border); background: #fffbeb; }
         .risk-kicker { display: flex; align-items: center; gap: 7px; color: #92400e; font-size: 12px; font-weight: 650; }
         .risk-title { margin: 5px 0 0; color: var(--ink); font-size: 15px; font-weight: 650; }
@@ -180,20 +218,56 @@
         .text-link { display: inline-flex; align-items: center; gap: 3px; margin-top: 7px; border: 0; padding: 0; color: var(--brand); background: transparent; font-size: 11px; font-weight: 600; text-decoration: none; white-space: nowrap; }
         .text-link:hover { text-decoration: underline; }
 
-        .resource-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
-        .resource-card { padding: 14px 15px; transition: border-color .16s ease, box-shadow .16s ease; }
-        .resource-card:hover { border-color: #cbd5e1; box-shadow: 0 3px 10px rgba(15, 23, 42, .05); }
-        .resource-card-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 8px; }
-        .resource-name { margin: 0; color: var(--ink); font-size: 13px; font-weight: 650; }
-        .resource-cluster { margin-top: 2px; color: var(--muted); font-size: 11px; }
-        .resource-value-row { display: flex; align-items: flex-end; justify-content: space-between; gap: 8px; margin-top: 14px; }
-        .resource-value { color: var(--ink); font: 700 20px/26px var(--font-mono); }
-        .resource-value small { color: var(--muted); font-size: 11px; font-weight: 400; }
-        .resource-ratio { color: var(--muted); font: 11px/18px var(--font-mono); }
+        .resource-heading-tools { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; }
+        .resource-filter-label { display: inline-flex; align-items: center; gap: 6px; color: var(--muted); font-size: 12px; font-weight: 600; white-space: nowrap; }
+        .resource-filter-label .icon { width: 14px; height: 14px; }
+        .resource-filter-select { min-height: 32px; padding: 6px 30px 6px 10px; border-color: var(--border); border-radius: 6px; color: var(--text); background-color: #fff; font-size: 12px; }
+        .resource-workbench { display: grid; grid-template-columns: 318px minmax(0, 1fr); min-height: 456px; overflow: hidden; border-radius: 12px; box-shadow: 0 1px 2px rgba(15, 23, 42, .025); }
+        .resource-master { border-right: 1px solid var(--border); background: #fff; }
+        .resource-master-label { min-height: 40px; padding: 11px 14px; border-bottom: 1px solid var(--border); color: var(--muted); background: #f8fafc; font-size: 11px; font-weight: 650; letter-spacing: .02em; }
+        .resource-master-list { display: grid; }
+        .resource-master-item { display: grid; width: 100%; grid-template-columns: 46px minmax(0, 1fr); align-items: center; gap: 7px 12px; min-height: 96px; padding: 12px 14px; border: 0; border-bottom: 1px solid #f1f5f9; border-radius: 0; color: var(--text); background: #fff; text-align: left; transition: color .16s ease, background-color .16s ease, box-shadow .16s ease; }
+        .resource-master-item:last-child { border-bottom: 0; }
+        .resource-master-item:hover { background: rgba(248, 250, 252, .8); }
+        .resource-master-item.active { color: var(--brand); background: #eff6ff; box-shadow: 3px 0 0 var(--brand) inset; }
+        .vendor-mark { display: grid; width: 46px; height: 46px; grid-row: span 2; place-items: center; border: 1px solid var(--border); border-radius: 8px; background: #fff; }
+        .vendor-mark svg { width: 28px; height: 28px; }
+        .vendor-mark.nvidia { color: #5c940d; background: #f7fee7; border-color: #d9f99d; }
+        .vendor-mark.huawei { color: #cf0a2c; background: #fff1f2; border-color: #fecdd3; }
+        .resource-master-copy { min-width: 0; }
+        .resource-master-copy strong { display: block; overflow: hidden; color: var(--ink); font: 650 13px/20px var(--font-mono); text-overflow: ellipsis; white-space: nowrap; }
+        .resource-master-copy span { display: block; margin-top: 1px; color: var(--muted); font-size: 11px; }
+        .resource-master-stats { display: grid; grid-template-columns: 1.25fr .8fr .8fr; gap: 10px; min-width: 0; }
+        .resource-master-stat { min-width: 0; }
+        .resource-master-stat small { display: block; color: var(--subtle); font-size: 10px; line-height: 15px; white-space: nowrap; }
+        .resource-master-stat strong { display: block; overflow: hidden; color: var(--text); font: 650 12px/18px var(--font-mono); text-overflow: ellipsis; white-space: nowrap; }
+        .resource-master-item.active .resource-master-copy strong, .resource-master-item.active .resource-master-stat strong { color: #1d4ed8; }
+        .resource-detail { min-width: 0; background: #fff; }
+        .resource-detail-head { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 14px 16px; border-bottom: 1px solid #f1f5f9; }
+        .resource-detail-title { display: flex; min-width: 0; align-items: center; gap: 9px; }
+        .resource-detail-title .vendor-mark { width: 34px; height: 34px; border-radius: 7px; }
+        .resource-detail-title .vendor-mark svg { width: 23px; height: 23px; }
+        .resource-detail-heading-line { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
+        .resource-detail-title h3 { margin: 0; color: var(--ink); font-size: 14px; font-weight: 650; }
+        .resource-detail-total { padding: 2px 7px; border: 1px solid var(--border); border-radius: 999px; color: var(--muted); background: #f8fafc; font: 600 10px/16px var(--font-mono); white-space: nowrap; }
+        .resource-detail-actions { display: flex; flex-wrap: wrap; align-items: center; justify-content: flex-end; gap: 8px; }
+        .resource-metrics { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); border-bottom: 1px solid var(--border); }
+        .resource-metric { min-height: 78px; padding: 12px 16px; border-right: 1px solid var(--border); }
+        .resource-metric:last-child { border-right: 0; }
+        .resource-metric-label { display: flex; align-items: center; gap: 5px; color: var(--muted); font-size: 10px; }
+        .metric-help { display: inline-grid; width: 15px; height: 15px; place-items: center; border: 1px solid #cbd5e1; border-radius: 50%; color: var(--muted); font: 650 9px/1 var(--font-sans); cursor: help; }
+        .resource-metric-value { margin-top: 2px; color: var(--ink); font: 700 19px/27px var(--font-mono); }
+        .resource-metric-note { margin-top: 1px; color: var(--subtle); font-size: 9px; line-height: 15px; }
+        .resource-table-head { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px; padding: 12px 16px; border-bottom: 1px solid #f1f5f9; background: #fff; }
+        .resource-table-head strong { color: var(--ink); font-size: 12px; font-weight: 650; }
+        .resource-table-tools { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; }
+        .resource-table-empty { height: 132px; color: var(--muted); text-align: center; }
+        .resource-detail th { letter-spacing: .035em; }
+        .resource-detail tbody tr { transition: background-color .16s ease; }
+        .resource-pagination { padding: 12px; border-top: 1px solid #f1f5f9; background: rgba(248, 250, 252, .55); font-size: 12px; }
         .progress { height: 6px; margin-top: 8px; overflow: hidden; border-radius: 999px; background: #e2e8f0; }
         .progress > span { display: block; height: 100%; border-radius: inherit; background: var(--brand); }
         .progress.warning > span { background: #f59e0b; }
-        .resource-foot { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-top: 8px; color: var(--muted); font-size: 11px; }
 
         .node-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); overflow: hidden; }
         .node-item { position: relative; min-height: 92px; padding: 15px 16px; border-right: 1px solid var(--border); color: inherit; text-decoration: none; }
@@ -206,25 +280,107 @@
         .node-value { margin-top: 5px; color: var(--ink); font: 700 22px/28px var(--font-mono); }
         .node-share { position: absolute; right: 16px; bottom: 16px; color: var(--muted); font: 11px/18px var(--font-mono); }
 
-        .model-health-panel { display: grid; grid-template-columns: minmax(230px, .9fr) minmax(0, 2.1fr); overflow: hidden; }
-        .model-health-summary { padding: 16px; border-right: 1px solid var(--border); background: #f8fbff; }
+        .model-health-panel { overflow: hidden; }
+        .model-health-summary { display: flex; align-items: center; justify-content: space-between; gap: 24px; padding: 14px 16px; border-bottom: 1px solid var(--border); background: #f8fbff; }
+        .model-health-overview { display: flex; min-width: 0; align-items: center; gap: 18px; }
         .model-health-kicker { color: var(--brand); font-size: 11px; font-weight: 700; }
-        .model-health-score { display: flex; align-items: baseline; gap: 7px; margin-top: 5px; }
-        .model-health-score strong { color: var(--ink); font: 700 26px/34px var(--font-mono); }
+        .model-health-score { display: flex; flex: 0 0 auto; align-items: baseline; gap: 7px; }
+        .model-health-score strong { color: var(--ink); font: 700 24px/32px var(--font-mono); }
         .model-health-score span { color: var(--muted); font-size: 12px; }
-        .model-health-copy { margin: 5px 0 0; color: var(--muted); font-size: 11px; }
-        .model-health-actions { display: flex; flex-wrap: wrap; gap: 8px 14px; margin-top: 12px; }
-        .model-health-list { min-width: 0; }
-        .model-health-row { display: grid; grid-template-columns: minmax(150px, 1.2fr) repeat(3, minmax(86px, .7fr)) auto; align-items: center; gap: 12px; min-height: 66px; padding: 10px 14px; border-bottom: 1px solid #f1f5f9; color: inherit; text-decoration: none; }
-        .model-health-row:last-child { border-bottom: 0; }
-        .model-health-row:hover { background: #f8fafc; }
-        .model-health-name { min-width: 0; }
-        .model-health-name strong { display: block; overflow: hidden; color: var(--ink); font: 650 12px/20px var(--font-mono); text-overflow: ellipsis; white-space: nowrap; }
-        .model-health-name .badge { margin-top: 4px; }
-        .model-health-metric small { display: block; color: var(--subtle); font-size: 9px; }
-        .model-health-metric strong { display: block; margin-top: 2px; color: var(--text); font: 650 12px/18px var(--font-mono); }
-        .model-health-metric strong.warning { color: var(--warning); }
-        .model-health-open { color: var(--brand); font-size: 11px; font-weight: 650; white-space: nowrap; }
+        .model-health-copy { max-width: 430px; margin: 0; color: var(--muted); font-size: 11px; }
+        .model-health-actions { display: flex; flex: 0 0 auto; flex-wrap: wrap; gap: 8px 14px; }
+        .model-health-list { min-width: 0; overflow-x: auto; }
+        .model-health-table { min-width: 1120px; table-layout: fixed; }
+        .model-health-table th:nth-child(1) { width: 18%; }
+        .model-health-table th:nth-child(2) { width: 8%; }
+        .model-health-table th:nth-child(3) { width: 12%; }
+        .model-health-table th:nth-child(4) { width: 7%; }
+        .model-health-table th:nth-child(5) { width: 19%; }
+        .model-health-table th:nth-child(6) { width: 10%; }
+        .model-health-table th:nth-child(7) { width: 11%; }
+        .model-health-table th:nth-child(8) { width: 8%; }
+        .model-health-table th:nth-child(9) { width: 7%; }
+        .model-health-table td { height: 58px; }
+        .model-service-heading { display: flex; min-width: 0; align-items: center; gap: 7px; }
+        .model-service-name { min-width: 0; overflow: hidden; color: var(--ink); font: 650 12px/20px var(--font-mono); text-overflow: ellipsis; white-space: nowrap; }
+        .model-service-heading .badge { min-height: 20px; flex: 0 0 auto; padding-inline: 6px; font-size: 10px; }
+        .service-type { display: inline-flex; min-height: 22px; align-items: center; gap: 6px; padding: 1px 8px; border: 1px solid; border-radius: 999px; font-size: 11px; font-weight: 650; }
+        .service-type::before { width: 6px; height: 6px; border-radius: 50%; background: currentColor; content: ""; }
+        .service-type.online { border-color: #a7f3d0; color: #047857; background: #ecfdf5; }
+        .service-type.offline { border-color: #fecdd3; color: #be123c; background: #fff1f2; }
+        .instance-count { display: inline-flex; align-items: baseline; gap: 3px; color: var(--ink); }
+        .instance-count strong { font: 700 13px/20px var(--font-mono); }
+        .instance-count small { color: var(--muted); font-size: 10px; }
+        .node-ip-preview { display: flex; min-width: 0; align-items: center; gap: 7px; }
+        .node-ip-first { min-width: 0; overflow: hidden; color: var(--text); font: 11px/22px var(--font-mono); text-overflow: ellipsis; white-space: nowrap; }
+        .node-ip-more { display: inline-flex; min-height: 26px; flex: 0 0 auto; align-items: center; padding: 2px 8px; border: 1px solid #bfdbfe; border-radius: 999px; color: #1d4ed8; background: #eff6ff; font-size: 10px; font-weight: 650; white-space: nowrap; transition: border-color .16s ease, background-color .16s ease; }
+        .node-ip-more:hover { border-color: #93c5fd; background: #dbeafe; }
+        .node-ip-empty { color: var(--subtle); }
+        .failure-rate { font: 650 12px/18px var(--font-mono); font-variant-numeric: tabular-nums; }
+        .failure-rate.warning { color: var(--warning); }
+        .column-help { position: relative; display: inline-flex; align-items: center; gap: 3px; }
+        .help-tip { position: relative; width: 24px; height: 24px; border: 0; padding: 0; color: #64748b; background: transparent; cursor: help; }
+        .help-tip::before { position: absolute; inset: 3px; display: grid; place-items: center; border: 1px solid #94a3b8; border-radius: 50%; background: #fff; content: "?"; font: 700 11px/16px var(--font-sans); }
+        .help-tip:focus-visible { border-radius: 4px; outline: 2px solid var(--brand); outline-offset: 1px; }
+        .help-popover { position: absolute; top: calc(100% + 4px); right: 0; z-index: 20; width: 218px; padding: 8px 10px; border: 1px solid #cbd5e1; border-radius: 6px; color: var(--text); background: #fff; box-shadow: 0 8px 20px rgba(15, 23, 42, .14); font-size: 11px; font-weight: 500; line-height: 18px; opacity: 0; pointer-events: none; transform: translateY(-3px); transition: opacity .16s ease, transform .16s ease; white-space: normal; }
+        .help-tip:hover + .help-popover, .help-tip:focus-visible + .help-popover { opacity: 1; transform: translateY(0); }
+        .model-health-open { color: var(--brand); font-size: 11px; font-weight: 650; text-decoration: none; white-space: nowrap; }
+        .model-health-open:hover { text-decoration: underline; }
+        .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0, 0, 0, 0); clip-path: inset(50%); white-space: nowrap; }
+
+        .task-compute-panel { overflow: hidden; }
+        .task-compute-toolbar { display: flex; align-items: center; justify-content: space-between; gap: 18px; padding: 13px 16px; border-bottom: 1px solid var(--border); background: #f8fbff; }
+        .task-compute-intro { min-width: 0; }
+        .task-compute-intro strong { display: block; color: var(--ink); font-size: 13px; font-weight: 650; }
+        .task-compute-intro span { display: block; margin-top: 2px; color: var(--muted); font-size: 10px; }
+        .task-compute-filters { display: flex; flex: 0 0 auto; flex-wrap: wrap; align-items: flex-end; justify-content: flex-end; gap: 10px; }
+        .task-compute-filter { display: grid; gap: 3px; }
+        .task-compute-filter > label, .task-compute-filter-label { color: var(--muted); font-size: 10px; font-weight: 650; }
+        .task-compute-filter .control { min-width: 162px; min-height: 32px; }
+        .task-compute-type button { min-width: 46px; }
+        .task-compute-body { display: grid; grid-template-columns: 268px minmax(0, 1fr); min-height: 356px; }
+        .task-compute-summary { padding: 18px; border-right: 1px solid var(--border); background: #fff; }
+        .task-compute-kicker { color: var(--muted); font-size: 10px; font-weight: 650; }
+        .task-compute-total { margin-top: 3px; color: var(--ink); font: 750 28px/36px var(--font-mono); letter-spacing: -.03em; }
+        .task-compute-unit { color: var(--muted); font-size: 11px; }
+        .task-compute-stats { display: grid; gap: 0; margin-top: 18px; border-top: 1px solid #f1f5f9; }
+        .task-compute-stat { padding: 11px 0; border-bottom: 1px solid #f1f5f9; }
+        .task-compute-stat span { display: block; color: var(--subtle); font-size: 9px; }
+        .task-compute-stat strong { display: block; overflow: hidden; margin-top: 2px; color: var(--text); font-size: 12px; font-weight: 650; text-overflow: ellipsis; white-space: nowrap; }
+        .task-compute-stat strong.mono { color: var(--brand); }
+        .task-compute-method { margin: 12px 0 0; color: var(--muted); font-size: 9px; line-height: 16px; }
+        .task-compute-ranking { min-width: 0; padding: 14px 16px 16px; background: #fff; }
+        .task-compute-ranking-head { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 6px; }
+        .task-compute-ranking-head strong { color: var(--ink); font-size: 12px; font-weight: 650; }
+        .task-compute-ranking-head span { color: var(--muted); font-size: 10px; }
+        .task-compute-list { display: grid; }
+        .task-compute-list.hidden { display: none; }
+        .task-compute-row { display: grid; grid-template-columns: 26px minmax(150px, 1.05fr) minmax(220px, 1.7fr) 76px; align-items: center; gap: 10px; min-height: 52px; border-bottom: 1px solid #f1f5f9; }
+        .task-compute-row:last-child { border-bottom: 0; }
+        .task-compute-rank { display: grid; width: 22px; height: 22px; place-items: center; border: 1px solid var(--border); border-radius: 5px; color: var(--muted); background: #f8fafc; font: 650 10px/1 var(--font-mono); }
+        .task-compute-row.is-top .task-compute-rank { border-color: #fde68a; color: #b45309; background: #fffbeb; }
+        .task-compute-name { min-width: 0; }
+        .task-compute-name-line { display: flex; min-width: 0; align-items: center; gap: 6px; }
+        .task-compute-name strong { min-width: 0; overflow: hidden; color: var(--ink); font: 650 11px/18px var(--font-mono); text-overflow: ellipsis; white-space: nowrap; }
+        .compute-hot { flex: 0 0 auto; padding: 1px 6px; border: 1px solid #fde68a; border-radius: 999px; color: #b45309; background: #fffbeb; font-size: 9px; font-weight: 700; white-space: nowrap; }
+        .task-compute-meta { display: flex; align-items: center; gap: 6px; margin-top: 2px; color: var(--muted); font-size: 9px; }
+        .task-compute-meta .service-type { min-height: 18px; gap: 4px; padding: 0 5px; font-size: 9px; }
+        .task-compute-meta .service-type::before { width: 4px; height: 4px; }
+        .task-compute-bar-wrap { min-width: 0; }
+        .task-compute-bar { height: 8px; overflow: hidden; border-radius: 999px; background: #eaf0f7; }
+        .task-compute-bar > span { display: block; height: 100%; min-width: 2px; border-radius: inherit; background: var(--brand); transition: width .22s ease-out; }
+        .task-compute-row.is-top .task-compute-bar > span { background: #f59e0b; }
+        .task-compute-share { color: var(--ink); font: 700 12px/18px var(--font-mono); text-align: right; }
+        .task-compute-tokens { display: block; color: var(--muted); font: 9px/14px var(--font-mono); }
+        .task-compute-empty { display: grid; min-height: 250px; place-items: center; padding: 24px; text-align: center; }
+        .task-compute-empty.hidden { display: none; }
+        .task-compute-empty strong { display: block; color: var(--ink); font-size: 13px; }
+        .task-compute-empty p { margin: 4px 0 12px; color: var(--muted); font-size: 11px; }
+        .task-compute-pagination { margin: 10px -16px -16px; border-top: 1px solid #f1f5f9; }
+        .task-compute-pagination.hidden { display: none; }
+        .task-compute-pagination .page-gap { display: inline-grid; min-width: 18px; place-items: center; color: var(--subtle); font-size: 10px; }
+        .task-compute-page-size { display: flex; align-items: center; gap: 6px; white-space: nowrap; }
+        .task-compute-page-size .control { min-height: 28px; padding: 4px 26px 4px 8px; }
 
         .chart-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
         .chart-panel { min-width: 0; padding: 14px 16px 12px; }
@@ -272,6 +428,7 @@
         .page-buttons { display: flex; align-items: center; gap: 6px; }
         .page-buttons button { min-width: 30px; height: 28px; padding: 0 8px; border: 1px solid #cbd5e1; border-radius: 5px; color: var(--text); background: #fff; font-size: 11px; white-space: nowrap; }
         .page-buttons button:hover:not(:disabled) { border-color: var(--brand); color: var(--brand); }
+        .page-buttons button.active { border-color: var(--brand); color: #fff; background: var(--brand); }
         .page-buttons button:disabled { cursor: not-allowed; opacity: .45; }
 
         .modal-backdrop { position: fixed; inset: 0; z-index: 60; display: flex; align-items: center; justify-content: center; padding: 20px; background: rgba(15, 23, 42, .42); }
@@ -282,6 +439,60 @@
         .modal-title { margin: 0; color: var(--ink); font-size: 16px; font-weight: 650; }
         .modal-body { overflow: auto; }
         .modal-footer { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 11px 18px; border-top: 1px solid var(--border); color: var(--muted); background: #f8fafc; font-size: 11px; }
+        .modal.modal-sm { width: min(680px, 100%); }
+        .modal.modal-lg { width: min(1240px, 100%); }
+        .rule-settings { display: grid; gap: 12px; padding: 18px; }
+        .rule-settings-intro { margin: 0; color: var(--muted); font-size: 12px; }
+        .rule-card { padding: 14px; border: 1px solid var(--border); border-radius: 8px; background: #fff; transition: opacity .16s ease, background-color .16s ease; }
+        .rule-card.is-disabled { background: #f8fafc; opacity: .62; }
+        .rule-card-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 16px; }
+        .rule-card-title { margin: 0; color: var(--ink); font-size: 13px; font-weight: 650; }
+        .rule-card-copy { margin: 2px 0 0; color: var(--muted); font-size: 11px; }
+        .rule-toggle { display: inline-flex; align-items: center; gap: 6px; color: var(--text); font-size: 11px; white-space: nowrap; }
+        .rule-toggle input { width: 16px; height: 16px; accent-color: var(--brand); }
+        .rule-fields { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; margin-top: 12px; }
+        .rule-field label { display: block; margin-bottom: 4px; color: var(--muted); font-size: 10px; font-weight: 600; }
+        .rule-field .control { width: 100%; padding-right: 10px; }
+        .rule-error { margin: 0; color: var(--danger); font-size: 11px; }
+        .rule-error.hidden { display: none; }
+        .modal-actions { display: flex; gap: 8px; }
+        .ip-modal-body { padding: 16px 18px 18px; }
+        .ip-modal-toolbar { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 12px; }
+        .ip-search { width: min(320px, 100%); }
+        .ip-modal-meta { color: var(--muted); font-size: 11px; white-space: nowrap; }
+        .ip-list { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; max-height: 320px; overflow-y: auto; padding: 2px; }
+        .ip-item { display: flex; min-width: 0; align-items: center; gap: 8px; padding: 9px 10px; border: 1px solid var(--border); border-radius: 6px; color: var(--text); background: #f8fafc; font: 11px/18px var(--font-mono); }
+        .ip-item::before { width: 6px; height: 6px; flex: 0 0 auto; border-radius: 50%; background: var(--success); content: ""; }
+        .ip-item span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+        .ip-list-empty { grid-column: 1 / -1; padding: 36px 16px; color: var(--muted); text-align: center; }
+        .model-export-trigger { margin: 0; }
+        .model-export-body { min-height: 420px; padding: 0; }
+        .absolute-time-filter { padding: 14px 18px 12px; border-bottom: 1px solid var(--border); background: #f8fafc; }
+        .time-filter-fields { display: flex; flex-wrap: wrap; align-items: flex-end; gap: 10px; }
+        .time-field { display: grid; min-width: 236px; gap: 4px; }
+        .time-field label { color: var(--muted); font-size: 10px; font-weight: 650; }
+        .time-field input { width: 100%; height: 36px; padding: 0 10px; border: 1px solid #cbd5e1; border-radius: 6px; color: var(--text); background: #fff; font: 11px/1 var(--font-mono); }
+        .time-field input[aria-invalid="true"] { border-color: var(--danger); box-shadow: 0 0 0 2px rgba(225, 29, 72, .08); }
+        .time-filter-separator { align-self: flex-end; padding-bottom: 8px; color: var(--subtle); font-size: 11px; }
+        .time-filter-actions { display: flex; gap: 8px; }
+        .time-filter-helper { margin: 7px 0 0; color: var(--muted); font-size: 10px; }
+        .time-filter-error { margin: 6px 0 0; color: var(--danger); font-size: 11px; }
+        .time-filter-error.hidden { display: none; }
+        .model-export-summary { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px; padding: 10px 18px; border-bottom: 1px solid #f1f5f9; color: var(--muted); background: #fff; font-size: 11px; }
+        .model-export-summary strong { color: var(--ink); font-family: var(--font-mono); }
+        .model-export-table { min-width: 1180px; table-layout: fixed; }
+        .model-export-table th:nth-child(1) { width: 15%; }
+        .model-export-table th:nth-child(2) { width: 8%; }
+        .model-export-table th:nth-child(3) { width: 12%; }
+        .model-export-table th:nth-child(4) { width: 7%; }
+        .model-export-table th:nth-child(5) { width: 12%; }
+        .model-export-table th:nth-child(6) { width: 17%; }
+        .model-export-table th:nth-child(7) { width: 10%; }
+        .model-export-table th:nth-child(8) { width: 10%; }
+        .model-export-table th:nth-child(9) { width: 9%; }
+        .model-export-table td { height: 52px; }
+        .task-name { overflow: hidden; max-width: 100%; color: var(--ink); font-weight: 600; text-overflow: ellipsis; white-space: nowrap; }
+        .export-empty td { height: 180px; color: var(--muted); text-align: center; }
 
         .toast { position: fixed; top: 68px; right: 18px; z-index: 80; display: none; max-width: 360px; align-items: flex-start; gap: 10px; padding: 12px 14px; border: 1px solid var(--border); border-left: 4px solid var(--success); border-radius: 8px; background: #fff; box-shadow: 0 12px 28px rgba(15, 23, 42, .14); }
         .toast.visible { display: flex; }
@@ -291,21 +502,27 @@
         @media (max-width: 1180px) {
             .kpi-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
             .kpi:nth-child(2n) { border-right: 0; }
-            .kpi:nth-last-child(-n+3) { border-bottom: 1px solid var(--border); }
+            .kpi:nth-last-child(-n+4) { border-bottom: 1px solid var(--border); }
             .kpi:nth-last-child(-n+2) { border-bottom: 0; }
-            .risk-panel { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+            .risk-panel { grid-template-columns: repeat(2, minmax(0, 1fr)); }
             .risk-lead { grid-column: 1 / -1; border-right: 0; border-bottom: 1px solid var(--border); }
-            .model-health-panel { grid-template-columns: 1fr; }
-            .model-health-summary { border-right: 0; border-bottom: 1px solid var(--border); }
+            .resource-workbench { grid-template-columns: 280px minmax(0, 1fr); }
+            .model-health-summary { align-items: flex-start; flex-direction: column; gap: 10px; }
+            .task-compute-toolbar { align-items: flex-start; flex-direction: column; }
+            .task-compute-filters { justify-content: flex-start; }
+            .task-compute-body { grid-template-columns: 230px minmax(0, 1fr); }
+            .task-compute-row { grid-template-columns: 26px minmax(140px, 1fr) minmax(160px, 1.3fr) 70px; }
         }
         @media (max-width: 900px) {
             :root { --sidebar-width: 64px; }
             .brand { justify-content: center; padding: 0; }
-            .brand-name, .env-badge, .nav-group-title, .nav-item span { display: none; }
+            .brand-copy, .sidebar-foot, .nav-group-title, .nav-item span { display: none; }
             .sidebar-nav { padding-inline: 8px; }
             .nav-item { justify-content: center; padding: 8px; }
-            .resource-grid, .chart-grid { grid-template-columns: 1fr; }
-            .model-health-row { grid-template-columns: minmax(150px, 1.3fr) repeat(3, minmax(76px, .7fr)) auto; }
+            .resource-workbench { grid-template-columns: 254px minmax(0, 1fr); }
+            .resource-master-item { grid-template-columns: 40px minmax(0, 1fr); }
+            .vendor-mark { width: 40px; height: 40px; }
+            .chart-grid { grid-template-columns: 1fr; }
         }
         @media (max-width: 640px) {
             :root { --sidebar-width: 0px; }
@@ -315,15 +532,50 @@
             .header-profile span:last-child, .page-desc, .refresh-time { display: none; }
             .overview-heading { align-items: stretch; flex-direction: column; }
             .toolbar-actions { justify-content: flex-start; }
-            .kpi-grid, .risk-panel, .resource-grid, .node-grid { grid-template-columns: 1fr; }
+            .kpi-grid, .risk-panel, .node-grid { grid-template-columns: 1fr; }
             .kpi, .risk-item, .node-item { border-right: 0; border-bottom: 1px solid var(--border) !important; }
             .kpi:last-child, .risk-item:last-child, .node-item:last-child { border-bottom: 0 !important; }
             .table-toolbar { align-items: stretch; flex-direction: column; }
+            .resource-heading-tools { align-items: stretch; flex-direction: column; }
+            .resource-workbench { grid-template-columns: 1fr; }
+            .resource-master { border-right: 0; border-bottom: 1px solid var(--border); }
+            .resource-master-list { grid-template-columns: 1fr; }
+            .resource-master-item { grid-template-columns: 40px minmax(0, 1fr); }
+            .resource-master-stats { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+            .resource-detail-head { align-items: flex-start; flex-direction: column; }
+            .resource-detail-actions { justify-content: flex-start; }
+            .resource-metrics { grid-template-columns: 1fr; }
+            .resource-metric { border-right: 0; border-bottom: 1px solid var(--border); }
+            .resource-metric:last-child { border-bottom: 0; }
+            .resource-table-head { align-items: flex-start; flex-direction: column; }
             .search { width: 100%; }
-            .model-health-row { grid-template-columns: 1fr 1fr; gap: 8px; padding: 12px 14px; }
-            .model-health-name, .model-health-open { grid-column: 1 / -1; }
+            .model-health-overview { align-items: flex-start; flex-direction: column; gap: 6px; }
+            .task-compute-filters { width: 100%; align-items: stretch; flex-direction: column; }
+            .task-compute-filter .control { width: 100%; min-height: 44px; }
+            .task-compute-type { display: grid; grid-template-columns: repeat(2, 1fr); }
+            .task-compute-type button { min-height: 44px; }
+            .task-compute-body { grid-template-columns: 1fr; }
+            .task-compute-summary { border-right: 0; border-bottom: 1px solid var(--border); }
+            .task-compute-stats { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+            .task-compute-stat { min-width: 0; padding-right: 10px; }
+            .task-compute-row { grid-template-columns: 26px minmax(0, 1fr) 66px; gap: 8px; padding: 9px 0; }
+            .task-compute-bar-wrap { grid-column: 2 / -1; grid-row: 2; }
+            .task-compute-pagination { align-items: stretch; flex-wrap: wrap; }
+            .task-compute-pagination .page-buttons { order: 3; width: 100%; overflow-x: auto; padding-bottom: 2px; }
             .modal-header { align-items: flex-start; }
             .modal-title-area { flex-direction: column; align-items: flex-start; }
+            .rule-fields { grid-template-columns: 1fr; }
+            .ip-modal-toolbar { align-items: stretch; flex-direction: column; }
+            .ip-list { grid-template-columns: 1fr; }
+            .time-filter-fields { align-items: stretch; flex-direction: column; }
+            .time-field { width: 100%; min-width: 0; }
+            .time-field input { min-height: 44px; font-size: 12px; }
+            .time-filter-separator { display: none; }
+            .time-filter-actions { width: 100%; }
+            .time-filter-actions .btn { flex: 1; min-height: 44px; }
+            .modal-footer { align-items: stretch; flex-direction: column; }
+            .modal-actions { width: 100%; }
+            .modal-actions .btn { flex: 1; min-height: 44px; }
         }
         @media (prefers-reduced-motion: reduce) {
             *, *::before, *::after { scroll-behavior: auto !important; transition-duration: .01ms !important; animation-duration: .01ms !important; }
@@ -348,6 +600,7 @@
     <symbol id="i-download" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/></symbol>
     <symbol id="i-refresh" viewBox="0 0 24 24"><path d="M20 6v6h-6M4 18v-6h6"/><path d="M18.49 9A7 7 0 0 0 5.64 6.64L4 8m16 8-1.64 1.36A7 7 0 0 1 5.51 15"/></symbol>
     <symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></symbol>
+    <symbol id="i-filter" viewBox="0 0 24 24"><path d="M4 5h16M7 12h10M10 19h4"/></symbol>
     <symbol id="i-x" viewBox="0 0 24 24"><path d="M18 6 6 18M6 6l12 12"/></symbol>
     <symbol id="i-alert" viewBox="0 0 24 24"><path d="M10.3 2.9 1.8 17a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 2.9a2 2 0 0 0-3.4 0Z"/><path d="M12 9v4m0 4h.01"/></symbol>
     <symbol id="i-check" viewBox="0 0 24 24"><path d="m20 6-11 11-5-5"/></symbol>
@@ -357,10 +610,9 @@
 
 <div class="shell">
     <aside class="sidebar" aria-label="应龙主导航">
-        <a class="brand" href="index.html" aria-label="应龙大模型推理平台首页">
-            <span class="brand-mark">应</span>
-            <span class="brand-name">应龙推理平台</span>
-            <span class="env-badge">PROD</span>
+        <a class="brand" href="index.html" aria-label="应龙 AI算力基座首页">
+            <span class="brand-mark" aria-hidden="true"><img src="doc/logo/icon_01.svg" alt=""></span>
+            <span class="brand-copy"><span class="brand-name">应龙</span><span class="brand-subtitle">AI算力基座</span></span>
         </a>
         <nav class="sidebar-nav">
             <div class="nav-group">
@@ -385,10 +637,15 @@
                 <a class="nav-item" href="prototypes/sys_resource_application.html"><svg class="icon"><use href="#i-file"/></svg><span>资源申请</span></a>
                 <a class="nav-item" href="prototypes/sys_resource_approval.html"><svg class="icon"><use href="#i-check-user"/></svg><span>授权审批</span></a>
                 <a class="nav-item" href="prototypes/sys_infrastructure_mgmt.html"><svg class="icon"><use href="#i-network"/></svg><span>集群管理</span></a>
-                <a class="nav-item" href="prototypes/sys_api_key_mgmt.html"><svg class="icon"><use href="#i-activity"/></svg><span>请求监控</span></a>
                 <a class="nav-item" href="prototypes/sys_request_tracing.html"><svg class="icon"><use href="#i-route"/></svg><span>链路追踪</span></a>
             </div>
         </nav>
+        <div class="sidebar-foot">
+            <div class="sidebar-version" tabindex="0" aria-describedby="sidebarVersionDetails">
+                <span>系统版本</span><strong>v1.0.0</strong>
+                <span class="sidebar-version-popover" id="sidebarVersionDetails" role="tooltip"><strong>版本信息</strong><span><span>前端版本</span><b>v1.0.0</b></span><span><span>后端版本</span><b>v1.0.0</b></span></span>
+            </div>
+        </div>
     </aside>
 
     <div class="content">
@@ -400,50 +657,45 @@
         <main id="main-content">
             <section class="section" aria-labelledby="overviewTitle">
                 <div class="section-heading overview-heading">
-                    <div><h1 class="page-title" id="overviewTitle">系统概览</h1><p class="page-desc">平台算力、节点与模型服务的实时运行态势 · 近 5 分钟实时数据</p></div>
+                    <div><h1 class="page-title" id="overviewTitle">系统概览</h1><p class="page-desc">平台节点、算力、模型与请求流量的实时运行态势 · 近 5 分钟统计</p></div>
                     <div class="toolbar-actions">
                         <span class="refresh-time" id="refreshTime">更新于 14:32:18</span>
-                        <select class="control" id="clusterScope" aria-label="集群范围"><option value="all">全部集群</option><option value="prod-a">生产集群 A</option><option value="prod-b">生产集群 B</option><option value="test">测试集群</option></select>
                         <button class="btn btn-icon" type="button" id="refreshButton" aria-label="刷新数据" title="刷新数据"><svg class="icon"><use href="#i-refresh"/></svg></button>
                         <button class="btn btn-primary" type="button" id="exportButton"><svg class="icon"><use href="#i-download"/></svg>导出资源明细</button>
                     </div>
                 </div>
                 <div class="panel kpi-grid">
-                    <div class="kpi"><span class="kpi-icon"><svg class="icon icon-lg"><use href="#i-chip"/></svg></span><div class="kpi-copy"><div class="kpi-label">GPU 总量</div><div class="kpi-value-row"><span class="kpi-value">256</span><span class="kpi-unit">卡</span></div><div class="kpi-trend">较昨日无变化</div></div></div>
-                    <div class="kpi"><span class="kpi-icon success"><svg class="icon icon-lg"><use href="#i-check"/></svg></span><div class="kpi-copy"><div class="kpi-label">空闲 GPU</div><div class="kpi-value-row"><span class="kpi-value">61</span><span class="kpi-unit">卡</span></div><div class="kpi-trend">可调度 53 卡</div></div></div>
-                    <div class="kpi"><span class="kpi-icon warning"><svg class="icon icon-lg"><use href="#i-activity"/></svg></span><div class="kpi-copy"><div class="kpi-label">GPU 使用率</div><div class="kpi-value-row"><span class="kpi-value">76.2%</span></div><div class="kpi-trend warning">近 1 小时 +4.8%</div></div></div>
-                    <div class="kpi"><span class="kpi-icon success"><svg class="icon icon-lg"><use href="#i-server"/></svg></span><div class="kpi-copy"><div class="kpi-label">在线节点</div><div class="kpi-value-row"><span class="kpi-value">42</span><span class="kpi-unit">台</span></div><div class="kpi-trend">可用率 89.4%</div></div></div>
-                    <div class="kpi"><span class="kpi-icon"><svg class="icon icon-lg"><use href="#i-layers"/></svg></span><div class="kpi-copy"><div class="kpi-label">运行模型服务</div><div class="kpi-value-row"><span class="kpi-value">18</span><span class="kpi-unit">个</span></div><div class="kpi-trend">健康 17 个</div></div></div>
-                    <div class="kpi"><span class="kpi-icon warning"><svg class="icon icon-lg"><use href="#i-clock"/></svg></span><div class="kpi-copy"><div class="kpi-label">待处理审批</div><div class="kpi-value-row"><span class="kpi-value">6</span><span class="kpi-unit">项</span></div><div class="kpi-trend warning">最长等待 46 分钟</div></div></div>
+                    <div class="kpi"><span class="kpi-icon success"><svg class="icon icon-lg"><use href="#i-server"/></svg></span><div class="kpi-copy"><div class="kpi-label">在线节点</div><div class="kpi-value-row"><span class="kpi-value">42</span><span class="kpi-unit">台</span></div></div></div>
+                    <div class="kpi"><span class="kpi-icon danger"><svg class="icon icon-lg"><use href="#i-alert"/></svg></span><div class="kpi-copy"><div class="kpi-label">异常节点</div><div class="kpi-value-row"><span class="kpi-value">1</span><span class="kpi-unit">台</span></div></div></div>
+                    <div class="kpi"><span class="kpi-icon success"><svg class="icon icon-lg"><use href="#i-chip"/></svg></span><div class="kpi-copy"><div class="kpi-label">空闲 GPU / NPU</div><div class="kpi-value-row"><span class="kpi-value">61</span><span class="kpi-unit">卡</span></div></div></div>
+                    <div class="kpi"><span class="kpi-icon"><svg class="icon icon-lg"><use href="#i-layers"/></svg></span><div class="kpi-copy"><div class="kpi-label">运行的模型</div><div class="kpi-value-row"><span class="kpi-value">18</span><span class="kpi-unit">个</span></div></div></div>
+                    <div class="kpi"><span class="kpi-icon warning"><svg class="icon icon-lg"><use href="#i-clock"/></svg></span><div class="kpi-copy"><div class="kpi-label">待处理审批</div><div class="kpi-value-row"><span class="kpi-value">6</span><span class="kpi-unit">项</span></div></div></div>
+                    <div class="kpi"><span class="kpi-icon info"><svg class="icon icon-lg"><use href="#i-activity"/></svg></span><div class="kpi-copy"><div class="kpi-label">全域 QPS</div><div class="kpi-value-row"><span class="kpi-value">1,240</span><span class="kpi-unit">req/5min</span></div><div class="kpi-meta">通用大模型 · 近 5 min 统计</div></div></div>
+                    <div class="kpi"><span class="kpi-icon info"><svg class="icon icon-lg"><use href="#i-activity"/></svg></span><div class="kpi-copy"><div class="kpi-label">全域 QPS</div><div class="kpi-value-row"><span class="kpi-value">1,240</span><span class="kpi-unit">req/5min</span></div><div class="kpi-meta">语音转写模型 · 近 5 min 统计</div></div></div>
+                    <div class="kpi"><span class="kpi-icon info"><svg class="icon icon-lg"><use href="#i-activity"/></svg></span><div class="kpi-copy"><div class="kpi-label">全域 QPS</div><div class="kpi-value-row"><span class="kpi-value">1,240</span><span class="kpi-unit">req/5min</span></div><div class="kpi-meta">小模型 · 近 5 min 统计</div></div></div>
                 </div>
             </section>
 
             <section class="section" aria-labelledby="riskTitle">
-                <div class="section-heading"><h2 class="section-title" id="riskTitle"><span class="section-dot"></span>容量风险</h2></div>
+                <div class="section-heading"><h2 class="section-title" id="riskTitle"><span class="section-dot"></span>预警风险</h2><button class="btn" type="button" id="openAlertRules"><svg class="icon"><use href="#i-settings"/></svg>预警规则配置</button></div>
                 <div class="panel risk-panel">
-                    <div class="risk-lead"><div class="risk-kicker"><svg class="icon"><use href="#i-alert"/></svg>当前有 3 项资源风险</div><div class="risk-title">生产集群存在容量与节点风险</div><p class="risk-copy">建议优先处理 H800 资源池和失联节点，避免影响在线推理 SLA。</p></div>
-                    <div class="risk-item"><div class="risk-meta"><span class="risk-name">H800 / prod-a</span><span class="badge badge-warning">容量紧张</span></div><div class="risk-value">92.1%</div><div class="risk-desc">可分配仅剩 5 卡，预计 2.4 小时耗尽</div><a class="text-link" href="prototypes/sys_dispatch.html">查看调度建议 →</a></div>
+                    <div class="risk-lead"><div class="risk-kicker"><svg class="icon"><use href="#i-alert"/></svg>当前有 2 项运行预警</div><div class="risk-title">节点健康与模型 SLA 存在异常</div><p class="risk-copy">建议先恢复失联节点，再根据失败任务定位模型请求问题。</p></div>
                     <div class="risk-item"><div class="risk-meta"><span class="risk-name">gpu-node-23</span><span class="badge badge-danger">节点失联</span></div><div class="risk-value" style="color:var(--danger)">18 分钟</div><div class="risk-desc">最后心跳 14:14，承载 2 个实例</div><a class="text-link" href="prototypes/sys_node_mgmt.html?status=error">定位节点 →</a></div>
-                    <div class="risk-item"><div class="risk-meta"><span class="risk-name">qwen3-32b</span><span class="badge badge-warning">SLA 预警</span></div><div class="risk-value">1.84%</div><div class="risk-desc">近 15 分钟失败率超过 1% 阈值</div><a class="text-link" href="prototypes/sys_model_monitor.html?model=qwen3-32b&amp;time=1h&amp;tab=task&amp;source=overview">诊断模型请求 →</a></div>
+                    <div class="risk-item"><div class="risk-meta"><span class="risk-name">qwen3-32b</span><span class="badge badge-warning">SLA 预警</span></div><div class="risk-value">2.84%</div><div class="risk-desc">近 1 小时失败率超过 2% 阈值</div><a class="text-link" href="prototypes/sys_model_monitor.html?model=qwen3-32b&amp;time=1h&amp;tab=task&amp;source=overview">诊断模型请求 →</a></div>
                 </div>
             </section>
 
             <section class="section" aria-labelledby="resourceTitle">
-                <div class="section-heading"><h2 class="section-title" id="resourceTitle"><span class="section-dot"></span>显卡资源</h2></div>
-                <div class="resource-grid">
-                    <button class="panel resource-card" type="button" data-resource="NVIDIA A100"><div class="resource-card-head"><div style="text-align:left"><h3 class="resource-name">NVIDIA A100</h3></div><span class="badge badge-warning">高负载</span></div><div class="resource-value-row"><span class="resource-value">120 <small>/ 128 卡</small></span><span class="resource-ratio">93.8%</span></div><div class="progress warning"><span style="width:93.8%"></span></div><div class="resource-foot"><span>空闲 8 卡</span><span class="text-link" style="margin:0">查看详情 →</span></div></button>
-                    <button class="panel resource-card" type="button" data-resource="NVIDIA H800"><div class="resource-card-head"><div style="text-align:left"><h3 class="resource-name">NVIDIA H800</h3></div><span class="badge badge-info">正常</span></div><div class="resource-value-row"><span class="resource-value">45 <small>/ 64 卡</small></span><span class="resource-ratio">70.3%</span></div><div class="progress"><span style="width:70.3%"></span></div><div class="resource-foot"><span>空闲 19 卡</span><span class="text-link" style="margin:0">查看详情 →</span></div></button>
-                    <button class="panel resource-card" type="button" data-resource="Ascend 910"><div class="resource-card-head"><div style="text-align:left"><h3 class="resource-name">Ascend 910</h3></div><span class="badge badge-success">充足</span></div><div class="resource-value-row"><span class="resource-value">30 <small>/ 64 卡</small></span><span class="resource-ratio">46.9%</span></div><div class="progress"><span style="width:46.9%;background:var(--success)"></span></div><div class="resource-foot"><span>空闲 34 卡</span><span class="text-link" style="margin:0">查看详情 →</span></div></button>
-                </div>
-            </section>
-
-            <section class="section" aria-labelledby="nodeTitle">
-                <div class="section-heading"><h2 class="section-title" id="nodeTitle"><span class="section-dot"></span>集群节点状态</h2><a class="text-link" href="prototypes/sys_infrastructure_mgmt.html">进入集群管理 →</a></div>
-                <div class="panel node-grid">
-                    <a class="node-item" href="prototypes/sys_node_mgmt.html?status=online"><div class="node-label"><span class="status-dot"></span>在线节点</div><div class="node-value">42</div><span class="node-share">89.4%</span></a>
-                    <a class="node-item" href="prototypes/sys_node_mgmt.html?status=offline"><div class="node-label"><span class="status-dot offline"></span>离线节点</div><div class="node-value">2</div><span class="node-share">4.3%</span></a>
-                    <a class="node-item" href="prototypes/sys_node_mgmt.html?status=maintenance"><div class="node-label"><span class="status-dot maintenance"></span>维护节点</div><div class="node-value">2</div><span class="node-share">4.3%</span></a>
-                    <a class="node-item" href="prototypes/sys_node_mgmt.html?status=error"><div class="node-label"><span class="status-dot error"></span>异常节点</div><div class="node-value">1</div><span class="node-share">2.1%</span></a>
+                <div class="section-heading"><h2 class="section-title" id="resourceTitle"><span class="section-dot"></span>显卡资源</h2><div class="resource-heading-tools"><label class="resource-filter-label" for="clusterScope"><svg class="icon"><use href="#i-filter"/></svg>集群</label><select class="control resource-filter-select" id="clusterScope"><option value="all">全部集群</option><option value="prod-a">生产集群 A</option><option value="prod-b">生产集群 B</option><option value="test">测试集群</option></select></div></div>
+                <div class="panel resource-workbench">
+                    <aside class="resource-master" aria-label="显卡型号列表"><div class="resource-master-label">硬件型号</div><div class="resource-master-list" id="resourceMasterList"></div></aside>
+                    <div class="resource-detail" aria-live="polite">
+                        <div class="resource-detail-head"><div class="resource-detail-title"><span id="resourceDetailVendor"></span><div class="resource-detail-heading-line"><h3 id="resourceDetailTitle">NVIDIA A100</h3><span class="resource-detail-total" id="resourceDetailTotal">总计 128 卡</span></div></div><div class="resource-detail-actions"><button class="btn" type="button" id="resourceExportCurrent"><svg class="icon"><use href="#i-download"/></svg>导出当前明细</button></div></div>
+                        <div class="resource-metrics"><div class="resource-metric"><div class="resource-metric-label">已分配卡数</div><div class="resource-metric-value" id="resourceUsedCount">120 卡</div></div><div class="resource-metric"><div class="resource-metric-label">空闲卡数</div><div class="resource-metric-value" id="resourceIdleCount">8 卡</div></div><div class="resource-metric"><div class="resource-metric-label">高水位节点 <span class="metric-help" title="近 1 小时平均 GPU 利用率大于 60%" aria-label="高水位节点口径：近 1 小时平均 GPU 利用率大于 60%">?</span></div><div class="resource-metric-value" id="resourceHighWaterCount">3 个</div><div class="resource-metric-note">近 1 小时平均 GPU 利用率 &gt; 60%</div></div></div>
+                        <div class="resource-table-head"><strong>卡级运行明细</strong><div class="resource-table-tools"><label class="resource-filter-label" for="resourceNodeFilter"><svg class="icon"><use href="#i-filter"/></svg>节点 IP</label><select class="control resource-filter-select" id="resourceNodeFilter"><option value="all">全部节点</option></select></div></div>
+                        <div class="table-scroll"><table><thead><tr><th>序号</th><th>唯一 ID</th><th>节点 IP</th><th>运行实例</th><th>GPU 利用率</th><th>显存占用率</th><th>功率</th></tr></thead><tbody id="resourceDetailBody"></tbody></table></div>
+                        <div class="pagination resource-pagination"><span id="resourcePageSummary">共 0 条记录</span><div class="page-buttons" id="resourcePageButtons" aria-label="显卡资源明细分页"></div><label class="resource-filter-label" for="resourcePageSize">每页</label><select class="control resource-filter-select" id="resourcePageSize"><option value="5">5 条</option><option value="10">10 条</option></select></div>
+                    </div>
                 </div>
             </section>
 
@@ -451,15 +703,49 @@
                 <div class="section-heading"><h2 class="section-title" id="modelHealthTitle"><span class="section-dot"></span>模型服务态势</h2><a class="text-link" href="prototypes/sys_model_monitor.html?model=all&amp;time=1h&amp;source=overview">进入模型监测 →</a></div>
                 <div class="panel model-health-panel">
                     <div class="model-health-summary">
-                        <div class="model-health-kicker">近 1 小时 · 在线服务</div>
-                        <div class="model-health-score"><strong>17 / 18</strong><span>服务健康</span></div>
-                        <p class="model-health-copy">1 个模型失败率超过 SLA 阈值，建议先查看任务调用，再定位 Pod 资源。</p>
-                        <div class="model-health-actions"><a class="text-link" href="prototypes/sys_model_monitor.html?model=qwen3-32b&amp;time=1h&amp;tab=task&amp;source=overview">处理 SLA 预警 →</a><a class="text-link" href="prototypes/sys_model_service.html">管理服务 →</a></div>
+                        <div class="model-health-overview"><div><div class="model-health-kicker">近 1 小时 · 全部服务</div><div class="model-health-score"><strong>17 / 18</strong><span>服务在线</span></div></div><p class="model-health-copy">1 个服务失败率超过 SLA 阈值，建议先查看调用记录，再定位节点资源。</p></div>
+                        <div class="model-health-actions"><button class="btn model-export-trigger" type="button" id="openModelExport"><svg class="icon"><use href="#i-download"/></svg>导出详情</button><a class="text-link" href="prototypes/sys_model_monitor.html?model=qwen3-32b&amp;time=1h&amp;tab=task&amp;source=overview">处理 SLA 预警 →</a><a class="text-link" href="prototypes/sys_model_service.html">管理服务 →</a></div>
                     </div>
-                    <div class="model-health-list" aria-label="重点模型健康摘要">
-                        <a class="model-health-row" href="prototypes/sys_model_monitor.html?model=qwen3-32b&amp;time=1h&amp;tab=task&amp;source=overview"><div class="model-health-name"><strong>qwen3-32b</strong><span class="badge badge-warning">SLA 预警</span></div><div class="model-health-metric"><small>调用失败率</small><strong class="warning">1.84%</strong></div><div class="model-health-metric"><small>平均时延</small><strong>318 ms</strong></div><div class="model-health-metric"><small>KV Cache</small><strong>58.4%</strong></div><span class="model-health-open">诊断 →</span></a>
-                        <a class="model-health-row" href="prototypes/sys_model_monitor.html?model=qwen2-2.5&amp;time=1h&amp;tab=service&amp;source=overview"><div class="model-health-name"><strong>qwen2-2.5</strong><span class="badge badge-success">健康</span></div><div class="model-health-metric"><small>调用失败率</small><strong>0%</strong></div><div class="model-health-metric"><small>平均时延</small><strong>172 ms</strong></div><div class="model-health-metric"><small>KV Cache</small><strong>39.2%</strong></div><span class="model-health-open">查看 →</span></a>
-                        <a class="model-health-row" href="prototypes/sys_model_monitor.html?model=whisper&amp;time=1h&amp;tab=service&amp;source=overview"><div class="model-health-name"><strong>whisper</strong><span class="badge badge-success">健康</span></div><div class="model-health-metric"><small>调用失败率</small><strong>0.03%</strong></div><div class="model-health-metric"><small>平均时延</small><strong>512 ms</strong></div><div class="model-health-metric"><small>KV Cache</small><strong>30.1%</strong></div><span class="model-health-open">查看 →</span></a>
+                    <div class="model-health-list">
+                        <table class="model-health-table" aria-label="模型服务运行态势列表">
+                            <thead><tr><th scope="col">服务名称</th><th scope="col">服务类型</th><th scope="col">硬件型号</th><th scope="col">实例数</th><th scope="col">节点 IP</th><th scope="col">调用数量</th><th scope="col"><span class="column-help">调用失败率<button class="help-tip" type="button" aria-label="SLA 预警规则" aria-describedby="slaRuleTip"></button><span class="help-popover" id="slaRuleTip" role="tooltip">SLA 预警：近 1 小时调用失败率超过 2%</span></span></th><th scope="col">平均时延</th><th scope="col">操作</th></tr></thead>
+                            <tbody>
+                                <tr><td><div class="model-service-heading"><div class="model-service-name" title="qwen3-32b">qwen3-32b</div><span class="badge badge-warning">SLA 预警</span></div></td><td><span class="service-type online">在线</span></td><td>昇腾 910B3 × 8</td><td><span class="instance-count"><strong>24</strong><small>个</small></span></td><td><div class="node-ip-preview"><span class="node-ip-first">10.24.16.23</span><button class="node-ip-more" type="button" data-model-ips="qwen3-32b" aria-haspopup="dialog">12 个节点</button></div></td><td class="mono">128,642</td><td><span class="failure-rate warning">2.84%</span></td><td class="mono">318 ms</td><td><a class="model-health-open" href="prototypes/sys_model_monitor.html?model=qwen3-32b&amp;time=1h&amp;tab=task&amp;source=overview">诊断 →</a></td></tr>
+                                <tr><td><div class="model-service-heading"><div class="model-service-name" title="qwen2-2.5">qwen2-2.5</div></div></td><td><span class="service-type online">在线</span></td><td>NVIDIA H20 × 4</td><td><span class="instance-count"><strong>10</strong><small>个</small></span></td><td><div class="node-ip-preview"><span class="node-ip-first">10.24.16.18</span><button class="node-ip-more" type="button" data-model-ips="qwen2-2.5" aria-haspopup="dialog">6 个节点</button></div></td><td class="mono">96,210</td><td><span class="failure-rate">0.41%</span></td><td class="mono">246 ms</td><td><a class="model-health-open" href="prototypes/sys_model_monitor.html?model=qwen2-2.5&amp;time=1h&amp;tab=service&amp;source=overview">查看 →</a></td></tr>
+                                <tr><td><div class="model-service-heading"><div class="model-service-name" title="whisper-large-v3">whisper-large-v3</div></div></td><td><span class="service-type online">在线</span></td><td>NVIDIA L40S × 2</td><td><span class="instance-count"><strong>6</strong><small>个</small></span></td><td><div class="node-ip-preview"><span class="node-ip-first">10.24.17.05</span><button class="node-ip-more" type="button" data-model-ips="whisper-large-v3" aria-haspopup="dialog">3 个节点</button></div></td><td class="mono">42,806</td><td><span class="failure-rate">0.03%</span></td><td class="mono">512 ms</td><td><a class="model-health-open" href="prototypes/sys_model_monitor.html?model=whisper&amp;time=1h&amp;tab=service&amp;source=overview">查看 →</a></td></tr>
+                                <tr><td><div class="model-service-heading"><div class="model-service-name" title="minimax-abab6.5">minimax-abab6.5</div></div></td><td><span class="service-type offline">离线</span></td><td>NVIDIA A800 × 8</td><td><span class="instance-count"><strong>0</strong><small>个</small></span></td><td><span class="node-ip-empty">--</span></td><td class="mono">0</td><td><span class="failure-rate">--</span></td><td class="mono">--</td><td><a class="model-health-open" href="prototypes/sys_model_service.html">管理 →</a></td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+            <section class="section" aria-labelledby="taskComputeTitle">
+                <div class="section-heading"><h2 class="section-title" id="taskComputeTitle"><span class="section-dot"></span>任务算力占比</h2><span class="section-note">近 1 小时 · 按输出 Tokens 统计</span></div>
+                <div class="panel task-compute-panel">
+                    <div class="task-compute-toolbar">
+                        <div class="task-compute-intro"><strong>输出 Tokens 算力消耗排行</strong><span>按模型和服务状态定位高消耗任务，排行始终按占比从高到低展示</span></div>
+                        <div class="task-compute-filters">
+                            <div class="task-compute-filter"><label for="taskComputeModelFilter">模型</label><select class="control" id="taskComputeModelFilter"><option value="qwen3-32b">qwen3-32b</option><option value="qwen2-2.5">qwen2-2.5</option><option value="whisper-large-v3">whisper-large-v3</option><option value="minimax-abab6.5">minimax-abab6.5</option></select></div>
+                            <div class="task-compute-filter"><span class="task-compute-filter-label" id="taskComputeTypeLabel">服务类型</span><div class="segment task-compute-type" role="group" aria-labelledby="taskComputeTypeLabel"><button class="active" type="button" data-compute-service="online" aria-pressed="true">在线</button><button type="button" data-compute-service="offline" aria-pressed="false">离线</button></div></div>
+                        </div>
+                    </div>
+                    <div class="task-compute-body">
+                        <aside class="task-compute-summary" aria-live="polite">
+                            <div class="task-compute-kicker">当前筛选总量</div><div class="task-compute-total" id="taskComputeTotal">0</div><div class="task-compute-unit">输出 Tokens</div>
+                            <div class="task-compute-stats">
+                                <div class="task-compute-stat"><span>消耗最高任务</span><strong id="taskComputeTopTask">--</strong></div>
+                                <div class="task-compute-stat"><span>最高占比</span><strong class="mono" id="taskComputeTopShare">0%</strong></div>
+                                <div class="task-compute-stat"><span>任务数量</span><strong class="mono" id="taskComputeTaskCount">0 个</strong></div>
+                            </div>
+                            <p class="task-compute-method">计算口径：单任务输出 Tokens ÷ 当前筛选范围内全部任务输出 Tokens。用于比较推理算力消耗，不等同于 GPU 运行时长。</p>
+                        </aside>
+                        <div class="task-compute-ranking">
+                            <div class="task-compute-ranking-head"><strong>任务消耗排行</strong><span id="taskComputeScope">qwen3-32b · 在线服务</span></div>
+                            <div class="task-compute-list" id="taskComputeList"></div>
+                            <div class="task-compute-empty hidden" id="taskComputeEmpty"><div><strong>当前组合下没有任务数据</strong><p>可以切换服务类型查看该模型的其他任务。</p><button class="btn" type="button" id="resetTaskCompute">查看该模型可用任务</button></div></div>
+                            <div class="pagination task-compute-pagination" id="taskComputePagination"><span id="taskComputePageSummary">共 0 个任务</span><div class="page-buttons" id="taskComputePageButtons" aria-label="任务消耗排行分页"></div><label class="task-compute-page-size" for="taskComputePageSize">每页<select class="control" id="taskComputePageSize"><option value="5" selected>5 条</option><option value="10">10 条</option><option value="20">20 条</option></select></label></div>
+                        </div>
                     </div>
                 </div>
             </section>
@@ -467,36 +753,198 @@
     </div>
 </div>
 
-<div class="modal-backdrop hidden" id="resourceDetailsModal" role="dialog" aria-modal="true" aria-labelledby="resModalTitle">
-    <div class="modal">
-        <div class="modal-header"><div class="modal-title-area"><h2 class="modal-title" id="resModalTitle">显卡资源详情</h2><select class="control" id="gpuTypeFilter" aria-label="显卡类型"></select><select class="control" id="nodeIpFilter" aria-label="节点 IP"><option value="all">全部节点 IP</option></select></div><button class="btn btn-icon" type="button" id="closeModal" aria-label="关闭详情弹窗"><svg class="icon"><use href="#i-x"/></svg></button></div>
-        <div class="modal-body"><table><thead><tr><th>GPU ID</th><th>节点 IP</th><th>实例名称</th><th>GPU 利用率</th><th>总显存</th><th>已用显存</th><th>显存占用率</th><th>功率</th></tr></thead><tbody id="resModalBody"></tbody></table></div>
-        <div class="modal-footer"><span id="modalSummary">-</span><button class="btn" type="button" id="modalExport"><svg class="icon"><use href="#i-download"/></svg>导出当前明细</button></div>
+<div class="modal-backdrop hidden" id="alertRulesModal" role="dialog" aria-modal="true" aria-labelledby="alertRulesTitle">
+    <div class="modal modal-sm">
+        <div class="modal-header"><div><h2 class="modal-title" id="alertRulesTitle">预警规则配置</h2><p class="rule-card-copy">配置系统概览中节点与模型预警的触发条件。</p></div><button class="btn btn-icon" type="button" id="closeAlertRules" aria-label="关闭预警规则配置"><svg class="icon"><use href="#i-x"/></svg></button></div>
+        <div class="modal-body rule-settings">
+            <p class="rule-settings-intro">告警级别将根据持续时间或指标阈值自动判定，修改后对全部生产集群生效。</p>
+            <article class="rule-card" id="nodeRuleCard">
+                <div class="rule-card-head"><div><h3 class="rule-card-title">节点心跳异常</h3><p class="rule-card-copy">节点心跳中断超过设定时间后触发预警。</p></div><label class="rule-toggle"><input id="nodeRuleEnabled" type="checkbox" checked>已启用</label></div>
+                <div class="rule-fields">
+                    <div class="rule-field"><label for="nodeWarningThreshold">警告阈值（分钟）</label><input class="control" id="nodeWarningThreshold" type="number" min="1" value="10"></div>
+                    <div class="rule-field"><label for="nodeCriticalThreshold">严重阈值（分钟）</label><input class="control" id="nodeCriticalThreshold" type="number" min="2" value="15"></div>
+                    <div class="rule-field"><label for="nodeScope">生效范围</label><select class="control" id="nodeScope"><option>全部生产集群</option><option>生产集群 A</option><option>生产集群 B</option></select></div>
+                </div>
+            </article>
+            <article class="rule-card" id="modelRuleCard">
+                <div class="rule-card-head"><div><h3 class="rule-card-title">模型请求失败率</h3><p class="rule-card-copy">指定时间窗口内失败请求占比超过阈值时触发预警。</p></div><label class="rule-toggle"><input id="modelRuleEnabled" type="checkbox" checked>已启用</label></div>
+                <div class="rule-fields">
+                    <div class="rule-field"><label for="modelWarningThreshold">警告阈值（%）</label><input class="control" id="modelWarningThreshold" type="number" min="0.1" step="0.1" value="2.0"></div>
+                    <div class="rule-field"><label for="modelCriticalThreshold">严重阈值（%）</label><input class="control" id="modelCriticalThreshold" type="number" min="0.2" step="0.1" value="5.0"></div>
+                    <div class="rule-field"><label for="modelWindow">统计窗口</label><select class="control" id="modelWindow"><option value="5">近 5 分钟</option><option value="15">近 15 分钟</option><option value="30">近 30 分钟</option><option value="60" selected>近 1 小时</option></select></div>
+                </div>
+            </article>
+            <p class="rule-error hidden" id="alertRuleError" role="alert">严重阈值必须大于警告阈值。</p>
+        </div>
+        <div class="modal-footer"><span>配置变更将记录到操作日志</span><div class="modal-actions"><button class="btn" type="button" id="cancelAlertRules">取消</button><button class="btn btn-primary" type="button" id="saveAlertRules"><svg class="icon"><use href="#i-check"/></svg>保存规则</button></div></div>
+    </div>
+</div>
+
+<div class="modal-backdrop hidden" id="modelExportModal" role="dialog" aria-modal="true" aria-labelledby="modelExportTitle" aria-describedby="modelExportDesc">
+    <div class="modal modal-lg">
+        <div class="modal-header"><div><div class="modal-title-area"><h2 class="modal-title" id="modelExportTitle">模型服务调用明细</h2><span class="badge badge-info">绝对时间</span></div><p class="rule-card-copy" id="modelExportDesc">按任务查看模型服务在指定时间段内的调用汇总，导出内容与当前筛选结果一致。</p></div><button class="btn btn-icon" type="button" id="closeModelExport" aria-label="关闭模型服务调用明细"><svg class="icon"><use href="#i-x"/></svg></button></div>
+        <div class="modal-body model-export-body">
+            <form class="absolute-time-filter" id="modelExportFilter" novalidate>
+                <div class="time-filter-fields">
+                    <div class="time-field"><label for="modelExportStart">开始时间</label><input id="modelExportStart" type="datetime-local" step="1" required aria-describedby="modelExportTimeHelper modelExportTimeError"></div>
+                    <span class="time-filter-separator" aria-hidden="true">至</span>
+                    <div class="time-field"><label for="modelExportEnd">结束时间</label><input id="modelExportEnd" type="datetime-local" step="1" required aria-describedby="modelExportTimeHelper modelExportTimeError"></div>
+                    <div class="time-filter-actions"><button class="btn btn-primary" type="submit"><svg class="icon"><use href="#i-search"/></svg>查询</button><button class="btn" type="button" id="resetModelExportTime">最近 1 小时</button></div>
+                </div>
+                <p class="time-filter-helper" id="modelExportTimeHelper">本地时区 Asia/Shanghai，时间精确到秒。</p>
+                <p class="time-filter-error hidden" id="modelExportTimeError" role="alert">请输入有效时间段。</p>
+            </form>
+            <div class="model-export-summary"><span id="modelExportRangeText">统计区间：--</span><span id="modelExportSummary">共 <strong>0</strong> 条任务记录</span></div>
+            <div class="table-scroll">
+                <table class="model-export-table" aria-label="模型服务调用导出详情">
+                    <thead><tr><th scope="col">服务名称</th><th scope="col">服务类型</th><th scope="col">硬件型号</th><th scope="col">实例数</th><th scope="col">节点 IP</th><th scope="col">任务名称</th><th scope="col">调用数量</th><th scope="col">调用失败率</th><th scope="col">平均时延</th></tr></thead>
+                    <tbody id="modelExportBody"></tbody>
+                </table>
+            </div>
+        </div>
+        <div class="modal-footer"><span>CSV 文件将使用 UTF-8 编码，可直接使用 Excel 打开</span><div class="modal-actions"><button class="btn" type="button" id="cancelModelExport">取消</button><button class="btn btn-primary" type="button" id="downloadModelExport"><svg class="icon"><use href="#i-download"/></svg>导出 CSV</button></div></div>
+    </div>
+</div>
+
+<div class="modal-backdrop hidden" id="nodeIpModal" role="dialog" aria-modal="true" aria-labelledby="nodeIpModalTitle" aria-describedby="nodeIpModalDesc">
+    <div class="modal modal-sm">
+        <div class="modal-header"><div><div class="modal-title-area"><h2 class="modal-title" id="nodeIpModalTitle">节点 IP</h2><span class="badge badge-info" id="nodeIpModalCount">0 个节点</span></div><p class="rule-card-copy" id="nodeIpModalDesc">查看该服务当前部署的全部节点地址。</p></div><button class="btn btn-icon" type="button" id="closeNodeIpModal" aria-label="关闭节点 IP 列表"><svg class="icon"><use href="#i-x"/></svg></button></div>
+        <div class="modal-body ip-modal-body">
+            <div class="ip-modal-toolbar"><div class="search ip-search"><svg class="icon"><use href="#i-search"/></svg><label class="sr-only" for="nodeIpSearch">搜索节点 IP</label><input id="nodeIpSearch" type="search" placeholder="搜索节点 IP" autocomplete="off"></div><span class="ip-modal-meta" id="nodeIpResultMeta">显示 0 个地址</span></div>
+            <div class="ip-list" id="nodeIpList" role="list"></div>
+        </div>
+        <div class="modal-footer"><span>IP 按地址升序排列</span><div class="modal-actions"><button class="btn" type="button" id="copyNodeIps">复制全部 IP</button><button class="btn btn-primary" type="button" id="doneNodeIpModal">完成</button></div></div>
     </div>
 </div>
 
 <div class="toast" id="toast" role="status" aria-live="polite"><svg class="icon" style="color:var(--success);margin-top:1px"><use href="#i-check"/></svg><div><div class="toast-title" id="toastTitle">数据已刷新</div><div class="toast-copy" id="toastCopy">平台状态已更新至最新采样时间。</div></div></div>
 
 <script>
+    const modelNodeIps = {
+        'qwen3-32b': ['10.24.16.23', '10.24.16.24', '10.24.16.25', '10.24.16.26', '10.24.16.27', '10.24.16.28', '10.24.16.29', '10.24.16.30', '10.24.16.31', '10.24.16.32', '10.24.16.33', '10.24.16.34'],
+        'qwen2-2.5': ['10.24.16.18', '10.24.16.19', '10.24.16.20', '10.24.16.21', '10.24.16.22', '10.24.16.25'],
+        'whisper-large-v3': ['10.24.17.05', '10.24.17.06', '10.24.17.07']
+    };
+    let activeIpModel = '';
+    let nodeIpTrigger = null;
+    const modelExportData = [
+        { serviceName: 'qwen3-32b', serviceType: '在线', hardware: '昇腾 910B3 × 8', instanceCount: 24, nodeIp: '10.24.16.23', taskName: 'production-chat', callsPerHour: 48620, failureRate: 3.12, latency: 326 },
+        { serviceName: 'qwen3-32b', serviceType: '在线', hardware: '昇腾 910B3 × 8', instanceCount: 24, nodeIp: '10.24.16.24', taskName: 'knowledge-rag', callsPerHour: 37842, failureRate: 2.76, latency: 308 },
+        { serviceName: 'qwen3-32b', serviceType: '在线', hardware: '昇腾 910B3 × 8', instanceCount: 24, nodeIp: '10.24.16.25', taskName: 'agent-planning', callsPerHour: 42180, failureRate: 2.61, latency: 321 },
+        { serviceName: 'qwen2-2.5', serviceType: '在线', hardware: 'NVIDIA H20 × 4', instanceCount: 10, nodeIp: '10.24.16.18', taskName: 'assistant-standard', callsPerHour: 54230, failureRate: 0.39, latency: 242 },
+        { serviceName: 'qwen2-2.5', serviceType: '在线', hardware: 'NVIDIA H20 × 4', instanceCount: 10, nodeIp: '10.24.16.19', taskName: 'text-summary', callsPerHour: 41980, failureRate: 0.43, latency: 251 },
+        { serviceName: 'whisper-large-v3', serviceType: '在线', hardware: 'NVIDIA L40S × 2', instanceCount: 6, nodeIp: '10.24.17.05', taskName: 'meeting-transcribe', callsPerHour: 25760, failureRate: 0.03, latency: 506 },
+        { serviceName: 'whisper-large-v3', serviceType: '在线', hardware: 'NVIDIA L40S × 2', instanceCount: 6, nodeIp: '10.24.17.06', taskName: 'media-caption', callsPerHour: 17046, failureRate: 0.02, latency: 521 },
+        { serviceName: 'minimax-abab6.5', serviceType: '离线', hardware: 'NVIDIA A800 × 8', instanceCount: 0, nodeIp: '--', taskName: '--', callsPerHour: 0, failureRate: null, latency: null }
+    ];
+    const modelExportState = { start: null, end: null, rows: [] };
+    const taskComputeData = [
+        { model: 'qwen3-32b', serviceType: 'online', task: 'knowledge-rag', tokens: 96800000 },
+        { model: 'qwen3-32b', serviceType: 'online', task: 'production-chat', tokens: 84500000 },
+        { model: 'qwen3-32b', serviceType: 'online', task: 'agent-planning', tokens: 58400000 },
+        { model: 'qwen3-32b', serviceType: 'online', task: 'document-analysis', tokens: 43600000 },
+        { model: 'qwen3-32b', serviceType: 'online', task: 'code-assistant', tokens: 39100000 },
+        { model: 'qwen3-32b', serviceType: 'online', task: 'report-generation', tokens: 32800000 },
+        { model: 'qwen3-32b', serviceType: 'online', task: 'contract-review', tokens: 27600000 },
+        { model: 'qwen3-32b', serviceType: 'online', task: 'customer-support', tokens: 23100000 },
+        { model: 'qwen3-32b', serviceType: 'online', task: 'data-extraction', tokens: 18700000 },
+        { model: 'qwen3-32b', serviceType: 'online', task: 'policy-check', tokens: 14200000 },
+        { model: 'qwen3-32b', serviceType: 'online', task: 'query-rewrite', tokens: 9600000 },
+        { model: 'qwen3-32b', serviceType: 'online', task: 'intent-routing', tokens: 6800000 },
+        { model: 'qwen3-32b', serviceType: 'offline', task: 'legacy-rag', tokens: 5200000 },
+        { model: 'qwen3-32b', serviceType: 'offline', task: 'archive-summary', tokens: 3100000 },
+        { model: 'qwen3-32b', serviceType: 'offline', task: 'retired-agent', tokens: 1700000 },
+        { model: 'qwen2-2.5', serviceType: 'online', task: 'assistant-standard', tokens: 44200000 },
+        { model: 'qwen2-2.5', serviceType: 'online', task: 'text-summary', tokens: 28600000 },
+        { model: 'qwen2-2.5', serviceType: 'online', task: 'faq-answering', tokens: 22400000 },
+        { model: 'qwen2-2.5', serviceType: 'online', task: 'content-tagging', tokens: 16900000 },
+        { model: 'qwen2-2.5', serviceType: 'online', task: 'email-drafting', tokens: 12100000 },
+        { model: 'qwen2-2.5', serviceType: 'online', task: 'title-generation', tokens: 7600000 },
+        { model: 'qwen2-2.5', serviceType: 'online', task: 'keyword-extract', tokens: 4300000 },
+        { model: 'qwen2-2.5', serviceType: 'offline', task: 'legacy-summary', tokens: 2800000 },
+        { model: 'qwen2-2.5', serviceType: 'offline', task: 'old-faq', tokens: 1600000 },
+        { model: 'whisper-large-v3', serviceType: 'online', task: 'meeting-transcribe', tokens: 12800000 },
+        { model: 'whisper-large-v3', serviceType: 'online', task: 'media-caption', tokens: 7300000 },
+        { model: 'whisper-large-v3', serviceType: 'online', task: 'call-transcribe', tokens: 6100000 },
+        { model: 'whisper-large-v3', serviceType: 'online', task: 'lecture-notes', tokens: 4800000 },
+        { model: 'whisper-large-v3', serviceType: 'online', task: 'subtitle-generate', tokens: 3500000 },
+        { model: 'whisper-large-v3', serviceType: 'online', task: 'voice-command', tokens: 1900000 },
+        { model: 'whisper-large-v3', serviceType: 'offline', task: 'legacy-caption', tokens: 1200000 },
+        { model: 'whisper-large-v3', serviceType: 'offline', task: 'archive-transcribe', tokens: 800000 },
+        { model: 'minimax-abab6.5', serviceType: 'offline', task: 'legacy-chat', tokens: 4900000 },
+        { model: 'minimax-abab6.5', serviceType: 'offline', task: 'batch-copywriting', tokens: 2300000 },
+        { model: 'minimax-abab6.5', serviceType: 'offline', task: 'old-agent', tokens: 1800000 },
+        { model: 'minimax-abab6.5', serviceType: 'offline', task: 'legacy-marketing', tokens: 1400000 },
+        { model: 'minimax-abab6.5', serviceType: 'offline', task: 'archive-rewrite', tokens: 900000 },
+        { model: 'minimax-abab6.5', serviceType: 'offline', task: 'retired-chat', tokens: 500000 }
+    ];
+    const taskComputeState = { model: 'qwen3-32b', serviceType: 'online', page: 1, pageSize: 5 };
+
     const resourceDetailData = {
-        'NVIDIA A100': [
-            { gpuId: 'GPU-0', nodeIp: '192.168.1.101', instanceName: 'qwen-72b-prod-01', gpuUtil: 92, totalMem: 80, usedMem: 78, power: 320 },
-            { gpuId: 'GPU-1', nodeIp: '192.168.1.101', instanceName: 'qwen-72b-prod-01', gpuUtil: 85, totalMem: 80, usedMem: 70, power: 305 },
-            { gpuId: 'GPU-0', nodeIp: '192.168.1.102', instanceName: 'qwen-72b-prod-02', gpuUtil: 88, totalMem: 80, usedMem: 72, power: 310 },
-            { gpuId: 'GPU-0', nodeIp: '192.168.1.103', instanceName: 'qwen-32b-batch-01', gpuUtil: 99, totalMem: 80, usedMem: 79, power: 380 }
-        ],
-        'NVIDIA H800': [
-            { gpuId: 'GPU-0', nodeIp: '192.168.2.201', instanceName: 'deepseek-r1-prod-01', gpuUtil: 75, totalMem: 80, usedMem: 60, power: 450 },
-            { gpuId: 'GPU-1', nodeIp: '192.168.2.201', instanceName: 'deepseek-r1-prod-01', gpuUtil: 80, totalMem: 80, usedMem: 65, power: 480 },
-            { gpuId: 'GPU-0', nodeIp: '192.168.2.202', instanceName: 'deepseek-v3-prod-01', gpuUtil: 68, totalMem: 80, usedMem: 57, power: 420 }
-        ],
-        'Ascend 910': [
-            { gpuId: 'NPU-0', nodeIp: '192.168.3.101', instanceName: 'embedding-prod-01', gpuUtil: 45, totalMem: 32, usedMem: 12, power: 160 },
-            { gpuId: 'NPU-1', nodeIp: '192.168.3.101', instanceName: 'embedding-prod-02', gpuUtil: 51, totalMem: 32, usedMem: 15, power: 168 }
-        ]
+        'NVIDIA A100': {
+            vendor: 'nvidia', vendorName: 'NVIDIA',
+            capacity: { all: [120, 128], 'prod-a': [61, 64], 'prod-b': [45, 48], test: [14, 16] },
+            nodes: { all: 18, 'prod-a': 8, 'prod-b': 6, test: 4 },
+            rows: [
+                ['prod-a','A100-SXM-0001','192.168.1.101','qwen-72b-prod-01',92,98,320],
+                ['prod-a','A100-SXM-0002','192.168.1.101','qwen-72b-prod-01',85,88,305],
+                ['prod-a','A100-SXM-0003','192.168.1.102','qwen-72b-prod-02',88,90,310],
+                ['prod-a','A100-SXM-0004','192.168.1.103','qwen-32b-batch-01',99,99,380],
+                ['prod-b','A100-SXM-0005','192.168.2.101','glm4-prod-01',72,76,286],
+                ['prod-b','A100-SXM-0006','192.168.2.102','glm4-prod-02',68,73,278],
+                ['prod-b','A100-SXM-0007','192.168.2.103','ocr-batch-01',57,64,260],
+                ['prod-b','A100-SXM-0008','192.168.2.104','multimodal-prod-01',81,86,298],
+                ['test','A100-SXM-0009','192.168.9.101','qwen-eval-01',43,51,221],
+                ['test','A100-SXM-0010','192.168.9.102','train-smoke-01',66,70,270],
+                ['test','A100-SXM-0011','192.168.9.103','idle',8,12,92],
+                ['test','A100-SXM-0012','192.168.9.104','qwen-eval-02',38,46,205]
+            ]
+        },
+        'NVIDIA H800': {
+            vendor: 'nvidia', vendorName: 'NVIDIA',
+            capacity: { all: [45, 64], 'prod-a': [12, 16], 'prod-b': [24, 32], test: [9, 16] },
+            nodes: { all: 12, 'prod-a': 4, 'prod-b': 6, test: 2 },
+            rows: [
+                ['prod-a','H800-SXM-0001','192.168.1.201','deepseek-r1-prod-01',75,75,450],
+                ['prod-a','H800-SXM-0002','192.168.1.201','deepseek-r1-prod-01',80,81,480],
+                ['prod-a','H800-SXM-0003','192.168.1.202','deepseek-v3-prod-01',68,71,420],
+                ['prod-a','H800-SXM-0004','192.168.1.203','qwen-longcontext-01',63,69,408],
+                ['prod-b','H800-SXM-0005','192.168.2.201','deepseek-r1-prod-02',77,79,462],
+                ['prod-b','H800-SXM-0006','192.168.2.202','deepseek-v3-prod-02',71,74,438],
+                ['prod-b','H800-SXM-0007','192.168.2.203','qwen-max-prod-01',59,62,390],
+                ['prod-b','H800-SXM-0008','192.168.2.204','code-model-prod-01',84,87,506],
+                ['test','H800-SXM-0009','192.168.9.201','deepseek-eval-01',36,42,260],
+                ['test','H800-SXM-0010','192.168.9.202','benchmark-01',61,65,372],
+                ['test','H800-SXM-0011','192.168.9.203','idle',6,10,108],
+                ['test','H800-SXM-0012','192.168.9.204','benchmark-02',48,54,318]
+            ]
+        },
+        'Ascend 910': {
+            vendor: 'huawei', vendorName: '华为',
+            capacity: { all: [30, 64], 'prod-a': [8, 16], 'prod-b': [14, 32], test: [8, 16] },
+            nodes: { all: 10, 'prod-a': 3, 'prod-b': 5, test: 2 },
+            rows: [
+                ['prod-a','ASCEND-910-0001','192.168.3.101','embedding-prod-01',45,38,160],
+                ['prod-a','ASCEND-910-0002','192.168.3.101','embedding-prod-02',51,47,168],
+                ['prod-a','ASCEND-910-0003','192.168.3.102','rerank-prod-01',41,34,152],
+                ['prod-a','ASCEND-910-0004','192.168.3.103','nlp-service-01',64,59,184],
+                ['prod-b','ASCEND-910-0005','192.168.4.101','embedding-prod-03',48,43,164],
+                ['prod-b','ASCEND-910-0006','192.168.4.102','rerank-prod-02',55,52,176],
+                ['prod-b','ASCEND-910-0007','192.168.4.103','vector-batch-01',67,63,192],
+                ['prod-b','ASCEND-910-0008','192.168.4.104','nlp-service-02',58,56,181],
+                ['test','ASCEND-910-0009','192.168.9.301','embedding-eval-01',32,28,138],
+                ['test','ASCEND-910-0010','192.168.9.302','rerank-eval-01',39,36,146],
+                ['test','ASCEND-910-0011','192.168.9.303','idle',4,8,72],
+                ['test','ASCEND-910-0012','192.168.9.304','nlp-benchmark-01',44,41,155]
+            ]
+        }
     };
 
-    const state = { currentGpu: 'NVIDIA A100' };
+    Object.values(resourceDetailData).forEach(resource => {
+        resource.rows = resource.rows.map(([cluster, uniqueId, nodeIp, instanceName, gpuUtil, memUtil, power]) => ({ cluster, uniqueId, nodeIp, instanceName, gpuUtil, memUtil, power }));
+    });
+
+    const state = { currentGpu: 'NVIDIA A100', cluster: 'all', nodeIp: 'all', page: 1, pageSize: 5 };
     const byId = id => document.getElementById(id);
     const unique = values => [...new Set(values)];
 
@@ -508,56 +956,439 @@
         showToast.timer = window.setTimeout(() => byId('toast').classList.remove('visible'), 2600);
     }
 
-    function showResourceDetails(type) {
-        state.currentGpu = type;
-        byId('gpuTypeFilter').innerHTML = Object.keys(resourceDetailData).map(name => `<option value="${name}"${name === type ? ' selected' : ''}>${name}</option>`).join('');
-        const ips = unique(resourceDetailData[type].map(item => item.nodeIp));
-        byId('nodeIpFilter').innerHTML = '<option value="all">全部节点 IP</option>' + ips.map(ip => `<option value="${ip}">${ip}</option>`).join('');
-        renderResourceDetails();
-        byId('resourceDetailsModal').classList.remove('hidden');
-        byId('closeModal').focus();
+    function formatTokenVolume(value) {
+        if (value >= 100000000) return `${(value / 1000000).toFixed(1)}M`;
+        if (value >= 1000000) return `${(value / 1000000).toFixed(1)}M`;
+        if (value >= 1000) return `${(value / 1000).toFixed(1)}K`;
+        return value.toLocaleString('zh-CN');
     }
 
-    function renderResourceDetails() {
-        const selectedIp = byId('nodeIpFilter').value;
-        const rows = resourceDetailData[state.currentGpu].filter(item => selectedIp === 'all' || item.nodeIp === selectedIp);
-        byId('resModalBody').innerHTML = rows.map(item => {
-            const memUtil = Math.round(item.usedMem / item.totalMem * 100);
-            const warning = memUtil >= 85;
-            return `<tr><td class="mono">${item.gpuId}</td><td class="mono" style="color:var(--brand)">${item.nodeIp}</td><td>${item.instanceName}</td><td class="mono">${item.gpuUtil}%</td><td class="mono">${item.totalMem} GB</td><td class="mono">${item.usedMem} GB</td><td><div class="usage-cell"><div class="progress${warning ? ' warning' : ''}"><span style="width:${memUtil}%"></span></div><span class="mono" style="color:${warning ? 'var(--warning)' : 'var(--text)'}">${memUtil}%</span></div></td><td class="mono">${item.power} W</td></tr>`;
+    function renderTaskCompute() {
+        const rows = taskComputeData
+            .filter(item => item.model === taskComputeState.model)
+            .filter(item => item.serviceType === taskComputeState.serviceType)
+            .sort((a, b) => b.tokens - a.tokens);
+        const total = rows.reduce((sum, item) => sum + item.tokens, 0);
+        const pageCount = Math.max(1, Math.ceil(rows.length / taskComputeState.pageSize));
+        taskComputeState.page = Math.min(taskComputeState.page, pageCount);
+        const startIndex = (taskComputeState.page - 1) * taskComputeState.pageSize;
+        const pageRows = rows.slice(startIndex, startIndex + taskComputeState.pageSize);
+        const serviceLabel = taskComputeState.serviceType === 'online' ? '在线服务' : '离线服务';
+        byId('taskComputeTotal').textContent = formatTokenVolume(total);
+        byId('taskComputeTopTask').textContent = rows[0]?.task || '--';
+        byId('taskComputeTopShare').textContent = rows.length ? `${(rows[0].tokens / total * 100).toFixed(1)}%` : '0%';
+        byId('taskComputeTaskCount').textContent = `${rows.length} 个`;
+        byId('taskComputeScope').textContent = `${taskComputeState.model} · ${serviceLabel}`;
+        byId('taskComputeList').classList.toggle('hidden', !rows.length);
+        byId('taskComputeEmpty').classList.toggle('hidden', Boolean(rows.length));
+        byId('taskComputePagination').classList.toggle('hidden', !rows.length);
+        byId('taskComputeList').innerHTML = pageRows.map((item, index) => {
+            const rank = startIndex + index + 1;
+            const share = item.tokens / total * 100;
+            const serviceText = item.serviceType === 'online' ? '在线' : '离线';
+            return `<article class="task-compute-row${rank === 1 ? ' is-top' : ''}" aria-label="第 ${rank} 名，${item.task}，${item.model}，${serviceText}服务，输出 Tokens ${formatTokenVolume(item.tokens)}，占比 ${share.toFixed(1)}%"><span class="task-compute-rank">${rank}</span><div class="task-compute-name"><div class="task-compute-name-line"><strong title="${item.task}">${item.task}</strong>${rank === 1 ? '<span class="compute-hot">TOP 1 · 高消耗</span>' : ''}</div><div class="task-compute-meta"><span>${item.model}</span><span class="service-type ${item.serviceType}">${serviceText}</span></div></div><div class="task-compute-bar-wrap"><div class="task-compute-bar" role="img" aria-label="算力占比 ${share.toFixed(1)}%"><span style="width:${share.toFixed(1)}%"></span></div></div><div class="task-compute-share">${share.toFixed(1)}%<span class="task-compute-tokens">${formatTokenVolume(item.tokens)}</span></div></article>`;
         }).join('');
-        byId('modalSummary').textContent = `${state.currentGpu} · 共 ${rows.length} 条卡级记录`;
+        renderTaskComputePagination(rows.length, pageCount);
     }
 
-    function exportResourceDetails(currentOnly) {
-        const types = currentOnly ? [state.currentGpu] : Object.keys(resourceDetailData);
-        const lines = ['GPU 型号,GPU ID,节点 IP,实例名称,GPU 利用率,总显存,已用显存,显存占用率,功率'];
-        types.forEach(type => resourceDetailData[type].forEach(item => lines.push([type, item.gpuId, item.nodeIp, item.instanceName, `${item.gpuUtil}%`, `${item.totalMem}GB`, `${item.usedMem}GB`, `${Math.round(item.usedMem / item.totalMem * 100)}%`, `${item.power}W`].join(','))));
-        const blob = new Blob(['\ufeff' + lines.join('\n')], { type: 'text/csv;charset=utf-8' });
+    function renderTaskComputePagination(total, pageCount) {
+        byId('taskComputePageSummary').textContent = `共 ${total} 个任务 · 第 ${taskComputeState.page} / ${pageCount} 页`;
+        const buttons = [`<button type="button" data-compute-page="${taskComputeState.page - 1}"${taskComputeState.page === 1 ? ' disabled' : ''}>上一页</button>`];
+        const visiblePages = [...new Set([1, taskComputeState.page - 1, taskComputeState.page, taskComputeState.page + 1, pageCount])]
+            .filter(page => page >= 1 && page <= pageCount)
+            .sort((a, b) => a - b);
+        visiblePages.forEach((page, index) => {
+            if (index > 0 && page - visiblePages[index - 1] > 1) buttons.push('<span class="page-gap" aria-hidden="true">…</span>');
+            buttons.push(`<button type="button" data-compute-page="${page}"${page === taskComputeState.page ? ' class="active" aria-current="page"' : ''}>${page}</button>`);
+        });
+        buttons.push(`<button type="button" data-compute-page="${taskComputeState.page + 1}"${taskComputeState.page === pageCount ? ' disabled' : ''}>下一页</button>`);
+        byId('taskComputePageButtons').innerHTML = buttons.join('');
+    }
+
+    function resetTaskCompute() {
+        const availableType = taskComputeData.some(item => item.model === taskComputeState.model && item.serviceType === 'online') ? 'online' : 'offline';
+        taskComputeState.serviceType = availableType;
+        taskComputeState.page = 1;
+        document.querySelectorAll('[data-compute-service]').forEach(button => {
+            const active = button.dataset.computeService === availableType;
+            button.classList.toggle('active', active);
+            button.setAttribute('aria-pressed', String(active));
+        });
+        renderTaskCompute();
+    }
+
+    function padDatePart(value) {
+        return String(value).padStart(2, '0');
+    }
+
+    function toDateTimeInput(date) {
+        return `${date.getFullYear()}-${padDatePart(date.getMonth() + 1)}-${padDatePart(date.getDate())}T${padDatePart(date.getHours())}:${padDatePart(date.getMinutes())}:${padDatePart(date.getSeconds())}`;
+    }
+
+    function formatAbsoluteTime(date) {
+        return `${date.getFullYear()}-${padDatePart(date.getMonth() + 1)}-${padDatePart(date.getDate())} ${padDatePart(date.getHours())}:${padDatePart(date.getMinutes())}:${padDatePart(date.getSeconds())}`;
+    }
+
+    function setModelExportError(message = '') {
+        const hasError = Boolean(message);
+        byId('modelExportTimeError').textContent = message;
+        byId('modelExportTimeError').classList.toggle('hidden', !hasError);
+        byId('modelExportStart').setAttribute('aria-invalid', String(hasError));
+        byId('modelExportEnd').setAttribute('aria-invalid', String(hasError));
+    }
+
+    function readModelExportRange() {
+        const start = new Date(byId('modelExportStart').value);
+        const end = new Date(byId('modelExportEnd').value);
+        if (Number.isNaN(start.getTime()) || Number.isNaN(end.getTime())) {
+            setModelExportError('请完整填写开始时间和结束时间。');
+            (byId('modelExportStart').value ? byId('modelExportEnd') : byId('modelExportStart')).focus();
+            return null;
+        }
+        if (end <= start) {
+            setModelExportError('结束时间必须晚于开始时间，请调整后重新查询。');
+            byId('modelExportEnd').focus();
+            return null;
+        }
+        if (end > new Date()) {
+            setModelExportError('结束时间不能晚于当前时间，请调整后重新查询。');
+            byId('modelExportEnd').focus();
+            return null;
+        }
+        setModelExportError();
+        return { start, end };
+    }
+
+    function renderModelExport(range) {
+        const durationHours = (range.end - range.start) / 3600000;
+        modelExportState.start = range.start;
+        modelExportState.end = range.end;
+        modelExportState.rows = modelExportData.map(item => ({ ...item, callCount: Math.round(item.callsPerHour * durationHours) }));
+        const totalCalls = modelExportState.rows.reduce((sum, item) => sum + item.callCount, 0);
+        byId('modelExportRangeText').textContent = `统计区间：${formatAbsoluteTime(range.start)} 至 ${formatAbsoluteTime(range.end)}`;
+        byId('modelExportSummary').innerHTML = `共 <strong>${modelExportState.rows.length}</strong> 条任务记录 · <strong>${totalCalls.toLocaleString('zh-CN')}</strong> 次调用`;
+        byId('modelExportBody').innerHTML = modelExportState.rows.length ? modelExportState.rows.map(item => {
+            const failureText = item.failureRate === null ? '--' : `${item.failureRate.toFixed(2)}%`;
+            const latencyText = item.latency === null ? '--' : `${item.latency} ms`;
+            return `<tr><td><div class="model-service-name" title="${item.serviceName}">${item.serviceName}</div></td><td><span class="service-type ${item.serviceType === '在线' ? 'online' : 'offline'}">${item.serviceType}</span></td><td>${item.hardware}</td><td><span class="instance-count"><strong>${item.instanceCount}</strong><small>个</small></span></td><td class="mono">${item.nodeIp}</td><td><div class="task-name" title="${item.taskName}">${item.taskName}</div></td><td class="mono">${item.callCount.toLocaleString('zh-CN')}</td><td><span class="failure-rate${item.failureRate !== null && item.failureRate > 2 ? ' warning' : ''}">${failureText}</span></td><td class="mono">${latencyText}</td></tr>`;
+        }).join('') : '<tr class="export-empty"><td colspan="9">当前时间段内没有可导出的任务记录</td></tr>';
+    }
+
+    function resetModelExportRange() {
+        const end = new Date();
+        const start = new Date(end.getTime() - 3600000);
+        const max = toDateTimeInput(end);
+        byId('modelExportStart').value = toDateTimeInput(start);
+        byId('modelExportEnd').value = max;
+        byId('modelExportStart').max = max;
+        byId('modelExportEnd').max = max;
+        setModelExportError();
+        renderModelExport({ start, end });
+    }
+
+    function openModelExportModal() {
+        resetModelExportRange();
+        byId('modelExportModal').classList.remove('hidden');
+        byId('modelExportStart').focus();
+    }
+
+    function closeModelExportModal() {
+        if (byId('modelExportModal').classList.contains('hidden')) return;
+        byId('modelExportModal').classList.add('hidden');
+        byId('openModelExport').focus();
+    }
+
+    function csvCell(value) {
+        return `"${String(value).replaceAll('"', '""')}"`;
+    }
+
+    function downloadModelExport() {
+        if (!modelExportState.start || !modelExportState.end) return;
+        const lines = [
+            ['统计开始时间', formatAbsoluteTime(modelExportState.start)],
+            ['统计结束时间', formatAbsoluteTime(modelExportState.end)],
+            [],
+            ['服务名称', '服务类型', '硬件型号', '实例数', '节点 IP', '任务名称', '调用数量', '调用失败率', '平均时延']
+        ];
+        modelExportState.rows.forEach(item => lines.push([
+            item.serviceName, item.serviceType, item.hardware, item.instanceCount, item.nodeIp, item.taskName, item.callCount,
+            item.failureRate === null ? '--' : `${item.failureRate.toFixed(2)}%`, item.latency === null ? '--' : `${item.latency} ms`
+        ]));
+        const csv = lines.map(row => row.map(csvCell).join(',')).join('\n');
+        const blob = new Blob(['\ufeff' + csv], { type: 'text/csv;charset=utf-8' });
         const link = document.createElement('a');
         link.href = URL.createObjectURL(blob);
-        link.download = currentOnly ? `${state.currentGpu.replaceAll(' ', '_')}_资源明细.csv` : '应龙平台_算力资源明细.csv';
+        link.download = `模型服务调用明细_${toDateTimeInput(modelExportState.start).replaceAll(/[-:T]/g, '')}_${toDateTimeInput(modelExportState.end).replaceAll(/[-:T]/g, '')}.csv`;
         document.body.appendChild(link);
         link.click();
         URL.revokeObjectURL(link.href);
         link.remove();
-        showToast('导出任务已完成', currentOnly ? '当前显卡资源明细已生成。' : '平台算力资源明细已生成。');
+        showToast('调用明细已导出', `已导出 ${modelExportState.rows.length} 条任务记录。`);
     }
 
-    document.querySelectorAll('[data-resource]').forEach(button => button.addEventListener('click', () => showResourceDetails(button.dataset.resource)));
-    byId('closeModal').addEventListener('click', () => byId('resourceDetailsModal').classList.add('hidden'));
-    byId('resourceDetailsModal').addEventListener('click', event => { if (event.target === byId('resourceDetailsModal')) byId('resourceDetailsModal').classList.add('hidden'); });
-    document.addEventListener('keydown', event => { if (event.key === 'Escape') byId('resourceDetailsModal').classList.add('hidden'); });
-    byId('gpuTypeFilter').addEventListener('change', event => showResourceDetails(event.target.value));
-    byId('nodeIpFilter').addEventListener('change', renderResourceDetails);
+    function renderNodeIps(query = '') {
+        const ips = modelNodeIps[activeIpModel] || [];
+        const keyword = query.trim();
+        const filtered = keyword ? ips.filter(ip => ip.includes(keyword)) : ips;
+        byId('nodeIpList').innerHTML = filtered.length
+            ? filtered.map(ip => `<div class="ip-item" role="listitem"><span>${ip}</span></div>`).join('')
+            : '<div class="ip-list-empty">未找到匹配的节点 IP</div>';
+        byId('nodeIpResultMeta').textContent = keyword ? `找到 ${filtered.length} / ${ips.length} 个地址` : `显示 ${ips.length} 个地址`;
+    }
+
+    function openNodeIpModal(button) {
+        activeIpModel = button.dataset.modelIps;
+        nodeIpTrigger = button;
+        const ips = modelNodeIps[activeIpModel] || [];
+        byId('nodeIpModalTitle').textContent = `${activeIpModel} · 节点 IP`;
+        byId('nodeIpModalCount').textContent = `${ips.length} 个节点`;
+        byId('nodeIpModalDesc').textContent = `查看 ${activeIpModel} 当前部署实例所在的全部节点地址。`;
+        byId('nodeIpSearch').value = '';
+        renderNodeIps();
+        byId('nodeIpModal').classList.remove('hidden');
+        byId('nodeIpSearch').focus();
+    }
+
+    function closeNodeIpModal() {
+        if (byId('nodeIpModal').classList.contains('hidden')) return;
+        byId('nodeIpModal').classList.add('hidden');
+        if (nodeIpTrigger) nodeIpTrigger.focus();
+    }
+
+    async function copyNodeIpList() {
+        const text = (modelNodeIps[activeIpModel] || []).join('\n');
+        try {
+            await navigator.clipboard.writeText(text);
+            showToast('节点 IP 已复制', `已复制 ${modelNodeIps[activeIpModel].length} 个节点地址。`);
+        } catch (error) {
+            const textarea = document.createElement('textarea');
+            textarea.value = text;
+            textarea.style.position = 'fixed';
+            textarea.style.opacity = '0';
+            document.body.appendChild(textarea);
+            textarea.select();
+            document.execCommand('copy');
+            textarea.remove();
+            showToast('节点 IP 已复制', `已复制 ${modelNodeIps[activeIpModel].length} 个节点地址。`);
+        }
+    }
+
+    function vendorIcon(resource) {
+        if (resource.vendor === 'huawei') return `<span class="vendor-mark huawei" aria-label="华为"><svg viewBox="0 0 32 32" aria-hidden="true"><g fill="currentColor"><path d="M14.5 4.2c-2.8.5-4.3 2.4-4 5.4l3.9 8.1.1-5.3.2-9.9-.1-13.5Z"/><path d="M17.5 4.2c2.8.5 4.3 2.4 4 5.4l-3.9 8.1c-.1-5.3-.2-9.9-.1-13.5Z"/><path d="M8.2 7.7c-2.4 1.5-3.1 3.9-1.7 6.6l6.3 5.8-4.6-12.4Z"/><path d="M23.8 7.7c2.4 1.5 3.1 3.9 1.7 6.6l-6.3 5.8 4.6-12.4Z"/><path d="M4.8 13.8c-1.2 2.5-.4 4.8 2.1 6.4l5 2.1-7.1-8.5Z"/><path d="M27.2 13.8c1.2 2.5.4 4.8-2.1 6.4l-5 2.1 7.1-8.5Z"/><path d="M8.1 23.1h15.8v2.4H8.1z"/></g></svg></span>`;
+        return `<span class="vendor-mark nvidia" aria-label="NVIDIA"><svg viewBox="0 0 32 32" aria-hidden="true"><path d="M4 16s4.8-7 12-7c6.2 0 10.4 4 12 7-1.6 3-5.8 7-12 7-7.2 0-12-7-12-7Z" fill="none" stroke="currentColor" stroke-width="2.4"/><path d="M9 16s2.8-4 7-4c3.6 0 6 2.3 7 4-1 1.7-3.4 4-7 4-4.2 0-7-4-7-4Z" fill="currentColor"/><circle cx="16" cy="16" r="2.2" fill="#fff"/></svg></span>`;
+    }
+
+    function clusterRows(resource) {
+        return resource.rows.filter(item => state.cluster === 'all' || item.cluster === state.cluster);
+    }
+
+    function renderResourceMaster() {
+        byId('resourceMasterList').innerHTML = Object.entries(resourceDetailData).map(([name, resource]) => {
+            const [used, total] = resource.capacity[state.cluster];
+            return `<button class="resource-master-item${name === state.currentGpu ? ' active' : ''}" type="button" data-resource="${name}" aria-pressed="${name === state.currentGpu}">${vendorIcon(resource)}<span class="resource-master-copy"><strong>${name}</strong><span>${resource.vendorName}</span></span><span class="resource-master-stats"><span class="resource-master-stat"><small>已用 / 总卡</small><strong>${used} / ${total}</strong></span><span class="resource-master-stat"><small>空闲卡</small><strong>${total - used}</strong></span><span class="resource-master-stat"><small>总台数</small><strong>${resource.nodes[state.cluster]} 台</strong></span></span></button>`;
+        }).join('');
+    }
+
+    function renderNodeFilter(resource) {
+        const ips = unique(clusterRows(resource).map(item => item.nodeIp));
+        if (!ips.includes(state.nodeIp)) state.nodeIp = 'all';
+        byId('resourceNodeFilter').innerHTML = '<option value="all">全部节点</option>' + ips.map(ip => `<option value="${ip}"${state.nodeIp === ip ? ' selected' : ''}>${ip}</option>`).join('');
+    }
+
+    function renderResourcePagination(total, pageCount) {
+        byId('resourcePageSummary').textContent = `共 ${total} 条记录 · 第 ${state.page} / ${pageCount} 页`;
+        const buttons = [`<button type="button" data-page="${state.page - 1}"${state.page === 1 ? ' disabled' : ''}>上一页</button>`];
+        for (let page = 1; page <= pageCount; page += 1) buttons.push(`<button type="button" data-page="${page}"${page === state.page ? ' class="active" aria-current="page"' : ''}>${page}</button>`);
+        buttons.push(`<button type="button" data-page="${state.page + 1}"${state.page === pageCount ? ' disabled' : ''}>下一页</button>`);
+        byId('resourcePageButtons').innerHTML = buttons.join('');
+    }
+
+    function renderResourceDetails() {
+        const resource = resourceDetailData[state.currentGpu];
+        const [used, total] = resource.capacity[state.cluster];
+        renderNodeFilter(resource);
+        const rows = clusterRows(resource).filter(item => state.nodeIp === 'all' || item.nodeIp === state.nodeIp);
+        const nodeAverages = clusterRows(resource).reduce((result, item) => {
+            const sample = result[item.nodeIp] || { total: 0, count: 0 };
+            sample.total += item.gpuUtil;
+            sample.count += 1;
+            result[item.nodeIp] = sample;
+            return result;
+        }, {});
+        const highWaterNodes = Object.values(nodeAverages).filter(sample => sample.total / sample.count > 60).length;
+        const pageCount = Math.max(1, Math.ceil(rows.length / state.pageSize));
+        state.page = Math.min(state.page, pageCount);
+        const pageRows = rows.slice((state.page - 1) * state.pageSize, state.page * state.pageSize);
+        byId('resourceDetailVendor').innerHTML = vendorIcon(resource);
+        byId('resourceDetailTitle').textContent = state.currentGpu;
+        byId('resourceDetailTotal').textContent = `总计 ${total} 卡 · ${resource.vendorName}`;
+        byId('resourceUsedCount').textContent = `${used} 卡`;
+        byId('resourceIdleCount').textContent = `${total - used} 卡`;
+        byId('resourceHighWaterCount').textContent = `${highWaterNodes} 个`;
+        byId('resourceDetailBody').innerHTML = pageRows.length ? pageRows.map((item, index) => {
+            const gpuWarning = item.gpuUtil > 60;
+            const memWarning = item.memUtil >= 85;
+            return `<tr><td class="mono">${(state.page - 1) * state.pageSize + index + 1}</td><td class="mono">${item.uniqueId}</td><td class="mono" style="color:var(--brand)">${item.nodeIp}</td><td>${item.instanceName}</td><td><div class="usage-cell"><div class="progress${gpuWarning ? ' warning' : ''}"><span style="width:${item.gpuUtil}%"></span></div><span class="mono">${item.gpuUtil}%</span></div></td><td><div class="usage-cell"><div class="progress${memWarning ? ' warning' : ''}"><span style="width:${item.memUtil}%"></span></div><span class="mono">${item.memUtil}%</span></div></td><td class="mono">${item.power} W</td></tr>`;
+        }).join('') : '<tr><td class="resource-table-empty" colspan="7">当前筛选条件下暂无卡级运行记录</td></tr>';
+        renderResourcePagination(rows.length, pageCount);
+    }
+
+    function selectResource(type) {
+        state.currentGpu = type;
+        state.nodeIp = 'all';
+        state.page = 1;
+        renderResourceMaster();
+        renderResourceDetails();
+    }
+
+    function exportResourceDetails(currentOnly) {
+        const types = currentOnly ? [state.currentGpu] : Object.keys(resourceDetailData);
+        const lines = ['GPU 型号,唯一 ID,节点 IP,运行实例,GPU 利用率,显存占用率,功率'];
+        types.forEach(type => clusterRows(resourceDetailData[type]).filter(item => !currentOnly || state.nodeIp === 'all' || item.nodeIp === state.nodeIp).forEach(item => lines.push([type, item.uniqueId, item.nodeIp, item.instanceName, `${item.gpuUtil}%`, `${item.memUtil}%`, `${item.power}W`].join(','))));
+        const blob = new Blob(['\ufeff' + lines.join('\n')], { type: 'text/csv;charset=utf-8' });
+        const link = document.createElement('a');
+        link.href = URL.createObjectURL(blob);
+        link.download = currentOnly ? `${state.currentGpu.replaceAll(' ', '_')}_卡级运行明细.csv` : '应龙平台_显卡资源明细.csv';
+        document.body.appendChild(link);
+        link.click();
+        URL.revokeObjectURL(link.href);
+        link.remove();
+        showToast('导出任务已完成', currentOnly ? '当前卡级运行明细已生成。' : '当前集群范围内的显卡资源明细已生成。');
+    }
+
+    function closeAlertRules() {
+        byId('alertRulesModal').classList.add('hidden');
+        byId('alertRuleError').classList.add('hidden');
+    }
+
+    function updateRuleCard(toggleId, cardId) {
+        const enabled = byId(toggleId).checked;
+        const card = byId(cardId);
+        card.classList.toggle('is-disabled', !enabled);
+        card.querySelectorAll('.rule-fields input, .rule-fields select').forEach(control => { control.disabled = !enabled; });
+    }
+
+    function saveAlertRules() {
+        const nodeWarning = Number(byId('nodeWarningThreshold').value);
+        const nodeCritical = Number(byId('nodeCriticalThreshold').value);
+        const modelWarning = Number(byId('modelWarningThreshold').value);
+        const modelCritical = Number(byId('modelCriticalThreshold').value);
+        const nodeInvalid = byId('nodeRuleEnabled').checked && (!nodeWarning || nodeCritical <= nodeWarning);
+        const modelInvalid = byId('modelRuleEnabled').checked && (!modelWarning || modelCritical <= modelWarning);
+        if (nodeInvalid || modelInvalid) {
+            byId('alertRuleError').classList.remove('hidden');
+            return;
+        }
+        closeAlertRules();
+        showToast('预警规则已保存', '节点与模型预警阈值已更新，新规则已对生产集群生效。');
+    }
+
+    byId('resourceMasterList').addEventListener('click', event => {
+        const button = event.target.closest('[data-resource]');
+        if (button) selectResource(button.dataset.resource);
+    });
+    byId('taskComputeModelFilter').addEventListener('change', event => {
+        taskComputeState.model = event.target.value;
+        taskComputeState.page = 1;
+        renderTaskCompute();
+    });
+    document.querySelector('.task-compute-type').addEventListener('click', event => {
+        const button = event.target.closest('[data-compute-service]');
+        if (!button) return;
+        taskComputeState.serviceType = button.dataset.computeService;
+        taskComputeState.page = 1;
+        document.querySelectorAll('[data-compute-service]').forEach(item => {
+            const active = item === button;
+            item.classList.toggle('active', active);
+            item.setAttribute('aria-pressed', String(active));
+        });
+        renderTaskCompute();
+    });
+    byId('resetTaskCompute').addEventListener('click', resetTaskCompute);
+    byId('taskComputePageSize').addEventListener('change', event => {
+        taskComputeState.pageSize = Number(event.target.value);
+        taskComputeState.page = 1;
+        renderTaskCompute();
+    });
+    byId('taskComputePageButtons').addEventListener('click', event => {
+        const button = event.target.closest('[data-compute-page]');
+        if (!button || button.disabled) return;
+        taskComputeState.page = Number(button.dataset.computePage);
+        renderTaskCompute();
+    });
+    byId('openModelExport').addEventListener('click', openModelExportModal);
+    byId('modelExportFilter').addEventListener('submit', event => {
+        event.preventDefault();
+        const range = readModelExportRange();
+        if (range) renderModelExport(range);
+    });
+    byId('modelExportStart').addEventListener('blur', readModelExportRange);
+    byId('modelExportEnd').addEventListener('blur', readModelExportRange);
+    byId('resetModelExportTime').addEventListener('click', resetModelExportRange);
+    byId('closeModelExport').addEventListener('click', closeModelExportModal);
+    byId('cancelModelExport').addEventListener('click', closeModelExportModal);
+    byId('downloadModelExport').addEventListener('click', downloadModelExport);
+    byId('modelExportModal').addEventListener('click', event => { if (event.target === byId('modelExportModal')) closeModelExportModal(); });
+    document.querySelector('.model-health-list').addEventListener('click', event => {
+        const button = event.target.closest('[data-model-ips]');
+        if (button) openNodeIpModal(button);
+    });
+    byId('nodeIpSearch').addEventListener('input', event => renderNodeIps(event.target.value));
+    byId('closeNodeIpModal').addEventListener('click', closeNodeIpModal);
+    byId('doneNodeIpModal').addEventListener('click', closeNodeIpModal);
+    byId('copyNodeIps').addEventListener('click', copyNodeIpList);
+    byId('nodeIpModal').addEventListener('click', event => { if (event.target === byId('nodeIpModal')) closeNodeIpModal(); });
+    byId('resourceNodeFilter').addEventListener('change', event => {
+        state.nodeIp = event.target.value;
+        state.page = 1;
+        renderResourceDetails();
+    });
+    byId('resourcePageSize').addEventListener('change', event => {
+        state.pageSize = Number(event.target.value);
+        state.page = 1;
+        renderResourceDetails();
+    });
+    byId('resourcePageButtons').addEventListener('click', event => {
+        const button = event.target.closest('[data-page]');
+        if (!button || button.disabled) return;
+        state.page = Number(button.dataset.page);
+        renderResourceDetails();
+    });
+    byId('resourceExportCurrent').addEventListener('click', () => exportResourceDetails(true));
+    document.addEventListener('keydown', event => {
+        if (event.key !== 'Escape') return;
+        closeModelExportModal();
+        closeNodeIpModal();
+        closeAlertRules();
+    });
     byId('exportButton').addEventListener('click', () => exportResourceDetails(false));
-    byId('modalExport').addEventListener('click', () => exportResourceDetails(true));
+    byId('openAlertRules').addEventListener('click', () => {
+        byId('alertRuleError').classList.add('hidden');
+        byId('alertRulesModal').classList.remove('hidden');
+        byId('closeAlertRules').focus();
+    });
+    byId('closeAlertRules').addEventListener('click', closeAlertRules);
+    byId('cancelAlertRules').addEventListener('click', closeAlertRules);
+    byId('saveAlertRules').addEventListener('click', saveAlertRules);
+    byId('alertRulesModal').addEventListener('click', event => { if (event.target === byId('alertRulesModal')) closeAlertRules(); });
+    byId('nodeRuleEnabled').addEventListener('change', () => updateRuleCard('nodeRuleEnabled', 'nodeRuleCard'));
+    byId('modelRuleEnabled').addEventListener('change', () => updateRuleCard('modelRuleEnabled', 'modelRuleCard'));
     byId('refreshButton').addEventListener('click', () => {
         const now = new Date();
         byId('refreshTime').textContent = `更新于 ${now.toLocaleTimeString('zh-CN', { hour12: false })}`;
         showToast('数据已刷新', '平台状态已更新至最新采样时间。');
     });
-    byId('clusterScope').addEventListener('change', event => showToast('集群范围已切换', `当前展示：${event.target.options[event.target.selectedIndex].text}`));
+    byId('clusterScope').addEventListener('change', event => {
+        state.cluster = event.target.value;
+        state.nodeIp = 'all';
+        state.page = 1;
+        renderResourceMaster();
+        renderResourceDetails();
+        showToast('集群范围已切换', `当前展示：${event.target.options[event.target.selectedIndex].text}`);
+    });
+    renderResourceMaster();
+    renderResourceDetails();
+    renderTaskCompute();
 </script>
 </body>
 </html>

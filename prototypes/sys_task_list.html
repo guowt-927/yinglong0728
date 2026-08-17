@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>我的任务 - 应龙大模型推理平台</title>
   <link rel="stylesheet" href="assets/css/yinglong-v2.css">
+  <link rel="stylesheet" href="assets/css/pages/sys_task_list.css">
 </head>
 <body class="sidebar-led heading-spec-page">
   <svg width="0" height="0" aria-hidden="true" style="position:absolute">
@@ -28,17 +29,21 @@
     <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></symbol>
     <symbol id="i-play" viewBox="0 0 24 24"><path d="m5 3 14 9-14 9V3Z"/></symbol>
     <symbol id="i-pause" viewBox="0 0 24 24"><path d="M8 5v14m8-14v14"/></symbol>
+    <symbol id="i-eye" viewBox="0 0 24 24"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12Z"/><circle cx="12" cy="12" r="3"/></symbol>
+    <symbol id="i-download" viewBox="0 0 24 24"><path d="M12 3v12m0 0 4-4m-4 4-4-4M5 21h14"/></symbol>
+    <symbol id="i-copy" viewBox="0 0 24 24"><rect width="13" height="13" x="8" y="8" rx="2"/><path d="M16 8V5a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h3"/></symbol>
   </svg>
 
   <a class="skip-link" href="#main-content">跳到主要内容</a>
   <aside class="sidebar" aria-label="应龙主导航">
-    <a class="brand" href="../index.html"><span class="brand-mark">应</span><span class="brand-name">应龙推理平台</span><span class="env-badge">PROD</span></a>
+    <a class="brand" href="../index.html" aria-label="应龙 AI算力基座首页"><span class="brand-mark" aria-hidden="true"><img src="../doc/logo/icon_01.svg" alt=""></span><span class="brand-copy"><span class="brand-name">应龙</span><span class="brand-subtitle">AI算力基座</span></span></a>
     <nav class="sidebar-nav">
       <section class="nav-group"><h2 class="nav-group-title">工作台</h2><a class="nav-item" href="../index.html"><svg class="icon"><use href="#i-dashboard"/></svg><span>系统概览</span></a></section>
       <section class="nav-group"><h2 class="nav-group-title">算力调度</h2><a class="nav-item" href="sys_dispatch.html"><svg class="icon"><use href="#i-sliders"/></svg><span>算力调度</span></a><a class="nav-item active" href="sys_task_list.html" aria-current="page"><svg class="icon"><use href="#i-list"/></svg><span>我的任务</span></a></section>
       <section class="nav-group"><h2 class="nav-group-title">模型管理</h2><a class="nav-item" href="sys_model_repo.html"><svg class="icon"><use href="#i-box"/></svg><span>模型资产</span></a><a class="nav-item" href="sys_model_service.html"><svg class="icon"><use href="#i-server"/></svg><span>模型服务</span></a><a class="nav-item" href="sys_model_training.html"><svg class="icon"><use href="#i-brain"/></svg><span>模型训练</span></a><a class="nav-item" href="sys_model_governance.html"><svg class="icon"><use href="#i-check-user"/></svg><span>模型纳管</span></a><a class="nav-item" href="sys_model_monitor.html"><svg class="icon"><use href="#i-activity"/></svg><span>模型监测</span></a></section>
-      <section class="nav-group"><h2 class="nav-group-title">资源与运维</h2><a class="nav-item" href="sys_resource_application.html"><svg class="icon"><use href="#i-file"/></svg><span>资源申请</span></a><a class="nav-item" href="sys_resource_approval.html"><svg class="icon"><use href="#i-check-user"/></svg><span>授权审批</span></a><a class="nav-item" href="sys_infrastructure_mgmt.html"><svg class="icon"><use href="#i-network"/></svg><span>集群管理</span></a><a class="nav-item" href="sys_api_key_mgmt.html"><svg class="icon"><use href="#i-activity"/></svg><span>请求监控</span></a><a class="nav-item" href="sys_request_tracing.html"><svg class="icon"><use href="#i-route"/></svg><span>链路追踪</span></a></section>
+      <section class="nav-group"><h2 class="nav-group-title">资源与运维</h2><a class="nav-item" href="sys_resource_application.html"><svg class="icon"><use href="#i-file"/></svg><span>资源申请</span></a><a class="nav-item" href="sys_resource_approval.html"><svg class="icon"><use href="#i-check-user"/></svg><span>授权审批</span></a><a class="nav-item" href="sys_infrastructure_mgmt.html"><svg class="icon"><use href="#i-network"/></svg><span>集群管理</span></a><a class="nav-item" href="sys_request_tracing.html"><svg class="icon"><use href="#i-route"/></svg><span>链路追踪</span></a></section>
     </nav>
+  <div class="sidebar-foot"><div class="sidebar-version" tabindex="0" aria-describedby="sidebarVersionDetails"><span>系统版本</span><strong>v1.0.0</strong><span class="sidebar-version-popover" id="sidebarVersionDetails" role="tooltip"><strong>版本信息</strong><span><span>前端版本</span><b>v1.0.0</b></span><span><span>后端版本</span><b>v1.0.0</b></span></span></div></div>
   </aside>
 
   <div class="app-main">
@@ -47,29 +52,23 @@
       <section class="section task-overview" aria-labelledby="taskPageTitle">
         <div class="section-heading overview-heading">
           <div><h1 class="page-title" id="taskPageTitle">我的任务</h1><p class="page-description">管理任务注册信息、运行状态与关联模型服务。</p></div>
-          <div class="toolbar-actions"><button class="btn btn-primary" id="openRegisterModal" type="button"><svg class="icon icon-sm"><use href="#i-plus"/></svg>注册任务</button></div>
-        </div>
-
-        <div class="metric-grid task-metrics" aria-label="任务统计">
-          <article class="card metric-card"><div class="metric-head"><span class="metric-label">总任务数</span><span class="metric-icon" style="width:34px;height:34px"><svg class="icon"><use href="#i-list"/></svg></span></div><div class="metric-value">128 <small>个</small></div><div class="metric-foot">已注册任务总量</div></article>
-          <article class="card metric-card"><div class="metric-head"><span class="metric-label">今日提交</span><span class="metric-icon" style="width:34px;height:34px;color:var(--indigo);background:var(--indigo-soft);border-color:#c7d2fe"><svg class="icon"><use href="#i-clock"/></svg></span></div><div class="metric-value">12 <small>个</small></div><div class="metric-foot">较昨日同期 +3</div></article>
-          <article class="card metric-card"><div class="metric-head"><span class="metric-label">运行中</span><span class="metric-icon" style="width:34px;height:34px;color:var(--success);background:var(--success-soft);border-color:#a7f3d0"><svg class="icon"><use href="#i-activity"/></svg></span></div><div class="metric-value">3 <small>个</small></div><div class="metric-foot">当前无异常任务</div></article>
+          <div class="toolbar-actions"><button class="btn btn-call-info" id="openCallDrawer" type="button"><svg class="icon icon-sm"><use href="#i-activity"/></svg>调用信息</button><button class="btn btn-primary" id="openRegisterModal" type="button"><svg class="icon icon-sm"><use href="#i-plus"/></svg>注册任务</button></div>
         </div>
       </section>
 
       <section class="card table-card" aria-labelledby="taskTableTitle">
         <div class="table-toolbar">
           <div class="table-title"><h2 id="taskTableTitle">任务列表</h2></div>
-          <div class="filters"><div class="search-wrap"><svg class="icon"><use href="#i-search"/></svg><input class="search-input" id="taskSearch" type="search" placeholder="搜索任务 ID、名称或 Tag" aria-label="搜索任务"><button class="search-clear hidden" id="taskSearchClear" type="button" aria-label="清空搜索"><svg class="icon icon-sm"><use href="#i-x"/></svg></button></div><select class="control" id="typeFilter" aria-label="筛选任务类型"><option value="all">全部类型</option><option value="offline">离线</option><option value="online">在线</option></select><select class="control" id="statusFilter" aria-label="筛选任务状态"><option value="all">全部状态</option><option value="active">运行中</option><option value="disabled">已停用</option></select><span class="result-count">已检索到 <strong id="taskCount">2</strong> 项</span></div>
+          <div class="filters"><div class="search-wrap"><svg class="icon"><use href="#i-search"/></svg><input class="search-input" id="taskSearch" type="search" placeholder="搜索名称、模型或 API Key" aria-label="搜索任务"><button class="search-clear hidden" id="taskSearchClear" type="button" aria-label="清空搜索"><svg class="icon icon-sm"><use href="#i-x"/></svg></button></div><select class="control" id="modelFilter" aria-label="筛选关联模型"><option value="all">全部模型</option><option value="Qwen-72B-Chat">Qwen-72B-Chat</option><option value="DeepSeek-R1">DeepSeek-R1</option><option value="Llama-3-70B">Llama-3-70B</option></select><select class="control" id="typeFilter" aria-label="筛选任务类型"><option value="all">全部类型</option><option value="offline">离线</option><option value="online">在线</option></select><select class="control" id="statusFilter" aria-label="筛选任务状态"><option value="all">全部状态</option><option value="active">运行中</option><option value="stopped">已停止</option></select><span class="result-count">已检索到 <strong id="taskCount">2</strong> 项</span></div>
         </div>
         <div class="active-filters hidden" id="activeFilters"><span class="muted">当前条件</span><div id="filterChips"></div><button class="reset-link" id="resetFilters" type="button">重置筛选</button></div>
         <div class="table-scroll">
-          <table>
-            <thead><tr><th>任务 ID</th><th>名称</th><th>Tag</th><th>类型</th><th>状态</th><th>时间</th><th style="text-align:right">操作</th></tr></thead>
+          <table class="task-list-table">
+            <thead><tr><th>序号</th><th>名称</th><th>模型</th><th>状态</th><th>类型</th><th>API Key</th><th>申请人</th><th>创建人</th><th>创建时间</th><th style="text-align:right">操作</th></tr></thead>
             <tbody id="taskBody">
-              <tr data-search="job-test-001 基准测试 Qwen 923" data-type="offline" data-status="active"><td class="mono">job-test-001</td><td><div class="cell-title">基准测试 Qwen</div></td><td><span class="tag">923</span></td><td>离线</td><td><span class="badge badge-success status-badge">运行中</span></td><td class="muted">2 小时前</td><td><div class="actions"><a class="text-link" href="sys_task_detail.html?task=job-test-001">详情</a><button class="text-link danger-text toggle-task" type="button" data-next="disabled">停用</button></div></td></tr>
-              <tr data-search="job-test-002 压力测试 R1 WX" data-type="online" data-status="disabled"><td class="mono">job-test-002</td><td><div class="cell-title">压力测试 R1</div></td><td><span class="tag">WX</span></td><td>在线</td><td><span class="badge badge-neutral status-badge">已停用</span></td><td class="muted">5 小时前</td><td><div class="actions"><a class="text-link" href="sys_task_detail.html?task=job-test-002">详情</a><button class="text-link success-text toggle-task" type="button" data-next="active">启用</button></div></td></tr>
-              <tr class="empty-row hidden" id="taskEmpty"><td colspan="7">未找到符合当前条件的任务，请调整搜索或筛选条件。</td></tr>
+              <tr data-task-id="job-test-001" data-api-key="YL-LxgFV32jncm-a0TfSMhkZATys41zWY7QSABXiRWs3Fq88nBjQ5r2" data-search="基准测试 Qwen Qwen-72B-Chat YL-LxgFV32jncm" data-type="offline" data-status="active"><td class="mono sequence-cell">1</td><td><div class="cell-title task-name">基准测试 Qwen</div></td><td class="task-model">Qwen-72B-Chat</td><td><span class="badge badge-success status-badge">运行中</span></td><td class="task-type">离线</td><td><div class="api-key-wrap"><code class="api-key-cell" title="完整 API Key 已隐藏">YL-LxgF••••••R2</code><button class="api-key-copy copy-task-api-key" type="button" aria-label="复制基准测试 Qwen 的 API Key" title="复制完整 API Key"><svg class="icon icon-sm"><use href="#i-copy"/></svg><span>复制</span></button></div></td><td>张伟</td><td>资源管理员</td><td class="mono muted">2026-08-12 09:30:18</td><td><div class="actions task-actions"><a class="text-link" href="sys_task_detail.html?task=job-test-001">详情</a><button class="text-link danger-text toggle-task" type="button" data-next="stopped">停止</button></div></td></tr>
+              <tr data-task-id="job-test-002" data-api-key="YL-P2k8sWj4nQm3-R1DemoKey-Z6t1" data-search="压力测试 R1 DeepSeek-R1 YL-P2k8sWj4nQm3" data-type="online" data-status="stopped"><td class="mono sequence-cell">2</td><td><div class="cell-title task-name">压力测试 R1</div></td><td class="task-model">DeepSeek-R1</td><td><span class="badge badge-neutral status-badge">已停止</span></td><td class="task-type">在线</td><td><div class="api-key-wrap"><code class="api-key-cell" title="完整 API Key 已隐藏">YL-P2k8••••••t1</code><button class="api-key-copy copy-task-api-key" type="button" aria-label="复制压力测试 R1 的 API Key" title="复制完整 API Key"><svg class="icon icon-sm"><use href="#i-copy"/></svg><span>复制</span></button></div></td><td>李娜</td><td>资源管理员</td><td class="mono muted">2026-08-11 16:08:42</td><td><div class="actions task-actions"><button class="text-link danger-text delete-task" type="button">删除</button><button class="text-link edit-task" type="button">编辑</button><a class="text-link" href="sys_task_detail.html?task=job-test-002">详情</a><button class="text-link success-text toggle-task" type="button" data-next="active">启动</button></div></td></tr>
+              <tr class="empty-row hidden" id="taskEmpty"><td colspan="10">未找到符合当前条件的任务，请调整搜索或筛选条件。</td></tr>
             </tbody>
           </table>
         </div>
@@ -95,22 +94,78 @@
           <div class="form-field full"><label for="expectedDuration">期望完成时间</label><select class="control" id="expectedDuration"><option value="">请选择期望时长</option><option value="0.5">0.5 小时</option><option value="1">1 小时</option><option value="2">2 小时</option><option value="4">4 小时</option><option value="8">8 小时</option><option value="24">24 小时</option></select></div>
         </div></section>
       </div>
-      <footer class="modal-footer"><span class="muted" style="font-size:11px">带 <span class="required">*</span> 为必填项</span><div class="modal-actions"><button class="btn" id="cancelRegister" type="button">取消</button><button class="btn btn-primary" type="submit"><svg class="icon icon-sm"><use href="#i-check"/></svg>提交注册</button></div></footer>
+      <footer class="modal-footer"><span class="muted" style="font-size:11px">带 <span class="required">*</span> 为必填项</span><div class="modal-actions"><button class="btn" id="cancelRegister" type="button">取消</button><button class="btn btn-primary" type="submit"><svg class="icon icon-sm"><use href="#i-check"/></svg><span id="registerSubmitLabel">提交注册</span></button></div></footer>
     </form>
   </div>
 
-  <div class="popconfirm hidden" id="taskPopconfirm" role="dialog" aria-label="确认更改任务状态"><p id="popconfirmText">确认停用该任务？</p><div class="popconfirm-actions"><button class="btn" id="cancelToggle" type="button">取消</button><button class="btn btn-danger" id="confirmToggle" type="button">确认</button></div></div>
+  <div class="popconfirm hidden" id="taskPopconfirm" role="dialog" aria-label="确认任务操作"><p id="popconfirmText">确认停止该任务？</p><div class="popconfirm-actions"><button class="btn" id="cancelToggle" type="button">取消</button><button class="btn btn-danger" id="confirmToggle" type="button">确认</button></div></div>
+
+  <div class="drawer-backdrop hidden" id="callDrawerBackdrop"></div>
+  <aside class="call-drawer" id="callDrawer" role="dialog" aria-modal="true" aria-labelledby="callDrawerTitle" aria-hidden="true" inert>
+    <header class="call-drawer-header"><div><h2 id="callDrawerTitle">调用信息</h2><p>按模型类别查看请求地址、鉴权方式和调用示例。</p></div><button class="btn btn-icon btn-ghost" id="closeCallDrawer" type="button" aria-label="关闭调用信息"><svg class="icon"><use href="#i-x"/></svg></button></header>
+    <div class="call-drawer-body">
+      <div class="form-field call-category-field"><label for="callModelCategory">模型类别</label><select class="control" id="callModelCategory"><option value="general">通用大模型 /v1/chat/completions</option><option value="asr">语音转写模型 /asr/recognition</option><option value="small">小模型 /SmallModel/</option></select></div>
+      <section class="call-field" aria-labelledby="apiUrlLabel"><div class="call-field-head"><h3 id="apiUrlLabel">请求地址</h3><button class="text-link copy-call" type="button" data-copy-target="callApiUrl">复制</button></div><div class="endpoint-row"><span>POST</span><code id="callApiUrl">http://192.192.140.6:31899/v1/chat/completions</code></div></section>
+      <section class="call-field parameter-field" aria-labelledby="interfaceParametersTitle"><div class="call-field-head parameter-field-head"><h3 id="interfaceParametersTitle">接口参数</h3><div class="parameter-actions"><button class="btn parameter-action" id="toggleInterfaceParameters" type="button" aria-expanded="false" aria-controls="interfaceParametersPanel"><svg class="icon icon-sm"><use href="#i-eye"/></svg><span id="toggleInterfaceParametersText">查看参数</span></button><button class="btn parameter-action" id="downloadInterfaceParameters" type="button"><svg class="icon icon-sm"><use href="#i-download"/></svg>下载 JSON</button></div></div><div class="parameter-panel hidden" id="interfaceParametersPanel"><div class="parameter-summary"><span id="interfaceParameterCategory">通用大模型</span><strong id="interfaceParameterCount">0 个参数</strong></div><div class="parameter-table-wrap"><table aria-label="当前接口参数"><thead><tr><th>参数名</th><th>位置</th><th>类型</th><th>是否必填</th><th>说明</th></tr></thead><tbody id="interfaceParametersBody"></tbody></table></div></div></section>
+      <section class="call-field auth-field" aria-labelledby="authTitle"><div class="call-field-head"><h3 id="authTitle">API Key 调用方式</h3><div class="auth-mode-tabs" role="tablist" aria-label="API Key 调用方式"><button class="active" type="button" role="tab" aria-selected="true" aria-controls="authHelpText" data-auth-mode="header">请求头</button><button type="button" role="tab" aria-selected="false" aria-controls="authHelpText" data-auth-mode="body" tabindex="-1">请求体</button></div></div><div class="auth-help"><div id="authHelpText"><strong>请求头方式</strong><span>添加 <code>Authorization: Bearer &lt;API_KEY&gt;</code></span></div><button class="text-link copy-call auth-key-copy" id="copyCallApiKey" type="button">复制 API Key</button></div></section>
+      <section class="call-example" aria-labelledby="callExampleTitle"><div class="call-example-head"><h3 id="callExampleTitle">API 调用示例</h3><div class="code-tabs" role="tablist" aria-label="调用示例类型"><button class="active" type="button" role="tab" aria-selected="true" aria-controls="callCode" data-code-tab="curl">cURL</button><button type="button" role="tab" aria-selected="false" aria-controls="callCode" data-code-tab="python" tabindex="-1">Python</button><button type="button" role="tab" aria-selected="false" aria-controls="callCode" data-code-tab="postman" tabindex="-1">Postman</button></div></div><div class="code-block"><button class="code-copy copy-call" type="button" data-copy-target="callCode">复制示例</button><pre id="callCode"></pre></div></section>
+    </div>
+    <footer class="call-drawer-footer"><span>示例会随模型类别和鉴权方式同步更新</span><button class="btn btn-primary" id="closeCallDrawerFooter" type="button">完成</button></footer>
+  </aside>
+
   <div class="toast hidden" id="toast" role="status" aria-live="polite"><svg class="icon"><use href="#i-check"/></svg><div><h3 id="toastTitle">操作成功</h3><p id="toastMessage">任务状态已更新。</p></div></div>
 
   <script>
     const registerModal = document.getElementById('registerTaskModal');
     const form = document.getElementById('registerForm');
-    const taskRows = [...document.querySelectorAll('#taskBody tr[data-search]')];
+    const getTaskRows = () => [...document.querySelectorAll('#taskBody tr[data-search]')];
     const searchInput = document.getElementById('taskSearch');
+    const modelFilter = document.getElementById('modelFilter');
     const typeFilter = document.getElementById('typeFilter');
     const statusFilter = document.getElementById('statusFilter');
     const popconfirm = document.getElementById('taskPopconfirm');
-    let pendingToggle = null;
+    const callDrawer = document.getElementById('callDrawer');
+    const callDrawerBackdrop = document.getElementById('callDrawerBackdrop');
+    let activeCodeTab = 'curl';
+    let activeAuthMode = 'header';
+    let pendingActionButton = null;
+    let editingRow = null;
+    let registerModalTrigger = null;
+
+    const callInfo = {
+      general: {
+        label: '通用大模型', model: 'qwen3-32b', key: 'YL-LxgFV32jncm-a0TfSMhkZATys41zWY7QSABXiRWs3Fq88nBjQ5r2', url: 'http://192.192.140.6:31899/v1/chat/completions', payload: { model: 'qwen3-32b', messages: [{ role: 'user', content: '请简要介绍应龙推理平台。' }] },
+        parameters: [
+          { name: 'Authorization', location: 'Header', type: 'string', required: '条件必填', description: '请求头鉴权时填写 Bearer API_KEY' },
+          { name: 'apikey', location: 'Body', type: 'string', required: '条件必填', description: '请求体鉴权时传入 API Key' },
+          { name: 'model', location: 'Body', type: 'string', required: '必填', description: '调用的模型服务名称' },
+          { name: 'messages', location: 'Body', type: 'array', required: '必填', description: '对话消息列表，包含 role 与 content' },
+          { name: 'temperature', location: 'Body', type: 'number', required: '选填', description: '采样温度，建议范围 0～2' },
+          { name: 'stream', location: 'Body', type: 'boolean', required: '选填', description: '是否使用流式响应，默认 false' }
+        ]
+      },
+      asr: {
+        label: '语音转写模型', model: 'whisper-large-v3', key: 'YL-ASR8xP9k2mV4DemoKey', url: 'http://192.192.140.6:31899/asr/recognition', payload: { model: 'whisper-large-v3', audio_url: 'https://example.com/audio/demo.wav', language: 'zh' },
+        parameters: [
+          { name: 'Authorization', location: 'Header', type: 'string', required: '条件必填', description: '请求头鉴权时填写 Bearer API_KEY' },
+          { name: 'apikey', location: 'Body', type: 'string', required: '条件必填', description: '请求体鉴权时传入 API Key' },
+          { name: 'model', location: 'Body', type: 'string', required: '必填', description: '语音转写模型服务名称' },
+          { name: 'audio_url', location: 'Body', type: 'string', required: '必填', description: '可访问的音频文件地址' },
+          { name: 'language', location: 'Body', type: 'string', required: '选填', description: '音频语言代码，例如 zh、en' },
+          { name: 'timestamps', location: 'Body', type: 'boolean', required: '选填', description: '是否返回分段时间戳' }
+        ]
+      },
+      small: {
+        label: '小模型', model: 'text-classifier-v2', key: 'YL-SM4rT7nQ2wK9DemoKey', url: 'http://192.192.140.6:31899/SmallModel/', payload: { model: 'text-classifier-v2', input: '待分类的文本内容' },
+        parameters: [
+          { name: 'Authorization', location: 'Header', type: 'string', required: '条件必填', description: '请求头鉴权时填写 Bearer API_KEY' },
+          { name: 'apikey', location: 'Body', type: 'string', required: '条件必填', description: '请求体鉴权时传入 API Key' },
+          { name: 'model', location: 'Body', type: 'string', required: '必填', description: '小模型服务名称' },
+          { name: 'input', location: 'Body', type: 'string | array', required: '必填', description: '单条文本或批量输入内容' },
+          { name: 'top_k', location: 'Body', type: 'integer', required: '选填', description: '返回置信度最高的前 K 项结果' }
+        ]
+      }
+    };
 
     function showToast(title, message) {
       const toast = document.getElementById('toast');
@@ -121,17 +176,183 @@
       showToast.timer = window.setTimeout(() => toast.classList.add('hidden'), 3200);
     }
 
-    function openRegisterModal() { registerModal.classList.remove('hidden'); document.body.style.overflow = 'hidden'; requestAnimationFrame(() => document.getElementById('taskName').focus()); }
-    function closeRegisterModal() { registerModal.classList.add('hidden'); document.body.style.overflow = ''; clearValidation(); document.getElementById('openRegisterModal').focus(); }
+    function showRegisterModal() { registerModal.classList.remove('hidden'); document.body.style.overflow = 'hidden'; requestAnimationFrame(() => document.getElementById('taskName').focus()); }
+    function openRegisterModal(trigger) {
+      editingRow = null;
+      registerModalTrigger = trigger || document.getElementById('openRegisterModal');
+      form.reset();
+      document.getElementById('registerTitle').textContent = '注册新任务';
+      document.getElementById('registerSubmitLabel').textContent = '提交注册';
+      document.getElementById('offlineConfigSection').classList.add('hidden');
+      document.getElementById('serviceStatusMsg').className = 'field-message hidden';
+      showRegisterModal();
+    }
+    function openEditModal(button) {
+      editingRow = button.closest('tr');
+      registerModalTrigger = button;
+      form.reset();
+      document.getElementById('registerTitle').textContent = '编辑任务';
+      document.getElementById('registerSubmitLabel').textContent = '保存修改';
+      document.getElementById('taskName').value = editingRow.querySelector('.task-name').textContent.trim();
+      const typeInput = document.querySelector(`input[name="taskType"][value="${editingRow.dataset.type}"]`);
+      if (typeInput) typeInput.checked = true;
+      const modelName = editingRow.querySelector('.task-model').textContent.trim();
+      document.getElementById('modelServiceSelect').value = modelName.includes('Qwen') ? 'svc-001' : modelName.includes('DeepSeek') ? 'svc-002' : 'svc-error';
+      toggleOfflineConfig();
+      checkServiceStatus();
+      showRegisterModal();
+    }
+    function closeRegisterModal() { const trigger = registerModalTrigger; registerModal.classList.add('hidden'); document.body.style.overflow = ''; clearValidation(); editingRow = null; registerModalTrigger = null; (trigger || document.getElementById('openRegisterModal')).focus(); }
     function clearValidation() { document.getElementById('taskNameError').classList.add('hidden'); document.getElementById('taskTypeError').classList.add('hidden'); document.getElementById('taskName').removeAttribute('aria-invalid'); }
+
+    function getCallCode(info, language) {
+      const payload = { ...info.payload };
+      if (activeAuthMode === 'body') payload.apikey = info.key;
+      const body = JSON.stringify(payload, null, 2);
+      const authHeader = activeAuthMode === 'header' ? `\n  -H "Authorization: Bearer ${info.key}" \\` : '';
+      if (language === 'python') {
+        const headers = activeAuthMode === 'header'
+          ? `{\n    "Authorization": "Bearer ${info.key}",\n    "Content-Type": "application/json"\n}`
+          : '{"Content-Type": "application/json"}';
+        return `import requests\n\nurl = "${info.url}"\nheaders = ${headers}\npayload = ${body}\n\nresponse = requests.post(url, headers=headers, json=payload)\nprint(response.json())`;
+      }
+      if (language === 'postman') {
+        const headerLine = activeAuthMode === 'header' ? `\nAuthorization: Bearer ${info.key}` : '';
+        return `POST ${info.url}\n\nHeaders\nContent-Type: application/json${headerLine}\n\nBody · raw · JSON\n${body}\n\n在 Postman 中点击 Send 发送请求。`;
+      }
+      return `curl -X POST "${info.url}" \\${authHeader}\n  -H "Content-Type: application/json" \\\n  -d '${JSON.stringify(payload)}'`;
+    }
+
+    function renderInterfaceParameters(info) {
+      document.getElementById('interfaceParameterCategory').textContent = info.label;
+      document.getElementById('interfaceParameterCount').textContent = `${info.parameters.length} 个参数`;
+      document.getElementById('interfaceParametersBody').innerHTML = info.parameters.map(parameter => {
+        const requiredClass = parameter.required === '必填' ? 'is-required' : parameter.required === '条件必填' ? 'is-conditional' : 'is-optional';
+        return `<tr><td class="mono parameter-name">${parameter.name}</td><td><span class="parameter-location">${parameter.location}</span></td><td class="mono">${parameter.type}</td><td><span class="parameter-required ${requiredClass}">${parameter.required}</span></td><td>${parameter.description}</td></tr>`;
+      }).join('');
+    }
+
+    function renderCallInfo() {
+      const category = document.getElementById('callModelCategory').value;
+      const info = callInfo[category];
+      document.getElementById('callApiUrl').textContent = info.url;
+      document.getElementById('callCode').textContent = getCallCode(info, activeCodeTab);
+      document.getElementById('copyCallApiKey').dataset.copyValue = info.key;
+      renderInterfaceParameters(info);
+      document.getElementById('authHelpText').innerHTML = activeAuthMode === 'header'
+        ? '<strong>请求头方式</strong><span>添加 <code>Authorization: Bearer &lt;API_KEY&gt;</code></span>'
+        : '<strong>请求体方式</strong><span>在 JSON 请求体中添加 <code>"apikey": "&lt;API_KEY&gt;"</code></span>';
+    }
+
+    function openCallDrawer() {
+      renderCallInfo();
+      callDrawer.removeAttribute('inert');
+      callDrawer.classList.add('open');
+      callDrawer.setAttribute('aria-hidden', 'false');
+      callDrawerBackdrop.classList.remove('hidden');
+      document.body.style.overflow = 'hidden';
+      requestAnimationFrame(() => document.getElementById('closeCallDrawer').focus());
+    }
+
+    function closeCallDrawer() {
+      callDrawer.classList.remove('open');
+      callDrawer.setAttribute('aria-hidden', 'true');
+      callDrawer.setAttribute('inert', '');
+      callDrawerBackdrop.classList.add('hidden');
+      document.body.style.overflow = '';
+      document.getElementById('openCallDrawer').focus();
+    }
+
+    async function copyText(text) {
+      if (!text) return false;
+      try {
+        if (!navigator.clipboard?.writeText) throw new Error('Clipboard API unavailable');
+        await navigator.clipboard.writeText(text);
+        return true;
+      } catch {
+        const previousFocus = document.activeElement;
+        const input = document.createElement('textarea');
+        input.value = text;
+        input.setAttribute('readonly', '');
+        input.style.position = 'fixed';
+        input.style.opacity = '0';
+        document.body.appendChild(input);
+        input.select();
+        let copied = false;
+        try { copied = document.execCommand('copy'); } catch { copied = false; }
+        input.remove();
+        if (previousFocus instanceof HTMLElement) previousFocus.focus();
+        return copied;
+      }
+    }
+
+    async function copyCallValue(button) {
+      const target = button.dataset.copyTarget ? document.getElementById(button.dataset.copyTarget) : null;
+      const text = button.dataset.copyValue || target?.textContent || '';
+      const copied = await copyText(text);
+      showToast(copied ? '复制成功' : '复制失败', copied ? '调用信息已复制到剪贴板。' : '当前浏览器未授权自动复制，请手动选择文本。');
+    }
+
+    async function copyTaskApiKey(button) {
+      const row = button.closest('tr');
+      const copied = await copyText(row?.dataset.apiKey || '');
+      if (!copied) { showToast('复制失败', '当前浏览器未授权自动复制，请手动选择 API Key。'); return; }
+      const label = button.querySelector('span');
+      label.textContent = '已复制';
+      button.classList.add('is-copied');
+      showToast('API Key 已复制', `${row.querySelector('.task-name').textContent.trim()} 的完整 API Key 已复制到剪贴板。`);
+      window.clearTimeout(button.copyResetTimer);
+      button.copyResetTimer = window.setTimeout(() => {
+        if (!button.isConnected) return;
+        label.textContent = '复制';
+        button.classList.remove('is-copied');
+      }, 1600);
+    }
+
+    function toggleInterfaceParameters() {
+      const button = document.getElementById('toggleInterfaceParameters');
+      const panel = document.getElementById('interfaceParametersPanel');
+      const expanded = button.getAttribute('aria-expanded') !== 'true';
+      button.setAttribute('aria-expanded', String(expanded));
+      panel.classList.toggle('hidden', !expanded);
+      document.getElementById('toggleInterfaceParametersText').textContent = expanded ? '收起参数' : '查看参数';
+    }
+
+    function downloadInterfaceParameters() {
+      const category = document.getElementById('callModelCategory').value;
+      const info = callInfo[category];
+      const specification = {
+        category: info.label,
+        method: 'POST',
+        endpoint: info.url,
+        authentication: [
+          { location: 'Header', format: 'Authorization: Bearer <API_KEY>' },
+          { location: 'Body', format: '"apikey": "<API_KEY>"' }
+        ],
+        parameters: info.parameters,
+        exampleBody: info.payload
+      };
+      const blob = new Blob([JSON.stringify(specification, null, 2)], { type: 'application/json;charset=utf-8' });
+      const objectUrl = URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = objectUrl;
+      link.download = `${category}-api-parameters.json`;
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+      window.setTimeout(() => URL.revokeObjectURL(objectUrl), 0);
+      showToast('参数文件已生成', `${info.label}接口参数已下载为 JSON。`);
+    }
 
     function applyFilters() {
       const keyword = searchInput.value.trim().toLowerCase();
+      const model = modelFilter.value;
       const type = typeFilter.value;
       const status = statusFilter.value;
       let count = 0;
-      taskRows.forEach(row => {
-        const visible = (!keyword || row.dataset.search.toLowerCase().includes(keyword)) && (type === 'all' || row.dataset.type === type) && (status === 'all' || row.dataset.status === status);
+      getTaskRows().forEach(row => {
+        const rowModel = row.querySelector('.task-model').textContent.trim();
+        const visible = (!keyword || row.dataset.search.toLowerCase().includes(keyword)) && (model === 'all' || rowModel === model) && (type === 'all' || row.dataset.type === type) && (status === 'all' || row.dataset.status === status);
         row.classList.toggle('hidden', !visible);
         if (visible) count += 1;
       });
@@ -141,6 +362,7 @@
       document.getElementById('taskSearchClear').classList.toggle('hidden', !keyword);
       const chips = [];
       if (keyword) chips.push(`关键词：${searchInput.value.trim()}`);
+      if (model !== 'all') chips.push(`模型：${modelFilter.options[modelFilter.selectedIndex].text}`);
       if (type !== 'all') chips.push(`类型：${typeFilter.options[typeFilter.selectedIndex].text}`);
       if (status !== 'all') chips.push(`状态：${statusFilter.options[statusFilter.selectedIndex].text}`);
       document.getElementById('filterChips').innerHTML = chips.map(item => `<span class="filter-chip">${item}</span>`).join('');
@@ -161,12 +383,30 @@
       else message.className = 'field-message hidden';
     }
 
+    function updateTaskSequences() {
+      getTaskRows().forEach((row, index) => { row.querySelector('.sequence-cell').textContent = index + 1; });
+    }
+
+    function renderTaskActions(row) {
+      const taskId = row.dataset.taskId;
+      const details = `<a class="text-link" href="sys_task_detail.html?task=${encodeURIComponent(taskId)}">详情</a>`;
+      row.querySelector('.task-actions').innerHTML = row.dataset.status === 'active'
+        ? `${details}<button class="text-link danger-text toggle-task" type="button" data-next="stopped">停止</button>`
+        : `<button class="text-link danger-text delete-task" type="button">删除</button><button class="text-link edit-task" type="button">编辑</button>${details}<button class="text-link success-text toggle-task" type="button" data-next="active">启动</button>`;
+    }
+
+    function refreshTaskSearch(row) {
+      const apiKey = row.dataset.apiKey || '';
+      row.dataset.search = `${row.querySelector('.task-name').textContent} ${row.querySelector('.task-model').textContent} ${apiKey}`;
+    }
+
     function openPopconfirm(button) {
-      pendingToggle = button;
-      const enable = button.dataset.next === 'active';
-      document.getElementById('popconfirmText').textContent = enable ? '确认启用该任务？启用后将恢复业务调用。' : '确认停用该任务？停用后新请求将被拒绝。';
-      document.getElementById('confirmToggle').textContent = enable ? '确认启用' : '确认停用';
-      document.getElementById('confirmToggle').className = enable ? 'btn btn-primary' : 'btn btn-danger';
+      pendingActionButton = button;
+      const deleting = button.classList.contains('delete-task');
+      const starting = button.dataset.next === 'active';
+      document.getElementById('popconfirmText').textContent = deleting ? '确认删除该任务？删除后将无法恢复。' : starting ? '确认启动该任务？启动后将恢复业务调用。' : '确认停止该任务？停止后新请求将被拒绝。';
+      document.getElementById('confirmToggle').textContent = deleting ? '确认删除' : starting ? '确认启动' : '确认停止';
+      document.getElementById('confirmToggle').className = deleting || !starting ? 'btn btn-danger' : 'btn btn-primary';
       const rect = button.getBoundingClientRect();
       popconfirm.style.left = `${Math.max(8, Math.min(window.innerWidth - 232, rect.right - 224))}px`;
       popconfirm.style.top = `${Math.max(8, rect.top - 112)}px`;
@@ -174,33 +414,85 @@
       document.getElementById('cancelToggle').focus();
     }
 
-    function confirmTaskToggle() {
-      if (!pendingToggle) return;
-      const row = pendingToggle.closest('tr');
-      const next = pendingToggle.dataset.next;
+    function confirmTaskAction() {
+      if (!pendingActionButton) return;
+      const row = pendingActionButton.closest('tr');
+      if (pendingActionButton.classList.contains('delete-task')) {
+        const name = row.querySelector('.task-name').textContent;
+        row.remove();
+        updateTaskSequences();
+        popconfirm.classList.add('hidden');
+        pendingActionButton = null;
+        applyFilters();
+        showToast('任务已删除', `${name} 已从任务列表移除。`);
+        return;
+      }
+      const next = pendingActionButton.dataset.next;
       const badge = row.querySelector('.status-badge');
       row.dataset.status = next;
-      if (next === 'active') { badge.className = 'badge badge-success status-badge'; badge.textContent = '运行中'; pendingToggle.textContent = '停用'; pendingToggle.dataset.next = 'disabled'; pendingToggle.className = 'text-link danger-text toggle-task'; }
-      else { badge.className = 'badge badge-neutral status-badge'; badge.textContent = '已停用'; pendingToggle.textContent = '启用'; pendingToggle.dataset.next = 'active'; pendingToggle.className = 'text-link success-text toggle-task'; }
+      if (next === 'active') { badge.className = 'badge badge-success status-badge'; badge.textContent = '运行中'; }
+      else { badge.className = 'badge badge-neutral status-badge'; badge.textContent = '已停止'; }
+      renderTaskActions(row);
       popconfirm.classList.add('hidden');
-      showToast('任务状态已更新', next === 'active' ? '任务已启用，可以接收新的业务请求。' : '任务已停用，不再接收新的业务请求。');
-      pendingToggle = null;
+      showToast('任务状态已更新', next === 'active' ? '任务已启动，可以接收新的业务请求。' : '任务已停止，不再接收新的业务请求。');
+      pendingActionButton = null;
       applyFilters();
     }
 
-    document.getElementById('openRegisterModal').addEventListener('click', openRegisterModal);
+    document.getElementById('openRegisterModal').addEventListener('click', event => openRegisterModal(event.currentTarget));
+    document.getElementById('openCallDrawer').addEventListener('click', openCallDrawer);
+    document.getElementById('closeCallDrawer').addEventListener('click', closeCallDrawer);
+    document.getElementById('closeCallDrawerFooter').addEventListener('click', closeCallDrawer);
+    callDrawerBackdrop.addEventListener('click', closeCallDrawer);
+    document.getElementById('callModelCategory').addEventListener('change', renderCallInfo);
+    document.getElementById('toggleInterfaceParameters').addEventListener('click', toggleInterfaceParameters);
+    document.getElementById('downloadInterfaceParameters').addEventListener('click', downloadInterfaceParameters);
+    function bindDrawerTabs(selector, dataKey, onChange) {
+      const tabs = [...document.querySelectorAll(selector)];
+      const activate = button => {
+        tabs.forEach(item => {
+          const active = item === button;
+          item.classList.toggle('active', active);
+          item.setAttribute('aria-selected', String(active));
+          item.tabIndex = active ? 0 : -1;
+        });
+        onChange(button.dataset[dataKey]);
+        renderCallInfo();
+      };
+      tabs.forEach(button => {
+        button.addEventListener('click', () => activate(button));
+        button.addEventListener('keydown', event => {
+          if (!['ArrowLeft', 'ArrowRight'].includes(event.key)) return;
+          event.preventDefault();
+          const nextIndex = (tabs.indexOf(button) + (event.key === 'ArrowRight' ? 1 : -1) + tabs.length) % tabs.length;
+          tabs[nextIndex].focus();
+          activate(tabs[nextIndex]);
+        });
+      });
+    }
+    bindDrawerTabs('[data-auth-mode]', 'authMode', value => { activeAuthMode = value; });
+    bindDrawerTabs('[data-code-tab]', 'codeTab', value => { activeCodeTab = value; });
+    document.querySelectorAll('.copy-call').forEach(button => button.addEventListener('click', () => copyCallValue(button)));
     document.getElementById('closeRegisterModal').addEventListener('click', closeRegisterModal);
     document.getElementById('cancelRegister').addEventListener('click', closeRegisterModal);
     document.querySelectorAll('input[name="taskType"]').forEach(input => input.addEventListener('change', toggleOfflineConfig));
     document.getElementById('modelServiceSelect').addEventListener('change', checkServiceStatus);
     searchInput.addEventListener('input', applyFilters);
+    modelFilter.addEventListener('change', applyFilters);
     typeFilter.addEventListener('change', applyFilters);
     statusFilter.addEventListener('change', applyFilters);
     document.getElementById('taskSearchClear').addEventListener('click', () => { searchInput.value = ''; applyFilters(); searchInput.focus(); });
-    document.getElementById('resetFilters').addEventListener('click', () => { searchInput.value = ''; typeFilter.value = 'all'; statusFilter.value = 'all'; applyFilters(); });
-    document.querySelectorAll('.toggle-task').forEach(button => button.addEventListener('click', () => openPopconfirm(button)));
-    document.getElementById('cancelToggle').addEventListener('click', () => { popconfirm.classList.add('hidden'); pendingToggle = null; });
-    document.getElementById('confirmToggle').addEventListener('click', confirmTaskToggle);
+    document.getElementById('resetFilters').addEventListener('click', () => { searchInput.value = ''; modelFilter.value = 'all'; typeFilter.value = 'all'; statusFilter.value = 'all'; applyFilters(); });
+    document.getElementById('taskBody').addEventListener('click', event => {
+      const copyButton = event.target.closest('.copy-task-api-key');
+      if (copyButton) { copyTaskApiKey(copyButton); return; }
+      const actionButton = event.target.closest('.toggle-task,.delete-task,.edit-task');
+      if (!actionButton) return;
+      if (actionButton.classList.contains('edit-task')) openEditModal(actionButton);
+      else openPopconfirm(actionButton);
+    });
+    document.getElementById('cancelToggle').addEventListener('click', () => { popconfirm.classList.add('hidden'); pendingActionButton = null; });
+    document.getElementById('confirmToggle').addEventListener('click', confirmTaskAction);
     form.addEventListener('submit', event => {
       event.preventDefault();
       clearValidation();
@@ -211,15 +503,25 @@
       if (!type) { document.getElementById('taskTypeError').classList.remove('hidden'); valid = false; }
       if (!valid) { (name.value.trim() ? document.querySelector('input[name="taskType"]') : name).focus(); return; }
       const taskName = name.value.trim();
+      const wasEditing = Boolean(editingRow);
+      if (editingRow) {
+        editingRow.querySelector('.task-name').textContent = taskName;
+        editingRow.dataset.type = type.value;
+        editingRow.querySelector('.task-type').textContent = type.value === 'online' ? '在线' : '离线';
+        const modelSelect = document.getElementById('modelServiceSelect');
+        if (modelSelect.value) editingRow.querySelector('.task-model').textContent = modelSelect.selectedOptions[0].text.split('（')[0];
+        refreshTaskSearch(editingRow);
+      }
       form.reset();
       document.getElementById('offlineConfigSection').classList.add('hidden');
       document.getElementById('serviceStatusMsg').className = 'field-message hidden';
       closeRegisterModal();
-      showToast('任务注册已提交', `${taskName} 已进入注册流程。`);
+      showToast(wasEditing ? '任务信息已更新' : '任务注册已提交', wasEditing ? `${taskName} 的任务信息已保存。` : `${taskName} 已进入注册流程。`);
+      applyFilters();
     });
     registerModal.addEventListener('click', event => { if (event.target === registerModal) closeRegisterModal(); });
-    document.addEventListener('click', event => { if (!popconfirm.classList.contains('hidden') && !popconfirm.contains(event.target) && !event.target.closest('.toggle-task')) { popconfirm.classList.add('hidden'); pendingToggle = null; } });
-    document.addEventListener('keydown', event => { if (event.key === 'Escape') { if (!popconfirm.classList.contains('hidden')) { popconfirm.classList.add('hidden'); pendingToggle = null; } else if (!registerModal.classList.contains('hidden')) closeRegisterModal(); } });
+    document.addEventListener('click', event => { if (!popconfirm.classList.contains('hidden') && !popconfirm.contains(event.target) && !event.target.closest('.toggle-task,.delete-task')) { popconfirm.classList.add('hidden'); pendingActionButton = null; } });
+    document.addEventListener('keydown', event => { if (event.key === 'Escape') { if (callDrawer.classList.contains('open')) closeCallDrawer(); else if (!popconfirm.classList.contains('hidden')) { popconfirm.classList.add('hidden'); pendingActionButton = null; } else if (!registerModal.classList.contains('hidden')) closeRegisterModal(); } });
   </script>
 </body>
 </html>

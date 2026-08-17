@@ -55,7 +55,6 @@
         { file: 'sys_resource_application.html', label: '资源申请', icon: 'fa-file-circle-plus', role: 'applicant' },
         { file: 'sys_resource_approval.html', label: '授权与审批', icon: 'fa-user-check', role: 'admin' },
         { file: 'sys_infrastructure_mgmt.html', label: '集群与节点', icon: 'fa-network-wired' },
-        { file: 'sys_api_key_mgmt.html', label: '请求监控分析', icon: 'fa-chart-bar' },
         { file: 'sys_request_tracing.html', label: '链路跟踪', icon: 'fa-route' }
       ]
     }
@@ -92,7 +91,6 @@
     'sys_cluster_list.html': ['资源与运维', '集群列表'],
     'sys_node_mgmt.html': ['资源与运维', '节点管理'],
     'sys_node_detail.html': ['资源与运维', '节点详情'],
-    'sys_api_key_mgmt.html': ['资源与运维', '请求监控分析'],
     'sys_request_tracing.html': ['资源与运维', '链路跟踪']
   };
 
@@ -118,8 +116,8 @@
     sidebar.innerHTML = `
       <a class="yl-skip-link" href="#yl-main-content">跳到主要内容</a>
       <div class="yl-sidebar-brand">
-        <span class="yl-sidebar-mark" aria-hidden="true">应</span>
-        <span><strong>应龙</strong><small>大模型推理平台</small></span>
+        <span class="yl-sidebar-mark" aria-hidden="true"><img src="../doc/logo/icon_01.svg" alt=""></span>
+        <span><strong>应龙</strong><small>AI算力基座</small></span>
       </div>
       <nav class="yl-sidebar-nav">
         ${groups.map(group => `
@@ -129,6 +127,14 @@
           </section>`).join('')}
       </nav>
       <div class="yl-sidebar-footer">
+        <div class="yl-sidebar-version" tabindex="0" aria-describedby="ylSidebarVersionDetails">
+          <span>系统版本</span><strong>v1.0.0</strong>
+          <span class="yl-sidebar-version-popover" id="ylSidebarVersionDetails" role="tooltip">
+            <strong>版本信息</strong>
+            <span><span>前端版本</span><b>v1.0.0</b></span>
+            <span><span>后端版本</span><b>v1.0.0</b></span>
+          </span>
+        </div>
         <div class="yl-sidebar-role-label"><span>当前工作视角</span><span class="yl-sidebar-online">权限已同步</span></div>
         <div class="yl-sidebar-role" role="group" aria-label="切换角色">
           <button type="button" data-sidebar-role="applicant" class="${admin ? '' : 'active'}">申请人</button>

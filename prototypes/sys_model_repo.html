@@ -34,13 +34,14 @@
 
   <a class="skip-link" href="#main-content">跳到主要内容</a>
   <aside class="sidebar" aria-label="应龙主导航">
-    <a class="brand" href="../index.html"><span class="brand-mark">应</span><span class="brand-name">应龙推理平台</span><span class="env-badge">PROD</span></a>
+    <a class="brand" href="../index.html" aria-label="应龙 AI算力基座首页"><span class="brand-mark" aria-hidden="true"><img src="../doc/logo/icon_01.svg" alt=""></span><span class="brand-copy"><span class="brand-name">应龙</span><span class="brand-subtitle">AI算力基座</span></span></a>
     <nav class="sidebar-nav">
       <section class="nav-group"><h2 class="nav-group-title">工作台</h2><a class="nav-item" href="../index.html"><svg class="icon"><use href="#i-dashboard"/></svg><span>系统概览</span></a></section>
       <section class="nav-group"><h2 class="nav-group-title">算力调度</h2><a class="nav-item" href="sys_dispatch.html"><svg class="icon"><use href="#i-sliders"/></svg><span>算力调度</span></a><a class="nav-item" href="sys_task_list.html"><svg class="icon"><use href="#i-list"/></svg><span>我的任务</span></a></section>
       <section class="nav-group"><h2 class="nav-group-title">模型管理</h2><a class="nav-item active" href="sys_model_repo.html" aria-current="page"><svg class="icon"><use href="#i-box"/></svg><span>模型资产</span></a><a class="nav-item" href="sys_model_service.html"><svg class="icon"><use href="#i-server"/></svg><span>模型服务</span></a><a class="nav-item" href="sys_model_training.html"><svg class="icon"><use href="#i-brain"/></svg><span>模型训练</span></a><a class="nav-item" href="sys_model_governance.html"><svg class="icon"><use href="#i-check-user"/></svg><span>模型纳管</span></a><a class="nav-item" href="sys_model_monitor.html"><svg class="icon"><use href="#i-activity"/></svg><span>模型监测</span></a></section>
-      <section class="nav-group"><h2 class="nav-group-title">资源与运维</h2><a class="nav-item" href="sys_resource_application.html"><svg class="icon"><use href="#i-file"/></svg><span>资源申请</span></a><a class="nav-item" href="sys_resource_approval.html"><svg class="icon"><use href="#i-check-user"/></svg><span>授权审批</span></a><a class="nav-item" href="sys_infrastructure_mgmt.html"><svg class="icon"><use href="#i-network"/></svg><span>集群管理</span></a><a class="nav-item" href="sys_api_key_mgmt.html"><svg class="icon"><use href="#i-activity"/></svg><span>请求监控</span></a><a class="nav-item" href="sys_request_tracing.html"><svg class="icon"><use href="#i-route"/></svg><span>链路追踪</span></a></section>
+      <section class="nav-group"><h2 class="nav-group-title">资源与运维</h2><a class="nav-item" href="sys_resource_application.html"><svg class="icon"><use href="#i-file"/></svg><span>资源申请</span></a><a class="nav-item" href="sys_resource_approval.html"><svg class="icon"><use href="#i-check-user"/></svg><span>授权审批</span></a><a class="nav-item" href="sys_infrastructure_mgmt.html"><svg class="icon"><use href="#i-network"/></svg><span>集群管理</span></a><a class="nav-item" href="sys_request_tracing.html"><svg class="icon"><use href="#i-route"/></svg><span>链路追踪</span></a></section>
     </nav>
+  <div class="sidebar-foot"><div class="sidebar-version" tabindex="0" aria-describedby="sidebarVersionDetails"><span>系统版本</span><strong>v1.0.0</strong><span class="sidebar-version-popover" id="sidebarVersionDetails" role="tooltip"><strong>版本信息</strong><span><span>前端版本</span><b>v1.0.0</b></span><span><span>后端版本</span><b>v1.0.0</b></span></span></div></div>
   </aside>
 
   <div class="app-main">
@@ -51,27 +52,23 @@
     <main class="page-canvas heading-spec-canvas" id="main-content">
       <section class="section model-page-overview" aria-labelledby="pageTitle">
         <div class="section-heading overview-heading">
-          <div><h1 class="page-title" id="pageTitle">模型资产</h1><p class="page-description">自动扫描共享目录，也支持手动添加或手动导入模型包。</p></div>
-          <div class="toolbar-actions"><button class="btn" type="button" data-package-spec-open><svg class="icon icon-sm"><use href="#i-scan"/></svg>自动扫描规范</button><button class="btn btn-primary" type="button" data-add-model-open><svg class="icon icon-sm"><use href="#i-file"/></svg>添加模型资产</button></div>
+          <div><h1 class="page-title" id="pageTitle">模型资产</h1><p class="page-description">自动扫描共享目录，也支持手动添加其他位置的模型包。</p></div>
+          <div class="toolbar-actions"><button class="btn" type="button" data-package-spec-open><svg class="icon icon-sm"><use href="#i-scan"/></svg>自动扫描规范</button><button class="btn btn-primary" type="button" data-add-model-open><svg class="icon icon-sm"><use href="#i-file"/></svg>添加模型资产</button><button class="btn" type="button" data-model-check><svg class="icon icon-sm"><use href="#i-check"/></svg><span>模型检查</span></button></div>
         </div>
       </section>
 
       <div class="model-page-stack">
         <section class="model-grid" aria-label="模型资产列表">
-          <article class="card model-card model-asset-card" data-model-id="qwen-72b" data-name="Qwen-72B" data-description="面向通用文本生成与知识问答的基础模型，可直接复用生产环境部署模板。" data-model-path="/data/yl/modelPath/yl-model_qwen-72b_v2.1.0" data-startup-path="/data/yl/modelPath/yl-model_qwen-72b_v2.1.0/qwen-72b_v2.1.0.yaml" data-icon="Q">
-            <div class="model-card-head"><div class="model-identity"><span class="model-mark" aria-hidden="true"><span>Q</span></span><div><h2 class="model-name">Qwen-72B</h2></div></div><div class="asset-version-count" aria-label="4 个版本"><strong>4</strong><span>个版本</span></div></div>
+          <article class="card model-card model-asset-card" data-model-id="qwen-72b" data-name="Qwen-72B" data-description="面向通用文本生成与知识问答的基础模型，可直接复用生产环境部署模板。" data-model-path="/data/yl/modelPath/yl-model_qwen-72b_v2.1.0" data-startup-path="/data/yl/modelPath/yl-model_qwen-72b_v2.1.0/qwen-72b_v2.1.0.yaml" data-icon-src="icon/model-icon/qianwen.jpg" data-icon-mode="auto">
+            <div class="model-card-head"><div class="model-identity"><span class="model-mark has-logo" aria-hidden="true"><img src="icon/model-icon/qianwen.jpg" alt=""></span><div><h2 class="model-name">Qwen-72B</h2></div></div><div class="asset-version-count" aria-label="4 个版本"><strong>4</strong><span>个版本</span></div></div>
             <p class="model-summary">面向通用文本生成与知识问答的基础模型，可直接复用生产环境部署模板。</p>
-            <div class="asset-status-row"><span class="badge badge-success">可部署</span><span class="tag">文本生成</span><span class="tag">生产可用</span></div>
-            <dl class="asset-details"><div><dt>维护团队</dt><dd>平台模型组</dd></div><div><dt>最近更新</dt><dd>2026-08-12 16:40</dd></div></dl>
-            <div class="card-actions"><button class="btn model-action" type="button" data-action="edit"><svg class="icon icon-sm"><use href="#i-edit"/></svg>编辑</button><button class="btn model-action" type="button" data-action="yaml"><svg class="icon icon-sm"><use href="#i-code"/></svg>部署 YAML</button><a class="btn model-action" href="sys_model_version_detail.html?model=qwen-72b"><svg class="icon icon-sm"><use href="#i-clock"/></svg>版本历史</a><button class="btn btn-primary model-action" type="button" data-deploy-open data-deploy-mode="deploy" data-deploy-model="Qwen-72B" data-deploy-version="v2.1.0" data-deploy-service="svc-qwen-72b-prod"><svg class="icon icon-sm"><use href="#i-rocket"/></svg>部署服务</button></div>
+            <div class="card-actions"><button class="btn model-action" type="button" data-action="edit"><svg class="icon icon-sm"><use href="#i-edit"/></svg>编辑</button><button class="btn model-action" type="button" data-action="yaml"><svg class="icon icon-sm"><use href="#i-code"/></svg>部署 YAML</button><a class="btn model-action" href="sys_model_version_detail.html?model=qwen-72b"><svg class="icon icon-sm"><use href="#i-clock"/></svg>训练版本</a><button class="btn btn-primary model-action" type="button" data-deploy-open data-deploy-mode="deploy" data-deploy-model="Qwen-72B" data-deploy-version="v2.1.0" data-deploy-service="svc-qwen-72b-prod"><svg class="icon icon-sm"><use href="#i-rocket"/></svg>部署服务</button></div>
           </article>
 
-          <article class="card model-card model-asset-card" data-model-id="deepseek-r1" data-name="DeepSeek-R1" data-description="面向代码生成与复杂推理场景的推理模型，可用于业务共性推理和代码辅助场景。" data-model-path="/data/yl/modelPath/yl-model_deepseek-r1_v1.0.0" data-startup-path="/data/yl/modelPath/yl-model_deepseek-r1_v1.0.0/deepseek-r1_v1.0.0.yaml" data-icon="D">
-            <div class="model-card-head"><div class="model-identity"><span class="model-mark deepseek" aria-hidden="true"><span>D</span></span><div><h2 class="model-name">DeepSeek-R1</h2></div></div><div class="asset-version-count" aria-label="3 个版本"><strong>3</strong><span>个版本</span></div></div>
+          <article class="card model-card model-asset-card" data-model-id="deepseek-r1" data-name="DeepSeek-R1" data-description="面向代码生成与复杂推理场景的推理模型，可用于业务共性推理和代码辅助场景。" data-model-path="/data/yl/modelPath/yl-model_deepseek-r1_v1.0.0" data-startup-path="/data/yl/modelPath/yl-model_deepseek-r1_v1.0.0/deepseek-r1_v1.0.0.yaml" data-icon-src="icon/model-icon/deepseek.jpg" data-icon-mode="auto">
+            <div class="model-card-head"><div class="model-identity"><span class="model-mark has-logo" aria-hidden="true"><img src="icon/model-icon/deepseek.jpg" alt=""></span><div><h2 class="model-name">DeepSeek-R1</h2></div></div><div class="asset-version-count" aria-label="3 个版本"><strong>3</strong><span>个版本</span></div></div>
             <p class="model-summary">面向代码生成与复杂推理场景的推理模型，可用于业务共性推理和代码辅助场景。</p>
-            <div class="asset-status-row"><span class="badge badge-info">试用中</span><span class="tag">复杂推理</span><span class="tag">代码生成</span></div>
-            <dl class="asset-details"><div><dt>维护团队</dt><dd>算法工程组</dd></div><div><dt>最近更新</dt><dd>2026-08-10 11:25</dd></div></dl>
-            <div class="card-actions"><button class="btn model-action" type="button" data-action="edit"><svg class="icon icon-sm"><use href="#i-edit"/></svg>编辑</button><button class="btn model-action" type="button" data-action="yaml"><svg class="icon icon-sm"><use href="#i-code"/></svg>部署 YAML</button><a class="btn model-action" href="sys_model_version_detail.html?model=deepseek-r1"><svg class="icon icon-sm"><use href="#i-clock"/></svg>版本历史</a><button class="btn btn-primary model-action" type="button" data-deploy-open data-deploy-mode="deploy" data-deploy-model="DeepSeek-R1" data-deploy-version="v1.0.0" data-deploy-service="svc-deepseek-r1-prod"><svg class="icon icon-sm"><use href="#i-rocket"/></svg>部署服务</button></div>
+            <div class="card-actions"><button class="btn model-action" type="button" data-action="edit"><svg class="icon icon-sm"><use href="#i-edit"/></svg>编辑</button><button class="btn model-action" type="button" data-action="yaml"><svg class="icon icon-sm"><use href="#i-code"/></svg>部署 YAML</button><a class="btn model-action" href="sys_model_version_detail.html?model=deepseek-r1"><svg class="icon icon-sm"><use href="#i-clock"/></svg>训练版本</a><button class="btn btn-primary model-action" type="button" data-deploy-open data-deploy-mode="deploy" data-deploy-model="DeepSeek-R1" data-deploy-version="v1.0.0" data-deploy-service="svc-deepseek-r1-prod"><svg class="icon icon-sm"><use href="#i-rocket"/></svg>部署服务</button></div>
           </article>
         </section>
       </div>
@@ -108,14 +105,6 @@
       <header class="modal-header"><div><h2 id="addModelTitle">添加模型资产</h2></div><button class="btn btn-icon btn-ghost" type="button" data-close-modal="addModelModal" aria-label="关闭添加模型资产弹窗"><svg class="icon"><use href="#i-x"/></svg></button></header>
       <form id="addModelForm" novalidate>
         <div class="modal-body model-ingest-body">
-          <fieldset class="ingest-mode-fieldset">
-            <legend>接入方式</legend>
-            <div class="ingest-mode-switch">
-              <label><input type="radio" name="ingestMode" value="path" checked><span><strong>手动添加</strong><small>填写模型包目录和部署配置文件路径</small></span></label>
-              <label><input type="radio" name="ingestMode" value="import"><span><strong>手动导入</strong><small>导入模型包目录和部署 YAML 文件</small></span></label>
-            </div>
-          </fieldset>
-
           <section class="ingest-section" aria-labelledby="assetInfoTitle">
             <h3 class="ingest-section-title" id="assetInfoTitle">资产信息</h3>
             <div class="form-grid ingest-base-grid">
@@ -128,20 +117,13 @@
           <section class="ingest-section" id="pathIngestPanel" aria-labelledby="pathIngestTitle">
             <h3 class="ingest-section-title" id="pathIngestTitle">服务器路径</h3>
             <div class="form-grid">
-              <div class="form-field full"><label for="addPackagePath">模型包目录 <span class="required">*</span></label><input class="control mono" id="addPackagePath" type="text" placeholder="/data/yl/modelPath/yl-model_bert_v1.0"><p class="field-help">支持共享存储路径；目录名须符合 <code>yl-model_{modelName}_{version}</code>。</p><p class="field-error hidden" id="addPackagePathError">请输入合规的模型包目录。</p></div>
-              <div class="form-field full"><label for="addYamlPath">部署配置文件 <span class="required">*</span></label><input class="control mono" id="addYamlPath" type="text" placeholder="/data/yl/modelPath/yl-model_bert_v1.0/bert_v1.0.yaml"><p class="field-help">YAML 须位于模型包目录内，并与目录中的模型名称和版本一致。</p><p class="field-error hidden" id="addYamlPathError">请输入模型包目录内的部署 YAML 路径。</p></div>
+              <div class="form-field full"><label for="addPackagePath">模型包目录 <span class="required">*</span></label><input class="control mono" id="addPackagePath" type="text" required aria-describedby="addPackagePathHelp addPackagePathError" placeholder="/data/yl/modelPath/yl-model_bert_v1.0"><p class="field-help" id="addPackagePathHelp">支持共享存储路径；目录名须符合 <code>yl-model_{modelName}_{version}</code>。</p><p class="field-error hidden" id="addPackagePathError" role="alert">请输入合规的模型包目录。</p></div>
+              <div class="form-field full"><label for="addYamlPath">部署配置文件 <span class="required">*</span></label><input class="control mono" id="addYamlPath" type="text" required aria-describedby="addYamlPathHelp addYamlPathError" placeholder="/data/yl/modelPath/yl-model_bert_v1.0/bert_v1.0.yaml"><p class="field-help" id="addYamlPathHelp">YAML 须位于模型包目录内，并与目录中的模型名称和版本一致。</p><p class="field-error hidden" id="addYamlPathError" role="alert">请输入模型包目录内的部署 YAML 路径。</p></div>
             </div>
           </section>
 
-          <section class="ingest-section hidden" id="fileIngestPanel" aria-labelledby="fileIngestTitle">
-            <h3 class="ingest-section-title" id="fileIngestTitle">本地文件</h3>
-            <div class="form-grid ingest-file-grid">
-              <div class="form-field full"><label for="addPackageFiles">模型包目录 <span class="required">*</span></label><div class="ingest-file-control"><svg class="icon"><use href="#i-upload"/></svg><div><input class="control" id="addPackageFiles" type="file" webkitdirectory directory multiple><p class="file-selection" id="packageFileSelection">请选择完整的模型包文件夹</p></div></div><p class="field-help">导入后写入 <code>/data/yl/modelPath</code>，文件夹名称须符合 <code>yl-model_{modelName}_{version}</code>。</p><p class="field-error hidden" id="addPackageFilesError">请选择合规的模型包文件夹。</p></div>
-              <div class="form-field full"><label for="addYamlFile">部署配置文件 <span class="required">*</span></label><div class="ingest-file-control"><svg class="icon"><use href="#i-code"/></svg><div><input class="control" id="addYamlFile" type="file" accept=".yaml,.yml,application/yaml,text/yaml"><p class="file-selection" id="yamlFileSelection">请选择与模型包匹配的 YAML 文件</p></div></div><p class="field-help">启动参数中的 <code>model-name</code> 须与模型名称一致。</p><p class="field-error hidden" id="addYamlFileError">请选择匹配的部署 YAML 文件。</p></div>
-            </div>
-          </section>
         </div>
-        <footer class="modal-footer"><span class="muted" id="ingestFooterHint">添加前将校验目录与 YAML 命名。</span><div class="modal-actions"><button class="btn" type="button" data-close-modal="addModelModal">取消</button><button class="btn btn-primary" id="submitAddModel" type="submit"><svg class="icon icon-sm"><use href="#i-check"/></svg><span>添加模型资产</span></button></div></footer>
+        <footer class="modal-footer"><span class="muted">添加前将校验目录与 YAML 命名。</span><div class="modal-actions"><button class="btn" type="button" data-close-modal="addModelModal">取消</button><button class="btn btn-primary" id="submitAddModel" type="submit"><svg class="icon icon-sm"><use href="#i-check"/></svg><span>添加模型资产</span></button></div></footer>
       </form>
     </section>
   </div>
@@ -151,7 +133,7 @@
       <header class="modal-header"><div><h2 id="editModelTitle">编辑模型</h2></div><button class="btn btn-icon btn-ghost" type="button" data-close-modal="editModelModal" aria-label="关闭编辑模型弹窗"><svg class="icon"><use href="#i-x"/></svg></button></header>
       <form id="editModelForm" novalidate>
         <div class="modal-body"><div class="form-grid">
-          <div class="form-field full"><label for="modelIcon">模型图标</label><div class="icon-edit-row"><span class="model-mark" id="modelIconPreview" aria-hidden="true"><span>Q</span></span><div class="icon-input-wrap"><input class="control" id="modelIcon" type="file" accept="image/png,image/jpeg,image/webp,image/svg+xml"><p class="field-help">支持 PNG、JPG、WebP、SVG；未上传时使用模型名称首字徽章。</p></div></div></div>
+          <div class="form-field full"><label for="modelIcon">模型图标</label><div class="icon-edit-row"><span class="model-mark default" id="modelIconPreview" aria-hidden="true"><svg class="icon"><use href="#i-box"/></svg></span><div class="icon-input-wrap"><input class="control" id="modelIcon" type="file" accept="image/png,image/jpeg,image/webp,image/svg+xml"><p class="field-help">支持 PNG、JPG、WebP、SVG；未上传时优先匹配开发商 Logo，无法匹配则使用默认模型图标。</p></div></div></div>
           <div class="form-field full"><label for="modelName">模型名称 <span class="required">*</span></label><input class="control" id="modelName" type="text" required><p class="field-error hidden" id="modelNameError">请输入模型名称。</p></div>
           <div class="form-field full"><label for="modelDescription">模型描述 <span class="required">*</span></label><textarea class="control" id="modelDescription" rows="3" required></textarea><p class="field-error hidden" id="modelDescriptionError">请输入模型描述。</p></div>
           <div class="form-field full"><label for="modelFilePath">模型包目录 <span class="required">*</span></label><input class="control mono" id="modelFilePath" type="text" required aria-describedby="modelFilePathHelp" placeholder="/data/yl/modelPath/yl-model_bert_v1.0"><p class="field-help" id="modelFilePathHelp">目录名须符合 <code>yl-model_{modelName}_{version}</code>。</p><p class="field-error hidden" id="modelFilePathError">请输入模型包目录。</p></div>
@@ -163,9 +145,9 @@
   </div>
 
   <div class="modal-backdrop hidden" id="yamlModal" role="dialog" aria-modal="true" aria-labelledby="yamlTitle">
-    <section class="modal model-edit-modal">
+    <section class="modal model-yaml-modal">
       <header class="modal-header"><div><h2 id="yamlTitle">部署 YAML</h2></div><button class="btn btn-icon btn-ghost" type="button" data-close-modal="yamlModal" aria-label="关闭部署 YAML 弹窗"><svg class="icon"><use href="#i-x"/></svg></button></header>
-      <div class="modal-body"><label class="form-label" for="yamlEditor">YAML 配置</label><textarea class="control yaml-editor" id="yamlEditor" spellcheck="false" aria-describedby="yamlHelp"></textarea><p class="field-help" id="yamlHelp">配置模型部署元数据、启动参数和资源限制。</p></div>
+      <div class="modal-body model-yaml-body"><label class="form-label" for="yamlEditor">YAML 配置</label><textarea class="control yaml-editor model-yaml-editor" id="yamlEditor" wrap="off" spellcheck="false" aria-describedby="yamlHelp"></textarea><p class="field-help" id="yamlHelp">配置模型部署元数据、启动参数和资源限制，编辑区支持横向与纵向滚动。</p></div>
       <footer class="modal-footer"><span class="muted">修改会保存到当前模型包的部署配置。</span><div class="modal-actions"><button class="btn" type="button" data-close-modal="yamlModal">取消</button><button class="btn btn-primary" id="saveYaml" type="button"><svg class="icon icon-sm"><use href="#i-check"/></svg>保存 YAML</button></div></footer>
     </section>
   </div>
@@ -196,25 +178,9 @@
       lastTrigger?.focus();
     }
 
-    function setIngestMode(mode) {
-      const pathMode = mode === 'path';
-      document.getElementById('pathIngestPanel').classList.toggle('hidden', !pathMode);
-      document.getElementById('fileIngestPanel').classList.toggle('hidden', pathMode);
-      document.getElementById('pathIngestPanel').setAttribute('aria-hidden', String(!pathMode));
-      document.getElementById('fileIngestPanel').setAttribute('aria-hidden', String(pathMode));
-      ['addPackagePath', 'addYamlPath'].forEach(id => { document.getElementById(id).required = pathMode; });
-      ['addPackageFiles', 'addYamlFile'].forEach(id => { document.getElementById(id).required = !pathMode; });
-      document.getElementById('ingestFooterHint').textContent = pathMode ? '添加前将校验目录与 YAML 命名。' : '导入前将校验文件夹与 YAML 的对应关系。';
-      document.getElementById('submitAddModel').querySelector('span').textContent = pathMode ? '添加模型资产' : '导入模型资产';
-      addModelModal.querySelectorAll('.field-error').forEach(error => error.classList.add('hidden'));
-    }
-
     function resetAddModelForm() {
       addModelForm.reset();
-      document.getElementById('packageFileSelection').textContent = '请选择完整的模型包文件夹';
-      document.getElementById('yamlFileSelection').textContent = '请选择与模型包匹配的 YAML 文件';
       addModelModal.querySelectorAll('.field-error').forEach(error => error.classList.add('hidden'));
-      setIngestMode('path');
     }
 
     function setAddError(id, invalid, message) {
@@ -244,34 +210,67 @@
       return String(value).replace(/[&<>'"]/g, character => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;' })[character]);
     }
 
-    function currentTimestamp() {
-      const date = new Date();
-      const pad = value => String(value).padStart(2, '0');
-      return `${date.getFullYear()}-${pad(date.getMonth() + 1)}-${pad(date.getDate())} ${pad(date.getHours())}:${pad(date.getMinutes())}`;
+    const modelLogoRules = [
+      { pattern: /(qwen|qianwen|通义|千问)/i, src: 'icon/model-icon/qianwen.jpg' },
+      { pattern: /deepseek/i, src: 'icon/model-icon/deepseek.jpg' },
+      { pattern: /(hunyuan|hunyun|混元)/i, src: 'icon/model-icon/hunyun.png' },
+      { pattern: /minimax/i, src: 'icon/model-icon/minimax.jpeg' }
+    ];
+
+    function logoForModel(name) {
+      return modelLogoRules.find(rule => rule.pattern.test(name)) || null;
     }
 
-    function appendModelCard({ name, version, description, modelPath, yamlPath, mode, yaml }) {
+    function modelMarkMarkup(name) {
+      const logo = logoForModel(name);
+      if (logo) return `<span class="model-mark has-logo" aria-hidden="true"><img src="${logo.src}" alt=""></span>`;
+      return '<span class="model-mark default" aria-hidden="true"><svg class="icon"><use href="#i-box"/></svg></span>';
+    }
+
+    function applyAutomaticLogo(card, name) {
+      const logo = logoForModel(name);
+      const mark = card.querySelector('.model-mark');
+      card.dataset.iconMode = 'auto';
+      mark.replaceChildren();
+      if (logo) {
+        card.dataset.iconSrc = logo.src;
+        mark.className = 'model-mark has-logo';
+        const image = document.createElement('img');
+        image.src = logo.src;
+        image.alt = '';
+        mark.appendChild(image);
+      } else {
+        delete card.dataset.iconSrc;
+        mark.className = 'model-mark default';
+        const icon = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+        icon.setAttribute('class', 'icon');
+        const use = document.createElementNS('http://www.w3.org/2000/svg', 'use');
+        use.setAttribute('href', '#i-box');
+        icon.appendChild(use);
+        mark.appendChild(icon);
+      }
+    }
+
+    function appendModelCard({ name, version, description, modelPath, yamlPath }) {
       const modelId = assetIdFor(name);
-      const icon = name.charAt(0).toUpperCase();
-      const modeLabel = mode === 'path' ? '手动添加' : '手动导入';
+      const logo = logoForModel(name);
       const card = document.createElement('article');
       card.className = 'card model-card model-asset-card';
-      Object.assign(card.dataset, { modelId, name, description, modelPath, startupPath: yamlPath, icon });
-      if (yaml) card.dataset.yaml = yaml;
+      Object.assign(card.dataset, { modelId, name, description, modelPath, startupPath: yamlPath, iconMode: 'auto' });
+      if (logo) card.dataset.iconSrc = logo.src;
       card.innerHTML = `
-        <div class="model-card-head"><div class="model-identity"><span class="model-mark" aria-hidden="true"><span>${escapeHtml(icon)}</span></span><div><h2 class="model-name">${escapeHtml(name)}</h2></div></div><div class="asset-version-count" aria-label="1 个版本"><strong>1</strong><span>个版本</span></div></div>
+        <div class="model-card-head"><div class="model-identity">${modelMarkMarkup(name)}<div><h2 class="model-name">${escapeHtml(name)}</h2></div></div><div class="asset-version-count" aria-label="1 个版本"><strong>1</strong><span>个版本</span></div></div>
         <p class="model-summary">${escapeHtml(description)}</p>
-        <div class="asset-status-row"><span class="badge badge-success">可部署</span><span class="tag">${modeLabel}</span><span class="tag">${escapeHtml(version)}</span></div>
-        <dl class="asset-details"><div><dt>维护团队</dt><dd>当前用户</dd></div><div><dt>最近更新</dt><dd>${currentTimestamp()}</dd></div></dl>
         <div class="card-actions"><button class="btn model-action" type="button" data-action="edit"><svg class="icon icon-sm"><use href="#i-edit"/></svg>编辑</button><button class="btn model-action" type="button" data-action="yaml"><svg class="icon icon-sm"><use href="#i-code"/></svg>部署 YAML</button><a class="btn model-action" href="sys_model_version_detail.html?model=${encodeURIComponent(modelId)}"><svg class="icon icon-sm"><use href="#i-clock"/></svg>版本历史</a><button class="btn btn-primary model-action" type="button" data-deploy-open data-deploy-mode="deploy" data-deploy-model="${escapeHtml(name)}" data-deploy-version="${escapeHtml(version)}" data-deploy-service="svc-${escapeHtml(modelId)}-prod"><svg class="icon icon-sm"><use href="#i-rocket"/></svg>部署服务</button></div>`;
       modelGrid.prepend(card);
     }
 
-    function updateIconPreview(source, fallback) {
+    function updateIconPreview(source) {
       const preview = document.getElementById('modelIconPreview');
       preview.replaceChildren();
+      preview.className = `model-mark ${source ? 'has-logo' : 'default'}`;
       if (source) { const image = document.createElement('img'); image.src = source; image.alt = ''; preview.appendChild(image); }
-      else { const label = document.createElement('span'); label.textContent = fallback; preview.appendChild(label); }
+      else { const icon = document.createElementNS('http://www.w3.org/2000/svg', 'svg'); icon.setAttribute('class', 'icon'); const use = document.createElementNS('http://www.w3.org/2000/svg', 'use'); use.setAttribute('href', '#i-box'); icon.appendChild(use); preview.appendChild(icon); }
     }
 
     function openEdit(card, trigger) {
@@ -282,7 +281,7 @@
       document.getElementById('startupFilePath').value = card.dataset.startupPath;
       document.getElementById('modelIcon').value = '';
       iconObjectUrl = '';
-      updateIconPreview(card.dataset.iconSrc || '', card.dataset.icon || card.dataset.name.charAt(0));
+      updateIconPreview(card.dataset.iconSrc || '');
       document.querySelectorAll('.field-error').forEach(error => error.classList.add('hidden'));
       openModal(editModal, trigger);
     }
@@ -303,23 +302,21 @@
 
     document.querySelector('[data-package-spec-open]').addEventListener('click', event => openModal(packageSpecModal, event.currentTarget));
     document.querySelector('[data-add-model-open]').addEventListener('click', event => { resetAddModelForm(); openModal(addModelModal, event.currentTarget); });
-    document.querySelectorAll('input[name="ingestMode"]').forEach(radio => radio.addEventListener('change', () => setIngestMode(radio.value)));
-
-    document.getElementById('addPackageFiles').addEventListener('change', event => {
-      const files = Array.from(event.target.files);
-      const root = files[0]?.webkitRelativePath?.split('/')[0] || '';
-      document.getElementById('packageFileSelection').textContent = files.length ? `${root || '已选文件夹'} · ${files.length} 个文件` : '请选择完整的模型包文件夹';
-      document.getElementById('addPackageFilesError').classList.add('hidden');
+    document.querySelector('[data-model-check]').addEventListener('click', event => {
+      const button = event.currentTarget;
+      const label = button.querySelector('span');
+      button.disabled = true;
+      label.textContent = '检查中…';
+      window.setTimeout(() => {
+        const assets = modelGrid.querySelectorAll('.model-card').length;
+        button.disabled = false;
+        label.textContent = '模型检查';
+        showToast('模型检查完成', `已检查 ${assets} 个模型资产，模型包目录与部署配置均符合当前规范。`);
+      }, 800);
     });
 
-    document.getElementById('addYamlFile').addEventListener('change', event => {
-      document.getElementById('yamlFileSelection').textContent = event.target.files[0]?.name || '请选择与模型包匹配的 YAML 文件';
-      document.getElementById('addYamlFileError').classList.add('hidden');
-    });
-
-    addModelForm.addEventListener('submit', async event => {
+    addModelForm.addEventListener('submit', event => {
       event.preventDefault();
-      const mode = document.querySelector('input[name="ingestMode"]:checked').value;
       const name = document.getElementById('addModelName').value.trim();
       const version = document.getElementById('addModelVersion').value.trim();
       const description = document.getElementById('addModelDescription').value.trim();
@@ -328,51 +325,33 @@
       valid = setAddError('addModelVersionError', !version) && valid;
       valid = setAddError('addModelDescriptionError', !description) && valid;
 
-      let folderName = '';
-      let modelPath = '';
-      let yamlPath = '';
-      let yaml = '';
-      if (mode === 'path') {
-        const rawPackagePath = document.getElementById('addPackagePath').value.trim().replace(/[\\/]+$/, '');
-        const rawYamlPath = document.getElementById('addYamlPath').value.trim();
-        folderName = rawPackagePath.split(/[\\/]/).pop() || '';
-        const rule = version ? packageRule(folderName, version) : null;
-        const packageInvalid = !rawPackagePath || !rule;
-        valid = setAddError('addPackagePathError', packageInvalid, rawPackagePath ? `目录名须以 yl-model_ 开头并以 _${version || '版本号'} 结尾。` : '请输入模型包目录。') && valid;
-        const normalizedPackage = rawPackagePath.replace(/\\/g, '/');
-        const normalizedYaml = rawYamlPath.replace(/\\/g, '/');
-        const yamlName = normalizedYaml.split('/').pop() || '';
-        const yamlInvalid = !rawYamlPath || !rule || normalizedYaml.slice(0, normalizedYaml.lastIndexOf('/')) !== normalizedPackage || yamlName.toLowerCase() !== rule.yamlName.toLowerCase();
-        valid = setAddError('addYamlPathError', yamlInvalid, rule ? `配置文件须位于模型包目录内并命名为 ${rule.yamlName}。` : '请先填写合规的模型包目录。') && valid;
-        modelPath = rawPackagePath;
-        yamlPath = rawYamlPath;
-      } else {
-        const packageFiles = Array.from(document.getElementById('addPackageFiles').files);
-        const yamlFile = document.getElementById('addYamlFile').files[0];
-        folderName = packageFiles[0]?.webkitRelativePath?.split('/')[0] || '';
-        const rule = version ? packageRule(folderName, version) : null;
-        valid = setAddError('addPackageFilesError', !packageFiles.length || !rule, packageFiles.length ? `文件夹名称须以 yl-model_ 开头并以 _${version || '版本号'} 结尾。` : '请选择完整的模型包文件夹。') && valid;
-        valid = setAddError('addYamlFileError', !yamlFile || !rule || yamlFile.name.toLowerCase() !== rule.yamlName.toLowerCase(), rule ? `请选择 ${rule.yamlName}。` : '请先选择合规的模型包文件夹。') && valid;
-        modelPath = `/data/yl/modelPath/${folderName}`;
-        yamlPath = yamlFile ? `${modelPath}/${yamlFile.name}` : '';
-        if (yamlFile) yaml = await yamlFile.text();
-      }
+      const modelPath = document.getElementById('addPackagePath').value.trim().replace(/[\\/]+$/, '');
+      const yamlPath = document.getElementById('addYamlPath').value.trim();
+      const folderName = modelPath.split(/[\\/]/).pop() || '';
+      const rule = version ? packageRule(folderName, version) : null;
+      const packageInvalid = !modelPath || !rule;
+      valid = setAddError('addPackagePathError', packageInvalid, modelPath ? `目录名须以 yl-model_ 开头并以 _${version || '版本号'} 结尾。` : '请输入模型包目录。') && valid;
+      const normalizedPackage = modelPath.replace(/\\/g, '/');
+      const normalizedYaml = yamlPath.replace(/\\/g, '/');
+      const yamlName = normalizedYaml.split('/').pop() || '';
+      const yamlInvalid = !yamlPath || !rule || normalizedYaml.slice(0, normalizedYaml.lastIndexOf('/')) !== normalizedPackage || yamlName.toLowerCase() !== rule.yamlName.toLowerCase();
+      valid = setAddError('addYamlPathError', yamlInvalid, rule ? `配置文件须位于模型包目录内并命名为 ${rule.yamlName}。` : '请先填写合规的模型包目录。') && valid;
 
       if (!valid) {
         const firstError = addModelModal.querySelector('.field-error:not(.hidden)');
         firstError?.closest('.form-field')?.querySelector('input, textarea')?.focus();
         return;
       }
-      appendModelCard({ name, version, description, modelPath, yamlPath, mode, yaml });
+      appendModelCard({ name, version, description, modelPath, yamlPath });
       closeModal(addModelModal);
-      showToast(mode === 'path' ? '模型资产已添加' : '模型包已导入', `${name} ${version} 已加入模型资产。`);
+      showToast('模型资产已添加', `${name} ${version} 已加入模型资产。`);
     });
 
     document.getElementById('modelIcon').addEventListener('change', event => {
       const file = event.target.files[0];
       if (!file) return;
       iconObjectUrl = URL.createObjectURL(file);
-      updateIconPreview(iconObjectUrl, activeModelCard.dataset.name.charAt(0));
+      updateIconPreview(iconObjectUrl);
     });
 
     editForm.addEventListener('submit', event => {
@@ -393,18 +372,14 @@
       activeModelCard.querySelector('.model-summary').textContent = description;
       if (iconObjectUrl) {
         activeModelCard.dataset.iconSrc = iconObjectUrl;
+        activeModelCard.dataset.iconMode = 'custom';
         const mark = activeModelCard.querySelector('.model-mark');
+        mark.className = 'model-mark has-logo';
         const image = document.createElement('img');
         image.src = iconObjectUrl;
         image.alt = '';
         mark.replaceChildren(image);
-      } else if (!activeModelCard.dataset.iconSrc) {
-        activeModelCard.dataset.icon = name.charAt(0).toUpperCase();
-        const mark = activeModelCard.querySelector('.model-mark');
-        const label = document.createElement('span');
-        label.textContent = activeModelCard.dataset.icon;
-        mark.replaceChildren(label);
-      }
+      } else if (activeModelCard.dataset.iconMode !== 'custom') applyAutomaticLogo(activeModelCard, name);
       closeModal(editModal);
       showToast('模型资产已更新', `${name} 的基础信息与运行配置已保存。`);
     });

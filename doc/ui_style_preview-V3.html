@@ -1570,103 +1570,212 @@ response = client.chat.completions.create(
         </div>
       </section>
 
-      <!-- Section 11: Operation Failure & Error Feedback Pattern (操作失败与异常告警规范 - 对齐规范 2.10) -->
+      <!-- Section 11: Page Alert & Notification Pattern (页面消息提示与状态反馈规范 - 对齐规范 2.10) -->
       <section class="space-y-4">
         <div class="flex items-center justify-between border-l-4 border-rose-600 pl-3">
           <div>
-            <h2 class="text-base font-bold text-slate-900">11. 操作失败与异常反馈规范 (Error Feedback Standards - 对应规范 2.10)</h2>
-            <p class="text-xs text-slate-500">定义全局 Toast、区域 Banner 告警、表单项校验错误及表格行内失败状态等 4 级异常反馈范式。</p>
+            <h2 class="text-base font-bold text-slate-900">11. 页面消息提示与状态反馈规范 (Alert & Notification Standards - 对应规范 2.10)</h2>
+            <p class="text-xs text-slate-500">涵盖提示 (Info)、成功 (Success)、警告 (Warning)、错误 (Error) 4 种等级的 Banner、Toast、表单提示与表格 Badge 等反馈范式。</p>
           </div>
         </div>
 
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <!-- 2.10.1 Toast Floating Error -->
-          <div class="bg-white p-4 rounded-xl border border-slate-200/80 shadow-xs space-y-2">
-            <div class="flex items-center justify-between">
-              <span class="text-xs font-bold text-slate-800 flex items-center gap-1.5">
-                <span class="w-1.5 h-1.5 rounded-full bg-rose-500"></span> 2.10.1 全局浮动错误 Toast (Global Floating Toast)
-              </span>
-              <code class="text-[10px] bg-slate-100 text-slate-500 px-1 rounded font-mono">fixed top-5 right-5</code>
-            </div>
-            
-            <div class="bg-white border-l-4 border-l-rose-500 border border-slate-200 shadow-lg rounded-xl p-3.5 flex items-start justify-between gap-3 text-xs">
-              <div class="flex items-start gap-2.5">
-                <svg class="w-4 h-4 text-rose-500 shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                <div>
-                  <div class="font-bold text-slate-900">API 密钥签发失败</div>
-                  <div class="text-[11px] text-slate-500 font-mono mt-0.5">HTTP 502 Bad Gateway: Upstream quota engine unreachable.</div>
-                </div>
-              </div>
-              <span class="text-slate-400 hover:text-slate-600 text-xs cursor-pointer">✕</span>
-            </div>
-            <p class="text-[11px] text-slate-400">适用于全局异步 API 请求报错、网络超时断开。</p>
+        <!-- Matrix 1: In-Page Alert Banner (4 Severity Levels) -->
+        <div class="bg-white p-4 rounded-xl border border-slate-200/80 shadow-xs space-y-3">
+          <div class="flex items-center justify-between">
+            <span class="text-xs font-bold text-slate-800 flex items-center gap-1.5">
+              <span class="w-1.5 h-1.5 rounded-full bg-[#266EFF]"></span> 1. 页面/区域级 Banner 消息 (In-Page Alert Banner - 4 种等级)
+            </span>
+            <code class="text-[10px] bg-slate-100 text-slate-500 px-1.5 py-0.5 rounded font-mono">In-Page Banner</code>
           </div>
 
-          <!-- 2.10.2 Banner Area Alert -->
-          <div class="bg-white p-4 rounded-xl border border-slate-200/80 shadow-xs space-y-2">
-            <div class="flex items-center justify-between">
-              <span class="text-xs font-bold text-slate-800 flex items-center gap-1.5">
-                <span class="w-1.5 h-1.5 rounded-full bg-rose-500"></span> 2.10.2 页面/区域级 Banner 告警 (In-Page Banner)
-              </span>
-              <code class="text-[10px] bg-slate-100 text-slate-500 px-1 rounded font-mono">In-Page Banner</code>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+            <!-- Level 1: Info Banner -->
+            <div class="bg-sky-50 border border-sky-200 text-sky-900 rounded-xl p-3.5 text-xs space-y-1">
+              <div class="font-bold flex items-center justify-between">
+                <div class="flex items-center gap-1.5 text-sky-900">
+                  <svg class="w-4 h-4 text-sky-600 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                  <span>[提示 Info] 系统将于今晚 02:00 进行调度节点例行维护</span>
+                </div>
+                <span class="text-sky-500 hover:text-sky-700 text-xs cursor-pointer">✕</span>
+              </div>
+              <p class="text-[11px] text-sky-700/90 leading-relaxed pl-5">预计维护耗时 15 分钟，期间离线微调任务不受影响，在线推理将由冗余节点平滑接管。</p>
             </div>
 
-            <div class="bg-rose-50 border border-rose-200 text-rose-900 rounded-xl p-3.5 text-xs space-y-1.5">
+            <!-- Level 2: Success Banner -->
+            <div class="bg-emerald-50 border border-emerald-200 text-emerald-900 rounded-xl p-3.5 text-xs space-y-1">
               <div class="font-bold flex items-center justify-between">
-                <div class="flex items-center gap-1.5">
-                  <svg class="w-4 h-4 text-rose-600 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                  <span>[高危区域告警] GPU 节点 node-a100-03 显存发生 ECC 故障</span>
+                <div class="flex items-center gap-1.5 text-emerald-900">
+                  <svg class="w-4 h-4 text-emerald-600 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                  <span>[成功 Success] DeepSeek-R1 服务集群已完成平滑扩容</span>
+                </div>
+                <button class="text-emerald-700 font-bold hover:underline text-[11px] cursor-pointer shrink-0">查看终端 →</button>
+              </div>
+              <p class="text-[11px] text-emerald-700/90 leading-relaxed pl-5">成功纳管 8 张 H800 GPU 节点，吞吐量提升 +40%，平均首字延迟降低至 120ms。</p>
+            </div>
+
+            <!-- Level 3: Warning Banner -->
+            <div class="bg-amber-50 border border-amber-200 text-amber-900 rounded-xl p-3.5 text-xs space-y-1">
+              <div class="font-bold flex items-center justify-between">
+                <div class="flex items-center gap-1.5 text-amber-900">
+                  <svg class="w-4 h-4 text-amber-600 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>
+                  <span>[警告 Warning] 调度域 node-a100-zone 显存占用率达 88.5%</span>
+                </div>
+                <button class="text-amber-700 font-bold hover:underline text-[11px] cursor-pointer shrink-0">排查队列 →</button>
+              </div>
+              <p class="text-[11px] text-amber-700/90 leading-relaxed pl-5">高水位运行持续超过 10 分钟，建议开启 KV Cache 自动清理或下发流量分流策略。</p>
+            </div>
+
+            <!-- Level 4: Error Banner -->
+            <div class="bg-rose-50 border border-rose-200 text-rose-900 rounded-xl p-3.5 text-xs space-y-1">
+              <div class="font-bold flex items-center justify-between">
+                <div class="flex items-center gap-1.5 text-rose-900">
+                  <svg class="w-4 h-4 text-rose-600 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                  <span>[错误 Error] GPU 节点 node-a100-03 发生不可恢复 ECC 故障</span>
                 </div>
                 <button class="text-rose-700 font-bold hover:underline text-[11px] cursor-pointer shrink-0">排查日志 →</button>
               </div>
-              <div class="text-[11px] text-rose-700/90 font-mono pl-5">
-                ErrCode: ERR_GPU_MEM_ECC_UNRECOVERABLE (显卡 #2 离线)
-              </div>
+              <p class="text-[11px] text-rose-700/90 font-mono pl-5">ErrCode: ERR_GPU_MEM_ECC_UNRECOVERABLE (显卡 #2 离线，受影响服务已自动迁移)</p>
             </div>
-            <p class="text-[11px] text-slate-400">适用于硬件节点崩溃、服务降级或显存耗尽等模块级故障。</p>
           </div>
+        </div>
 
-          <!-- 2.10.3 Form Inline Error -->
-          <div class="bg-white p-4 rounded-xl border border-slate-200/80 shadow-xs space-y-2">
+        <!-- Matrix 2: Toast Floating Notification Matrix & Inline Validation -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <!-- Toast Floating Notifications -->
+          <div class="bg-white p-4 rounded-xl border border-slate-200/80 shadow-xs space-y-3">
             <div class="flex items-center justify-between">
               <span class="text-xs font-bold text-slate-800 flex items-center gap-1.5">
-                <span class="w-1.5 h-1.5 rounded-full bg-rose-500"></span> 2.10.3 表单项行内校验错误 (Inline Validation)
+                <span class="w-1.5 h-1.5 rounded-full bg-indigo-500"></span> 2. 全局 Toast 浮动通知 (4 级左边条模式)
               </span>
-              <code class="text-[10px] bg-slate-100 text-slate-500 px-1 rounded font-mono">Field Validation</code>
+              <code class="text-[10px] bg-slate-100 text-slate-500 px-1.5 py-0.5 rounded font-mono">fixed top-5 right-5</code>
             </div>
 
-            <div class="bg-slate-50 p-3 rounded-lg border border-slate-200 space-y-1">
-              <label class="text-[11px] font-semibold text-slate-700 block">申请 GPU 卡数 (A100)：</label>
-              <input type="text" value="999 Cards" class="w-full px-2.5 py-1.5 text-xs bg-white border border-rose-500 rounded-lg focus:outline-none font-mono text-slate-800">
-              <span class="text-[11px] text-rose-600 flex items-center gap-1 mt-1 font-medium">
-                ⚠️ 申请卡数超出部门可用剩余配额 (剩余 2 卡)
-              </span>
+            <div class="space-y-2">
+              <!-- Info Toast -->
+              <div class="bg-white border-l-4 border-l-sky-500 border border-slate-200 shadow-md rounded-xl p-3 flex items-start justify-between gap-3 text-xs">
+                <div class="flex items-start gap-2.5">
+                  <svg class="w-4 h-4 text-sky-600 shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                  <div>
+                    <div class="font-bold text-slate-900">新版本特性提示</div>
+                    <div class="text-[11px] text-slate-500 mt-0.5">推理沙盘推演模型 V2 已上线，支持 SLA 动态模拟。</div>
+                  </div>
+                </div>
+                <span class="text-slate-400 hover:text-slate-600 text-xs cursor-pointer">✕</span>
+              </div>
+
+              <!-- Success Toast -->
+              <div class="bg-white border-l-4 border-l-emerald-500 border border-slate-200 shadow-md rounded-xl p-3 flex items-start justify-between gap-3 text-xs">
+                <div class="flex items-start gap-2.5">
+                  <svg class="w-4 h-4 text-emerald-600 shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                  <div>
+                    <div class="font-bold text-slate-900">API 密钥签发成功</div>
+                    <div class="text-[11px] text-slate-500 font-mono mt-0.5">Key: yl-prod-88392**** 已成功存入受控凭据库。</div>
+                  </div>
+                </div>
+                <span class="text-slate-400 hover:text-slate-600 text-xs cursor-pointer">✕</span>
+              </div>
+
+              <!-- Warning Toast -->
+              <div class="bg-white border-l-4 border-l-amber-500 border border-slate-200 shadow-md rounded-xl p-3 flex items-start justify-between gap-3 text-xs">
+                <div class="flex items-start gap-2.5">
+                  <svg class="w-4 h-4 text-amber-600 shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>
+                  <div>
+                    <div class="font-bold text-slate-900">部门算力配额预警</div>
+                    <div class="text-[11px] text-slate-500 mt-0.5">研发三组 GPU 卡数使用率达到 92%，剩余配额不足 2 卡。</div>
+                  </div>
+                </div>
+                <span class="text-slate-400 hover:text-slate-600 text-xs cursor-pointer">✕</span>
+              </div>
+
+              <!-- Error Toast -->
+              <div class="bg-white border-l-4 border-l-rose-500 border border-slate-200 shadow-md rounded-xl p-3 flex items-start justify-between gap-3 text-xs">
+                <div class="flex items-start gap-2.5">
+                  <svg class="w-4 h-4 text-rose-600 shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                  <div>
+                    <div class="font-bold text-slate-900">模型训练任务中断</div>
+                    <div class="text-[11px] text-slate-500 font-mono mt-0.5">HTTP 502 Bad Gateway: Upstream worker OOM killed.</div>
+                  </div>
+                </div>
+                <span class="text-slate-400 hover:text-slate-600 text-xs cursor-pointer">✕</span>
+              </div>
             </div>
-            <p class="text-[11px] text-slate-400">适用于表单必填校验、参数越界或名称重名冲突。</p>
           </div>
 
-          <!-- 2.10.4 Table Inline Failure Status Badge -->
-          <div class="bg-white p-4 rounded-xl border border-slate-200/80 shadow-xs space-y-2">
-            <div class="flex items-center justify-between">
-              <span class="text-xs font-bold text-slate-800 flex items-center gap-1.5">
-                <span class="w-1.5 h-1.5 rounded-full bg-rose-500"></span> 2.10.4 表格行内失败状态 (Row Failure Status)
-              </span>
-              <code class="text-[10px] bg-slate-100 text-slate-500 px-1 rounded font-mono">Row Status Badge</code>
-            </div>
-
-            <div class="bg-slate-50 p-3 rounded-lg border border-slate-200 flex items-center justify-between text-xs">
-              <div class="space-y-0.5">
-                <div class="font-bold text-slate-800">DeepSeek-R1-SFT-v2</div>
-                <div class="text-[10px] text-slate-400 font-mono">Job ID: sft-task-88421</div>
-              </div>
-              <div class="flex items-center gap-2">
-                <span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[11px] font-semibold bg-rose-50 text-rose-700 border border-rose-200">
-                  <span class="w-1.5 h-1.5 rounded-full bg-rose-500 animate-pulse"></span> 训练中断 (OOM)
+          <!-- Form Inline Validation & Table Badges -->
+          <div class="space-y-4">
+            <!-- Form Inline Validation -->
+            <div class="bg-white p-4 rounded-xl border border-slate-200/80 shadow-xs space-y-2.5">
+              <div class="flex items-center justify-between">
+                <span class="text-xs font-bold text-slate-800 flex items-center gap-1.5">
+                  <span class="w-1.5 h-1.5 rounded-full bg-rose-500"></span> 3. 表单项行内校验与提示 (Inline Validation)
                 </span>
-                <button class="text-[#266EFF] font-semibold hover:underline text-[11px] cursor-pointer">原因 →</button>
+                <code class="text-[10px] bg-slate-100 text-slate-500 px-1.5 py-0.5 rounded font-mono">Field Feedback</code>
+              </div>
+
+              <!-- Field 1: Warning State -->
+              <div class="bg-slate-50 p-2.5 rounded-lg border border-slate-200 space-y-1">
+                <label class="text-[11px] font-semibold text-slate-700 block">并发请求上限 (QPS Threshold)：</label>
+                <input type="text" value="4,500 QPS" class="w-full px-2.5 py-1 text-xs bg-white border border-amber-400 rounded-lg focus:outline-none font-mono text-slate-800">
+                <span class="text-[11px] text-amber-600 flex items-center gap-1 font-medium">
+                  <svg class="w-3.5 h-3.5 text-amber-500 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>
+                  <span>建议阈值 ≤ 4,000 QPS，接近当前集群最大承载上限</span>
+                </span>
+              </div>
+
+              <!-- Field 2: Error State -->
+              <div class="bg-slate-50 p-2.5 rounded-lg border border-slate-200 space-y-1">
+                <label class="text-[11px] font-semibold text-slate-700 block">申请 GPU 显存 (GB)：</label>
+                <input type="text" value="960 GB" class="w-full px-2.5 py-1 text-xs bg-white border border-rose-500 rounded-lg focus:outline-none font-mono text-slate-800">
+                <span class="text-[11px] text-rose-600 flex items-center gap-1 font-medium">
+                  <svg class="w-3.5 h-3.5 text-rose-500 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                  <span>申请显存量超出该节点剩余物理上限 (剩余可用 640 GB)</span>
+                </span>
               </div>
             </div>
-            <p class="text-[11px] text-slate-400">适用于微调中断、部署失败、健康检查异常等数据列表行内状态。</p>
+
+            <!-- Table Row Status Badges Matrix -->
+            <div class="bg-white p-4 rounded-xl border border-slate-200/80 shadow-xs space-y-2.5">
+              <div class="flex items-center justify-between">
+                <span class="text-xs font-bold text-slate-800 flex items-center gap-1.5">
+                  <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span> 4. 表格行内 4 级状态 Badge 矩阵
+                </span>
+                <code class="text-[10px] bg-slate-100 text-slate-500 px-1.5 py-0.5 rounded font-mono">Row Status Badges</code>
+              </div>
+
+              <div class="grid grid-cols-2 gap-2 text-xs">
+                <!-- Info Badge -->
+                <div class="bg-slate-50 p-2 rounded-lg border border-slate-200 flex items-center justify-between">
+                  <span class="text-slate-600 font-medium">排队等待中</span>
+                  <span class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full text-[11px] font-semibold bg-sky-50 text-sky-700 border border-sky-200">
+                    <span class="w-1.5 h-1.5 rounded-full bg-sky-500"></span> 信息 Info
+                  </span>
+                </div>
+
+                <!-- Success Badge -->
+                <div class="bg-slate-50 p-2 rounded-lg border border-slate-200 flex items-center justify-between">
+                  <span class="text-slate-600 font-medium">推理服务在线</span>
+                  <span class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full text-[11px] font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200">
+                    <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span> 成功 Running
+                  </span>
+                </div>
+
+                <!-- Warning Badge -->
+                <div class="bg-slate-50 p-2 rounded-lg border border-slate-200 flex items-center justify-between">
+                  <span class="text-slate-600 font-medium">显存高水位</span>
+                  <span class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full text-[11px] font-semibold bg-amber-50 text-amber-700 border border-amber-200">
+                    <span class="w-1.5 h-1.5 rounded-full bg-amber-500 animate-pulse"></span> 警告 Warning
+                  </span>
+                </div>
+
+                <!-- Error Badge -->
+                <div class="bg-slate-50 p-2 rounded-lg border border-slate-200 flex items-center justify-between">
+                  <span class="text-slate-600 font-medium">节点 OOM 中断</span>
+                  <span class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full text-[11px] font-semibold bg-rose-50 text-rose-700 border border-rose-200">
+                    <span class="w-1.5 h-1.5 rounded-full bg-rose-500 animate-pulse"></span> 错误 Failed
+                  </span>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </section>
@@ -1840,7 +1949,7 @@ response = client.chat.completions.create(
         <div class="flex items-center justify-between border-l-4 border-indigo-600 pl-3">
           <div>
             <h2 class="text-base font-bold text-slate-900">13. 自定义时间段筛选组件规范 (Custom Date/Time Range Filter - 对应规范 2.12)</h2>
-            <p class="text-xs text-slate-500">涵盖快捷相对粒度与精确秒级 Popover 2 种核心业务场景。</p>
+            <p class="text-xs text-slate-500">涵盖快捷相对粒度与精确秒级 Popover 2 种核心业务场景（与设计规范文档 2.12 一一对应）。</p>
           </div>
         </div>
 
@@ -1850,19 +1959,19 @@ response = client.chat.completions.create(
           <div class="space-y-2.5 border-b border-slate-100 pb-5">
             <div class="flex items-center justify-between">
               <span class="text-xs font-bold text-slate-800 flex items-center gap-1.5">
-                <span class="w-1.5 h-1.5 rounded-full bg-[#266EFF]"></span> 场景一：快捷相对时间段切换器 (Quick Relative Time Range Segment)
+                <span class="w-1.5 h-1.5 rounded-full bg-[#266EFF]"></span> 场景一：快捷相对时间段切换器 (Quick Relative Time Range Segment - 规范 2.12.1)
               </span>
-              <code class="text-[10px] bg-slate-100 text-slate-500 px-1.5 py-0.5 rounded font-mono">Segmented Pills Control</code>
+              <code class="text-[10px] bg-slate-100 text-slate-500 px-1.5 py-0.5 rounded font-mono">Segmented Control</code>
             </div>
             
             <div class="bg-slate-50 p-4 rounded-xl border border-slate-200/80 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
               <div class="space-y-1">
                 <div class="text-xs font-bold text-slate-800">算力调度实时概览监控</div>
-                <p class="text-[11px] text-slate-500">高频快筛，点击“自定义...”可扩展指定起止时间。</p>
+                <p class="text-[11px] text-slate-500">高频快筛场景，分段按钮选择相对区间，点击“自定义...”可扩展指定绝对时间。</p>
               </div>
 
               <!-- Segment Control Component -->
-              <div class="bg-slate-200/80 p-0.5 rounded-lg border border-slate-200/90 inline-flex items-center gap-0.5 shrink-0 shadow-2xs">
+              <div class="bg-slate-100 p-0.5 rounded-lg border border-slate-200 inline-flex items-center gap-0.5 shrink-0 shadow-xs">
                 <button class="px-2.5 py-1 text-xs font-medium rounded-md text-slate-600 hover:text-slate-900 transition cursor-pointer">实时</button>
                 <button class="px-2.5 py-1 text-xs font-medium rounded-md text-slate-600 hover:text-slate-900 transition cursor-pointer">15m</button>
                 <button class="px-2.5 py-1 text-xs font-semibold rounded-md bg-white text-[#266EFF] shadow-2xs cursor-pointer">1h</button>
@@ -1882,19 +1991,19 @@ response = client.chat.completions.create(
           <div class="space-y-2.5">
             <div class="flex items-center justify-between">
               <span class="text-xs font-bold text-slate-800 flex items-center gap-1.5">
-                <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span> 场景二：精确绝对时间段选择器 (Precision Datetime Range Picker)
+                <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span> 场景二：精确绝对时间段选择器 (Precision Datetime Range Picker Popover - 规范 2.12.2)
               </span>
               <code class="text-[10px] bg-slate-100 text-slate-500 px-1.5 py-0.5 rounded font-mono">Precision Datetime Popover</code>
             </div>
 
             <!-- Trigger Button Demo & Expanded Popover Mock -->
             <div class="bg-slate-50 p-4 rounded-xl border border-slate-200/80 space-y-4">
-              <!-- Trigger Input -->
+              <!-- Trigger Bar -->
               <div class="flex items-center justify-between">
                 <div class="text-xs font-medium text-slate-600">链路追踪与日志查询过滤 (Request Tracing Filter)：</div>
-                <div class="inline-flex items-center gap-2 bg-white border border-[#266EFF] px-3 py-1.5 rounded-md text-xs font-mono text-slate-800 shadow-xs cursor-pointer ring-2 ring-blue-100">
+                <div class="inline-flex items-center gap-2 bg-white border border-slate-200 hover:border-[#266EFF] px-3 py-1.5 rounded-md text-xs font-mono text-slate-700 shadow-xs cursor-pointer transition">
                   <svg class="w-3.5 h-3.5 text-[#266EFF] shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
-                  <span>2026-08-12 00:00:00 ~ 2026-08-13 23:59:59</span>
+                  <span>2026-08-12 00:00:00 至 2026-08-13 23:59:59</span>
                   <svg class="w-3 h-3 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
                 </div>
               </div>
@@ -1902,7 +2011,7 @@ response = client.chat.completions.create(
               <!-- Expanded Popover Component UI Representation -->
               <div class="bg-white rounded-xl border border-slate-200 shadow-lg p-4 space-y-4 max-w-2xl mx-auto">
                 <div class="flex flex-col sm:flex-row gap-4 border-b border-slate-100 pb-4">
-                  <!-- Quick Presets Left Bar -->
+                  <!-- 1. Left Presets Bar -->
                   <div class="w-full sm:w-28 space-y-1 shrink-0 border-r border-slate-100 pr-3">
                     <div class="text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-2">快捷预设</div>
                     <button class="w-full text-left px-2 py-1 rounded text-xs text-slate-600 hover:bg-slate-100">今天</button>
@@ -1915,43 +2024,59 @@ response = client.chat.completions.create(
 
                   <!-- Date Range Picker Main Panel -->
                   <div class="flex-1 space-y-3">
+                    <!-- Precise Time Input Box (HH:mm:ss) -->
                     <div class="grid grid-cols-2 gap-3 text-xs">
                       <div>
-                        <label class="text-[10px] text-slate-400 block mb-1">开始时间 (Start)</label>
+                        <label class="text-[10px] text-slate-400 block mb-1 font-medium">开始时间 (Start Time)</label>
                         <input type="text" value="2026-08-12 00:00:00" class="w-full px-2.5 py-1 bg-slate-50 border border-slate-200 rounded font-mono text-xs text-slate-800 focus:outline-none focus:border-[#266EFF]">
                       </div>
                       <div>
-                        <label class="text-[10px] text-slate-400 block mb-1">结束时间 (End)</label>
+                        <label class="text-[10px] text-slate-400 block mb-1 font-medium">结束时间 (End Time)</label>
                         <input type="text" value="2026-08-13 23:59:59" class="w-full px-2.5 py-1 bg-slate-50 border border-slate-200 rounded font-mono text-xs text-slate-800 focus:outline-none focus:border-[#266EFF]">
                       </div>
                     </div>
 
-                    <!-- Mini Calendar Representation -->
-                    <div class="bg-slate-50 p-2.5 rounded-lg border border-slate-100 text-xs space-y-2">
-                      <div class="flex items-center justify-between text-slate-700 font-bold">
-                        <span>2026 年 8 月</span>
-                        <div class="flex gap-1 text-slate-400">
-                          <span class="hover:text-slate-700 cursor-pointer">‹</span>
-                          <span class="hover:text-slate-700 cursor-pointer">›</span>
+                    <!-- 2. Dual Calendar Grid Representation (双月份日历) -->
+                    <div class="grid grid-cols-2 gap-2 bg-slate-50 p-2.5 rounded-lg border border-slate-100 text-xs">
+                      <!-- Month 1 -->
+                      <div class="space-y-1.5">
+                        <div class="flex items-center justify-between text-slate-700 font-bold text-[11px]">
+                          <span>2026 年 8 月</span>
+                          <span class="hover:text-slate-700 cursor-pointer text-slate-400">‹</span>
+                        </div>
+                        <div class="grid grid-cols-7 gap-1 text-center text-[10px] text-slate-400 font-mono">
+                          <span>日</span><span>一</span><span>二</span><span>三</span><span>四</span><span>五</span><span>六</span>
+                          <span class="text-slate-300">10</span><span class="text-slate-300">11</span>
+                          <span class="bg-[#266EFF] text-white font-bold rounded">12</span>
+                          <span class="bg-blue-100 text-[#266EFF]">13</span>
+                          <span class="bg-blue-50 text-[#266EFF]">14</span><span class="bg-blue-50 text-[#266EFF]">15</span><span class="bg-blue-50 text-[#266EFF]">16</span>
                         </div>
                       </div>
-                      <div class="grid grid-cols-7 gap-1 text-center text-[10px] text-slate-400 font-mono">
-                        <span>日</span><span>一</span><span>二</span><span>三</span><span>四</span><span>五</span><span>六</span>
-                        <span class="text-slate-300">10</span><span class="text-slate-300">11</span>
-                        <span class="bg-[#266EFF] text-white font-bold rounded">12</span>
-                        <span class="bg-blue-100 text-[#266EFF]">13</span>
-                        <span class="text-slate-600">14</span><span class="text-slate-600">15</span><span class="text-slate-600">16</span>
+
+                      <!-- Month 2 -->
+                      <div class="space-y-1.5">
+                        <div class="flex items-center justify-between text-slate-700 font-bold text-[11px]">
+                          <span>2026 年 9 月</span>
+                          <span class="hover:text-slate-700 cursor-pointer text-slate-400">›</span>
+                        </div>
+                        <div class="grid grid-cols-7 gap-1 text-center text-[10px] text-slate-400 font-mono">
+                          <span>日</span><span>一</span><span>二</span><span>三</span><span>四</span><span>五</span><span>六</span>
+                          <span class="text-slate-600">1</span><span class="text-slate-600">2</span><span class="text-slate-600">3</span><span class="text-slate-600">4</span><span class="text-slate-600">5</span><span class="text-slate-600">6</span><span class="text-slate-600">7</span>
+                        </div>
                       </div>
                     </div>
                   </div>
                 </div>
 
-                <!-- Footer Operations -->
-                <div class="flex items-center justify-between text-xs pt-1">
-                  <span class="text-slate-500">跨度统计: <strong class="text-slate-800 font-mono">2 天 (48 小时)</strong></span>
-                  <div class="flex items-center gap-2">
+                <!-- Footer Operations & Data Validation Rule Hint -->
+                <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 text-xs pt-1">
+                  <div class="text-[11px] text-amber-600 flex items-center gap-1 font-medium">
+                    <svg class="w-3.5 h-3.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                    <span>校验规则：开始时间必须 ≤ 结束时间，保存跨度超过 90 天将阻断提交</span>
+                  </div>
+                  <div class="flex items-center gap-2 shrink-0 self-end sm:self-auto">
                     <button class="px-3 py-1 bg-slate-100 hover:bg-slate-200 text-slate-600 rounded text-xs font-medium cursor-pointer">重置</button>
-                    <button class="px-3 py-1 bg-[#266EFF] hover:bg-blue-600 text-white rounded text-xs font-semibold shadow-2xs cursor-pointer">应用生效</button>
+                    <button class="px-3 py-1 bg-[#266EFF] hover:bg-blue-600 text-white rounded text-xs font-semibold shadow-2xs cursor-pointer">确认应用</button>
                   </div>
                 </div>
               </div>

@@ -5,8 +5,13 @@
     version: 'v1.0.0',
     service: 'svc-deepseek-r1-prod',
     serviceType: 'offline',
+    imageMode: 'path',
+    imagePath: 'registry.yinglong.ai/inference/vllm:0.6.2-cuda12.1',
+    imageRepository: 'registry.yinglong.ai/inference/vllm:0.6.2-cuda12.1',
     cluster: '192.192.140.6',
     gpu: 'nvidia-l40s',
+    nodeMode: 'auto',
+    nodeIp: '',
     replicas: '1',
     gpuPerReplica: '1',
     portMode: 'random',
@@ -40,15 +45,36 @@
                 </div>
                 <div class="deploy-form-row">
                   <label for="deployServiceName"><span class="required">*</span> 服务名称</label>
-                  <div class="deploy-control-stack"><input class="control mono" id="deployServiceName" type="text" required><p class="deploy-field-error hidden" id="deployServiceNameError">请输入服务名称。</p></div>
+                  <div class="deploy-control-stack"><input class="control mono" id="deployServiceName" type="text" required aria-describedby="deployServiceNameError"><p class="deploy-field-error hidden" id="deployServiceNameError" role="alert">请输入服务名称。</p></div>
                 </div>
-                <fieldset class="deploy-form-row deploy-radio-row">
-                  <legend><span class="required">*</span> 服务类型</legend>
+                <div class="deploy-form-row deploy-radio-row" role="group" aria-labelledby="deployServiceTypeLabel">
+                  <span class="deploy-field-label" id="deployServiceTypeLabel"><span class="required">*</span> 服务类型</span>
                   <div class="deploy-radio-group">
                     <label><input type="radio" name="deployServiceType" value="offline"><span>离线批处理</span></label>
                     <label><input type="radio" name="deployServiceType" value="online"><span>在线实时调用</span></label>
                   </div>
-                </fieldset>
+                </div>
+                <div class="deploy-form-row">
+                  <span class="deploy-field-label"><span class="required">*</span> 镜像</span>
+                  <div class="deploy-image-stack">
+                    <div class="deploy-image-mode" role="group" aria-label="镜像选择方式">
+                      <label><input type="radio" name="deployImageMode" value="path"><span>填写镜像路径</span></label>
+                      <label><input type="radio" name="deployImageMode" value="repository"><span>从镜像仓库选择</span></label>
+                    </div>
+                    <div id="deployImagePathPanel">
+                      <input class="control mono" id="deployImagePath" type="text" placeholder="例如：registry.yinglong.ai/inference/vllm:0.6.2" aria-label="镜像路径" aria-describedby="deployImageHelp deployImagePathError">
+                      <p class="deploy-field-error hidden" id="deployImagePathError" role="alert">请输入完整的镜像路径。</p>
+                    </div>
+                    <div class="hidden" id="deployImageRepositoryPanel">
+                      <select class="control mono" id="deployImageRepository" aria-label="镜像仓库中的镜像" aria-describedby="deployImageHelp">
+                        <option value="registry.yinglong.ai/inference/vllm:0.6.2-cuda12.1">vLLM 0.6.2 · CUDA 12.1</option>
+                        <option value="registry.yinglong.ai/inference/triton:24.07-py3">Triton 24.07 · Python 3</option>
+                        <option value="registry.yinglong.ai/inference/mindie:1.0.0-rc2">MindIE 1.0.0 RC2</option>
+                      </select>
+                    </div>
+                    <p class="deploy-image-help" id="deployImageHelp">填写可直接拉取的完整镜像地址与标签。</p>
+                  </div>
+                </div>
               </section>
 
               <section class="deploy-config-section">
@@ -84,6 +110,21 @@
                       <option value="nvidia-h800">NVIDIA H800 (80GB)</option>
                       <option value="nvidia-t4">NVIDIA T4 (16GB)</option>
                     </select>
+                  </div>
+                  <div class="deploy-form-row deploy-radio-row" role="group" aria-labelledby="deployNodeModeLabel">
+                    <span class="deploy-field-label" id="deployNodeModeLabel"><span class="required">*</span> 节点指定</span>
+                    <div class="deploy-radio-group deploy-node-mode">
+                      <label><input type="radio" name="deployNodeMode" value="auto"><span>不指定（自动调度）</span></label>
+                      <label><input type="radio" name="deployNodeMode" value="specified"><span>指定节点</span></label>
+                    </div>
+                  </div>
+                  <div class="deploy-form-row hidden" id="deployNodePanel">
+                    <label for="deployNodeIp"><span class="required">*</span> 节点 IP</label>
+                    <div class="deploy-control-stack">
+                      <select class="control mono" id="deployNodeIp" aria-describedby="deployNodeHelp deployNodeError"></select>
+                      <p class="deploy-image-help" id="deployNodeHelp">仅显示当前集群中匹配所选显卡型号的节点。</p>
+                      <p class="deploy-field-error hidden" id="deployNodeError" role="alert">当前集群没有匹配该显卡型号的可用节点。</p>
+                    </div>
                   </div>
                   <div class="deploy-form-row">
                     <label for="deployReplicas"><span class="required">*</span> 副本数</label>
@@ -134,9 +175,21 @@
   }
 
   const clusterNodes = {
-    '192.192.140.6': { name: 'node6', ip: '192.192.140.6', gpu: 'NVIDIA L40S', available: 6, total: 8, defaultGpu: 'nvidia-l40s' },
-    '192.192.140.18': { name: 'node18', ip: '192.192.140.18', gpu: 'NVIDIA A100', available: 12, total: 16, defaultGpu: 'nvidia-a100-80g' },
-    '192.192.140.32': { name: 'node32', ip: '192.192.140.32', gpu: 'NVIDIA T4', available: 24, total: 32, defaultGpu: 'nvidia-t4' }
+    '192.192.140.6': [
+      { name: 'node6', ip: '192.192.140.6', gpu: 'NVIDIA L40S', gpuId: 'nvidia-l40s', available: 6, total: 8 },
+      { name: 'node7', ip: '192.192.140.7', gpu: 'NVIDIA L40S', gpuId: 'nvidia-l40s', available: 4, total: 8 },
+      { name: 'node8', ip: '192.192.140.8', gpu: 'NVIDIA A100', gpuId: 'nvidia-a100-80g', available: 2, total: 8 }
+    ],
+    '192.192.140.18': [
+      { name: 'node18', ip: '192.192.140.18', gpu: 'NVIDIA A100', gpuId: 'nvidia-a100-80g', available: 12, total: 16 },
+      { name: 'node19', ip: '192.192.140.19', gpu: 'NVIDIA A100', gpuId: 'nvidia-a100-80g', available: 8, total: 16 },
+      { name: 'node20', ip: '192.192.140.20', gpu: 'NVIDIA H800', gpuId: 'nvidia-h800', available: 6, total: 8 }
+    ],
+    '192.192.140.32': [
+      { name: 'node32', ip: '192.192.140.32', gpu: 'NVIDIA T4', gpuId: 'nvidia-t4', available: 24, total: 32 },
+      { name: 'node33', ip: '192.192.140.33', gpu: 'NVIDIA T4', gpuId: 'nvidia-t4', available: 18, total: 32 },
+      { name: 'node34', ip: '192.192.140.34', gpu: 'NVIDIA L40S', gpuId: 'nvidia-l40s', available: 4, total: 8 }
+    ]
   };
 
   function previousVersionFor(model, version) {
@@ -150,13 +203,18 @@
 
   function currentValues() {
     const versionSelect = document.getElementById('deployModelVersion');
+    const imageMode = document.querySelector('input[name="deployImageMode"]:checked')?.value || 'path';
     return {
       model: versionSelect.dataset.model,
       version: versionSelect.value,
       service: document.getElementById('deployServiceName').value.trim(),
       serviceType: document.querySelector('input[name="deployServiceType"]:checked')?.value || 'offline',
+      imageMode,
+      image: imageMode === 'repository' ? document.getElementById('deployImageRepository').value : document.getElementById('deployImagePath').value.trim(),
       cluster: document.getElementById('deployCluster').value,
       gpu: document.getElementById('deployGpu').value,
+      nodeMode: document.querySelector('input[name="deployNodeMode"]:checked')?.value || 'auto',
+      nodeIp: document.getElementById('deployNodeIp').value,
       replicas: Number(document.getElementById('deployReplicas').value) || 1,
       gpuPerReplica: Number(document.getElementById('deployGpuPerReplica').value) || 1,
       portMode: document.querySelector('[data-port-mode].active')?.dataset.portMode || 'random',
@@ -167,6 +225,7 @@
 
   function yamlFor(values) {
     const portLine = values.portMode === 'custom' ? `\n    port: ${values.port}` : '';
+    const nodeLine = values.nodeMode === 'specified' && values.nodeIp ? `\n    nodeIp: ${yamlScalar(values.nodeIp)}` : '';
     return [
       'apiVersion: serving.yinglong.io/v1alpha1',
       'kind: ModelService',
@@ -177,8 +236,9 @@
       '  model:',
       `    name: ${yamlScalar(values.model)}`,
       `    version: ${yamlScalar(values.version)}`,
+      `  image: ${yamlScalar(values.image)}`,
       '  placement:',
-      `    cluster: ${yamlScalar(values.cluster)}`,
+      `    cluster: ${yamlScalar(values.cluster)}${nodeLine}`,
       '    accelerator:',
       `      type: ${values.gpu}`,
       `      countPerReplica: ${values.gpuPerReplica}`,
@@ -199,11 +259,36 @@
     document.getElementById('deployYaml').value = yamlFor(currentValues());
   }
 
-  function renderClusterNode(syncGpu = false) {
+  function renderNodeOptions(preferredNodeIp = '') {
     const cluster = document.getElementById('deployCluster').value;
-    const node = clusterNodes[cluster];
-    document.getElementById('deployGpuTableBody').innerHTML = `<tr><td>1</td><td>${node.name}</td><td class="mono">${node.ip}</td><td>${node.gpu}</td><td><strong class="resource-available">${node.available}</strong></td><td>${node.total}</td></tr>`;
-    if (syncGpu) document.getElementById('deployGpu').value = node.defaultGpu;
+    const gpu = document.getElementById('deployGpu').value;
+    const nodes = (clusterNodes[cluster] || []).filter(node => node.gpuId === gpu && node.available > 0);
+    const select = document.getElementById('deployNodeIp');
+    select.innerHTML = nodes.length
+      ? nodes.map(node => `<option value="${node.ip}">${node.ip} · ${node.name}（可用 ${node.available}/${node.total} 卡）</option>`).join('')
+      : '<option value="">暂无匹配的可用节点</option>';
+    if (preferredNodeIp && nodes.some(node => node.ip === preferredNodeIp)) select.value = preferredNodeIp;
+    select.disabled = document.querySelector('input[name="deployNodeMode"]:checked')?.value !== 'specified' || nodes.length === 0;
+    document.getElementById('deployNodeHelp').textContent = nodes.length
+      ? `已筛选出 ${nodes.length} 个匹配所选显卡型号的可用节点。`
+      : '当前集群没有匹配所选显卡型号的可用节点，请调整显卡型号或集群。';
+  }
+
+  function renderClusterNodes(syncGpu = false, preferredNodeIp = '') {
+    const cluster = document.getElementById('deployCluster').value;
+    const nodes = clusterNodes[cluster] || [];
+    document.getElementById('deployGpuTableBody').innerHTML = nodes.map((node, index) => `<tr><td>${index + 1}</td><td>${node.name}</td><td class="mono">${node.ip}</td><td>${node.gpu}</td><td><strong class="resource-available">${node.available}</strong></td><td>${node.total}</td></tr>`).join('');
+    if (syncGpu && nodes.length) document.getElementById('deployGpu').value = nodes[0].gpuId;
+    renderNodeOptions(preferredNodeIp);
+  }
+
+  function setNodeMode(mode, sync = true) {
+    const specified = mode === 'specified';
+    document.querySelectorAll('input[name="deployNodeMode"]').forEach(radio => { radio.checked = radio.value === mode; });
+    document.getElementById('deployNodePanel').classList.toggle('hidden', !specified);
+    document.getElementById('deployNodeError').classList.add('hidden');
+    renderNodeOptions(document.getElementById('deployNodeIp').value);
+    if (sync) syncYaml();
   }
 
   function setPortMode(mode) {
@@ -216,6 +301,17 @@
     syncYaml();
   }
 
+  function setImageMode(mode, sync = true) {
+    const pathMode = mode === 'path';
+    document.getElementById('deployImagePathPanel').classList.toggle('hidden', !pathMode);
+    document.getElementById('deployImageRepositoryPanel').classList.toggle('hidden', pathMode);
+    document.getElementById('deployImagePath').disabled = !pathMode;
+    document.getElementById('deployImageRepository').disabled = pathMode;
+    document.getElementById('deployImageHelp').textContent = pathMode ? '填写可直接拉取的完整镜像地址与标签。' : '列表来自平台镜像仓库，可直接选择已同步的推理镜像。';
+    document.getElementById('deployImagePathError').classList.add('hidden');
+    if (sync) syncYaml();
+  }
+
   function readTrigger(button) {
     return {
       ...defaults,
@@ -224,6 +320,11 @@
       version: button.dataset.deployVersion || defaults.version,
       service: button.dataset.deployService || defaults.service,
       serviceType: button.dataset.deployServiceType || defaults.serviceType,
+      imageMode: button.dataset.deployImageMode || defaults.imageMode,
+      imagePath: button.dataset.deployImagePath || defaults.imagePath,
+      imageRepository: button.dataset.deployImageRepository || defaults.imageRepository,
+      nodeMode: button.dataset.deployNodeMode || defaults.nodeMode,
+      nodeIp: button.dataset.deployNodeIp || defaults.nodeIp,
       replicas: button.dataset.deployReplicas || defaults.replicas
     };
   }
@@ -240,19 +341,26 @@
     versionSelect.innerHTML = `<option value="${values.version}">${values.model} (${values.version})</option><option value="${previousVersion}">${values.model} (${previousVersion})</option>`;
     versionSelect.dataset.model = values.model;
     document.querySelectorAll('input[name="deployServiceType"]').forEach(radio => { radio.checked = radio.value === values.serviceType; });
+    document.querySelectorAll('input[name="deployImageMode"]').forEach(radio => { radio.checked = radio.value === values.imageMode; });
+    document.getElementById('deployImagePath').value = values.imagePath;
+    document.getElementById('deployImageRepository').value = values.imageRepository;
     document.getElementById('deployCluster').value = values.cluster;
     document.getElementById('deployGpu').value = values.gpu;
+    document.querySelectorAll('input[name="deployNodeMode"]').forEach(radio => { radio.checked = radio.value === values.nodeMode; });
     document.getElementById('deployReplicas').value = values.replicas;
     document.getElementById('deployGpuPerReplica').value = values.gpuPerReplica;
     document.getElementById('deployPort').value = values.port;
     document.getElementById('deployRuntimeConfig').value = values.runtimeConfig;
-    renderClusterNode();
+    renderClusterNodes(false, values.nodeIp);
+    setNodeMode(values.nodeMode, false);
+    setImageMode(values.imageMode, false);
     setPortMode(values.portMode);
     document.getElementById('resourceConfig').classList.remove('hidden');
     document.getElementById('resourceToggle').setAttribute('aria-expanded', 'true');
     document.getElementById('deployAdvanced').classList.add('hidden');
     document.getElementById('deployAdvancedToggle').setAttribute('aria-expanded', 'false');
     document.getElementById('deployServiceNameError').classList.add('hidden');
+    document.getElementById('deployImagePathError').classList.add('hidden');
     document.getElementById('submitDeploy').querySelector('span').textContent = isConfigure ? '保存配置' : '一键部署';
     syncYaml();
     document.getElementById('deployModal').classList.remove('hidden');
@@ -286,10 +394,16 @@
   document.getElementById('resourceToggle').addEventListener('click', event => toggleSection(event.currentTarget, document.getElementById('resourceConfig')));
   document.getElementById('deployAdvancedToggle').addEventListener('click', event => toggleSection(event.currentTarget, document.getElementById('deployAdvanced')));
   document.querySelectorAll('[data-port-mode]').forEach(button => button.addEventListener('click', () => setPortMode(button.dataset.portMode)));
-  document.getElementById('deployCluster').addEventListener('change', () => { renderClusterNode(true); syncYaml(); });
-  ['deployServiceName', 'deployModelVersion', 'deployGpu', 'deployReplicas', 'deployGpuPerReplica', 'deployPort', 'deployRuntimeConfig'].forEach(id => {
-    const eventName = ['deployServiceName', 'deployReplicas', 'deployGpuPerReplica', 'deployPort'].includes(id) ? 'input' : 'change';
-    document.getElementById(id).addEventListener(eventName, syncYaml);
+  document.querySelectorAll('input[name="deployImageMode"]').forEach(radio => radio.addEventListener('change', () => setImageMode(radio.value)));
+  document.getElementById('deployCluster').addEventListener('change', () => { renderClusterNodes(true); document.getElementById('deployNodeError').classList.add('hidden'); syncYaml(); });
+  document.querySelectorAll('input[name="deployNodeMode"]').forEach(radio => radio.addEventListener('change', () => setNodeMode(radio.value)));
+  document.getElementById('deployNodeIp').addEventListener('change', () => { document.getElementById('deployNodeError').classList.add('hidden'); syncYaml(); });
+  ['deployServiceName', 'deployModelVersion', 'deployImagePath', 'deployImageRepository', 'deployGpu', 'deployReplicas', 'deployGpuPerReplica', 'deployPort', 'deployRuntimeConfig'].forEach(id => {
+    const eventName = ['deployServiceName', 'deployImagePath', 'deployReplicas', 'deployGpuPerReplica', 'deployPort'].includes(id) ? 'input' : 'change';
+    document.getElementById(id).addEventListener(eventName, () => {
+      if (id === 'deployGpu') { renderNodeOptions(); document.getElementById('deployNodeError').classList.add('hidden'); }
+      syncYaml();
+    });
   });
   document.querySelectorAll('input[name="deployServiceType"]').forEach(radio => radio.addEventListener('change', syncYaml));
   document.getElementById('deployForm').addEventListener('submit', event => {
@@ -297,6 +411,16 @@
     const values = currentValues();
     document.getElementById('deployServiceNameError').classList.toggle('hidden', Boolean(values.service));
     if (!values.service) { document.getElementById('deployServiceName').focus(); return; }
+    const imageInvalid = values.imageMode === 'path' && !values.image;
+    document.getElementById('deployImagePathError').classList.toggle('hidden', !imageInvalid);
+    if (imageInvalid) { document.getElementById('deployImagePath').focus(); return; }
+    const nodeInvalid = values.nodeMode === 'specified' && !values.nodeIp;
+    document.getElementById('deployNodeError').classList.toggle('hidden', !nodeInvalid);
+    if (nodeInvalid) {
+      const nodeSelect = document.getElementById('deployNodeIp');
+      (nodeSelect.disabled ? document.getElementById('deployGpu') : nodeSelect).focus();
+      return;
+    }
     close();
     notify(currentMode === 'configure' ? '服务配置已保存' : '服务部署已提交', currentMode === 'configure' ? `${values.service} 将按新配置滚动更新。` : `${values.service} 正在创建模型服务实例。`);
   });

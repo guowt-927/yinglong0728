@@ -33,6 +33,221 @@
         .embedded-resource-heading h2 { margin: 0; color: var(--governance-ink); font-size: 16px; }
         .embedded-resource-heading p { margin: 3px 0 0; color: var(--governance-muted); font-size: 11px; }
         .flow-link { cursor: pointer; }
+        .request-type-explanation {
+            margin: 0;
+            padding: 10px 16px;
+            color: var(--governance-text);
+            background: var(--governance-blue-soft);
+            border-bottom: 1px solid var(--governance-line);
+            font-size: 12px;
+            line-height: 18px;
+        }
+
+        .prototype-view-switch {
+            display: inline-flex;
+            align-items: center;
+            gap: 2px;
+            padding: 2px;
+            border: 1px solid var(--governance-line);
+            border-radius: 7px;
+            background: #f1f5f9;
+        }
+
+        .prototype-view-switch button {
+            min-height: 28px;
+            padding: 0 10px;
+            border: 0;
+            border-radius: 5px;
+            color: var(--governance-muted);
+            background: transparent;
+            font-size: 11px;
+            font-weight: 650;
+            white-space: nowrap;
+        }
+
+        .prototype-view-switch button.active {
+            color: var(--governance-blue);
+            background: #fff;
+            box-shadow: 0 1px 2px rgba(15, 23, 42, .08);
+        }
+
+        .table-toolbar-actions {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .filter-result-snapshot {
+            display: inline-flex;
+            min-height: 32px;
+            align-items: center;
+            gap: 4px;
+            padding: 0 10px;
+            border: 1px solid #dbeafe;
+            border-radius: 6px;
+            color: #475569;
+            background: #eff6ff;
+            font-size: 12px;
+            white-space: nowrap;
+        }
+
+        .filter-result-snapshot strong { color: var(--governance-blue); font-family: var(--font-mono); }
+        .application-name-link { display: block; max-width: 260px; padding: 0; border: 0; color: var(--governance-blue); background: transparent; font-weight: 700; text-align: left; }
+        .application-name-link:hover { color: #175be5; text-decoration: underline; }
+        .resource-demand strong { display: block; color: var(--governance-ink); font: 700 12px/1.5 var(--font-mono); }
+        .resource-demand small { display: block; margin-top: 2px; color: var(--governance-muted); font-size: 11px; }
+
+        .detail-modal { width: min(672px, calc(100vw - 32px)); max-height: min(90vh, calc(100vh - 32px)); }
+        .detail-modal .modal-header { flex: 0 0 auto; }
+        .detail-modal .modal-header p { margin: 4px 0 0; color: var(--governance-muted); font-size: 12px; }
+        .detail-modal .modal-body { flex: 1 1 auto; min-height: 0; overflow-y: auto; background: #f8fafc; }
+        .detail-modal .modal-footer { flex: 0 0 auto; }
+        .detail-status-strip { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 12px 14px; border: 1px solid #dbeafe; border-radius: 8px; background: #eff6ff; }
+        .detail-status-strip span:first-child { color: #475569; font: 600 12px/1.5 var(--font-mono); }
+        .detail-grid { display: grid; gap: 12px; margin-top: 12px; }
+        .detail-panel { overflow: hidden; border: 1px solid var(--governance-line); border-radius: 8px; background: #fff; }
+        .detail-panel h3 { margin: 0; padding: 11px 14px; border-bottom: 1px solid #e8edf3; color: var(--governance-ink); background: #fbfdff; font-size: 13px; }
+        .detail-panel dl { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); margin: 0; padding: 4px 14px 12px; column-gap: 24px; }
+        .detail-panel dl > div { min-width: 0; padding: 10px 0; border-bottom: 1px solid #eef2f6; }
+        .detail-panel dt { margin-bottom: 3px; color: var(--governance-muted); font-size: 11px; }
+        .detail-panel dd { margin: 0; overflow-wrap: anywhere; color: var(--governance-text); font-size: 12px; }
+        .detail-panel.result-panel dl { grid-template-columns: 1fr; }
+
+        .permission-options {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 8px;
+        }
+
+        .permission-option {
+            display: flex;
+            min-height: 38px;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 10px;
+            border: 1px solid var(--governance-line);
+            border-radius: 6px;
+            color: var(--governance-text);
+            background: #fff;
+            font-size: 12px;
+        }
+
+        .permission-option input {
+            width: 15px;
+            height: 15px;
+            accent-color: var(--governance-blue);
+        }
+
+        .resource-time-picker {
+            position: relative;
+        }
+
+        .resource-time-trigger {
+            display: flex;
+            width: 100%;
+            min-height: 38px;
+            align-items: center;
+            gap: 8px;
+            padding: 7px 10px;
+            border: 1px solid var(--governance-line);
+            border-radius: 6px;
+            color: var(--governance-text);
+            background: #fff;
+            box-shadow: 0 1px 2px rgba(15, 23, 42, .04);
+            font-size: 11px;
+            text-align: left;
+        }
+
+        .resource-time-trigger:hover,
+        .resource-time-trigger[aria-expanded="true"] {
+            border-color: var(--governance-blue);
+            box-shadow: 0 0 0 2px rgba(38, 110, 255, .08);
+        }
+
+        .resource-time-trigger .icon:first-child { color: var(--governance-blue); }
+        .resource-time-trigger .resource-time-value { flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+        .resource-time-trigger .trigger-chevron { transition: transform .16s ease; }
+        .resource-time-trigger[aria-expanded="true"] .trigger-chevron { transform: rotate(180deg); }
+
+        .resource-time-popover {
+            width: 100%;
+            margin-top: 8px;
+            overflow: hidden;
+            border: 1px solid var(--governance-line);
+            border-radius: 8px;
+            background: #fff;
+            box-shadow: 0 14px 34px rgba(15, 23, 42, .14);
+        }
+
+        .resource-time-head {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            padding: 11px 12px;
+            border-bottom: 1px solid var(--governance-line);
+        }
+
+        .resource-time-head h4 { margin: 0; color: var(--governance-ink); font-size: 13px; }
+        .resource-time-fields {
+            display: grid;
+            grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+            align-items: end;
+            gap: 8px;
+            padding: 10px 12px;
+            border-bottom: 1px solid var(--governance-line);
+            background: #fbfdff;
+        }
+
+        .resource-time-fields > span { padding-bottom: 9px; color: var(--governance-muted); font-size: 11px; }
+        .resource-time-input label { display: block; margin-bottom: 4px; color: var(--governance-muted); font-size: 11px; font-weight: 650; }
+        .resource-time-input .control { width: 100%; font-family: var(--font-mono); }
+        .resource-time-body { display: grid; grid-template-columns: 105px minmax(0, 1fr); min-height: 250px; }
+
+        .resource-time-presets {
+            display: flex;
+            flex-direction: column;
+            gap: 3px;
+            padding: 10px;
+            border-right: 1px solid var(--governance-line);
+            background: #f8fafc;
+        }
+
+        .resource-time-presets strong { margin: 0 0 4px; color: var(--governance-muted); font-size: 10px; }
+        .resource-time-presets button { min-height: 30px; padding: 0 8px; border: 0; border-radius: 5px; color: var(--governance-text); background: transparent; font-size: 11px; text-align: left; }
+        .resource-time-presets button:hover,
+        .resource-time-presets button.active { color: var(--governance-blue); background: #fff; box-shadow: 0 1px 2px rgba(15, 23, 42, .08); font-weight: 700; }
+
+        .resource-dual-calendar { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; padding: 11px 12px 13px; }
+        .resource-calendar-panel header { display: grid; grid-template-columns: 28px minmax(0, 1fr) 28px; align-items: center; margin-bottom: 7px; }
+        .resource-calendar-panel h4 { margin: 0; color: var(--governance-ink); font: 700 11px/1.4 var(--font-mono); text-align: center; }
+        .resource-calendar-nav,
+        .resource-calendar-nav-spacer { display: grid; width: 28px; height: 28px; place-items: center; border: 0; border-radius: 5px; color: var(--governance-muted); background: transparent; }
+        .resource-calendar-nav:hover { color: var(--governance-blue); background: var(--governance-blue-soft); }
+        .resource-calendar-grid { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 2px; }
+        .resource-calendar-weekdays { margin-bottom: 3px; }
+        .resource-calendar-weekdays span { color: var(--governance-muted); font-size: 9px; line-height: 22px; text-align: center; }
+        .resource-calendar-day,
+        .resource-calendar-day-empty { aspect-ratio: 1; min-height: 25px; }
+        .resource-calendar-day { border: 0; border-radius: 5px; color: var(--governance-text); background: transparent; font: 10px/1 var(--font-mono); }
+        .resource-calendar-day:hover { color: var(--governance-blue); background: var(--governance-blue-soft); }
+        .resource-calendar-day.in-range { border-radius: 3px; color: var(--governance-blue); background: #eff6ff; }
+        .resource-calendar-day.range-start,
+        .resource-calendar-day.range-end { color: #fff; background: var(--governance-blue); font-weight: 750; }
+
+        .resource-time-footer {
+            display: flex;
+            min-height: 52px;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+            padding: 9px 12px;
+            border-top: 1px solid var(--governance-line);
+            background: #fbfdff;
+        }
+
+        .resource-time-footer .field-error { margin: 0; color: var(--governance-red); font-size: 11px; }
+        .resource-time-actions { display: flex; align-items: center; gap: 7px; margin-left: auto; }
 
         .governance-card {
             overflow: hidden;
@@ -431,6 +646,28 @@
             font-weight: 700;
         }
 
+        .node-title-row {
+            display: flex;
+            align-items: center;
+            gap: 7px;
+            margin-bottom: 6px;
+        }
+
+        .node-title-row .node-title { margin-bottom: 0; }
+        .optional-badge {
+            display: inline-flex;
+            min-height: 20px;
+            align-items: center;
+            padding: 0 7px;
+            border: 1px solid #f4c574;
+            border-radius: 999px;
+            color: var(--governance-orange);
+            background: var(--governance-orange-soft);
+            font-size: 10px;
+            font-weight: 700;
+            white-space: nowrap;
+        }
+
         .node-copy {
             margin: 0;
             min-height: 60px;
@@ -562,19 +799,42 @@
                 grid-template-columns: 1fr;
             }
 
+            .resource-time-body { grid-template-columns: 1fr; }
+            .resource-time-presets { flex-direction: row; flex-wrap: wrap; border-right: 0; border-bottom: 1px solid var(--governance-line); }
+            .resource-time-presets strong { width: 100%; }
+            .resource-time-presets button { text-align: center; }
+
+        }
+
+        @media (max-width: 620px) {
+            .permission-options,
+            .resource-dual-calendar { grid-template-columns: 1fr; }
+            .resource-time-fields { grid-template-columns: 1fr; }
+            .resource-time-fields > span { display: none; }
+            .resource-time-footer { align-items: stretch; flex-direction: column; }
+            .resource-time-actions { width: 100%; margin-left: 0; }
+            .resource-time-actions .btn { flex: 1; }
+            .table-toolbar-actions { width: 100%; align-items: flex-start; flex-direction: column; }
+
         }
     </style>
 </head>
 <body class="sidebar-led heading-spec-page">
 <svg width="0" height="0" aria-hidden="true" style="position:absolute">
     <symbol id="i-dashboard" viewBox="0 0 24 24"><rect width="7" height="9" x="3" y="3" rx="1"/><rect width="7" height="5" x="14" y="3" rx="1"/><rect width="7" height="9" x="14" y="12" rx="1"/><rect width="7" height="5" x="3" y="16" rx="1"/></symbol><symbol id="i-sliders" viewBox="0 0 24 24"><path d="M4 21v-7m0-4V3m8 18v-9m0-4V3m8 18v-5m0-4V3M1 14h6m2-6h6m2 8h6"/></symbol><symbol id="i-list" viewBox="0 0 24 24"><path d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01"/></symbol><symbol id="i-box" viewBox="0 0 24 24"><path d="m21 8-9-5-9 5 9 5 9-5Z"/><path d="m3 8v8l9 5 9-5V8m-9 5v8"/></symbol><symbol id="i-server" viewBox="0 0 24 24"><rect width="20" height="8" x="2" y="2" rx="2"/><rect width="20" height="8" x="2" y="14" rx="2"/><path d="M6 6h.01M6 18h.01"/></symbol><symbol id="i-brain" viewBox="0 0 24 24"><path d="M9.5 4A2.5 2.5 0 0 0 7 6.5V8a3 3 0 0 0-3 3v1.5A2.5 2.5 0 0 0 6.5 15H7v1.5A3.5 3.5 0 0 0 10.5 20H12V5.5A1.5 1.5 0 0 0 10.5 4h-1Z"/><path d="M14.5 4A2.5 2.5 0 0 1 17 6.5V8a3 3 0 0 1 3 3v1.5a2.5 2.5 0 0 1-2.5 2.5H17v1.5a3.5 3.5 0 0 1-3.5 3.5H12V5.5A1.5 1.5 0 0 1 13.5 4h1Z"/></symbol><symbol id="i-activity" viewBox="0 0 24 24"><path d="M3 12h4l2-8 4 16 2-8h6"/></symbol><symbol id="i-file" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8Z"/><path d="M14 2v6h6M9 15h6M12 12v6"/></symbol><symbol id="i-check-user" viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="m16 11 2 2 4-4"/></symbol><symbol id="i-network" viewBox="0 0 24 24"><rect width="6" height="6" x="9" y="2" rx="1"/><rect width="6" height="6" x="2" y="16" rx="1"/><rect width="6" height="6" x="16" y="16" rx="1"/><path d="M12 8v4m-7 4v-2h14v2"/></symbol><symbol id="i-route" viewBox="0 0 24 24"><circle cx="6" cy="19" r="3"/><path d="M9 19h5.5a3.5 3.5 0 0 0 0-7h-5a3.5 3.5 0 0 1 0-7H15"/><circle cx="18" cy="5" r="3"/></symbol><symbol id="i-settings" viewBox="0 0 24 24"><path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.38a2 2 0 0 0-.73-2.73l-.15-.09a2 2 0 0 1-1-1.74v-.51a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2Z"/><circle cx="12" cy="12" r="3"/></symbol>
+    <symbol id="i-calendar" viewBox="0 0 24 24"><path d="M8 2v4M16 2v4M3 10h18"/><rect width="18" height="18" x="3" y="4" rx="2"/></symbol>
+    <symbol id="i-chevron-down" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></symbol>
+    <symbol id="i-chevron-left" viewBox="0 0 24 24"><path d="m15 18-6-6 6-6"/></symbol>
+    <symbol id="i-chevron-right" viewBox="0 0 24 24"><path d="m9 18 6-6-6-6"/></symbol>
+    <symbol id="i-x" viewBox="0 0 24 24"><path d="M18 6 6 18M6 6l12 12"/></symbol>
+    <symbol id="i-check" viewBox="0 0 24 24"><path d="m20 6-11 11-5-5"/></symbol>
 </svg>
 <a class="skip-link" href="#main-content">跳到主要内容</a>
-<aside class="sidebar" aria-label="应龙主导航"><a class="brand" href="../index.html"><span class="brand-mark">应</span><span class="brand-name">应龙推理平台</span><span class="env-badge">PROD</span></a><nav class="sidebar-nav">
+<aside class="sidebar" aria-label="应龙主导航"><a class="brand" href="../index.html" aria-label="应龙 AI算力基座首页"><span class="brand-mark" aria-hidden="true"><img src="../doc/logo/icon_01.svg" alt=""></span><span class="brand-copy"><span class="brand-name">应龙</span><span class="brand-subtitle">AI算力基座</span></span></a><nav class="sidebar-nav">
     <section class="nav-group"><h2 class="nav-group-title">工作台</h2><a class="nav-item" href="../index.html"><svg class="icon"><use href="#i-dashboard"/></svg><span>系统概览</span></a></section><section class="nav-group"><h2 class="nav-group-title">算力调度</h2><a class="nav-item" href="sys_dispatch.html"><svg class="icon"><use href="#i-sliders"/></svg><span>算力调度</span></a><a class="nav-item" href="sys_task_list.html"><svg class="icon"><use href="#i-list"/></svg><span>我的任务</span></a></section>
     <section class="nav-group"><h2 class="nav-group-title">模型管理</h2><a class="nav-item" href="sys_model_repo.html"><svg class="icon"><use href="#i-box"/></svg><span>模型资产</span></a><a class="nav-item" href="sys_model_service.html"><svg class="icon"><use href="#i-server"/></svg><span>模型服务</span></a><a class="nav-item" href="sys_model_training.html"><svg class="icon"><use href="#i-brain"/></svg><span>模型训练</span></a><a class="nav-item active" href="sys_model_governance.html" aria-current="page"><svg class="icon"><use href="#i-check-user"/></svg><span>模型纳管</span></a><a class="nav-item" href="sys_model_monitor.html"><svg class="icon"><use href="#i-activity"/></svg><span>模型监测</span></a></section>
-    <section class="nav-group"><h2 class="nav-group-title">资源与运维</h2><a class="nav-item" href="sys_resource_application.html"><svg class="icon"><use href="#i-file"/></svg><span>资源申请</span></a><a class="nav-item" href="sys_resource_approval.html"><svg class="icon"><use href="#i-check-user"/></svg><span>授权审批</span></a><a class="nav-item" href="sys_infrastructure_mgmt.html"><svg class="icon"><use href="#i-network"/></svg><span>集群管理</span></a><a class="nav-item" href="sys_api_key_mgmt.html"><svg class="icon"><use href="#i-activity"/></svg><span>请求监控</span></a><a class="nav-item" href="sys_request_tracing.html"><svg class="icon"><use href="#i-route"/></svg><span>链路追踪</span></a></section>
-</nav></aside>
+    <section class="nav-group"><h2 class="nav-group-title">资源与运维</h2><a class="nav-item" href="sys_resource_application.html"><svg class="icon"><use href="#i-file"/></svg><span>资源申请</span></a><a class="nav-item" href="sys_resource_approval.html"><svg class="icon"><use href="#i-check-user"/></svg><span>授权审批</span></a><a class="nav-item" href="sys_infrastructure_mgmt.html"><svg class="icon"><use href="#i-network"/></svg><span>集群管理</span></a><a class="nav-item" href="sys_request_tracing.html"><svg class="icon"><use href="#i-route"/></svg><span>链路追踪</span></a></section>
+</nav><div class="sidebar-foot"><div class="sidebar-version" tabindex="0" aria-describedby="sidebarVersionDetails"><span>系统版本</span><strong>v1.0.0</strong><span class="sidebar-version-popover" id="sidebarVersionDetails" role="tooltip"><strong>版本信息</strong><span><span>前端版本</span><b>v1.0.0</b></span><span><span>后端版本</span><b>v1.0.0</b></span></span></div></div></aside>
 <div class="app-main">
     <header class="global-header"><nav class="breadcrumb" aria-label="面包屑"><a href="../index.html">应龙</a><span>/</span><span>模型管理</span><span>/</span><span class="breadcrumb-current" aria-current="page">模型纳管</span></nav><div class="user-profile"><span>资源管理员</span><span class="user-avatar" aria-hidden="true">A</span></div></header>
         <main class="page-canvas heading-spec-canvas" id="main-content">
@@ -682,14 +942,14 @@
                                 </div>
                                 <div class="flow-node action">
                                     <span class="node-index">2</span>
-                                    <strong class="node-title">申请试用资源</strong>
-                                    <p class="node-copy">需要平台试用算力时，先提交试用资源申请，并按期释放资源。</p>
-                                    <button class="flow-link" type="button" onclick="openApplicationModal('试用资源')">提交试用资源申请</button>
+                                    <div class="node-title-row"><strong class="node-title">申请线下验证服务器</strong><span class="optional-badge">可选</span></div>
+                                    <p class="node-copy">模型纳管前如需验证，可申请独立服务器在线下部署；已有验证环境或结论时可跳过。</p>
+                                    <button class="flow-link" type="button" onclick="openApplicationModal('线下验证服务器')">申请线下验证服务器</button>
                                 </div>
                                 <div class="flow-node">
                                     <span class="node-index">3</span>
-                                    <strong class="node-title">完成试用验证</strong>
-                                    <p class="node-copy">业务方完成模型启动、依赖适配、接口暴露、效果验证和资源评估。</p>
+                                    <strong class="node-title">完成线下部署验证</strong>
+                                    <p class="node-copy">业务方在独立服务器上完成模型启动、依赖适配、接口暴露、效果验证和资源评估。</p>
                                     <span class="node-meta">业务方负责</span>
                                 </div>
                                 <div class="flow-node">
@@ -700,14 +960,14 @@
                                 </div>
                                 <div class="flow-node action">
                                     <span class="node-index">5</span>
-                                    <strong class="node-title">正式资源申请</strong>
-                                    <p class="node-copy">试用通过并确认长期运行后，申请正式资源、账号权限和部署配额。</p>
-                                    <button class="flow-link primary" type="button" onclick="openApplicationModal('正式资源')">提交正式资源申请</button>
+                                    <strong class="node-title">申请平台权限和资源</strong>
+                                    <p class="node-copy">确认模型需要长期运行后，提交验证结论、上线计划和资源需求，由平台统一核定权限与资源。</p>
+                                    <button class="flow-link primary" type="button" onclick="openApplicationModal('平台账号和资源')">申请平台权限和资源</button>
                                 </div>
                                 <div class="flow-node done">
                                     <span class="node-index">6</span>
-                                    <strong class="node-title">自助部署维护</strong>
-                                    <p class="node-copy">平台开通权限和配额后，业务方自助部署、发布、升级和调参。</p>
+                                    <strong class="node-title">在平台部署与维护</strong>
+                                    <p class="node-copy">平台开通账号、权限和配额后，业务方在平台内完成部署、发布、升级和调参。</p>
                                     <span class="node-meta">长期维护</span>
                                 </div>
                             </div>
@@ -717,10 +977,15 @@
 
                 <section class="governance-application-section" id="resource-application">
                     <div class="resource-heading embedded-resource-heading">
-                        <div><h2>资源申请</h2></div>
-                        <div class="page-actions"><a class="btn" href="sys_resource_approval.html">进入授权审批</a><button class="btn trial-button" onclick="openApplicationModal('试用资源')">新建试用申请</button><button class="btn btn-primary" onclick="openApplicationModal('正式资源')">新建正式申请</button></div>
+                        <div><h2>部署资源申请</h2></div>
+                        <div class="page-actions"><button class="btn trial-button" onclick="openApplicationModal('线下验证服务器')">申请线下验证服务器</button><button class="btn btn-primary" onclick="openApplicationModal('平台账号和资源')">申请平台权限和资源</button></div>
                     </div>
-                    <section class="card table-card application-table"><div class="filter-toolbar"><div class="search-wrap"><input class="search-input" id="keyword" maxlength="50" placeholder="搜索名称、编号、业务系统或模型" oninput="renderTable()"><button class="search-clear hidden" id="keywordClear" onclick="clearKeyword()" aria-label="清除申请搜索">×</button></div><select class="control" id="typeFilter" onchange="renderTable()"><option value="">全部类型</option><option>试用资源</option><option>正式资源</option></select><select class="control" id="statusFilter" onchange="renderTable()"><option value="">全部状态</option><option>草稿</option><option>已提交</option><option>审核中</option><option>审核通过</option><option>已驳回</option></select><button class="btn btn-ghost" onclick="resetFilters()">重置</button></div><div class="table-toolbar"><div class="table-title"><h2>我的资源申请</h2></div><span class="result-count">共 <strong id="resultCount">0</strong> 项</span></div><div class="table-scroll" id="tableArea"></div><footer class="pagination"><span id="paginationText">共 0 项</span><div><button class="btn table-button" disabled>上一页</button><button class="btn table-button btn-primary">1</button><button class="btn table-button" disabled>下一页</button></div></footer></section>
+                    <section class="card table-card application-table">
+                        <div class="filter-toolbar"><div class="search-wrap"><input class="search-input" id="keyword" maxlength="50" placeholder="搜索申请名称、编号、业务系统或申请人" oninput="renderTable()"><button class="search-clear hidden" id="keywordClear" onclick="clearKeyword()" aria-label="清除申请搜索">×</button></div><select class="control" id="typeFilter" onchange="renderTable()"><option value="">全部类型</option><option>线下验证服务器</option><option>平台账号和资源</option></select><select class="control" id="statusFilter" onchange="renderTable()"><option value="">全部状态</option><option>草稿</option><option>已提交</option><option>审核中</option><option>审核通过</option><option>已驳回</option></select><span class="filter-result-snapshot">筛选结果 <strong id="resultCount">0</strong> 项</span><button class="btn btn-ghost" onclick="resetFilters()">重置</button></div>
+                        <div class="table-toolbar"><div class="table-title"><h2>我的部署资源申请</h2></div><div class="table-toolbar-actions"><div class="prototype-view-switch" aria-label="切换申请列表示例状态"><button id="emptyViewBtn" class="active" type="button" aria-pressed="true" onclick="switchApplicationView('empty')">空状态</button><button id="listViewBtn" type="button" aria-pressed="false" onclick="switchApplicationView('list')">列表状态</button></div></div></div>
+                        <div class="table-scroll" id="tableArea"></div>
+                        <footer class="pagination"><span id="paginationText">共 0 项</span><div><button class="btn table-button" disabled>上一页</button><button class="btn table-button btn-primary">1</button><button class="btn table-button" disabled>下一页</button></div></footer>
+                    </section>
                 </section>
 
                 <section class="governance-card">
@@ -776,32 +1041,102 @@
             </div>
         </main>
 </div>
-<div class="modal-backdrop hidden" id="formOverlay" role="dialog" aria-modal="true" aria-labelledby="formTitle"><section class="modal application-modal"><header class="modal-header"><div><h2 id="formTitle">新建资源申请</h2></div><button class="btn btn-icon btn-ghost" onclick="closeForm()" aria-label="关闭资源申请弹窗">×</button></header><div class="request-type-tabs" role="tablist"><button id="trialTab" onclick="switchRequestType('试用资源')">试用资源</button><button id="formalTab" onclick="switchRequestType('正式资源')">正式资源</button></div><form class="modal-body" id="requestForm" novalidate>
-  <section class="form-section"><h3 class="form-section-title">基本信息</h3><div class="form-grid"><div class="form-field"><label for="requestName">申请名称 <span class="required">*</span></label><input class="control" id="requestName" maxlength="60"></div><div class="form-field"><label for="department">申请部门 / 项目组 <span class="required">*</span></label><input class="control" id="department"></div><div class="form-field"><label for="systemName">业务系统 <span class="required">*</span></label><input class="control" id="systemName"></div><div class="form-field"><label for="applicant">申请人 <span class="required">*</span></label><input class="control" id="applicant"></div><div class="form-field"><label for="operator">部署操作人 <span class="required">*</span></label><input class="control" id="operator"></div><div class="form-field formal-only"><label for="operatorAccount">部署账号 <span class="required">*</span></label><input class="control" id="operatorAccount" placeholder="例如 li.si"></div><div class="form-field trial-only"><label for="startDate">试用开始时间 <span class="required">*</span></label><input class="control" id="startDate" type="date"></div><div class="form-field trial-only"><label for="endDate">试用结束时间 <span class="required">*</span></label><input class="control" id="endDate" type="date"></div><div class="form-field full"><label for="purpose">资源用途 <span class="required">*</span></label><textarea class="control" id="purpose" rows="3" maxlength="300"></textarea></div></div></section>
-  <section class="form-section hidden" id="formalFields"><h3 class="form-section-title">模型与上线信息</h3><div class="form-grid"><div class="form-field"><label for="modelName">模型名称 <span class="required">*</span></label><input class="control" id="modelName"></div><div class="form-field"><label for="trialPassed">是否试用通过 <span class="required">*</span></label><select class="control" id="trialPassed"><option>是，已完成试用验证</option><option>否，申请直接上线评审</option></select></div><div class="form-field"><label for="concurrency">预计并发</label><input class="control" id="concurrency" type="number" min="0" max="100000"></div><div class="form-field"><label for="launchTime">上线时间</label><input class="control" id="launchTime" type="datetime-local"></div></div><div class="material-note"><strong>正式接入前置材料</strong><div><span>模型权重</span><span>部署镜像</span><span>k8sYaml</span><span>接口文档</span><span>测试样例数据</span></div></div></section>
-  <section class="form-section"><h3 class="form-section-title">资源需求</h3><div class="form-grid"><div class="form-field"><label for="gpuType">GPU 型号 <span class="required">*</span></label><select class="control" id="gpuType"><option>910B4</option><option>L40</option><option>A10</option><option>不限制</option></select></div><div class="form-field"><label for="gpuCount">GPU 数量 <span class="required">*</span></label><input class="control" id="gpuCount" type="number" min="1" max="64"></div></div><div class="field-message danger-text" id="formError" role="alert"></div></section>
-</form><footer class="modal-footer"><span class="muted">带 * 的字段为必填项</span><div class="modal-actions"><button class="btn" onclick="closeForm()">取消</button><button class="btn" onclick="saveRequest('草稿')">保存草稿</button><button class="btn btn-primary" onclick="saveRequest('已提交')">提交申请</button></div></footer></section></div>
-<div class="modal-backdrop hidden" id="detailOverlay" role="dialog" aria-modal="true" aria-labelledby="detailTitle"><section class="modal detail-modal"><header class="modal-header"><div><h2 id="detailTitle">申请详情</h2></div><button class="btn btn-icon btn-ghost" onclick="closeDetail()" aria-label="关闭申请详情">×</button></header><div class="modal-body" id="detailBody"></div><footer class="modal-footer"><span></span><div class="modal-actions"><button class="btn" id="editBtn" onclick="editCurrent()">编辑</button><button class="btn" onclick="copyCurrent()">复制申请</button><button class="btn" id="withdrawBtn" onclick="withdrawCurrent()">撤回</button><button class="btn btn-danger" id="deleteBtn" onclick="deleteCurrent()">删除</button></div></footer></section></div>
+<div class="modal-backdrop hidden" id="formOverlay" role="dialog" aria-modal="true" aria-labelledby="formTitle">
+  <section class="modal application-modal">
+    <header class="modal-header"><div><h2 id="formTitle">新建部署资源申请</h2></div><button class="btn btn-icon btn-ghost" type="button" onclick="closeForm()" aria-label="关闭资源申请弹窗">×</button></header>
+    <div class="request-type-tabs" role="tablist"><button id="trialTab" role="tab" type="button" onclick="switchRequestType('线下验证服务器')">线下验证服务器</button><button id="formalTab" role="tab" type="button" onclick="switchRequestType('平台账号和资源')">平台账号和资源</button></div>
+    <p class="request-type-explanation" id="requestTypeExplanation">用于模型纳管前验证：平台提供一台独立服务器，由业务方在线下自行部署，验证结束后释放。</p>
+    <form class="modal-body" id="requestForm" novalidate>
+      <section class="form-section">
+        <h3 class="form-section-title">基本信息</h3>
+        <div class="form-grid">
+          <div class="form-field"><label for="requestName">申请名称 <span class="required">*</span></label><input class="control" id="requestName" maxlength="60"></div>
+          <div class="form-field"><label for="department">申请部门 / 项目组 <span class="required">*</span></label><input class="control" id="department"></div>
+          <div class="form-field"><label for="systemName">业务系统 <span class="required">*</span></label><input class="control" id="systemName"></div>
+          <div class="form-field"><label for="applicant">申请人 <span class="required">*</span></label><input class="control" id="applicant"></div>
+          <div class="form-field"><label for="operator">部署操作人 <span class="required">*</span></label><input class="control" id="operator"></div>
+          <div class="form-field formal-only hidden"><label for="modelName">模型名称 <span class="required">*</span></label><input class="control" id="modelName"></div>
+          <div class="form-field full"><label for="purpose">资源用途 <span class="required">*</span></label><textarea class="control" id="purpose" rows="3" maxlength="300" placeholder="说明部署场景、验证目标或长期运行用途"></textarea></div>
+        </div>
+      </section>
+
+      <section class="form-section trial-only" id="offlineFields">
+        <div class="form-grid">
+          <div class="form-field full resource-time-picker">
+            <label>资源使用时间 <span class="required">*</span></label>
+            <button class="resource-time-trigger" id="resourceTimeTrigger" type="button" aria-haspopup="dialog" aria-expanded="false" aria-controls="resourceTimePopover"><svg class="icon icon-sm"><use href="#i-calendar"/></svg><span class="resource-time-value mono" id="resourceTimeText">2026-08-18 09:00:00 ~ 2026-08-25 18:00:00</span><svg class="icon icon-sm trigger-chevron"><use href="#i-chevron-down"/></svg></button>
+            <div class="resource-time-popover hidden" id="resourceTimePopover" role="dialog" aria-modal="false" aria-labelledby="resourceTimeTitle">
+              <div class="resource-time-head"><h4 id="resourceTimeTitle">选择资源使用时间</h4><button class="btn btn-icon btn-ghost" id="closeResourceTime" type="button" aria-label="关闭资源使用时间选择器"><svg class="icon"><use href="#i-x"/></svg></button></div>
+              <div class="resource-time-fields"><div class="resource-time-input"><label for="resourceStartTime">开始时间</label><input class="control mono" id="resourceStartTime" type="datetime-local" step="1" value="2026-08-18T09:00:00" required></div><span aria-hidden="true">至</span><div class="resource-time-input"><label for="resourceEndTime">结束时间</label><input class="control mono" id="resourceEndTime" type="datetime-local" step="1" value="2026-08-25T18:00:00" required></div></div>
+              <div class="resource-time-body"><aside class="resource-time-presets" aria-label="快捷资源使用时间"><strong>快捷选择</strong><button type="button" data-resource-time-preset="today">今天</button><button type="button" data-resource-time-preset="tomorrow">明天</button><button type="button" data-resource-time-preset="3d">未来 3 天</button><button type="button" data-resource-time-preset="7d">未来 7 天</button><button type="button" data-resource-time-preset="30d">未来 30 天</button><button type="button" data-resource-time-preset="month">本月</button></aside><div class="resource-dual-calendar"><section class="resource-calendar-panel"><header><button class="resource-calendar-nav" id="resourceCalendarPrev" type="button" aria-label="查看上个月"><svg class="icon icon-sm"><use href="#i-chevron-left"/></svg></button><h4 id="resourceCalendarLeftTitle">2026 年 8 月</h4><span class="resource-calendar-nav-spacer"></span></header><div class="resource-calendar-grid resource-calendar-weekdays" aria-hidden="true"><span>一</span><span>二</span><span>三</span><span>四</span><span>五</span><span>六</span><span>日</span></div><div class="resource-calendar-grid" id="resourceCalendarLeftDays"></div></section><section class="resource-calendar-panel"><header><span class="resource-calendar-nav-spacer"></span><h4 id="resourceCalendarRightTitle">2026 年 9 月</h4><button class="resource-calendar-nav" id="resourceCalendarNext" type="button" aria-label="查看下个月"><svg class="icon icon-sm"><use href="#i-chevron-right"/></svg></button></header><div class="resource-calendar-grid resource-calendar-weekdays" aria-hidden="true"><span>一</span><span>二</span><span>三</span><span>四</span><span>五</span><span>六</span><span>日</span></div><div class="resource-calendar-grid" id="resourceCalendarRightDays"></div></section></div></div>
+              <div class="resource-time-footer"><p class="field-error hidden" id="resourceTimeError" role="alert"></p><div class="resource-time-actions"><button class="btn btn-ghost" id="resetResourceTime" type="button">重置</button><button class="btn" id="cancelResourceTime" type="button">取消</button><button class="btn btn-primary" id="applyResourceTime" type="button"><svg class="icon icon-sm"><use href="#i-check"/></svg>确认应用</button></div></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="form-section hidden formal-only" id="formalFields">
+        <div class="form-grid">
+          <div class="form-field"><label for="trialPassed">是否完成线下验证 <span class="required">*</span></label><select class="control" id="trialPassed"><option>是，已完成线下部署验证</option><option>否，申请直接进入平台部署评审</option></select></div>
+          <div class="form-field"><label for="concurrency">预计并发</label><input class="control" id="concurrency" type="number" min="0" max="100000"></div>
+          <div class="form-field"><label for="launchTime">计划上线时间</label><input class="control" id="launchTime" type="datetime-local" step="1"></div>
+        </div>
+      </section>
+
+      <section class="form-section"><div class="form-grid"><div class="form-field"><label for="gpuType">GPU 型号 <span class="required">*</span></label><select class="control" id="gpuType"><option>910B4</option><option>L40</option><option>A10</option><option>不限制</option></select></div><div class="form-field"><label for="gpuCount">GPU 数量 <span class="required">*</span></label><input class="control" id="gpuCount" type="number" min="1" max="64"></div></div><div class="field-message danger-text" id="formError" role="alert"></div></section>
+    </form>
+    <footer class="modal-footer"><div class="modal-actions"><button class="btn" type="button" onclick="closeForm()">取消</button><button class="btn" type="button" onclick="saveRequest('草稿')">保存草稿</button><button class="btn btn-primary" type="button" onclick="saveRequest('已提交')">提交申请</button></div></footer>
+  </section>
+</div>
+<div class="modal-backdrop hidden" id="detailOverlay" role="dialog" aria-modal="true" aria-labelledby="detailTitle"><section class="modal detail-modal"><header class="modal-header"><div><h2 id="detailTitle">申请详情</h2><p id="detailSubtitle">查看申请信息和审批结果</p></div><button class="btn btn-icon btn-ghost" onclick="closeDetail()" aria-label="关闭申请详情">×</button></header><div class="modal-body" id="detailBody"></div><footer class="modal-footer"><span class="muted">申请信息为只读展示</span><div class="modal-actions"><button class="btn" id="editBtn" onclick="editCurrent()">编辑</button><button class="btn" onclick="copyCurrent()">复制申请</button><button class="btn" id="withdrawBtn" onclick="withdrawCurrent()">撤回</button><button class="btn btn-danger" id="deleteBtn" onclick="deleteCurrent()">删除</button></div></footer></section></div>
 <div class="toast hidden" id="toast" role="status" aria-live="polite"><div><h3 id="toastTitle">操作成功</h3><p id="toastMessage"></p></div></div>
 <script>
-const STORE_KEY='ylGovernanceResourceRequestsV1';let requests=[],currentType='试用资源',editingId=null,currentDetailId=null,lastTrigger=null;
-function loadRequests(){try{requests=JSON.parse(localStorage.getItem(STORE_KEY)||'[]')}catch(e){requests=[]}if(!Array.isArray(requests))requests=[]}function saveAll(){localStorage.setItem(STORE_KEY,JSON.stringify(requests))}
+const STORE_KEY='ylGovernanceResourceRequestsV1',OFFLINE_TYPE='线下验证服务器',PLATFORM_TYPE='平台账号和资源';
+const DEFAULT_RESOURCE_START='2026-08-18T09:00:00',DEFAULT_RESOURCE_END='2026-08-25T18:00:00';
+const DEMO_REQUESTS=[
+  {id:'DEMO-202608-001',name:'合同解析模型线下验证申请',type:OFFLINE_TYPE,department:'法务科技部 / 合同审阅项目组',system:'合同智能审阅',applicant:'赵琪',operator:'陈晨',operatorAccount:'',purpose:'在线下独立服务器验证合同解析模型的依赖兼容性、抽取准确率和资源消耗。',gpuType:'A10',gpuCount:2,status:'已提交',createdAt:'2026-08-14 09:36',updatedAt:'2026-08-14 09:36',model:'Contract-Parser-14B',resourceStartTime:'2026-08-18T09:00:00',resourceEndTime:'2026-08-25T18:00:00',permissions:[],targetEnvironment:'',trialPassed:'',concurrency:0,launchTime:''},
+  {id:'DEMO-202608-002',name:'智能客服模型平台部署申请',type:PLATFORM_TYPE,department:'客户运营部 / 智能客服项目组',system:'智能客服中台',applicant:'刘明',operator:'李四',operatorAccount:'li.si',purpose:'申请平台账号、部署权限和生产环境资源，用于承载智能客服推理服务。',gpuType:'L40',gpuCount:8,status:'审核中',createdAt:'2026-08-14 10:05',updatedAt:'2026-08-14 10:18',model:'Yinglong-Chat-72B',resourceStartTime:'',resourceEndTime:'',permissions:['查看服务','部署与更新','查看日志','查看监控'],targetEnvironment:'生产环境',trialPassed:'是，已完成线下部署验证',concurrency:200,launchTime:'2026-08-20T10:00:00'},
+  {id:'DEMO-202608-003',name:'知识库问答模型平台部署申请',type:PLATFORM_TYPE,department:'企业平台部 / 知识库项目组',system:'企业知识库',applicant:'周航',operator:'周航',operatorAccount:'zhou.hang',purpose:'为知识库问答服务开通部署账号、日志与监控权限，并申请推理资源。',gpuType:'910B4',gpuCount:4,status:'审核通过',createdAt:'2026-08-13 16:20',updatedAt:'2026-08-15 11:08',model:'RAG-Rerank-32B',resourceStartTime:'',resourceEndTime:'',permissions:['查看服务','部署与更新','查看日志','查看监控'],targetEnvironment:'生产环境',trialPassed:'是，已完成线下部署验证',concurrency:120,launchTime:'2026-08-19T20:00:00'}
+];
+let requests=[],currentType=OFFLINE_TYPE,editingId=null,currentDetailId=null,lastTrigger=null,applicationView='empty';
+let resourceTimeState={start:new Date(DEFAULT_RESOURCE_START),end:new Date(DEFAULT_RESOURCE_END)},resourceCalendarAnchor=new Date(2026,7,1),resourceCalendarPickingEnd=false,resourceTimeLastTrigger=null;
+function normalizeRequestType(type){return ['试用资源',OFFLINE_TYPE].includes(type)?OFFLINE_TYPE:['正式资源','平台部署资源','账号部署权限和平台资源',PLATFORM_TYPE].includes(type)?PLATFORM_TYPE:type}
+function loadRequests(){try{requests=JSON.parse(localStorage.getItem(STORE_KEY)||'[]')}catch(e){requests=[]}if(!Array.isArray(requests))requests=[];requests=requests.map(x=>({...x,type:normalizeRequestType(x.type),resourceStartTime:x.resourceStartTime||(x.startDate?`${x.startDate}T00:00:00`:''),resourceEndTime:x.resourceEndTime||(x.endDate?`${x.endDate}T23:59:59`:''),permissions:Array.isArray(x.permissions)?x.permissions:[],targetEnvironment:x.targetEnvironment||'生产环境',trialPassed:x.trialPassed==='是，已完成试用验证'?'是，已完成线下部署验证':x.trialPassed==='否，申请直接上线评审'?'否，申请直接进入平台部署评审':x.trialPassed}))}function saveAll(){localStorage.setItem(STORE_KEY,JSON.stringify(requests))}
+function getRequest(id){return requests.find(x=>x.id===id)||DEMO_REQUESTS.find(x=>x.id===id)}
+function escapeHtml(value){return String(value??'').replace(/[&<>"']/g,char=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[char]))}
 function statusClass(s){return s==='草稿'?'badge-neutral':s==='已提交'?'badge-info':s==='审核中'?'badge-warning':s==='审核通过'?'badge-success':'badge-danger'}
-function renderTable(){const kw=keyword.value.trim().toLowerCase(),type=typeFilter.value,status=statusFilter.value;const rows=requests.filter(x=>(!type||x.type===type)&&(!status||x.status===status)&&(!kw||[x.id,x.name,x.system,x.model||'',x.applicant].join(' ').toLowerCase().includes(kw)));resultCount.textContent=rows.length;paginationText.textContent=`共 ${rows.length} 项`;keywordClear.classList.toggle('hidden',!kw);tableArea.innerHTML=rows.length?`<table><thead><tr><th>申请摘要</th><th>类型</th><th>业务系统</th><th>申请人 / 操作人</th><th>资源需求</th><th>状态</th><th>更新时间</th><th style="text-align:right">操作</th></tr></thead><tbody>${rows.map(x=>`<tr><td><div class="cell-title">${x.name}</div><div class="cell-subtitle">${x.id}</div></td><td><span class="tag ${x.type==='正式资源'?'formal-tag':''}">${x.type}</span></td><td>${x.system}</td><td>${x.applicant}<div class="cell-subtitle">操作人 · ${x.operator}</div></td><td class="mono">${x.gpuCount} × ${x.gpuType}</td><td><span class="badge ${statusClass(x.status)}">${x.status}</span></td><td class="muted">${x.updatedAt}</td><td><div class="actions"><button class="text-link" onclick="openDetail('${x.id}')">查看</button><button class="text-link" onclick="copyRequest('${x.id}')">复制</button>${x.status==='草稿'?`<button class="text-link" onclick="editRequest('${x.id}')">编辑</button>`:''}${['草稿','已提交'].includes(x.status)?`<button class="text-link danger-text" onclick="withdrawRequest('${x.id}')">${x.status==='草稿'?'删除':'撤回'}</button>`:''}</div></td></tr>`).join('')}</tbody></table>`:'<div class="empty-state governance-empty"><strong>暂无资源申请</strong><p>请先阅读上方模型纳管规范与流程，再新建试用或正式资源申请。</p><div><button class="btn trial-button" onclick="openApplicationModal(\'试用资源\')">新建试用申请</button><button class="btn btn-primary" onclick="openApplicationModal(\'正式资源\')">新建正式申请</button></div></div>'}
+function renderTable(){const kw=keyword.value.trim().toLowerCase(),type=typeFilter.value,status=statusFilter.value,source=applicationView==='empty'?[]:[...requests,...DEMO_REQUESTS];const rows=source.filter(x=>(!type||x.type===type)&&(!status||x.status===status)&&(!kw||[x.id,x.name,x.system,x.applicant].join(' ').toLowerCase().includes(kw)));resultCount.textContent=rows.length;paginationText.textContent=`共 ${rows.length} 项`;keywordClear.classList.toggle('hidden',!kw);tableArea.innerHTML=rows.length?`<table><thead><tr><th>申请名称</th><th>类型</th><th>业务系统</th><th>申请人</th><th>资源需求</th><th>状态</th><th>更新时间</th></tr></thead><tbody>${rows.map(x=>`<tr><td><button class="application-name-link" type="button" onclick="openDetail('${x.id}')">${escapeHtml(x.name)}</button><div class="cell-subtitle">${escapeHtml(x.id)}</div></td><td><span class="tag ${x.type===PLATFORM_TYPE?'formal-tag':''}">${escapeHtml(x.type)}</span></td><td>${escapeHtml(x.system)}</td><td>${escapeHtml(x.applicant)}</td><td><div class="resource-demand"><strong>${escapeHtml(x.gpuCount)} × ${escapeHtml(x.gpuType)}</strong><small>${x.type===OFFLINE_TYPE?'线下验证算力':'平台部署算力'}</small></div></td><td><span class="badge ${statusClass(x.status)}">${escapeHtml(x.status)}</span></td><td class="muted">${escapeHtml(x.updatedAt)}</td></tr>`).join('')}</tbody></table>`:`<div class="empty-state governance-empty"><strong>暂无部署资源申请</strong><p>纳管前验证请选择“线下验证服务器”；在平台部署请选择“平台账号和资源”。</p><div><button class="btn trial-button" onclick="openApplicationModal('${OFFLINE_TYPE}')">申请线下验证服务器</button><button class="btn btn-primary" onclick="openApplicationModal('${PLATFORM_TYPE}')">申请平台权限和资源</button></div></div>`}
+function switchApplicationView(view){applicationView=view==='list'?'list':'empty';emptyViewBtn.classList.toggle('active',applicationView==='empty');listViewBtn.classList.toggle('active',applicationView==='list');emptyViewBtn.setAttribute('aria-pressed',String(applicationView==='empty'));listViewBtn.setAttribute('aria-pressed',String(applicationView==='list'));renderTable()}
 function clearKeyword(){keyword.value='';renderTable();keyword.focus()}function resetFilters(){keyword.value='';typeFilter.value='';statusFilter.value='';renderTable()}
-function openApplicationModal(type){lastTrigger=document.activeElement;editingId=null;requestForm.reset();switchRequestType(type);fillDefaults(type);formOverlay.classList.remove('hidden');document.body.style.overflow='hidden';requestAnimationFrame(()=>requestName.focus())}
-function fillDefaults(type){requestName.value=type==='试用资源'?'模型试用资源申请':'非主线模型正式资源申请';department.value='';systemName.value='';applicant.value='当前登录用户';operator.value='';operatorAccount.value='';purpose.value='';startDate.value='';endDate.value='';modelName.value='';concurrency.value='';launchTime.value='';gpuType.value=type==='试用资源'?'910B4':'L40';gpuCount.value=type==='试用资源'?2:4}
-function switchRequestType(type){currentType=type;trialTab.classList.toggle('active',type==='试用资源');formalTab.classList.toggle('active',type==='正式资源');document.querySelectorAll('.trial-only').forEach(x=>x.classList.toggle('hidden',type!=='试用资源'));document.querySelectorAll('.formal-only').forEach(x=>x.classList.toggle('hidden',type!=='正式资源'));formalFields.classList.toggle('hidden',type!=='正式资源');formTitle.textContent=(editingId?'编辑':'新建')+type+'申请'}
-function collect(status){return{id:editingId||nextId(),name:requestName.value.trim(),type:currentType,department:department.value.trim(),system:systemName.value.trim(),applicant:applicant.value.trim(),operator:operator.value.trim(),operatorAccount:currentType==='正式资源'?operatorAccount.value.trim():'',purpose:purpose.value.trim(),gpuType:gpuType.value,gpuCount:Number(gpuCount.value),status,createdAt:editingId?requests.find(x=>x.id===editingId)?.createdAt:now(),updatedAt:now(),startDate:startDate.value,endDate:endDate.value,model:modelName.value.trim(),trialPassed:trialPassed.value,concurrency:Number(concurrency.value||0),launchTime:launchTime.value}}
-function validateRequest(status){formError.textContent='';if(status==='草稿'){if(!requestName.value.trim()){formError.textContent='保存草稿至少需要填写申请名称。';requestName.focus();return false}return true}const base=[['申请名称',requestName],['申请部门 / 项目组',department],['业务系统',systemName],['申请人',applicant],['部署操作人',operator],['资源用途',purpose],['GPU 数量',gpuCount],...(currentType==='正式资源'?[['部署账号',operatorAccount],['模型名称',modelName]]:[])];for(const[n,el]of base){if(!el.value||(el.type==='number'&&Number(el.value)<1)){formError.textContent=`请完整填写：${n}`;el.focus();return false}}if(currentType==='试用资源'){if(!startDate.value||!endDate.value){formError.textContent='请完整填写试用开始时间和试用结束时间。';return false}if(startDate.value>endDate.value){formError.textContent='试用结束时间不能早于开始时间。';endDate.focus();return false}}return true}
-function saveRequest(status){if(!validateRequest(status))return;const item=collect(status),idx=requests.findIndex(x=>x.id===item.id);idx>=0?requests.splice(idx,1,item):requests.unshift(item);saveAll();closeForm();renderTable();showToast(status==='草稿'?'草稿已保存':'申请已提交',status==='草稿'?'可稍后继续编辑。':'审批人员可在授权审批页查看。')}
-function nextId(){const nums=requests.map(x=>Number((x.id||'').split('-').pop())||0);return`RA-202608-${String(Math.max(0,...nums)+1).padStart(3,'0')}`}function now(){return'2026-08-13 '+new Date().toTimeString().slice(0,5)}
-function editRequest(id){const x=requests.find(r=>r.id===id);if(!x)return;lastTrigger=document.activeElement;editingId=id;switchRequestType(x.type);requestName.value=x.name;department.value=x.department;systemName.value=x.system;applicant.value=x.applicant;operator.value=x.operator;operatorAccount.value=x.operatorAccount||'';purpose.value=x.purpose||'';startDate.value=x.startDate||'';endDate.value=x.endDate||'';modelName.value=x.model||'';trialPassed.value=x.trialPassed||'是，已完成试用验证';concurrency.value=x.concurrency||'';launchTime.value=x.launchTime||'';gpuType.value=x.gpuType;gpuCount.value=x.gpuCount;formOverlay.classList.remove('hidden');document.body.style.overflow='hidden'}
-function openDetail(id){lastTrigger=document.activeElement;const x=requests.find(r=>r.id===id);currentDetailId=id;detailTitle.textContent=x.name;detailBody.innerHTML=`<div class="detail-meta-strip">${x.id} · ${x.type} · ${x.status}</div><div class="detail-grid"><section class="detail-panel"><h3>申请信息</h3><dl>${dl([['申请名称',x.name],['申请部门 / 项目组',x.department],['业务系统',x.system],['申请人',x.applicant],['部署操作人',x.operator],...(x.type==='正式资源'?[['部署账号',x.operatorAccount],['模型名称',x.model]]:[]),['资源用途',x.purpose],['GPU 申请值',`${x.gpuCount} × ${x.gpuType}`],...(x.type==='试用资源'?[['试用周期',`${x.startDate||'-'} 至 ${x.endDate||'-'}`]]:[])])}</dl></section><section class="detail-panel result-panel"><h3>审批与开通结果</h3><dl>${dl([['当前状态',x.status],['审批意见','暂无'],['开通结果','待管理员审批后生成']])}</dl></section></div>`;editBtn.disabled=x.status!=='草稿';withdrawBtn.disabled=!['草稿','已提交'].includes(x.status);deleteBtn.disabled=x.status!=='草稿';detailOverlay.classList.remove('hidden');document.body.style.overflow='hidden'}
-function dl(rows){return rows.map(([k,v])=>`<div><dt>${k}</dt><dd>${v||'-'}</dd></div>`).join('')}function copyRequest(id){const source=requests.find(r=>r.id===id);if(!source)return;const x={...source,id:nextId(),name:source.name+'（复制）',status:'草稿',createdAt:now(),updatedAt:now()};requests.unshift(x);saveAll();renderTable();showToast('已复制为草稿',x.id+' 可继续编辑。')}function copyCurrent(){copyRequest(currentDetailId);closeDetail()}function editCurrent(){closeDetail();editRequest(currentDetailId)}
+function openApplicationModal(type){lastTrigger=document.activeElement;editingId=null;requestForm.reset();switchRequestType(normalizeRequestType(type));fillDefaults(normalizeRequestType(type));formError.textContent='';formOverlay.classList.remove('hidden');document.body.style.overflow='hidden';requestAnimationFrame(()=>requestName.focus())}
+function fillDefaults(type){requestName.value=type===OFFLINE_TYPE?'模型线下验证服务器申请':'非主线模型平台权限和资源申请';department.value='';systemName.value='';applicant.value='当前登录用户';operator.value='';purpose.value='';modelName.value='';trialPassed.value='是，已完成线下部署验证';concurrency.value='';launchTime.value='';gpuType.value=type===OFFLINE_TYPE?'910B4':'L40';gpuCount.value=type===OFFLINE_TYPE?2:4;setResourceTimeState(new Date(DEFAULT_RESOURCE_START),new Date(DEFAULT_RESOURCE_END));closeResourceTimePopover(false)}
+function switchRequestType(type){currentType=normalizeRequestType(type);const isOffline=currentType===OFFLINE_TYPE;trialTab.classList.toggle('active',isOffline);formalTab.classList.toggle('active',!isOffline);trialTab.setAttribute('aria-selected',String(isOffline));formalTab.setAttribute('aria-selected',String(!isOffline));document.querySelectorAll('.trial-only').forEach(x=>x.classList.toggle('hidden',!isOffline));document.querySelectorAll('.formal-only').forEach(x=>x.classList.toggle('hidden',isOffline));if(!isOffline)closeResourceTimePopover(false);requestTypeExplanation.textContent=isOffline?'用于模型纳管前验证：平台提供一台独立服务器，由业务方在线下自行部署；已有验证环境或结论时可跳过。':'用于模型在平台长期运行：提交验证结论、上线计划和资源需求，由管理员统一核定平台权限和资源。';formTitle.textContent=editingId?(isOffline?'编辑线下验证服务器申请':'编辑平台权限和资源申请'):(isOffline?'申请线下验证服务器':'申请平台权限和资源')}
+function collect(status){return{id:editingId||nextId(),name:requestName.value.trim(),type:currentType,department:department.value.trim(),system:systemName.value.trim(),applicant:applicant.value.trim(),operator:operator.value.trim(),operatorAccount:'',targetEnvironment:'',permissions:[],purpose:purpose.value.trim(),gpuType:gpuType.value,gpuCount:Number(gpuCount.value),status,createdAt:editingId?requests.find(x=>x.id===editingId)?.createdAt:now(),updatedAt:now(),resourceStartTime:currentType===OFFLINE_TYPE?formatDateTimeInput(resourceTimeState.start):'',resourceEndTime:currentType===OFFLINE_TYPE?formatDateTimeInput(resourceTimeState.end):'',model:currentType===PLATFORM_TYPE?modelName.value.trim():'',trialPassed:currentType===PLATFORM_TYPE?trialPassed.value:'',concurrency:currentType===PLATFORM_TYPE?Number(concurrency.value||0):0,launchTime:currentType===PLATFORM_TYPE?launchTime.value:''}}
+function validateRequest(status){formError.textContent='';resourceTimeTrigger.removeAttribute('aria-invalid');if(status==='草稿'){if(!requestName.value.trim()){formError.textContent='保存草稿至少需要填写申请名称。';requestName.focus();return false}return true}const base=[['申请名称',requestName],['申请部门 / 项目组',department],['业务系统',systemName],['申请人',applicant],['部署操作人',operator],['资源用途',purpose],['GPU 数量',gpuCount],...(currentType===PLATFORM_TYPE?[['模型名称',modelName],['是否完成线下验证',trialPassed]]:[])];for(const[n,el]of base){if(!el.value||(el.type==='number'&&Number(el.value)<1)){formError.textContent=`请完整填写：${n}`;el.focus();return false}}if(currentType===OFFLINE_TYPE){if(Number.isNaN(resourceTimeState.start.getTime())||Number.isNaN(resourceTimeState.end.getTime())){formError.textContent='请选择完整的资源使用时间。';resourceTimeTrigger.setAttribute('aria-invalid','true');resourceTimeTrigger.focus();return false}if(resourceTimeState.start>resourceTimeState.end){formError.textContent='资源使用开始时间不能晚于结束时间。';resourceTimeTrigger.setAttribute('aria-invalid','true');resourceTimeTrigger.focus();return false}}return true}
+function saveRequest(status){if(!validateRequest(status))return;const item=collect(status),idx=requests.findIndex(x=>x.id===item.id);idx>=0?requests.splice(idx,1,item):requests.unshift(item);saveAll();closeForm();switchApplicationView('list');showToast(status==='草稿'?'草稿已保存':'申请已提交',status==='草稿'?'可稍后继续编辑。':'申请已进入审核流程。')}
+function nextId(){const nums=requests.map(x=>Number((x.id||'').split('-').pop())||0);return`RA-202608-${String(Math.max(0,...nums)+1).padStart(3,'0')}`}function now(){return formatDateTimeDisplay(new Date()).slice(0,16)}
+function editRequest(id){const x=requests.find(r=>r.id===id);if(!x)return;lastTrigger=document.activeElement;editingId=id;requestForm.reset();switchRequestType(x.type);requestName.value=x.name;department.value=x.department;systemName.value=x.system;applicant.value=x.applicant;operator.value=x.operator;purpose.value=x.purpose||'';modelName.value=x.model||'';trialPassed.value=x.trialPassed||'是，已完成线下部署验证';concurrency.value=x.concurrency||'';launchTime.value=x.launchTime||'';gpuType.value=x.gpuType;gpuCount.value=x.gpuCount;const start=new Date(x.resourceStartTime||DEFAULT_RESOURCE_START),end=new Date(x.resourceEndTime||DEFAULT_RESOURCE_END);setResourceTimeState(Number.isNaN(start.getTime())?new Date(DEFAULT_RESOURCE_START):start,Number.isNaN(end.getTime())?new Date(DEFAULT_RESOURCE_END):end);closeResourceTimePopover(false);formError.textContent='';formOverlay.classList.remove('hidden');document.body.style.overflow='hidden';requestAnimationFrame(()=>requestName.focus())}
+function openDetail(id){lastTrigger=document.activeElement;const x=getRequest(id);if(!x)return;currentDetailId=id;const persisted=requests.some(item=>item.id===id);detailTitle.textContent='申请详情';detailSubtitle.textContent=x.name;detailBody.innerHTML=`<div class="detail-status-strip"><span>${escapeHtml(x.id)} · ${escapeHtml(x.type)}</span><span class="badge ${statusClass(x.status)}">${escapeHtml(x.status)}</span></div><div class="detail-grid"><section class="detail-panel"><h3>基本信息</h3><dl>${dl([['申请名称',x.name],['申请部门 / 项目组',x.department],['业务系统',x.system],['申请人',x.applicant],['部署操作人',x.operator],...(x.type===PLATFORM_TYPE?[['模型名称',x.model]]:[])])}</dl></section><section class="detail-panel"><h3>申请内容</h3><dl>${dl([['资源用途',x.purpose],['资源需求',`${x.gpuCount} × ${x.gpuType}`],...(x.type===OFFLINE_TYPE?[['资源使用时间',`${formatStoredDateTime(x.resourceStartTime)} 至 ${formatStoredDateTime(x.resourceEndTime)}`]]:[['是否完成线下验证',x.trialPassed],['预计并发',x.concurrency||'-'],['计划上线时间',formatStoredDateTime(x.launchTime)]])])}</dl></section><section class="detail-panel result-panel"><h3>审批与开通结果</h3><dl>${dl([['审批意见',x.approvalOpinion||'暂无'],['开通结果',x.status==='审核通过'?'平台权限和资源已按申请核定':'待管理员审核后生成']])}</dl></section></div>`;editBtn.disabled=!persisted||x.status!=='草稿';withdrawBtn.disabled=!persisted||!['草稿','已提交'].includes(x.status);deleteBtn.disabled=!persisted||x.status!=='草稿';detailOverlay.classList.remove('hidden');document.body.style.overflow='hidden'}
+function dl(rows){return rows.map(([k,v])=>`<div><dt>${escapeHtml(k)}</dt><dd>${escapeHtml(v||'-')}</dd></div>`).join('')}function copyRequest(id){const source=getRequest(id);if(!source)return;const x={...source,id:nextId(),name:source.name+'（复制）',status:'草稿',createdAt:now(),updatedAt:now(),approvalOpinion:''};requests.unshift(x);saveAll();switchApplicationView('list');showToast('已复制为草稿',x.id+' 可继续编辑。')}function copyCurrent(){copyRequest(currentDetailId);closeDetail()}function editCurrent(){closeDetail();editRequest(currentDetailId)}
 function withdrawRequest(id){const i=requests.findIndex(x=>x.id===id);if(i<0)return;if(requests[i].status==='草稿'){requests.splice(i,1);showToast('草稿已删除','该申请未进入审批流程。')}else{requests[i].status='草稿';requests[i].updatedAt=now();showToast('申请已撤回','申请已恢复为草稿。')}saveAll();renderTable()}function withdrawCurrent(){withdrawRequest(currentDetailId);closeDetail()}function deleteCurrent(){const x=requests.find(r=>r.id===currentDetailId);if(!x||x.status!=='草稿')return;requests=requests.filter(r=>r.id!==currentDetailId);saveAll();closeDetail();renderTable();showToast('申请已删除','该记录已从列表移除。')}
-function closeForm(){formOverlay.classList.add('hidden');document.body.style.overflow='';if(lastTrigger)lastTrigger.focus()}function closeDetail(){detailOverlay.classList.add('hidden');document.body.style.overflow='';if(lastTrigger)lastTrigger.focus()}function showToast(title,message){toastTitle.textContent=title;toastMessage.textContent=message;toast.classList.remove('hidden');clearTimeout(showToast.timer);showToast.timer=setTimeout(()=>toast.classList.add('hidden'),3000)}
-document.querySelectorAll('.modal-backdrop').forEach(x=>x.addEventListener('click',e=>{if(e.target===x)(x.id==='formOverlay'?closeForm():closeDetail())}));document.addEventListener('keydown',e=>{if(e.key==='Escape'){if(!formOverlay.classList.contains('hidden'))closeForm();if(!detailOverlay.classList.contains('hidden'))closeDetail()}});loadRequests();renderTable();const initialType=new URLSearchParams(location.search).get('type');if(initialType==='trial'||initialType==='formal'){document.getElementById('resource-application').scrollIntoView();openApplicationModal(initialType==='trial'?'试用资源':'正式资源')}
+function padDatePart(value){return String(value).padStart(2,'0')}
+function formatDateTimeDisplay(date){return`${date.getFullYear()}-${padDatePart(date.getMonth()+1)}-${padDatePart(date.getDate())} ${padDatePart(date.getHours())}:${padDatePart(date.getMinutes())}:${padDatePart(date.getSeconds())}`}
+function formatDateTimeInput(date){return`${date.getFullYear()}-${padDatePart(date.getMonth()+1)}-${padDatePart(date.getDate())}T${padDatePart(date.getHours())}:${padDatePart(date.getMinutes())}:${padDatePart(date.getSeconds())}`}
+function formatStoredDateTime(value){if(!value)return'-';const date=new Date(value);return Number.isNaN(date.getTime())?String(value).replace('T',' '):formatDateTimeDisplay(date)}
+function setResourceTimeState(start,end){resourceTimeState={start:new Date(start),end:new Date(end)};resourceCalendarAnchor=new Date(resourceTimeState.start.getFullYear(),resourceTimeState.start.getMonth(),1);resourceStartTime.value=formatDateTimeInput(resourceTimeState.start);resourceEndTime.value=formatDateTimeInput(resourceTimeState.end);resourceTimeText.textContent=`${formatDateTimeDisplay(resourceTimeState.start)} ~ ${formatDateTimeDisplay(resourceTimeState.end)}`;renderResourceCalendars()}
+function readPendingResourceTime(){return{start:new Date(resourceStartTime.value),end:new Date(resourceEndTime.value)}}
+function setPendingResourceTime(start,end){resourceStartTime.value=formatDateTimeInput(start);resourceEndTime.value=formatDateTimeInput(end);renderResourceCalendars()}
+function sameResourceCalendarDay(left,right){return left.getFullYear()===right.getFullYear()&&left.getMonth()===right.getMonth()&&left.getDate()===right.getDate()}
+function renderResourceCalendarMonth(monthDate,titleId,daysId){const year=monthDate.getFullYear(),month=monthDate.getMonth(),firstWeekday=(new Date(year,month,1).getDay()+6)%7,totalDays=new Date(year,month+1,0).getDate(),pending=readPendingResourceTime(),safeStart=Number.isNaN(pending.start.getTime())?resourceTimeState.start:pending.start,safeEnd=Number.isNaN(pending.end.getTime())?resourceTimeState.end:pending.end,startDay=new Date(safeStart.getFullYear(),safeStart.getMonth(),safeStart.getDate()).getTime(),endDay=new Date(safeEnd.getFullYear(),safeEnd.getMonth(),safeEnd.getDate()).getTime(),cells=Array.from({length:firstWeekday},()=>'<span class="resource-calendar-day-empty"></span>');document.getElementById(titleId).textContent=`${year} 年 ${month+1} 月`;for(let day=1;day<=totalDays;day+=1){const date=new Date(year,month,day),time=date.getTime(),classes=['resource-calendar-day'];if(time>startDay&&time<endDay)classes.push('in-range');if(sameResourceCalendarDay(date,safeStart))classes.push('range-start');if(sameResourceCalendarDay(date,safeEnd))classes.push('range-end');const value=`${year}-${padDatePart(month+1)}-${padDatePart(day)}`;cells.push(`<button class="${classes.join(' ')}" type="button" data-resource-calendar-date="${value}" aria-label="${year}年${month+1}月${day}日">${day}</button>`)}document.getElementById(daysId).innerHTML=cells.join('')}
+function renderResourceCalendars(){renderResourceCalendarMonth(resourceCalendarAnchor,'resourceCalendarLeftTitle','resourceCalendarLeftDays');renderResourceCalendarMonth(new Date(resourceCalendarAnchor.getFullYear(),resourceCalendarAnchor.getMonth()+1,1),'resourceCalendarRightTitle','resourceCalendarRightDays')}
+function openResourceTimePopover(){resourceTimeLastTrigger=document.activeElement;resourceCalendarAnchor=new Date(resourceTimeState.start.getFullYear(),resourceTimeState.start.getMonth(),1);resourceCalendarPickingEnd=false;setPendingResourceTime(resourceTimeState.start,resourceTimeState.end);document.querySelectorAll('[data-resource-time-preset]').forEach(button=>button.classList.remove('active'));resourceTimeError.classList.add('hidden');resourceTimePopover.classList.remove('hidden');resourceTimeTrigger.setAttribute('aria-expanded','true');requestAnimationFrame(()=>resourceStartTime.focus())}
+function closeResourceTimePopover(restoreFocus=true){resourceTimePopover.classList.add('hidden');resourceTimeTrigger.setAttribute('aria-expanded','false');resourceTimeError.classList.add('hidden');if(restoreFocus)(resourceTimeLastTrigger||resourceTimeTrigger).focus()}
+function applyResourceTimePreset(preset){const now=new Date(),todayStart=new Date(now.getFullYear(),now.getMonth(),now.getDate(),0,0,0);let start=new Date(todayStart),end=new Date(now.getFullYear(),now.getMonth(),now.getDate(),23,59,59);if(preset==='tomorrow'){start.setDate(start.getDate()+1);end.setDate(end.getDate()+1)}if(preset==='3d')end.setDate(end.getDate()+2);if(preset==='7d')end.setDate(end.getDate()+6);if(preset==='30d')end.setDate(end.getDate()+29);if(preset==='month')end=new Date(now.getFullYear(),now.getMonth()+1,0,23,59,59);resourceCalendarAnchor=new Date(start.getFullYear(),start.getMonth(),1);resourceCalendarPickingEnd=false;setPendingResourceTime(start,end);document.querySelectorAll('[data-resource-time-preset]').forEach(button=>button.classList.toggle('active',button.dataset.resourceTimePreset===preset))}
+function handleResourceCalendarDay(value){const[year,month,day]=value.split('-').map(Number),pending=readPendingResourceTime(),safeStart=Number.isNaN(pending.start.getTime())?resourceTimeState.start:pending.start,safeEnd=Number.isNaN(pending.end.getTime())?resourceTimeState.end:pending.end;if(!resourceCalendarPickingEnd){const start=new Date(year,month-1,day,safeStart.getHours(),safeStart.getMinutes(),safeStart.getSeconds()),end=new Date(year,month-1,day,safeEnd.getHours(),safeEnd.getMinutes(),safeEnd.getSeconds());resourceCalendarPickingEnd=true;setPendingResourceTime(start,end)}else{const selected=new Date(year,month-1,day,safeEnd.getHours(),safeEnd.getMinutes(),safeEnd.getSeconds());if(selected<safeStart){const start=new Date(year,month-1,day,safeStart.getHours(),safeStart.getMinutes(),safeStart.getSeconds());setPendingResourceTime(start,safeEnd)}else setPendingResourceTime(safeStart,selected);resourceCalendarPickingEnd=false}document.querySelectorAll('[data-resource-time-preset]').forEach(button=>button.classList.remove('active'))}
+function applyResourceTimeRange(){const pending=readPendingResourceTime();let message='';if(!resourceStartTime.value||!resourceEndTime.value||Number.isNaN(pending.start.getTime())||Number.isNaN(pending.end.getTime()))message='请选择完整的开始时间和结束时间。';else if(pending.start>pending.end)message='开始时间不能晚于结束时间。';resourceTimeError.textContent=message;resourceTimeError.classList.toggle('hidden',!message);resourceStartTime.setAttribute('aria-invalid',String(Boolean(message)));resourceEndTime.setAttribute('aria-invalid',String(Boolean(message)));if(message){(pending.start>pending.end?resourceEndTime:resourceStartTime).focus();return}setResourceTimeState(pending.start,pending.end);resourceTimeTrigger.removeAttribute('aria-invalid');closeResourceTimePopover();showToast('资源使用时间已更新',`${formatDateTimeDisplay(pending.start)} 至 ${formatDateTimeDisplay(pending.end)}`)}
+function closeForm(){closeResourceTimePopover(false);formOverlay.classList.add('hidden');document.body.style.overflow='';if(lastTrigger)lastTrigger.focus()}function closeDetail(){detailOverlay.classList.add('hidden');document.body.style.overflow='';if(lastTrigger)lastTrigger.focus()}function showToast(title,message){toastTitle.textContent=title;toastMessage.textContent=message;toast.classList.remove('hidden');clearTimeout(showToast.timer);showToast.timer=setTimeout(()=>toast.classList.add('hidden'),3000)}
+resourceTimeTrigger.addEventListener('click',()=>resourceTimePopover.classList.contains('hidden')?openResourceTimePopover():closeResourceTimePopover());closeResourceTime.addEventListener('click',()=>closeResourceTimePopover());cancelResourceTime.addEventListener('click',()=>closeResourceTimePopover());resetResourceTime.addEventListener('click',()=>{resourceCalendarAnchor=new Date(resourceTimeState.start.getFullYear(),resourceTimeState.start.getMonth(),1);setPendingResourceTime(resourceTimeState.start,resourceTimeState.end);document.querySelectorAll('[data-resource-time-preset]').forEach(button=>button.classList.remove('active'))});applyResourceTime.addEventListener('click',applyResourceTimeRange);document.querySelectorAll('[data-resource-time-preset]').forEach(button=>button.addEventListener('click',()=>applyResourceTimePreset(button.dataset.resourceTimePreset)));resourceCalendarPrev.addEventListener('click',()=>{resourceCalendarAnchor=new Date(resourceCalendarAnchor.getFullYear(),resourceCalendarAnchor.getMonth()-1,1);renderResourceCalendars()});resourceCalendarNext.addEventListener('click',()=>{resourceCalendarAnchor=new Date(resourceCalendarAnchor.getFullYear(),resourceCalendarAnchor.getMonth()+1,1);renderResourceCalendars()});resourceTimePopover.addEventListener('click',event=>{const button=event.target.closest('[data-resource-calendar-date]');if(button)handleResourceCalendarDay(button.dataset.resourceCalendarDate)});resourceStartTime.addEventListener('change',()=>{const date=new Date(resourceStartTime.value);if(!Number.isNaN(date.getTime()))resourceCalendarAnchor=new Date(date.getFullYear(),date.getMonth(),1);renderResourceCalendars()});resourceEndTime.addEventListener('change',renderResourceCalendars);
+document.querySelectorAll('.modal-backdrop').forEach(x=>x.addEventListener('click',e=>{if(e.target===x)(x.id==='formOverlay'?closeForm():closeDetail())}));document.addEventListener('click',event=>{const picker=document.querySelector('.resource-time-picker');if(!resourceTimePopover.classList.contains('hidden')&&!picker.contains(event.target))closeResourceTimePopover(false)});document.addEventListener('keydown',e=>{if(e.key==='Escape'){if(!resourceTimePopover.classList.contains('hidden')){closeResourceTimePopover();return}if(!formOverlay.classList.contains('hidden'))closeForm();if(!detailOverlay.classList.contains('hidden'))closeDetail()}});loadRequests();setResourceTimeState(new Date(DEFAULT_RESOURCE_START),new Date(DEFAULT_RESOURCE_END));switchApplicationView('empty');const initialType=new URLSearchParams(location.search).get('type');if(initialType==='trial'||initialType==='formal'){document.getElementById('resource-application').scrollIntoView();openApplicationModal(initialType==='trial'?OFFLINE_TYPE:PLATFORM_TYPE)}
 </script>
 </body>
 </html>

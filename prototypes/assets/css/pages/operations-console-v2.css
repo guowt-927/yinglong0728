@@ -48,9 +48,9 @@ body.ops-v2:not(.yl-embedded) > .sidebar,
 
 .ops-v2 .brand {
   display: flex;
-  min-height: 56px;
+  min-height: 68px;
   align-items: center;
-  gap: 10px;
+  gap: 11px;
   padding: 0 16px;
   border-bottom: 1px solid var(--ops-line);
   color: var(--ops-ink);
@@ -59,16 +59,12 @@ body.ops-v2:not(.yl-embedded) > .sidebar,
 
 .ops-v2 .brand-mark {
   display: grid;
-  width: 28px;
-  height: 28px;
-  flex: 0 0 auto;
+  width: 38px;
+  height: 38px;
+  flex: 0 0 38px;
   place-items: center;
-  border-radius: 7px;
-  color: #fff;
-  background: var(--ops-brand);
-  font-size: 12px;
-  font-weight: 800;
 }
+.ops-v2 .brand-mark img { display: block; width: 38px; height: 38px; object-fit: contain; }
 
 .ops-v2 .brand-name { color: var(--ops-ink); font-size: 15px; font-weight: 650; white-space: nowrap; }
 .ops-v2 .env-badge {
@@ -368,11 +364,11 @@ body.ops-v2:not(.yl-embedded) > .sidebar,
    This final, scoped override neutralizes the legacy toolbar's global .brand rules. */
 body.ops-v2 .sidebar > .brand {
   display: flex !important;
-  height: 56px !important;
-  min-height: 56px !important;
+  height: 68px !important;
+  min-height: 68px !important;
   align-items: center !important;
   justify-content: flex-start !important;
-  gap: 10px !important;
+  gap: 11px !important;
   padding: 0 16px !important;
   border-bottom: 1px solid var(--ops-line) !important;
   color: var(--ops-ink) !important;
@@ -387,18 +383,15 @@ body.ops-v2 .sidebar > .brand::before {
 
 body.ops-v2 .sidebar > .brand .brand-mark {
   display: grid !important;
-  width: 28px !important;
-  height: 28px !important;
-  flex: 0 0 auto !important;
+  width: 38px !important;
+  height: 38px !important;
+  flex: 0 0 38px !important;
   place-items: center !important;
-  border-radius: 7px !important;
-  color: #fff !important;
-  background: var(--ops-brand) !important;
-  box-shadow: 0 2px 6px rgba(38, 110, 255, .22) !important;
-  font-size: 12px !important;
-  line-height: 28px !important;
-  font-weight: 800 !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
 }
+body.ops-v2 .sidebar > .brand .brand-mark img { display: block !important; width: 38px !important; height: 38px !important; object-fit: contain !important; }
 
 body.ops-v2 .sidebar > .brand .brand-name {
   display: inline !important;
