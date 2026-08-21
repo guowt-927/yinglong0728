@@ -54,8 +54,7 @@
       items: [
         { file: 'sys_resource_application.html', label: '资源申请', icon: 'fa-file-circle-plus', role: 'applicant' },
         { file: 'sys_resource_approval.html', label: '授权与审批', icon: 'fa-user-check', role: 'admin' },
-        { file: 'sys_infrastructure_mgmt.html', label: '集群与节点', icon: 'fa-network-wired' },
-        { file: 'sys_request_tracing.html', label: '链路跟踪', icon: 'fa-route' }
+        { file: 'sys_infrastructure_mgmt.html', label: '集群与节点', icon: 'fa-network-wired' }
       ]
     }
   ];

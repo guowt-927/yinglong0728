@@ -509,14 +509,27 @@
             transition: border-color .15s ease, background-color .15s ease;
         }
 
-        .download-link:hover {
+        .download-link:not(.is-disabled):hover {
             border-color: #9fbdff;
             background: #f7faff;
         }
 
-        .download-link:focus-visible {
+        .download-link:not(.is-disabled):focus-visible {
             outline: 2px solid var(--governance-blue);
             outline-offset: 2px;
+        }
+
+        .download-link.is-disabled {
+            color: #94a3b8;
+            background: #f8fafc;
+            cursor: not-allowed;
+            opacity: .72;
+        }
+
+        .download-link.is-disabled .download-icon,
+        .download-link.is-disabled .download-copy strong,
+        .download-link.is-disabled .download-action {
+            color: #94a3b8;
         }
 
         .download-icon {
@@ -873,7 +886,7 @@
 <aside class="sidebar" aria-label="应龙主导航"><a class="brand" href="../index.html" aria-label="应龙 AI算力基座首页"><span class="brand-mark" aria-hidden="true"><img src="../doc/logo/icon_01.svg" alt=""></span><span class="brand-copy"><span class="brand-name">应龙</span><span class="brand-subtitle">AI算力基座</span></span></a><nav class="sidebar-nav">
     <section class="nav-group"><h2 class="nav-group-title">工作台</h2><a class="nav-item" href="../index.html"><svg class="icon"><use href="#i-dashboard"/></svg><span>系统概览</span></a></section><section class="nav-group"><h2 class="nav-group-title">算力调度</h2><a class="nav-item" href="sys_dispatch.html"><svg class="icon"><use href="#i-sliders"/></svg><span>算力调度</span></a><a class="nav-item" href="sys_task_list.html"><svg class="icon"><use href="#i-list"/></svg><span>我的任务</span></a></section>
     <section class="nav-group"><h2 class="nav-group-title">模型管理</h2><a class="nav-item" href="sys_model_repo.html"><svg class="icon"><use href="#i-box"/></svg><span>模型资产</span></a><a class="nav-item" href="sys_model_service.html"><svg class="icon"><use href="#i-server"/></svg><span>模型服务</span></a><a class="nav-item" href="sys_model_training.html"><svg class="icon"><use href="#i-brain"/></svg><span>模型训练</span></a><a class="nav-item active" href="sys_model_governance.html" aria-current="page"><svg class="icon"><use href="#i-check-user"/></svg><span>模型纳管</span></a><a class="nav-item" href="sys_model_monitor.html"><svg class="icon"><use href="#i-activity"/></svg><span>模型监测</span></a></section>
-    <section class="nav-group"><h2 class="nav-group-title">资源与运维</h2><a class="nav-item" href="sys_resource_application.html"><svg class="icon"><use href="#i-file"/></svg><span>资源申请</span></a><a class="nav-item" href="sys_resource_approval.html"><svg class="icon"><use href="#i-check-user"/></svg><span>授权审批</span></a><a class="nav-item" href="sys_infrastructure_mgmt.html"><svg class="icon"><use href="#i-network"/></svg><span>集群管理</span></a><a class="nav-item" href="sys_request_tracing.html"><svg class="icon"><use href="#i-route"/></svg><span>链路追踪</span></a></section>
+    <section class="nav-group"><h2 class="nav-group-title">资源与运维</h2><a class="nav-item" href="sys_resource_application.html"><svg class="icon"><use href="#i-file"/></svg><span>资源申请</span></a><a class="nav-item" href="sys_resource_approval.html"><svg class="icon"><use href="#i-check-user"/></svg><span>授权审批</span></a><a class="nav-item" href="sys_infrastructure_mgmt.html"><svg class="icon"><use href="#i-network"/></svg><span>集群管理</span></a></section>
 </nav><div class="sidebar-foot"><div class="sidebar-version" tabindex="0" aria-describedby="sidebarVersionDetails"><span>系统版本</span><strong>v1.0.0</strong><span class="sidebar-version-popover" id="sidebarVersionDetails" role="tooltip"><strong>版本信息</strong><span><span>前端版本</span><b>v1.0.0</b></span><span><span>后端版本</span><b>v1.0.0</b></span></span></div></div></aside>
 <div class="app-main">
     <header class="global-header"><nav class="breadcrumb" aria-label="面包屑"><a href="../index.html">应龙</a><span>/</span><span>模型管理</span><span>/</span><span class="breadcrumb-current" aria-current="page">模型纳管</span></nav><div class="user-profile"><span>资源管理员</span><span class="user-avatar" aria-hidden="true">A</span></div></header>
@@ -944,16 +957,16 @@
                             <div class="guidance-downloads">
                                 <h3>平台纳管规范与指引</h3>
                                 <div class="download-list">
-                                    <a class="download-link" href="../doc/model_governance_specification.md" download>
+                                    <a class="download-link" href="平台模型纳管规范.pdf" download>
                                         <svg class="download-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="m7 10 5 5 5-5"/><path d="M12 15V3"/></svg>
-                                        <span class="download-copy"><strong>平台模型纳管规范</strong><span>Markdown · V1.0</span></span>
+                                        <span class="download-copy"><strong>平台模型纳管规范</strong><span>PDF · V3</span></span>
                                         <span class="download-action">下载</span>
                                     </a>
-                                    <a class="download-link" href="../doc/model_governance_guide.md" download>
+                                    <div class="download-link is-disabled" aria-disabled="true" title="操作指引暂未开放">
                                         <svg class="download-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="m7 10 5 5 5-5"/><path d="M12 15V3"/></svg>
-                                        <span class="download-copy"><strong>平台模型纳管操作指引</strong><span>Markdown · V1.0</span></span>
-                                        <span class="download-action">下载</span>
-                                    </a>
+                                        <span class="download-copy"><strong>平台模型纳管操作指引</strong><span>内容整理中</span></span>
+                                        <span class="download-action">暂未开放</span>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -1022,7 +1035,7 @@
                     </div>
                     <section class="card table-card application-table">
                         <div class="filter-toolbar"><div class="search-wrap"><input class="search-input" id="keyword" maxlength="50" placeholder="搜索申请名称、编号、业务系统或申请人" oninput="renderTable()"><button class="search-clear hidden" id="keywordClear" onclick="clearKeyword()" aria-label="清除申请搜索">×</button></div><select class="control" id="typeFilter" onchange="renderTable()"><option value="">全部类型</option><option>线下验证服务器</option><option>平台账号和资源</option></select><select class="control" id="statusFilter" onchange="renderTable()"><option value="">全部状态</option><option>草稿</option><option>审核中</option><option>审核通过</option></select><span class="filter-result-snapshot">筛选结果 <strong id="resultCount">0</strong> 项</span><button class="btn btn-ghost" onclick="resetFilters()">重置</button></div>
-                        <div class="table-toolbar"><div class="table-title"><h2>我的部署资源申请</h2></div><div class="table-toolbar-actions"><div class="prototype-view-switch" aria-label="切换申请列表示例状态"><button id="emptyViewBtn" class="active" type="button" aria-pressed="true" onclick="switchApplicationView('empty')">空状态</button><button id="listViewBtn" type="button" aria-pressed="false" onclick="switchApplicationView('list')">列表状态</button></div></div></div>
+                        <div class="table-toolbar"><div class="table-title"><h2>我的部署资源申请</h2></div><div class="table-toolbar-actions"><div class="prototype-view-switch" aria-label="切换申请列表示例状态"><button id="emptyViewBtn" type="button" aria-pressed="false" onclick="switchApplicationView('empty')">空状态</button><button id="listViewBtn" class="active" type="button" aria-pressed="true" onclick="switchApplicationView('list')">列表状态</button></div></div></div>
                         <div class="table-scroll" id="tableArea"></div>
                         <footer class="pagination"><span id="paginationText">共 0 项</span><div><button class="btn table-button" disabled>上一页</button><button class="btn table-button btn-primary">1</button><button class="btn table-button" disabled>下一页</button></div></footer>
                     </section>
@@ -1138,7 +1151,7 @@ const DEMO_REQUESTS=[
   {id:'DEMO-202608-002',name:'智能客服模型平台部署申请',type:PLATFORM_TYPE,department:'客户运营部 / 智能客服项目组',system:'智能客服中台',applicant:'刘明',operator:'李四',operatorAccount:'li.si',purpose:'申请平台账号、部署权限和生产环境资源，用于承载智能客服推理服务。',gpuType:'L40',gpuCount:8,status:'审核中',createdAt:'2026-08-14 10:05',updatedAt:'2026-08-14 10:18',model:'Yinglong-Chat-72B',resourceStartTime:'',resourceEndTime:'',permissions:['查看服务','部署与更新','查看日志','查看监控'],targetEnvironment:'生产环境',trialPassed:'是，已完成线下部署验证',concurrency:200,launchTime:'2026-08-20T10:00:00'},
   {id:'DEMO-202608-003',name:'知识库问答模型平台部署申请',type:PLATFORM_TYPE,department:'企业平台部 / 知识库项目组',system:'企业知识库',applicant:'周航',operator:'周航',operatorAccount:'zhou.hang',purpose:'为知识库问答服务开通部署账号、日志与监控权限，并申请推理资源。',gpuType:'910B4',gpuCount:4,status:'审核通过',createdAt:'2026-08-13 16:20',updatedAt:'2026-08-15 11:08',model:'RAG-Rerank-32B',resourceStartTime:'',resourceEndTime:'',permissions:['查看服务','部署与更新','查看日志','查看监控'],targetEnvironment:'生产环境',trialPassed:'是，已完成线下部署验证',concurrency:120,launchTime:'2026-08-19T20:00:00'}
 ];
-let requests=[],currentType=OFFLINE_TYPE,editingId=null,currentDetailId=null,lastTrigger=null,applicationView='empty';
+let requests=[],currentType=OFFLINE_TYPE,editingId=null,currentDetailId=null,lastTrigger=null,applicationView='list';
 let resourceTimeState={start:new Date(DEFAULT_RESOURCE_START),end:new Date(DEFAULT_RESOURCE_END)},resourceCalendarAnchor=new Date(2026,7,1),resourceCalendarPickingEnd=false,resourceTimeLastTrigger=null;
 function normalizeRequestType(type){return ['试用资源',OFFLINE_TYPE].includes(type)?OFFLINE_TYPE:['正式资源','平台部署资源','账号部署权限和平台资源',PLATFORM_TYPE].includes(type)?PLATFORM_TYPE:type}
 function normalizeRequestStatus(status){return status==='已提交'?'审核中':status==='审核通过'?'审核通过':'草稿'}
@@ -1181,7 +1194,7 @@ function handleResourceCalendarDay(value){const[year,month,day]=value.split('-')
 function applyResourceTimeRange(){const pending=readPendingResourceTime();let message='';if(!resourceStartTime.value||!resourceEndTime.value||Number.isNaN(pending.start.getTime())||Number.isNaN(pending.end.getTime()))message='请选择完整的开始时间和结束时间。';else if(pending.start>pending.end)message='开始时间不能晚于结束时间。';resourceTimeError.textContent=message;resourceTimeError.classList.toggle('hidden',!message);resourceStartTime.setAttribute('aria-invalid',String(Boolean(message)));resourceEndTime.setAttribute('aria-invalid',String(Boolean(message)));if(message){(pending.start>pending.end?resourceEndTime:resourceStartTime).focus();return}setResourceTimeState(pending.start,pending.end);resourceTimeTrigger.removeAttribute('aria-invalid');closeResourceTimePopover();showToast('资源使用时间已更新',`${formatDateTimeDisplay(pending.start)} 至 ${formatDateTimeDisplay(pending.end)}`)}
 function closeForm(){closeResourceTimePopover(false);formOverlay.classList.add('hidden');document.body.style.overflow='';if(lastTrigger)lastTrigger.focus()}function closeDetail(){detailOverlay.classList.add('hidden');document.body.style.overflow='';if(lastTrigger)lastTrigger.focus()}function showToast(title,message){toastTitle.textContent=title;toastMessage.textContent=message;toast.classList.remove('hidden');clearTimeout(showToast.timer);showToast.timer=setTimeout(()=>toast.classList.add('hidden'),3000)}
 resourceTimeTrigger.addEventListener('click',()=>resourceTimePopover.classList.contains('hidden')?openResourceTimePopover():closeResourceTimePopover());closeResourceTime.addEventListener('click',()=>closeResourceTimePopover());cancelResourceTime.addEventListener('click',()=>closeResourceTimePopover());resetResourceTime.addEventListener('click',()=>{resourceCalendarAnchor=new Date(resourceTimeState.start.getFullYear(),resourceTimeState.start.getMonth(),1);setPendingResourceTime(resourceTimeState.start,resourceTimeState.end);document.querySelectorAll('[data-resource-time-preset]').forEach(button=>button.classList.remove('active'))});applyResourceTime.addEventListener('click',applyResourceTimeRange);document.querySelectorAll('[data-resource-time-preset]').forEach(button=>button.addEventListener('click',()=>applyResourceTimePreset(button.dataset.resourceTimePreset)));resourceCalendarPrev.addEventListener('click',()=>{resourceCalendarAnchor=new Date(resourceCalendarAnchor.getFullYear(),resourceCalendarAnchor.getMonth()-1,1);renderResourceCalendars()});resourceCalendarNext.addEventListener('click',()=>{resourceCalendarAnchor=new Date(resourceCalendarAnchor.getFullYear(),resourceCalendarAnchor.getMonth()+1,1);renderResourceCalendars()});resourceTimePopover.addEventListener('click',event=>{const button=event.target.closest('[data-resource-calendar-date]');if(button)handleResourceCalendarDay(button.dataset.resourceCalendarDate)});resourceStartTime.addEventListener('change',()=>{const date=new Date(resourceStartTime.value);if(!Number.isNaN(date.getTime()))resourceCalendarAnchor=new Date(date.getFullYear(),date.getMonth(),1);renderResourceCalendars()});resourceEndTime.addEventListener('change',renderResourceCalendars);
-document.querySelectorAll('.modal-backdrop').forEach(x=>x.addEventListener('click',e=>{if(e.target===x)(x.id==='formOverlay'?closeForm():closeDetail())}));document.addEventListener('click',event=>{const picker=document.querySelector('.resource-time-picker');if(!resourceTimePopover.classList.contains('hidden')&&!picker.contains(event.target))closeResourceTimePopover(false)});document.addEventListener('keydown',e=>{if(e.key==='Escape'){if(!resourceTimePopover.classList.contains('hidden')){closeResourceTimePopover();return}if(!formOverlay.classList.contains('hidden'))closeForm();if(!detailOverlay.classList.contains('hidden'))closeDetail()}});loadRequests();setResourceTimeState(new Date(DEFAULT_RESOURCE_START),new Date(DEFAULT_RESOURCE_END));switchApplicationView('empty');const initialType=new URLSearchParams(location.search).get('type');if(initialType==='trial'||initialType==='formal'){document.getElementById('resource-application').scrollIntoView();openApplicationModal(initialType==='trial'?OFFLINE_TYPE:PLATFORM_TYPE)}
+document.querySelectorAll('.modal-backdrop').forEach(x=>x.addEventListener('click',e=>{if(e.target===x)(x.id==='formOverlay'?closeForm():closeDetail())}));document.addEventListener('click',event=>{const picker=document.querySelector('.resource-time-picker');if(!resourceTimePopover.classList.contains('hidden')&&!picker.contains(event.target))closeResourceTimePopover(false)});document.addEventListener('keydown',e=>{if(e.key==='Escape'){if(!resourceTimePopover.classList.contains('hidden')){closeResourceTimePopover();return}if(!formOverlay.classList.contains('hidden'))closeForm();if(!detailOverlay.classList.contains('hidden'))closeDetail()}});loadRequests();setResourceTimeState(new Date(DEFAULT_RESOURCE_START),new Date(DEFAULT_RESOURCE_END));switchApplicationView('list');const initialType=new URLSearchParams(location.search).get('type');if(initialType==='trial'||initialType==='formal'){document.getElementById('resource-application').scrollIntoView();openApplicationModal(initialType==='trial'?OFFLINE_TYPE:PLATFORM_TYPE)}
 </script>
 </body>
 </html>
